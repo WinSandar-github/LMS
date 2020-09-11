@@ -129,7 +129,9 @@
   <!-- /.sidebar-menu -->
 </div>
 <!-- /.sidebar -->
+
 <script>
+  url = window.location.href.split('?')[0];
   $('#menu a').filter(function () {
     return this.href == url;
   }).addClass('active');
