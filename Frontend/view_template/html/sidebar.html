@@ -1,0 +1,138 @@
+<!-- Brand Logo -->
+<a href="#" class="brand-link">
+  <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+       style="opacity: .8">
+  <span class="brand-text font-weight-light" id="company_name">Logistics</span>
+</a>
+<!-- Sidebar -->
+<div class="sidebar">
+  <!-- Sidebar user panel (optional) -->
+  <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    <div class="image">
+      <a href="#" class="d-block" id="user_name"></a>
+    </div>
+  </div>
+  <!-- Sidebar Menu -->
+  <nav class="mt-2">
+    <ul id="menu" class="nav nav-pills nav-sidebar flex-column text-sm" data-widget="treeview" data-api="tree" role="menu" data-accordion="false">
+      <!-- Add icons to the links using the .nav-icon class
+      with font-awesome or any other icon font library -->
+      <li class="nav-item">
+        <a href="index.html" class="nav-link" id="li_index">
+          <i class="nav-icon fas fa-home"></i>
+          <p>
+            ပင်မစာမျက်နှာ
+          </p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="company_info.html" class="nav-link" id="li_company_info">
+          <i class="nav-icon fas fa-file-alt"></i>
+          <p>
+            Company Info
+          </p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="goodreceipt.html" class="nav-link" id="li_goodreceipt">
+          <i class="nav-icon fas fa-list"></i>
+          <p>
+            ပစ္စည်းလက်ခံစာရင်း
+          </p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="orderentry.html" class="nav-link" id="li_orderentry">
+          <i class="nav-icon fas fa-cart-plus"></i>
+          <p>
+            ဘောင်ချာ ဖွင့်ရန်
+          </p>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="orders.html" class="nav-link" id="li_orders">
+          <i class="nav-icon fas fa-shopping-cart"></i>
+          <p>
+            ဘောင်ချာများ
+          </p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="order_finish.html" class="nav-link" id="li_order_finish">
+          <i class="nav-icon fas fa-check"></i>
+          <p>
+            ဘောင်ချာများ(ပြီးဆုံး)
+          </p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="delivery.html" class="nav-link" id="li_delivery">
+          <i class="nav-icon fas fa-truck"></i>
+          <p>
+            ခရီးစဉ်များ စာရင်း
+          </p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="deliverydetail.html" class="nav-link" id="li_deliverydetail">
+          <i class="nav-icon fa fa-check"></i>
+          <p>
+            ခရီးစဉ်များ (ပြီးဆုံး)
+          </p>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="good_in_out.html" class="nav-link" id="li_good_in_out">
+          <i class="nav-icon fas fa-list-ol"></i>
+          <p>
+            ကုန် အ၀င်/ အထွက်စာရင်း
+          </p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="statment.html" class="nav-link" id="li_statment">
+          <i class="fas fa-car nav-icon"></i>
+          <p>
+            Statment for Car Lists
+          </p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="vip_customer.html" class="nav-link" id="li_vip_customer">
+          <i class="fas fa-user nav-icon"></i>
+          <p>
+            VIP Customers
+          </p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="users.html" class="nav-link" id="li_users">
+          <i class="fas fa-users nav-icon"></i>
+          <p>
+            Admin များ
+          </p>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="rules.html" class="nav-link" id="li_rules">
+          <i class="nav-icon fas fa-plus-circle"></i>
+          <p>
+            စည်းကမ်းချက်များ
+          </p>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.sidebar-menu -->
+</div>
+<!-- /.sidebar -->
+
+<script>
+  url = window.location.href.split('?')[0];
+  $('#menu a').filter(function () {
+    return this.href == url;
+  }).addClass('active');
+</script>
