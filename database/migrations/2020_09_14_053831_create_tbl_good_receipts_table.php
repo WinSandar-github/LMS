@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateTblGoodReceiptsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,18 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('tbl_good_receipt', function (Blueprint $table) {
             $table->id();
-            $table->string('display_name',64);
-            $table->string('full_name',64);
-            $table->string('email',125)->unique();
-            $table->string('password',125);
-            $table->string('nrc_passport',125);
+            $table->string('sender_name',125);
+            $table->string('order_no',125);
             $table->string('phone_no',20);
+            $table->string('remark',225);
+            $table->string('attachment',225);
+            $table->integer('status');
+            $table->integer('cash_method');
+            $table->string('city',45);
             $table->string('address',125);
-            $table->date('birthday');
-            $table->string('avatar',255);
-            $table->integer('gender');
-            $table->integer('role');
+            $table->bigInteger('user_id');
             $table->bigInteger('company_id');
             $table->timestamps();
         });
@@ -38,6 +37,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('tbl_good_receipt');
     }
 }
