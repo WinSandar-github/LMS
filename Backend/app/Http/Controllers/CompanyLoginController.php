@@ -20,24 +20,19 @@ use Mail;
 use App\tbl_company;
 use App\tbl_users;
 use App\User;
-class CompanyLoginController extends Controller
-{
+class CompanyLoginController extends Controller{
 
-public function loginValidate(Request $request)
+	public function loginValidate(Request $request)
 	{
-    $user_data = json_decode($request->getContent(), true);
-
+		$user_data = json_decode($request->getContent(), true);
 		$user=tbl_users::where('email','=',$user_data['email'] )
 					->where('password','=',$user_data['password'])
-
 					->get();
 
+		$header = array (
+			'Content-Type' => 'application/json; charset=UTF-8',
+			'charset' => 'utf-8');
 
-			$header = array (
-								'Content-Type' => 'application/json; charset=UTF-8',
-								'charset' => 'utf-8');
-
-			return response()->json($user, 200, $header, JSON_UNESCAPED_UNICODE);
-  }
-	}
- ?>
+		return response()->json($user, 200, $header, JSON_UNESCAPED_UNICODE);
+  	}
+}
