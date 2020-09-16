@@ -1,3 +1,4 @@
+var Backend_url="http://localhost/";
 function login() {
 
     var email = $('#email').val();
@@ -27,7 +28,7 @@ function login() {
               else {
 
                     var obj = JSON.parse((xhttp.responseText));
-                        console.log(obj);
+
                     if (typeof (localStorage) !== "undefined") {
                       document.getElementById("result").innerHTML = "Authentication Successful!";
                       localStorage.setItem('a', xhttp.responseText);
@@ -42,7 +43,7 @@ function login() {
               document.write(xhttp.responseText);
           }
       };
-      xhttp.open('POST','http://logistic.local/'+'loginValidate');
+      xhttp.open('POST',Backend_url+'loginValidate');
       xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
       xhttp.send(JSON.stringify(data));

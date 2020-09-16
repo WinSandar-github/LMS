@@ -1,9 +1,10 @@
+var Backend_url="http://localhost/";
 function saveCompanyRegister()
 {
 
-  var companyname=$('#companyname').val();
+  var company_name=$('#companyname').val();
 
-  var companyaddress=$('#companyaddress').val();
+  var company_address=$('#companyaddress').val();
   var gender= $("input[name='gender']:checked").val();
   var txt_name=$('#txt_name').val();
   var txt_type=$('#txt_type').val();
@@ -27,8 +28,8 @@ function saveCompanyRegister()
 
         for (var i = 0; i <= fi.files.length - 1; i++) {
 
-            var fname = fi.files.item(i).name;      // THE NAME OF THE FILE.
-            var fsize = fi.files.item(i).size;      // THE SIZE OF THE FILE.
+            var fname = fi.files.item(i).name;
+            var fsize = fi.files.item(i).size;
 
             var product_photo = document.getElementById('companylogo').files[0].name;
             var ext = product_photo.substr((product_photo.lastIndexOf('.') + 1));
@@ -40,8 +41,8 @@ function saveCompanyRegister()
         }
 
     }
-    form.append('companyname',companyname);
-    form.append('companyaddress',companyaddress);
+    form.append('companyname',company_name);
+    form.append('companyaddress',company_address);
     form.append('gender',gender);
     form.append('txt_name',txt_name);
     form.append('txt_type',txt_type);
@@ -58,12 +59,12 @@ function saveCompanyRegister()
     form.append('avatar',avatar);
     $.ajax({
             type: "post",
-            url: "http://logistic.local/" + "saveTblCompany",
+            url: Backend_url + "saveTblCompany",
             data: form,
             contentType: false,
             processData: false,
             success: function (data) {
-                console.log(data);
+
                 if (data == '1') {
                     alert("Successfully!");
 
