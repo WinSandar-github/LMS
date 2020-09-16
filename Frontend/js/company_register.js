@@ -1,4 +1,4 @@
-var Backend_url="http://localhost/";
+var Backend_url="http://"+window.location.host+"/";
 function saveCompanyRegister()
 {
 
