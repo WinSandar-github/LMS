@@ -1,27 +1,24 @@
-var BACKEND_URL = 'http://localhost:8000/'; //"http://" + window.location.host + "/";
+var BACKEND_URL = "http://" + window.location.host + "/";
 function save_tbl_city() {
-    var cityData = "company_id=" + 1 + "&city_name=" + $("#txt_city_name").val();
+    var cityData = "company_id=" + company_id + "&city_name=" + $("#txt_city_name").val();
     $.ajax({
-    beforeSend: function () {
-
-    },
-    type: "POST",
-    url: BACKEND_URL + "save_tbl_city",
-    data: cityData,
-    success: function (data) {
-              if (data == "1") {
-                  alert("Success!");
-                  $("#txt_city_name").val("");
-                  $('#table_tbl_city').DataTable().destroy();
-                  load_tbl_city();
-              }
+        type: "POST",
+        url: BACKEND_URL + "save_tbl_city",
+        data: cityData,
+        success: function (data) {
+            if (data == "1") {
+                alert("Success!");
+                $("#txt_city_name").val("");
+                $('#table_tbl_city').DataTable().destroy();
+                load_tbl_city();
+            }
         
-    },
-    error: function (XMLHttpRequest, textStatus, errorThrown) {
-      alert("Status: " + textStatus);
-      alert("Error: " + errorThrown);
-    }
-  });
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+          alert("Status: " + textStatus);
+          alert("Error: " + errorThrown);
+        }
+    });
 }
 function load_tbl_city() {
     if ($.fn.DataTable.isDataTable('#table_tbl_city')) {
@@ -29,11 +26,9 @@ function load_tbl_city() {
     }
     $("#tbl_city_container").empty();
     $.ajax({
-        beforeSend: function () {
-        },
-        type: "post",
+        type: "POST",
         url: BACKEND_URL + "get_tbl_city",
-        data: "company_id=" + 1,
+        data: "company_id=" + company_id,
         success: function (data) {
             data.forEach(function (element) {
                 var tr = "<tr>";
@@ -96,9 +91,6 @@ function update_city() {
     
     var cityData = "city_id=" + $("#city_id").val() + "&city_name=" + $("#txt_city_name").val();
     $.ajax({
-        beforeSend: function () {
-
-        },
         type: "POST",
         url: BACKEND_URL + "update_tbl_city",
         data: cityData,
@@ -108,7 +100,7 @@ function update_city() {
                 $('#table_tbl_city').DataTable().destroy();
                 load_tbl_city();
                 $("#city_form").attr('action', 'javascript:save_tbl_city()');
-                alert("update successfully!");
+                alert("Update successfully!");
             }
 
         },
@@ -125,9 +117,6 @@ function delete_city(city_name, city_id) {
     if (result) {
         var data = "&city_id=" + city_id;
         $.ajax({
-            beforeSend: function () {
-
-            },
             type: "POST",
             url: BACKEND_URL + "delete_tbl_city",
             data: data,
