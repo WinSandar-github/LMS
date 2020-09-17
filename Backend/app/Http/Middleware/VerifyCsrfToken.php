@@ -15,9 +15,9 @@ class VerifyCsrfToken extends Middleware
         'saveTblCompany',
         'loginValidate',
         'createCity',
-        'getTblCity',
+        'getCity',
         'getCityInfo',
-        'updateTblCity',
-        'deleteTblCity'
+        'updateCity',
+        'deleteCity'
     ];
 }
