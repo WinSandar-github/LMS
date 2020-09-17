@@ -13,47 +13,72 @@ use App\tbl_city_list;
 
 class CityController extends Controller
 {
-     public function save_tbl_city(Request $request)
+    protected $header = array (
+					'Content-Type' => 'application/json; charset=UTF-8',
+					'charset' => 'utf-8');
+    protected $successMessage=array('message'=>'success.');
+    protected $errorMessage=array('message'=>'there is error occur.');
+    protected $dataMessage=array('message'=>'there is no data.');
+    
+     public function createCity(Request $request)
 	{
     
 		$city=new tbl_city_list();
         $city->city_name=$request->input("city_name");
         $city->company_id=$request->input("company_id");
-        $city->save();
-        return "1";
-		
-	}
-     public function get_tbl_city(Request $request)
-	{	
-		 $city_list = tbl_city_list::where("company_id","=",$request->input("company_id"))->get();
-		 $header = array (
-					'Content-Type' => 'application/json; charset=UTF-8',
-					'charset' => 'utf-8');
+        if($city->save()){
+          return response()->json($this->successMessage, 200, $this->header, JSON_UNESCAPED_UNICODE);
+        }
+        else{
+          return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
+        }
 
-		 return response()->json($city_list, 200, $header, JSON_UNESCAPED_UNICODE);
 		
 	}
-    public function get_tbl_city_by_id(Request $request)
+     public function getTblCity(Request $request)
+	{
+		 $city_list = tbl_city_list::where("company_id","=",$request->input("company_id"))->get();
+         if(sizeof($city_list)){
+            return response()->json($city_list, 200, $this->header, JSON_UNESCAPED_UNICODE);
+         }
+         else{
+             return response()->json($this->dataMessage, 404, $this->header, JSON_UNESCAPED_UNICODE);
+         }
+		
+		
+	}
+    public function getCityInfo(Request $request)
 	{
 	    $city = tbl_city_list::find($request->input("city_id"));
-	    $header = array (
-				    'Content-Type' => 'application/json; charset=UTF-8',
-				    'charset' => 'utf-8');
-
-        return response()->json($city, 200, $header, JSON_UNESCAPED_UNICODE);
+        if(empty($city)){
+           return response()->json($this->dataMessage, 404, $this->header, JSON_UNESCAPED_UNICODE);
+        }
+        else{
+          return response()->json($city, 200, $this->header, JSON_UNESCAPED_UNICODE);
+        }
+      
+		
 
 	}
-    public function update_tbl_city(Request $request)
+    public function updateTblCity(Request $request)
 	{
 		$city = tbl_city_list::find($request->input("city_id"));
 		$city->city_name = $request->input("city_name");
-		$city->save();
-		return 1;
+		if($city->save()){
+          return response()->json($this->successMessage, 200, $this->header, JSON_UNESCAPED_UNICODE);
+        }
+        else{
+          return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
+        }
 	}
-    public function delete_tbl_city(Request $request)
+    public function deleteTblCity(Request $request)
 	{
 		$city = tbl_city_list::find($request->input("city_id"));
-		$city->delete();
-		return "1";
+		if($city->delete()){
+          return response()->json($this->successMessage, 200, $this->header, JSON_UNESCAPED_UNICODE);
+        }
+        else{
+          return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
+        }
 	}
 }
