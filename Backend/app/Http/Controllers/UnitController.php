@@ -23,10 +23,10 @@ class UnitController extends Controller
     public function createUnit(Request $request)
 	{
         try{
-            $city=new tbl_unit();
-            $city->unit_name=$request->input("unit_name");
-            $city->company_id=$request->input("company_id");
-            $city->save();
+            $unit=new tbl_unit();
+            $unit->unit_name=$request->input("unit_name");
+            $unit->company_id=$request->input("company_id");
+            $unit->save();
             return response()->json($this->successMessage, 200, $this->header, JSON_UNESCAPED_UNICODE);
            
         }catch (\Exception $e) {
