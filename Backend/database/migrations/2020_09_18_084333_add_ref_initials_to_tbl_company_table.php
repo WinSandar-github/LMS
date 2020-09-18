@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTblUsers extends Migration
+class AddRefInitialsToTblCompanyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateTblUsers extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_users', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('tbl_company', function (Blueprint $table) {
+            $table->string('ref_initials',10);
         });
     }
 
@@ -26,6 +25,8 @@ class CreateTblUsers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_users');
+        Schema::table('tbl_company', function (Blueprint $table) {
+            //
+        });
     }
 }
