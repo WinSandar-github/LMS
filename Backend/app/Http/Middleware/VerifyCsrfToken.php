@@ -18,6 +18,11 @@ class VerifyCsrfToken extends Middleware
         'getCity',
         'getCityInfo',
         'updateCity',
-        'deleteCity'
+        'deleteCity',
+        'createUnit',
+        'getUnit',
+        'showUnitInfo',
+        'updateUnit',
+        'deleteUnit'
     ];
 }
