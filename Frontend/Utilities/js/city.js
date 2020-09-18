@@ -1,5 +1,5 @@
 var BACKEND_URL = "http://" + window.location.host + "/";
-function saveTblCity() {
+function saveCity() {
     var cityData = "company_id=" + company_id + "&city_name=" + $("#txt_city_name").val();
     $.ajax({
         type: "POST",
@@ -9,7 +9,7 @@ function saveTblCity() {
             alert(data.message);
             $("#txt_city_name").val("");
             $('#table_tbl_city').DataTable().destroy();
-            getTblCity();
+            getCity();
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
           alert("Status: " + textStatus);
@@ -17,14 +17,14 @@ function saveTblCity() {
         }
     });
 }
-function getTblCity() {
+function getCity() {
     if ($.fn.DataTable.isDataTable('#table_tbl_city')) {
         $('#table_tbl_city').DataTable().destroy();
     }
     $("#tbl_city_container").empty();
     $.ajax({
         type: "POST",
-        url: BACKEND_URL + "getTblCity",
+        url: BACKEND_URL + "getCity",
         data: "company_id=" + company_id,
         success: function (data) {
             
@@ -81,16 +81,15 @@ function showCityInfo(city_id) {
 }
 
 function updateCity() {
-    
     var cityData = "city_id=" + $("#city_id").val() + "&city_name=" + $("#txt_city_name").val();
     $.ajax({
         type: "POST",
-        url: BACKEND_URL + "updateTblCity",
+        url: BACKEND_URL + "updateCity",
         data: cityData,
         success: function (data) {
             $("#txt_city_name").val("");
             $('#table_tbl_city').DataTable().destroy();
-            getTblCity();
+            getCity();
             $("#city_form").attr('action', 'javascript:saveTblCity()');
             alert(data.message);
         },
@@ -102,18 +101,17 @@ function updateCity() {
 }
 
 function deleteCity(city_name, city_id) {
-
     var result = confirm("WARNING: This will delete the city " + decodeURIComponent(city_name) + " and all related stocks! Press OK to proceed.");
     if (result) {
-        var data = "&city_id=" + city_id;
+        var data = "city_id=" + city_id;
         $.ajax({
             type: "POST",
-            url: BACKEND_URL + "deleteTblCity",
+            url: BACKEND_URL + "deleteCity",
             data: data,
             success: function (data) {
                 $("#txt_city_name").val("");
                 $('#table_tbl_city').DataTable().destroy();
-                getTblCity();
+                getCity();
                 alert(data.message);
 
             },
