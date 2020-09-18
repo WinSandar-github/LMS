@@ -124,3 +124,27 @@ function deleteCity(city_name, city_id) {
         });
     }
 }
+function getCitySelect(){
+    var select = document.getElementById("select_city");
+    $.ajax({
+        type: "POST",
+        url: BACKEND_URL + "getCity",
+        data: "company_id="+1,
+        success: function (data) {
+            console.log(data);
+            data.forEach(function (element) {
+
+                var option = document.createElement('option');
+                option.text = element.city_name;
+                option.value = element.id;
+                select.add(option, 0);
+
+            });
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            alert("Status: " + textStatus);
+            alert("Error: " + errorThrown);
+        }
+    });
+}
