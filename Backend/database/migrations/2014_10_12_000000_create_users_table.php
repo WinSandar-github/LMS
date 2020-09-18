@@ -24,8 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('address',125);
             $table->date('birthday');
             $table->string('avatar',255);
-            $table->integer('gender');
-            $table->integer('role');
+            $table->string('gender',255);
+            $table->string('role',255);
             $table->bigInteger('company_id');
             $table->timestamps();
         });

@@ -1,4 +1,5 @@
-var Backend_url="http://"+window.location.host+"/";
+var Backend_url = window.location.origin + "/Backend/" ;
+
 function login() {
 
     var email = $('#email').val();
@@ -12,28 +13,17 @@ function login() {
     var xhttp = new XMLHttpRequest();
 
       xhttp.onreadystatechange = function () {
-
-          if (xhttp.readyState == 4 && xhttp.status == 200) {
-            var data=JSON.parse(xhttp.responseText);
-            var user_id;
-            data.forEach(function (element) {
-              user_id = element.id;
-
-          });
-
-              if (user_id==undefined) {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+              if (xhttp.responseText.trim()=="") {
                   document.getElementById("result").innerHTML = "<h3>Authentication Failed!</h3>";
-
-              }
+                }
               else {
-
                     var obj = JSON.parse((xhttp.responseText));
 
                     if (typeof (localStorage) !== "undefined") {
-                      document.getElementById("result").innerHTML = "Authentication Successful!";
-                      localStorage.setItem('a', xhttp.responseText);
+                     document.getElementById("result").innerHTML = "<h3>Authentication Successful!</h3>";
                       localStorage.setItem('userinfo', xhttp.responseText);
-
+                      
                   }
 
               }
@@ -45,8 +35,5 @@ function login() {
       };
       xhttp.open('POST',Backend_url+'loginValidate');
       xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
       xhttp.send(JSON.stringify(data));
-
-
 }
