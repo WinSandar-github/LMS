@@ -13,6 +13,11 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'saveTblCompany',
-        'loginValidate'
+        'loginValidate',
+        'createCity',
+        'getCity',
+        'getCityInfo',
+        'updateCity',
+        'deleteCity'
     ];
 }
