@@ -27,6 +27,9 @@
       body {
           font-family: 'Padauk' !important;
       }
+      table th, td {
+          white-space: nowrap;
+      }
   </style>
 </head>
 <body class="sidebar-mini layout-fixed layout-navbar-fixed text-sm">
@@ -127,7 +130,7 @@
                                 <div class="col-md-12">
                                     <div class="form-check">
                                         <label class="form-check-label" for="check1">
-                                            <input type="checkbox" class="form-check-input" id="vip_customer" name="vip_customer" value="something" checked>VIP Customer?
+                                            <input type="checkbox" class="form-check-input" id="vip_customer" name="vip_customer" value="something">VIP Customer?
                                         </label>
                                     </div>
                                 </div>
@@ -172,6 +175,8 @@
                                         <label for="exampleInputEmail1">Cash Method ရွေးရန်</label>
                                         <select class="form-control" id="select_cash_method" name="select_role_id">
                                             <option value="" selected disabled>Cash Method ရွေးရန်</option>
+                                            <option value="1">ငွေရှင်းပြီး</option>
+                                            <option value="2">ဂိတ်ဆုံး</option>
                                         </select>
                                     </div>
                                 </div>
@@ -182,6 +187,57 @@
                                         <label for="exampleInputEmail1">မှတ်ချက်</label>
                                         <textarea type="text" class="form-control" id="txt_user_name" name="txt_user_name" placeholder="မှတ်ချက် ထည့်ရန်"></textarea>
                                     </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-bordered table-hover" id="tbl_product">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>ပစ္စည်းအမည်</th>
+                                                <th>အရေအတွက်</th>
+                                                <th>အတိုင်းအတာစံ</th>
+                                                <th>အလေးချိန်</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbl_product_body">
+                                            <tr>
+                                                <td>
+                                                    #
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="remark" id="txt_good_name" placeholder="ပစ္စည်းအမည်">
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="number" name="" id="txt_quantity_detail" placeholder="အရေအတွက်" value="0">
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" id="txt_unit">
+                                                        <option>ဖာ</option>
+                                                        <option>လုံး</option>
+                                                        <option>ချောင်း</option>
+                                                        <option>အိတ်</option>
+                                                        <option>မယ်</option>
+                                                        <option>လိတ်</option>
+                                                        <option>တွဲ</option>
+                                                        <option>ဖာတွဲ</option>
+                                                        <option>တန်</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="number" name="txt_weight_detail" id="txt_weight_detail" placeholder="--အလေးချိန်--" value="0">
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn_save btn-success btn-xs" onclick="addProduct();"><i class="fa fa-save"></i> Add </button>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
                                 </div>
 
                             </div>
@@ -225,6 +281,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
     <script src="../Utilities/js/auth.js"></script>
     <script src="../Utilities/js/city.js"></script>
+    <script src="../Utilities/js/good_receipt.js"></script>
     <script>
         $('.datepicker').datepicker({
             format: 'mm/dd/yyyy'

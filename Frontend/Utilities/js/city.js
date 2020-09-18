@@ -1,4 +1,4 @@
-var BACKEND_URL = "http://" + window.location.host + "/";
+var BACKEND_URL = "http://localhost:8000/"//"http://" + window.location.host + "/";
 function saveCity() {
     var cityData = "company_id=" + company_id + "&city_name=" + $("#txt_city_name").val();
     $.ajax({
