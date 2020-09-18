@@ -1,185 +1,192 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
-<head>
-    <meta charset="utf-8">
-    <title>Registration Form</title>
-    <link rel="stylesheet" href="../Utilities/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="../Utilities/dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="../Utilities/plugins/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../Utilities/css/custom.css">
-</head>
-<body>
-    <div class="container">
-        <form method="post" enctype="multipart/form-data" action="javascript:saveCompanyRegister();" name="register_form" id="register_form">
-            <div class="row">
-                <div class="col-4"></div>
-                <div class="col-4">
-                    <h3>Registration Form</h3>
-                </div>
-                <div class="col-4"></div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <label for="">ကုမ္ပဏီအမည်</label>
-                            <input type="text" class="form-control" id="companyname" required oninvalid="this.setCustomValidity('ကုမ္ပဏီအမည် ထည့်ရန်')" oninput="setCustomValidity('')">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <label for="">ကုမ္ပဏီအမှတ်တံဆိပ်</label>
-                            <input type="file" class="form-control" id="companylogo" name="img[]" required oninvalid="this.setCustomValidity('ကုမ္ပဏီအမှတ်တံဆိပ် ထည့်ရန်')" oninput="setCustomValidity('')">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <label for="">လိပ်စာ</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <textarea class="form-control" cols="155" rows="5" id="companyaddress" required oninvalid="this.setCustomValidity('လိပ်စာ ထည့်ရန်')" oninput="setCustomValidity('')"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <label for="">အ‌ကြောင်းအရာ</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <textarea class="form-control" cols="155" rows="5" id="description" required oninvalid="this.setCustomValidity('အ‌ကြောင်းအရာ ထည့်ရန်')" oninput="setCustomValidity('')"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <label for="">မြို့အမည်</label>
-                            <input type="text" class="form-control" id="city" required oninvalid="this.setCustomValidity('မြို့အမည် ထည့်ရန်')" oninput="setCustomValidity('')">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <label for="">ပြည်နယ်/တိုင်း</label>
-                            <input type="text" class="form-control" id="state" required oninvalid="this.setCustomValidity('ပြည်နယ်/တိုင်း ထည့်ရန်')" oninput="setCustomValidity('')">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-wrapper">
-                        <label for="">zipcode</label>
-                        <input type="number" class="form-control" id="zip_code" required oninvalid="this.setCustomValidity('zip_code ထည့်ရန်')" oninput="setCustomValidity('')" />
-                    </div>
-                </div>
-            </div>
-            <br />
-            <div class="radio">
-                <div class="">
-                    <input class="radio-input" type="radio" name="gender" value="ဦး" checked />
-                    <label class="radio-label">
-                        ဦး
-                    </label>
-                    <input class="radio-input" type="radio" name="gender" value="ဒေါ်" />
-                    <label class="radio-label">
-                        ဒေါ်
-                    </label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <label for="">အမည်</label>
-                            <input type="text" class="form-control" id="txt_name" required oninvalid="this.setCustomValidity('အမည် ထည့်ရန်')" oninput="setCustomValidity('')">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <label>ရာထူး</label>
-                            <input type="text" class="form-control" id="txt_type" required oninvalid="this.setCustomValidity('ရာထူး ထည့်ရန်')" oninput="setCustomValidity('')">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <label for="">မှတ်ပုံတင်အမှတ်</label>
-                            <input type="text" class="form-control" id="nrc_passport" required oninvalid="this.setCustomValidity('မှတ်ပုံတင်အမှတ် ထည့်ရန်')" oninput="setCustomValidity('')">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <label>မွေးနေ့</label>
-                            <input type="date" class="form-control" id="birthday" name="email" required oninvalid="this.setCustomValidity('မွေးနေ့ ထည့်ရန်')" oninput="setCustomValidity('')">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <label for="">ဖုန်း</label>
-                            <input type="text" class="form-control" id="txt_phone" required oninvalid="this.setCustomValidity('ဖုန်: ထည့်ရန်')" oninput="setCustomValidity('')">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <label>အီးမေးလ်</label>
-                            <input type="email" class="form-control" id="txt_email" name="email" required oninvalid="this.setCustomValidity('အီးမေးလ် ထည့်ရန်')" oninput="setCustomValidity('')">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <label>avatar</label>
-                            <input type="text" class="form-control" id="avatar" required oninvalid="this.setCustomValidity('avatar ထည့်ရန်')" oninput="setCustomValidity('')">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <label>စကားဝှက်</label>
-                            <input type="password" class="form-control" id="txt_password" required oninvalid="this.setCustomValidity('စကားဝှက် ထည့်ရန်')" oninput="setCustomValidity('')">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <input type='submit' value="Register Now" class="form-control btn btn-info">
-        </form>
-    </div>
-</body>
-<script type="text/javascript" src="../Utilities/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="../Utilities/js/company_register.js"></script>
-<script type="text/javascript" src="../Utilities/dist/js/adminlte.min.js"></script>
+	<head>
+		<meta charset="utf-8">
+		<title>Registration Form</title>
+		<link rel="stylesheet" href="../Utilities/plugins/fontawesome-free/css/all.min.css">
+		<link rel="stylesheet" href="../Utilities/dist/css/adminlte.min.css">
+		<link rel="stylesheet" href="../Utilities/plugins/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../Utilities/css/custom.css">
+	</head>
+	<body>
+		<div class="container">
+
+			<form method="post" enctype="multipart/form-data" action="javascript:saveCompanyRegister();" name="register_form" id="register_form">
+				<div class="row">
+					<div class="col-4"></div>
+					<div class="col-4">
+						<h3>Registration Form</h3>
+					</div>
+					<div class="col-4"></div>
+				</div>
+				<div class="row">
+
+						<div class="col-6">
+							<div class="form-group">
+								<div class="form-wrapper">
+									<label for="">ကုမ္ပဏီအမည်</label>
+									<input type="text" class="form-control" id="companyname" required oninvalid="this.setCustomValidity('ကုမ္ပဏီအမည် ထည့်ရန်')" oninput="setCustomValidity('')">
+								</div>
+							</div>
+						</div>
+
+						<div class="col-6">
+							<div class="form-group">
+								<div class="form-wrapper">
+									<label for="">ကုမ္ပဏီအမှတ်တံဆိပ်</label>
+									<input type="file" class="form-control" id="companylogo" name="img[]" required oninvalid="this.setCustomValidity('ကုမ္ပဏီအမှတ်တံဆိပ် ထည့်ရန်')" oninput="setCustomValidity('')">
+								</div>
+						</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<label for="">လိပ်စာ</label>
+						</div>
+					</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<div class="form-wrapper">
+									<textarea class="form-control" cols="155" rows="5" id="companyaddress" required oninvalid="this.setCustomValidity('လိပ်စာ ထည့်ရန်')" oninput="setCustomValidity('')"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<label for="">အ‌ကြောင်းအရာ</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<div class="form-wrapper">
+									<textarea class="form-control" cols="155" rows="5" id="description" required oninvalid="this.setCustomValidity('အ‌ကြောင်းအရာ ထည့်ရန်')" oninput="setCustomValidity('')"></textarea>
+							</div>
+						</div></div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						<div class="form-group">
+							<div class="form-wrapper">
+								<label for="">မြို့အမည်</label>
+								<input type="text" class="form-control" id="city" required oninvalid="this.setCustomValidity('မြို့အမည် ထည့်ရန်')" oninput="setCustomValidity('')">
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-group">
+							<div class="form-wrapper">
+								<label for="">ပြည်နယ်/တိုင်း</label>
+								<input type="text" class="form-control" id="state"  required oninvalid="this.setCustomValidity('ပြည်နယ်/တိုင်း ထည့်ရန်')" oninput="setCustomValidity('')">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="form-wrapper">
+							<label for="">zipcode</label>
+						<input type="number" class="form-control" id="zip_code" required oninvalid="this.setCustomValidity('zip_code ထည့်ရန်')" oninput="setCustomValidity('')"/>
+						</div>
+					</div>
+				</div>
+
+				<br/>
+					<div class="radio">
+
+								<div class="">
+									<input class="radio-input" type="radio" name="gender" value="ဦး" checked />
+									<label class="radio-label">
+										ဦး
+									</label>
+										<input class="radio-input" type="radio" name="gender" value="ဒေါ်"/>
+									<label class="radio-label">
+									ဒေါ်
+									</label>
+								</div>
+
+					</div>
+
+				<div class="row">
+					<div class="col-6">
+						<div class="form-group">
+							<div class="form-wrapper">
+								<label for="">အမည်</label>
+								<input type="text" class="form-control" id="txt_name" required oninvalid="this.setCustomValidity('အမည် ထည့်ရန်')" oninput="setCustomValidity('')">
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-group">
+							<div class="form-wrapper">
+								<label>ရာထူး</label>
+								<input type="text" class="form-control" id="txt_type" required oninvalid="this.setCustomValidity('ရာထူး ထည့်ရန်')" oninput="setCustomValidity('')">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+						<div class="col-6">
+							<div class="form-group">
+									<div class="form-wrapper">
+										<label for="">မှတ်ပုံတင်အမှတ်</label>
+										<input type="text" class="form-control" id="nrc_passport" required oninvalid="this.setCustomValidity('မှတ်ပုံတင်အမှတ် ထည့်ရန်')" oninput="setCustomValidity('')">
+									</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<div class="form-wrapper">
+									<label>မွေးနေ့</label>
+									<input type="date" class="form-control" id="birthday" name="email" required oninvalid="this.setCustomValidity('မွေးနေ့ ထည့်ရန်')" oninput="setCustomValidity('')">
+								</div>
+							</div>
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						<div class="form-group">
+								<div class="form-wrapper">
+									<label for="">ဖုန်း</label>
+									<input type="text" class="form-control" id="txt_phone" required oninvalid="this.setCustomValidity('ဖုန်: ထည့်ရန်')" oninput="setCustomValidity('')">
+								</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-group">
+							<div class="form-wrapper">
+								<label>အီးမေးလ်</label>
+								<input type="email" class="form-control" id="txt_email" name="email" required oninvalid="this.setCustomValidity('အီးမေးလ် ထည့်ရန်')" oninput="setCustomValidity('')">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						<div class="form-group">
+								<div class="form-wrapper">
+									<label>avatar</label>
+									<input type="text" class="form-control" id="avatar" required oninvalid="this.setCustomValidity('avatar ထည့်ရန်')" oninput="setCustomValidity('')">
+								</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-group">
+							<div class="form-wrapper">
+								<label>စကားဝှက်</label>
+								<input type="password" class="form-control" id="txt_password" required oninvalid="this.setCustomValidity('စကားဝှက် ထည့်ရန်')" oninput="setCustomValidity('')">
+							</div>
+						</div>
+					</div>
+				</div>
+				<input type='submit' value="Register Now" class="form-control btn btn-info" >
+			</form>
+
+	</div>
+	</body>
+	<script type="text/javascript" src="../Utilities/plugins/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="../Utilities/js/company_register.js"></script>
+	<script type="text/javascript" src="../Utilities/dist/js/adminlte.min.js"></script>
 </html>
