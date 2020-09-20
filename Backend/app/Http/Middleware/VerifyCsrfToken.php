@@ -23,6 +23,7 @@ class VerifyCsrfToken extends Middleware
         'getUnit',
         'showUnitInfo',
         'updateUnit',
-        'deleteUnit'
+        'deleteUnit',
+        'createGoodRecipt'
     ];
 }

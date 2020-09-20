@@ -1,6 +1,6 @@
-var BACKEND_URL = "http://" + window.location.host + "/";
+var BACKEND_URL = "http://localhost:8000/";//"http://" + window.location.host + "/";
 function saveUnit() {
-var uityData = "company_id=" + company_id + "&unit_name=" + $("#txt_unit_name").val();
+    var uityData = "company_id=" + company_id + "&unit_name=" +$("#txt_unit_name").val();
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "createUnit",
@@ -25,7 +25,7 @@ function getUnit() {
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getUnit",
-        data : "company_id=" +company_id,
+        data: "company_id=" +company_id,
         success: function (data) {
             
             data.forEach(function (element) {
@@ -96,7 +96,7 @@ function updateUnit() {
             alert("Status: " + textStatus);
             alert("Error: " + errorThrown);
         }
-    });
+    }); 
 }
 function deleteUnit(unit_name, unit_id) {
     var result = confirm("WARNING: This will delete the unit " + decodeURIComponent(unit_name) + " and all related stocks! Press OK to proceed.");
@@ -119,4 +119,28 @@ function deleteUnit(unit_name, unit_id) {
             }
         });
     }
+}
+function getUnitSelect(){
+     var select = document.getElementById("select_unit");
+    $.ajax({
+        type: "POST",
+        url: BACKEND_URL + "getUnit",
+        data: "company_id="+1,
+        success: function (data) {
+            console.log(data);
+            data.forEach(function (element) {
+
+                var option = document.createElement('option');
+                option.text = element.unit_name;
+                option.value = element.id;
+                select.add(option, 0);
+
+            });
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            alert("Status: " + textStatus);
+            alert("Error: " + errorThrown);
+        }
+    });
 }

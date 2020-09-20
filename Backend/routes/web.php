@@ -29,6 +29,8 @@ Route::post('getUnit',array('middleware'=>'cors','uses'=>'UnitController@getUnit
 Route::post('showUnitInfo',array('middleware'=>'cors','uses'=>'UnitController@showUnitInfo'));
 Route::post('updateUnit',array('middleware'=>'cors','uses'=>'UnitController@updateUnit'));
 Route::post('deleteUnit',array('middleware'=>'cors','uses'=>'UnitController@deleteUnit'));
+//For Goodreceipt CRUD
+Route::post('createGoodRecipt',array('middleware'=>'cors','uses'=>'GoodreceiptController@createGoodRecipt'));
 
 
 
