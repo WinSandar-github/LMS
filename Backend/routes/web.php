@@ -20,11 +20,13 @@ Route::post('/saveCompany', array('middleware' => 'cors', 'uses' => 'RegisterCon
 Route::post('/updateCompany', array('middleware' => 'cors', 'uses' => 'RegisterController@updateCompany'));
 Route::post('/loginValidate', array('middleware' => 'cors', 'uses' => 'CompanyLoginController@loginValidate'));
 Route::post('/saveDelivery', array('middleware' => 'cors', 'uses' => 'DeliveryController@saveDelivery'));
+Route::post('/getDelivery', array('middleware' => 'cors', 'uses' => 'DeliveryController@getDelivery'));
+Route::post('/getDeliverDetailsByDeliveryId', array('middleware' => 'cors', 'uses' => 'DeliveryController@getDeliverDetailsByDeliveryId'));
 Route::post('/updateDelivery', array('middleware' => 'cors', 'uses' => 'DeliveryController@updateDelivery'));
 Route::post('/deleteDelivery', array('middleware' => 'cors', 'uses' => 'DeliveryController@deleteDelivery'));
-Route::post('/saveDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliverDetailController@saveDeliverDetail'));
-Route::post('/updateDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliverDetailController@updateDeliverDetail'));
-Route::post('/deleteDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliverDetailController@deleteDeliverDetail'));
+Route::post('/saveDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliveryController@saveDeliverDetail'));
+Route::post('/updateDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliveryController@updateDeliverDetail'));
+Route::post('/deleteDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliveryController@deleteDeliverDetail'));
 
 Route::post('createCity',array('middleware'=>'cors','uses'=>'CityController@createCity'));
 Route::post('getCity',array('middleware'=>'cors','uses'=>'CityController@getCity'));

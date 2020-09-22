@@ -14,7 +14,7 @@ body{
 .wrp{
   background-color: #D1C4E9;
 }
-.container-fluid{
+.container-fluid-custom{
   width: 100%;
   min-height: 100vh;
 
@@ -31,7 +31,7 @@ body{
   z-index: 1;
 
 }
-.wrapper{
+.wrapper-login{
   width: 500px;
   line-height: 5;
   border-radius: 10px;
@@ -67,4 +67,10 @@ body{
     text-align: center;
     text-transform: uppercase;
     display: block;
+}
+table th,td{
+  white-space: nowrap;
+}
+.custom-input{
+  display: flex;
 }

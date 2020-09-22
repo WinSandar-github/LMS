@@ -23,7 +23,7 @@ function login() {
                     if (typeof (localStorage) !== "undefined") {
                      document.getElementById("result").innerHTML = "<h3>Authentication Successful!</h3>";
                       localStorage.setItem('userinfo', xhttp.responseText);
-                      
+
                   }
 
               }
