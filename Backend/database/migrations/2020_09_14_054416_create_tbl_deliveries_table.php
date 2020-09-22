@@ -25,7 +25,6 @@ class CreateTblDeliveriesTable extends Migration
             $table->string('car_no',20);
             $table->string('remark',225);
             $table->integer('status');
-            $table->bigInteger('order_id');
             $table->bigInteger('user_id');
             $table->bigInteger('company_id');
             $table->timestamps();

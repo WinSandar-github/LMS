@@ -1,101 +1,380 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script type="text/javascript" src="../Utilities/js/auth.js"></script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Logistics | Delivery</title>
-  <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="../Utilities/plugins/fontawesome-free/css/all.min.css">
-  <!-- Theme style -->
   <link rel="stylesheet" href="../Utilities/dist/css/adminlte.min.css">
-  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="../Utilities/plugins/jquery-ui/jquery-ui.css">
   <link rel="stylesheet" href="../Utilities/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- Daterange picker -->
   <link rel="stylesheet" href="../Utilities/plugins/daterangepicker/daterangepicker.css">
   <link rel="stylesheet" href="../Utilities/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="../Utilities/plugins/datatables-select/css/select.bootstrap4.min.css">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  <!-- DataTables -->
   <link rel="stylesheet" href="../Utilities/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../Utilities/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="../Utilities/css/custom.css">
 
 </head>
 <body class="sidebar-mini layout-fixed layout-navbar-fixed text-sm">
   <div class="wrapper">
 
-    <!-- Navbar -->
     <header class="main-header"></header>
 
-    <!-- /.navbar -->
-    <!-- Main Sidebar Container -->
     <aside class="main-sidebar elevation-4 sidebar-light-info" style="position:fixed;"></aside>
 
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
+
       <div class="content-header">
 
       </div>
-      <!-- /.content-header -->
-      <!-- Main content -->
+
       <section class="content" style="clear:both;">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Coming Soon.....</h3>
+                  <h3 class="card-title">ခရီးစဥ်များ</h3>
 
                 </div>
                 <div class="card-body">
+                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-delivery">
+                      <i class="fa fa-plus"></i>&nbsp;ခရီးစဥ် အသစ်ထည့်ရန်
+                  </button>
+                  <div style="margin-top:20px;overflow-x:auto;">
+                        <h4 style="text-align:center;font-weight:bold">မပြီးဆုံးသေးသော ခရီးစဥ်များ</h4>
+                        <table id="table_tbl_delivery" class="table table-bordered " width="100%">
+                          <thead >
+                                <tr>
+                                        <th>ကားနံပါတ်</th>
+                                        <th>ယာဥ်မောင်းသူ အမည်</th>
+                                        <th>​ယာဥ်မောင်းသူ ဖုန်းနံပါတ်</th>
+                                        <th>စတင်ထွက်ခွါသည့် မြို့</th>
+                                        <th>ရောက်ရှိသည့် မြို့</th>
+                                        <th>စတင်ထွက်ခွါသည့် အချိန်</th>
+                                        <th>ရောက်ရှိသည့် အချိန်</th>
+                                        <th>ကြာချိန်</th>
+                                        <th>မှတ်ချက်</th>
+                                        <th>လုပ်ဆောင်သည့်သူ</th>
+                                        <th>ကုမ္ပဏီအမည်</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                  </tr>
+                                </thead>
+                                <tbody id="tbl_delivery_container" class="hoverTable"></tbody>
+                          </table>
+                  </div>
+                  <div style="margin-top:20px;overflow-x:auto;">
+                              <h4 style="text-align:center;font-weight:bold">ခရီးစဥ် ပြီးဆုံး</h4>
+                          <table id="table_tbl_delivery2" class="table table-bordered table-striped" width="100%">
+                                <thead >
+                                      <tr>
+                                          <th>ကားနံပါတ်</th>
+                                          <th>ယာဥ်မောင်းသူ အမည်</th>
+                                          <th>​ယာဥ်မောင်းသူ ဖုန်းနံပါတ်</th>
+                                          <th>စတင်ထွက်ခွါသည့် မြို့</th>
+                                          <th>ရောက်ရှိသည့် မြို့</th>
+                                          <th>စတင်ထွက်ခွါသည့် အချိန်</th>
+                                          <th>ရောက်ရှိသည့် အချိန်</th>
+                                          <th>ကြာချိန်</th>
+                                          <th>မှတ်ချက်</th>
+                                          <th>လုပ်ဆောင်သည့်သူ</th>
+                                          <th>ကုမ္ပဏီအမည်</th>
+                                          <th></th>
+                                          <th></th>
+                                          <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbl_delivery_container2" class="hoverTable"></tbody>
+                            </table>
+                    </div>
 
-                  <br />
                 </div>
-                <!-- /.card-body -->
+
               </div>
             </div>
 
           </div>
-          <!-- /.row (main row) -->
-        </div><!-- /.container-fluid -->
+
+        </div>
       </section>
-      <!-- /.content -->
+      <section class="content" style="clear:both;">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-body">
+                    <div style="margin-top:20px;overflow-x:auto;">
+                        <h4 style="text-align:center;font-weight:bold">ပစ္စည်း စာရင်း</h4>
+                        <table id="table_tbl_deliverydetails" class="table table-bordered table-striped" width="100%">
+                          <thead>
+                                <tr>
+                                        <th>Customer အမည််</th>
+                                        <th>ပစ္စည်းအမည်</th>
+                                        <th>​အရည်အတွက််</th>
+                                        <th>အလေးချိန်ု့</th>
+                                        <th>မှတ်ချက်</th>
+
+                                  </tr>
+                                </thead>
+                                <tbody id="tbl_deliverydetails_container" class="hoverTable"></tbody>
+                          </table>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
     </div>
-    <!-- /.content-wrapper -->
+
     <footer class="main-footer"></footer>
 
-    <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
+
     </aside>
-    <!-- /.control-sidebar -->
+
   </div>
-  <!-- ./wrapper -->
-  <!-- jQuery -->
+  <div class="modal fade" id="modal-delivery">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">ခရီးစဥ် အသစ် </h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+  <form method="post" enctype="multipart/form-data" id="fileUploadForm" action="javascript:saveDelivery(); ">
+        <div class="modal-body">
+            <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">ကားနံပါတ်</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    <i class="fas fa-truck-moving"></i>
+                                  </span>
+                                </div>
+                            <input type="text" class="form-control" placeholder="ကားနံပါတ် ထည့်ရန်" id="car_number">
+                          </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">ယာဥ်မောင်းသူ နာမည်</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    <i class="fas fa-user-tie"></i>
+                                  </span>
+                                </div>
+                            <input type="text" class="form-control" id="driver_name" name="driver_name" placeholder="ယာဥ်မောင်းသူ နာမည် ထည့်ရန်">
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">ယာဥ်မောင်းသူ ဖုန်းနံပါတ်</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    <i class="fas fa-mobile-alt"></i>
+                                  </span>
+                                </div>
+                            <input type="text" class="form-control" id="driver_phone" name="driver_phone" placeholder="ယာဥ်မောင်းသူ ဖုန်းနံပါတ် ထည့်ရန်">
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">စတင်ထွက်ခွါသည့် မြို့</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    <i class="fas fa-home"></i>
+                                  </span>
+                                </div>
+                            <input type="text" class="form-control" id="from_city_name" autocomplete="off"  placeholder="စတင်ထွက်ခွါသည့် မြို့"/>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">ရောက်ရှိသည့် မြို့</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    <i class="fas fa-home"></i>
+                                  </span>
+                                </div>
+                            <input type="text" class="form-control" id="to_city_name" autocomplete="off"  placeholder="ရောက်ရှိသည့် မြို့">
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                    <div class="row">
+                        <div class="col-6">
+                              <div class="form-group">
+                                  <label for="exampleInputEmail1">စတင်ထွက်ခွါသည့် အချိန်</label>
+
+                                        <input type="text" class="form-control datepicker" autocomplete="off" id="start_dt" placeholder="စတင်ထွက်ခွါသည့် အချိန် ထည့်ရန်" onchange="getDifferentDays(this.form)">
+                                </div>
+                        </div>
+                        <div class="col-6">
+                              <div class="form-group">
+                                  <label for="exampleInputEmail1">ရောက်ရှိသည့် အချိန်</label>
+
+                                  <input type="text" class="form-control datepicker" autocomplete="off" id="arrived_dt" placeholder="ရောက်ရှိသည့် အချိန် ထည့်ရန်" onchange="getDifferentDays(this.form)">
+
+                              </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                          <div class="col-6">
+                              <div class="form-group">
+                                  <label for="exampleInputEmail1">ကြာချိန််</label>
+                                  <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                          <i class="fas fa-shipping-fast"></i>
+                                        </span>
+                                      </div>
+                                  <input type="number" class="form-control " id="different_day" placeholder=" ကြာချိန်">
+                                </div>
+                              </div>
+                          </div>
+                          <div class="col-6">
+                              <div class="form-group">
+                                  <label for="exampleInputEmail1">မှတ်ချက်</label>
+                                  <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                          <i class="fas fa-info-circle"></i>
+                                        </span>
+                                      </div>
+                                  <input class="form-control" type="text" id="delivery_remark" placeholder="မှတ်ချက်ရေးရန်" />
+                                </div>
+                              </div>
+                          </div>
+                </div>
+
+        </div>
+
+        <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">
+                            <i class="fa fa-floppy-o"></i>  Save
+                    </button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modal-delivery_details">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">ခရီးစဥ် ဘောင်ချာဖွင့်ရန် </h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+  <form method="post" enctype="multipart/form-data" id="fileUploadForm" action="javascript:saveDeliverDetail();">
+    <input type="hidden" id="hdeliveryId">
+        <div class="modal-body">
+          <div class="row">
+              <div class="col-12 box-body table-responsive">
+                <table class="table table-bordered table-hover" id="productdata">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th width="10%">Customer အမည်</th>
+                            <th>Order</th>
+                            <th width="10%">ပစ္စည်းအမည်</th>
+                            <th>စုစုပေါင်း အရေအတွက်</th>
+                            <th>တင်မည့် အရေအတွက်</th>
+                            <th>အလေးချိန်</th>
+                            <th>မြို့အမည်</th>
+                            <th>Remark</th>
+
+                            <th>Print</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>#</td>
+                        <td>
+                            <input type="hidden" id="customer_name" />
+                            <input type="text" class="form-control" name="receiver_name" id="receiver_name" placeholder="Customer Name" disabled />
+
+                        </td>
+                        <td>
+                            <input type="hidden" id="order_ref" />
+                            <select class="form-control select2" id="order_id" name="order_id" data-placeholder="Order ရွေးရန်" onchange="searchOrderNo(this.value);">
+                                <option value="">--Order ရွေးရန်--</option>
+                            </select>
+                        </td>
+                        <td></td>
+                        <td>
+                            <input type="text" class="form-control" name="total_qty" id="total_qty" placeholder="Qty" disabled />
+                        </td>
+                        <td></td>
+                        <td>
+                            <input type="text" class="form-control" name="total_weight" id="total_weight" placeholder="Customer Name" disabled />
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tbody class="product_table" id="product_table"></tbody>
+                </table>
+              </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+              <button class="btn btn-primary" type="submit">
+                      <i class="fa fa-floppy-o"></i>  Save
+              </button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
   <script src="../Utilities/plugins/jquery/jquery.min.js"></script>
-  <!-- jQuery UI 1.11.4 -->
+
   <script src="../Utilities/plugins/jquery-ui/jquery-ui.min.js"></script>
-  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+
   <script>
     $.widget.bridge('uibutton', $.ui.button)
   </script>
-  <!-- Bootstrap 4-->
+
   <script src="../Utilities/plugins/bootstrap/js/bootstrap.min.js"></script>
-  <!-- overlayScrollbars -->
+
   <script src="../Utilities/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-  <!-- AdminLTE App -->
+
   <script src="../Utilities/dist/js/adminlte.js"></script>
-  <!-- AdminLTE for demo purposes -->
+
   <script src="../Utilities/dist/js/demo.js"></script>
   <script src="../MainComponents/js/adminlte_view.js"></script>
-  <!-- DataTables -->
+
   <script src="../Utilities/plugins/datatables/jquery.dataTables.min.js"></script>
   <script src="../Utilities/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
   <script src="../Utilities/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
   <script src="../Utilities/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-
+  <script src="../Utilities/js/delivery.js"></script>
+  <script>
+    $('.datepicker').datepicker({ format: 'yyyy-mm-dd' });
+    loadDelivery();
+    </script>
 </body>
 </html>
