@@ -24,6 +24,10 @@ class VerifyCsrfToken extends Middleware
         'showUnitInfo',
         'updateUnit',
         'deleteUnit',
-        'createGoodRecipt'
+        'createGoodRecipt',
+        'getGoodReceipt/*',
+        'showGoodReceiptInfo',
+        'updateGoodReceipt',
+        'deleteGoodReceipt'
     ];
 }

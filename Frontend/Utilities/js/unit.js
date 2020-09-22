@@ -1,14 +1,13 @@
-var BACKEND_URL = "http://localhost:8000/";//"http://" + window.location.host + "/";
+var BACKEND_URL = "http://" + window.location.host + "/";
 function saveUnit() {
-    var uityData = "company_id=" + company_id + "&unit_name=" +$("#txt_unit_name").val();
+    var unitData = "companyId=" + company_id + "&unitName=" +$("#txt_unit_name").val();
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "createUnit",
-		data: uityData,
+        data: unitData,
         success: function (data) {
             alert(data.message);
             $("#txt_unit_name").val("");
-            $('#tbl_unit').DataTable().destroy();
             getUnit();
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -18,14 +17,11 @@ function saveUnit() {
     });
 }
 function getUnit() {
-    if ($.fn.DataTable.isDataTable('#tbl_unit')) {
-        $('#tbl_unit').DataTable().destroy();
-    }
-    $("#tbl_unit_body").empty();
+    destroyDatatable("#tbl_unit", "#tbl_unit_body");
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getUnit",
-        data: "company_id=" +company_id,
+        data: "companyId=" + company_id,
         success: function (data) {
             
             data.forEach(function (element) {
@@ -40,17 +36,7 @@ function getUnit() {
                 $("#tbl_unit_body").append(tr);
 
             });
-            var tbl_unit = $('#tbl_unit').DataTable({
-                'destroy': true,
-                'paging': true,
-                'lengthChange': false,
-                "pageLength": 5,
-                'searching': false,
-                'ordering': true,
-                'info': false,
-                'autoWidth': true,
-                "order": [[0, "desc"]]
-            });
+            createDataTable("#tbl_unit");
 
         },
         error: function (message) {
@@ -59,11 +45,11 @@ function getUnit() {
         }
     });
 }
-function showUnitInfo(unit_id) {
+function showUnitInfo(unitId) {
     $("#unit_form").attr('action', 'javascript:updateUnit()');
-    $("#unit_id").val(unit_id);
+    $("#unit_id").val(unitId);
 
-    var data = "&unit_id=" + unit_id;
+    var data = "&unitId=" + unitId;
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "showUnitInfo",
@@ -80,14 +66,13 @@ function showUnitInfo(unit_id) {
 }
 
 function updateUnit() {
-    var unitData = "unit_id=" + $("#unit_id").val() + "&unit_name=" + $("#txt_unit_name").val();
+    var unitData = "unitId=" + $("#unit_id").val() + "&unitName=" + $("#txt_unit_name").val();
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "updateUnit",
         data: unitData,
         success: function (data) {
             $("#txt_unit_name").val("");
-            $('#tbl_unit').DataTable().destroy();
             getUnit();
             $("#unit_form").attr('action', 'javascript:saveUnit()');
             alert(data.message);
@@ -98,17 +83,16 @@ function updateUnit() {
         }
     }); 
 }
-function deleteUnit(unit_name, unit_id) {
-    var result = confirm("WARNING: This will delete the unit " + decodeURIComponent(unit_name) + " and all related stocks! Press OK to proceed.");
+function deleteUnit(unitName, unitId) {
+    var result = confirm("WARNING: This will delete the unit " + decodeURIComponent(unitName) + " and all related stocks! Press OK to proceed.");
     if (result) {
-        var data = "unit_id=" + unit_id;
+        var data = "unitId=" + unitId;
         $.ajax({
             type: "POST",
             url: BACKEND_URL + "deleteUnit",
             data: data,
             success: function (data) {
                 $("#txt_unit_name").val("");
-                $('#tbl_unit').DataTable().destroy();
                 getUnit();
                 alert(data.message);
 
@@ -125,7 +109,7 @@ function getUnitSelect(){
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getUnit",
-        data: "company_id="+1,
+        data: "companyId="+1,
         success: function (data) {
             console.log(data);
             data.forEach(function (element) {
