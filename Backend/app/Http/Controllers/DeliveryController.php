@@ -55,6 +55,7 @@ class DeliveryController extends Controller
                 ->where('users.company_id','=',$request->input("companyId"))
                 ->where('tbl_company.id','=',$request->input("companyId"))
                 ->where('tbl_delivery.company_id','=',$request->input("companyId"))
+                ->where('tbl_delivery.status','=','0')
                 ->select('users.full_name', 'tbl_delivery.*','tbl_company.name')
                 ->get();
         if(sizeof($delivery)){
@@ -108,6 +109,17 @@ class DeliveryController extends Controller
         return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
     }
 
+  }
+  public function updateDeliveryByStatus(Request $request)
+  {
+    try{
+        $delivery = tbl_delivery::find($request->input("deliveryId"));
+        $delivery->status = $request->input("status");
+        $delivery->save();
+        return response()->json($this->successMessage, 200, $this->header, JSON_UNESCAPED_UNICODE);
+    }catch (\Exception $e) {
+        return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
+    }
   }
 }
  ?>

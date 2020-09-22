@@ -1,5 +1,5 @@
-var Backend_url = window.location.origin + "/Backend/" ;
-
+//var Backend_url = window.location.origin + "/Backend/" ;
+var Backend_url="http://logistic.local/";
 function destroyDataTable(table,tableContainer)
 {
   if ($.fn.DataTable.isDataTable(table)) {
@@ -101,7 +101,7 @@ function loadDelivery()
                 data: "companyId=" + company_id,
                 success: function (data) {
                   data.forEach(function (element) {
-                      var tr = "<tr onclick='getDeliveryById(" + element.id + ");'>";
+                      var tr = "<tr onclick='selectDelivery(" + element.id + ");'>";
                       tr += "<td >" + element.car_no + "</td>";
                       tr += "<td >" + element.driver_name + "</td>";
                       tr += "<td >" + element.driver_phone + "</td>";
@@ -114,8 +114,8 @@ function loadDelivery()
                       tr += "<td >" + element.full_name + "</td>";
                       tr += "<td >" + element.name + "</td>";
                       tr += "<td class='alignright'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")>Add DeliveryDetails</button ></td >" ;
-                      tr += "<td class='alignright'><button type='button' class='btn btn-primary' onClick=saveDelveryDetails("+ element.id +")>Complete</button ></td > ";
-                      tr += "<td class='alignright'><button type='button' class='btn btn-warning' onClick=saveDelveryDetails("+ element.id +")>Update Delivery</button ></td > ";
+                      tr += "<td class='alignright'><button type='button' class='btn btn-primary' onClick=completeDeliveryByStatus("+ element.id +")>Complete</button ></td > ";
+                      tr += "<td class='alignright'><button type='button' class='btn btn-warning' onClick=updateDelivery("+ element.id +")>Update Delivery</button ></td > ";
                       tr += "</tr>";
                       $("#tbl_delivery_container").append(tr);
 
@@ -125,38 +125,9 @@ function loadDelivery()
               }
         });
 }
-function getDeliveryById(deliveryId) {
-
-        $('#hdeliveryId').val(deliveryId);
-
-        destroyDataTable("#table_tbl_deliverydetails","#tbl_deliverydetails_container");
-        $(".data_loader").show();
-        $.ajax({
-                type: "post",
-                url: Backend_url + "getDeliverDetailsByDeliveryId",
-                data: "deliveryId=" + deliveryId,
-                success: function (data) {
-                  data.forEach(function (element) {
-                      var tr = "<tr>";
-                      tr += "<td >" + element.receiver_name + "</td>";
-                      tr += "<td >" + element.product_name + "</td>";
-                      tr += "<td >" + element.quantity + "</td>";
-                      tr += "<td >" + element.weight + "</td>";
-                      tr += "<td >" + element.remark + "</td>";
-                      tr += "</tr>";
-                      $("#tbl_deliverydetails_container").append(tr);
-
-                  });
-                  createDataTable('#table_tbl_deliverydetails');
-                  $(".data_loader").hide();
-              },
-              error: function (message) {
-                  var returnMessage = JSON.parse(message.responseText)
-                  alert(returnMessage.message);
-              }
-
-
-        });
+function getDeliveryById(deliveryId)
+{
+  $('#hdeliveryId').val(deliveryId);
 }
 function saveDeliverDetail()
 {
@@ -222,4 +193,61 @@ function saveDeliverDetail()
                }
             });
 
+}
+function selectDelivery(deliveryId)
+{
+  destroyDataTable("#table_tbl_deliverydetails","#tbl_deliverydetails_container");
+
+  $.ajax({
+          type: "post",
+          url: Backend_url + "getDeliverDetailsByDeliveryId",
+          data: "deliveryId=" + deliveryId,
+          success: function (data) {
+            data.forEach(function (element) {
+                var tr = "<tr>";
+                tr += "<td >" + element.receiver_name + "</td>";
+                tr += "<td >" + element.product_name + "</td>";
+                tr += "<td >" + element.quantity + "</td>";
+                tr += "<td >" + element.weight + "</td>";
+                tr += "<td >" + element.remark + "</td>";
+                tr += "</tr>";
+                $("#tbl_deliverydetails_container").append(tr);
+
+            });
+            createDataTable('#table_tbl_deliverydetails');
+            $(".data_loader").hide();
+        },
+        error: function (message) {
+            var returnMessage = JSON.parse(message.responseText)
+            alert(returnMessage.message);
+        }
+
+
+  });
+}
+function completeDeliveryByStatus(deliveryId)
+{
+
+  var delivery=new FormData;
+  var status='1';
+  delivery.append('deliveryId',deliveryId);
+  delivery.append('status',status);
+  $.ajax({
+          type: "post",
+          url: Backend_url + "updateDeliveryByStatus",
+          data: delivery,
+          contentType: false,
+          processData: false,
+          success: function (data) {
+            alert(data.message);
+            destroyDataTable("#table_tbl_delivery","#tbl_delivery_container");
+            loadDelivery();
+        },
+        error: function (message) {
+            var returnMessage = JSON.parse(message.responseText)
+            alert(returnMessage.message);
+        }
+
+
+  });
 }
