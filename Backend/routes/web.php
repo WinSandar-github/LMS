@@ -32,6 +32,18 @@ Route::post('getCityInfo',array('middleware'=>'cors','uses'=>'CityController@get
 Route::post('updateCity',array('middleware'=>'cors','uses'=>'CityController@updateCity'));
 Route::post('deleteCity',array('middleware'=>'cors','uses'=>'CityController@deleteCity'));
 
+//For Unit CRUD
+Route::post('createUnit',array('middleware'=>'cors','uses'=>'UnitController@createUnit'));
+Route::post('getUnit',array('middleware'=>'cors','uses'=>'UnitController@getUnit'));
+Route::post('showUnitInfo',array('middleware'=>'cors','uses'=>'UnitController@showUnitInfo'));
+Route::post('updateUnit',array('middleware'=>'cors','uses'=>'UnitController@updateUnit'));
+Route::post('deleteUnit',array('middleware'=>'cors','uses'=>'UnitController@deleteUnit'));
+//For Goodreceipt CRUD
+Route::post('createGoodRecipt',array('middleware'=>'cors','uses'=>'GoodreceiptController@createGoodRecipt'));
+Route::post('getGoodReceipt/{imcompleteOrderStatus}',array('middleware'=>'cors','uses'=>'GoodreceiptController@getGoodReceipt'));
+Route::post('showGoodReceiptInfo',array('middleware'=>'cors','uses'=>'GoodreceiptController@showGoodReceiptInfo'));
+Route::post('updateGoodReceipt',array('middleware'=>'cors','uses'=>'GoodreceiptController@updateGoodReceipt'));
+Route::post('deleteGoodReceipt',array('middleware'=>'cors','uses'=>'GoodreceiptController@deleteGoodReceipt'));
 
 Auth::routes();
 
