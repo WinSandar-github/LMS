@@ -12,8 +12,15 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'saveTblCompany',
+        'saveCompany',
         'loginValidate',
+        'updateCompany',
+        'saveDelivery',
+        'updateDelivery',
+        'deleteDelivery',
+        'saveDeliverDetail',
+        'updateDeliverDetail',
+        'deleteDeliverDetail',
         'createCity',
         'getCity',
         'getCityInfo',

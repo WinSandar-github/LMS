@@ -7,38 +7,55 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use File;
 use Hash;
 use DateTime;
 use Session;
 use App\tbl_company;
-use App\tbl_users;
-class RegisterController extends Controller{
-  public function saveTblCompany(Request $request)
+use App\User;
+class RegisterController extends Controller
+{
+  protected $header = array ('Content-Type' => 'application/json; charset=UTF-8','charset' => 'utf-8');
+  protected $successMessage=array('message'=>'success.');
+  protected $errorMessage=array('message'=>'there is error occur.');
+  protected $dataMessage=array('message'=>'there is no data.');
+  public function saveCompany(Request $request)
   {
-
-            $company=new tbl_company();
-           $company->name=$request->input('companyname');
-           $company->address=$request->input('companyaddress');
-           $company->description=$request->input('description');
-           $company->city=$request->input('city');
-           $company->state=$request->input('state');
-           $company->zipcode=$request->input('zip_code');
-           $company->phone=$request->input('txt_phone');
-           $file_ext=$request->input('ext');
-
-             foreach($request->file('img') as $file)
-
-            {
-              $name=$file->getClientOriginalName();
-              $file->storeAs('public/images', $name);
-				      $data= $name;
+           try{
+            $string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $company_name=$request->input('companyname');
+            $com_len=strlen($company_name);
+            if($com_len==1){
+              $str = str_shuffle($string);
+              $ref_initials=$company_name[0].(substr($str,0,2));
+              }
+            else if($com_len==2){
+              $str = str_shuffle($string);
+              $ref_initials=$company_name[0].$company_name[1].(substr($str,0,1));
+            }
+            else{
+              $ref_initials=$company_name[0].$company_name[1].$company_name[2];
             }
 
-             $company->logo=$data;
-             $company->save();
+            $company=new tbl_company();
+            $company->name=$request->input('companyname');
+            $company->address=$request->input('companyaddress');
+            $company->description=$request->input('description');
+            $company->city=$request->input('city');
+            $company->state=$request->input('state');
+            $company->zipcode=$request->input('zip_code');
+            $company->phone=$request->input('txt_phone');
 
-            $user=new tbl_users();
+            $file_ext=$request->input('ext');
+            $file_name=$ref_initials.".".$file_ext;
+            $request->file('img')->storeAs('public/company_logo',$file_name);
+
+            $company->logo=$file_name;
+            $company->ref_initials = strtoupper($ref_initials);
+            $company->save();
+
+            $user=new User();
             $user->display_name=$request->input('txt_name');
             $user->full_name=$request->input('txt_name');
             $user->nrc_passport=$request->input('nrc_passport');
@@ -50,10 +67,14 @@ class RegisterController extends Controller{
             $user->role=$request->input('txt_type');
             $user->company_id=$company->id;
             $user->email=$request->input('txt_email');
-            $user->password=$request->input('txt_password');
+            $user->password=Hash::make($request->input('txt_password'));
+            $user->api_key=str_random(40);
             $user->save();
+            return response()->json($this->successMessage, 200, $this->header, JSON_UNESCAPED_UNICODE);
 
-            return 1;
+            }catch (\Exception $e){
+             return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
+           }
   }
 }
  ?>
