@@ -19,7 +19,7 @@ class CityController extends Controller
     protected $successMessage=array('message'=>'success.');
     protected $errorMessage=array('message'=>'there is error occur.');
     protected $dataMessage=array('message'=>'there is no data.');
-    
+
     public function createCity(Request $request)
 	{
         try{
@@ -28,11 +28,11 @@ class CityController extends Controller
             $city->company_id=$request->input("company_id");
             $city->save();
             return response()->json($this->successMessage, 200, $this->header, JSON_UNESCAPED_UNICODE);
-           
+
         }catch (\Exception $e) {
             return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
         }
-			
+
 	}
     public function getCity(Request $request)
 	{
@@ -47,7 +47,7 @@ class CityController extends Controller
         }catch (\Exception $e) {
             return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
         }
-		
+
 	}
     public function getCityInfo(Request $request)
 	{
@@ -62,7 +62,7 @@ class CityController extends Controller
          }catch (\Exception $e) {
              return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
          }
-	
+
 	}
     public function updateCity(Request $request)
 	{

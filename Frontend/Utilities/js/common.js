@@ -1,3 +1,4 @@
+var BACKEND_URL = window.location.origin + "/Backend/" ;
 function destroyDatatable(table, tableBody) {
     if ($.fn.DataTable.isDataTable(table)) {
         $(table).DataTable().destroy();
@@ -17,4 +18,11 @@ function createDataTable(table) {
         "order": [[0, "desc"]]
     });
 
+}
+function selectedDataTableTr(table){
+  $(table).on( 'click', 'tr', function () {
+
+      $(this).addClass('selected').siblings().removeClass('selected');
+
+  } );
 }

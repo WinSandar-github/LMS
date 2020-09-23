@@ -1,4 +1,4 @@
-var Backend_url = window.location.origin + "/Backend/" ;
+
 
 function saveCompanyRegister()
 {
@@ -56,7 +56,7 @@ function saveCompanyRegister()
     form.append('avatar',avatar);
     $.ajax({
             type: "post",
-            url: Backend_url + "saveCompany",
+            url: BACKEND_URL + "saveCompany",
             data: form,
             contentType: false,
             processData: false,

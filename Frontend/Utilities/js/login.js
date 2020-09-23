@@ -1,4 +1,3 @@
-var Backend_url = window.location.origin + "/Backend/" ;
 
 function login() {
 
@@ -33,7 +32,7 @@ function login() {
               document.write(xhttp.responseText);
           }
       };
-      xhttp.open('POST',Backend_url+'loginValidate');
+      xhttp.open('POST',BACKEND_URL+'loginValidate');
       xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
       xhttp.send(JSON.stringify(data));
 }
