@@ -1,33 +1,3 @@
-//var Backend_url = window.location.origin + "/Backend/" ;
-var Backend_url="http://logistic.local/";
-function destroyDataTable(table,tableContainer)
-{
-  if ($.fn.DataTable.isDataTable(table)) {
-      $(table).DataTable().destroy();
-  }
-  $(tableContainer).empty();
-}
-function createDataTable(table){
-  $(table).DataTable({
-      "language": {
-        "search": "ရှာရန်",
-        },
-      'destroy': true,
-      'paging': true,
-      'lengthChange': false,
-      "pageLength": 5,
-      'searching': true,
-      'ordering': true,
-      'info': false,
-      'autoWidth': true,
-      "order": [[0, "desc"]]
-  });
-  $(table).on( 'click', 'tr', function () {
-
-      $(this).addClass('selected').siblings().removeClass('selected');
-
-  } );
-}
 function saveDelivery()
 {
 
@@ -57,14 +27,14 @@ function saveDelivery()
         delivery.append('userId',user_id);
         $.ajax({
                 type: "post",
-                url: Backend_url + "saveDelivery",
+                url: BACKEND_URL + "saveDelivery",
                 data: delivery,
                 contentType: false,
                 processData: false,
                 success: function (data) {
                   alert(data.message);
                   $('#modal-delivery').modal('toggle');
-                  destroyDataTable("#table_tbl_delivery","#tbl_delivery_container");
+                  destroyDatatable("#table_tbl_delivery","#tbl_delivery_container");
                   loadDelivery();
                },
                error: function (message) {
@@ -94,14 +64,14 @@ function getDifferentDays() {
 }
 function loadDelivery()
 {
-        destroyDataTable("#table_tbl_delivery","#tbl_delivery_container");
+        destroyDatatable("#table_tbl_delivery","#tbl_delivery_container");
         $.ajax({
                 type: "post",
-                url: Backend_url + "getDelivery",
+                url: BACKEND_URL + "getDelivery",
                 data: "companyId=" + company_id,
                 success: function (data) {
                   data.forEach(function (element) {
-                      var tr = "<tr onclick='selectDelivery(" + element.id + ");'>";
+                      var tr = "<tr onclick='getDeliverDetailsByDeliveryId(" + element.id + ");'>";
                       tr += "<td >" + element.car_no + "</td>";
                       tr += "<td >" + element.driver_name + "</td>";
                       tr += "<td >" + element.driver_phone + "</td>";
@@ -115,19 +85,20 @@ function loadDelivery()
                       tr += "<td >" + element.name + "</td>";
                       tr += "<td class='alignright'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")>Add DeliveryDetails</button ></td >" ;
                       tr += "<td class='alignright'><button type='button' class='btn btn-primary' onClick=completeDeliveryByStatus("+ element.id +")>Complete</button ></td > ";
-                      tr += "<td class='alignright'><button type='button' class='btn btn-warning' onClick=updateDelivery("+ element.id +")>Update Delivery</button ></td > ";
+                      tr += "<td class='alignright'><button type='button' class='btn btn-warning' onClick=showDeliveryById("+ element.id +")>Update Delivery</button ></td > ";
                       tr += "</tr>";
                       $("#tbl_delivery_container").append(tr);
 
                   });
                   createDataTable('#table_tbl_delivery');
-
+                  selectedDataTableTr('#table_tbl_delivery');
               }
         });
 }
 function getDeliveryById(deliveryId)
 {
   $('#hdeliveryId').val(deliveryId);
+
 }
 function saveDeliverDetail()
 {
@@ -179,7 +150,7 @@ function saveDeliverDetail()
 
         $.ajax({
                 type: "post",
-                url: Backend_url + "saveDeliverDetail",
+                url: BACKEND_URL + "saveDeliverDetail",
                 data: deliveryDetails,
                 contentType: false,
                 processData: false,
@@ -194,60 +165,152 @@ function saveDeliverDetail()
             });
 
 }
-function selectDelivery(deliveryId)
+function getDeliverDetailsByDeliveryId(deliveryId)
 {
-  destroyDataTable("#table_tbl_deliverydetails","#tbl_deliverydetails_container");
+        destroyDatatable("#table_tbl_deliverydetails","#tbl_deliverydetails_container");
 
-  $.ajax({
-          type: "post",
-          url: Backend_url + "getDeliverDetailsByDeliveryId",
-          data: "deliveryId=" + deliveryId,
-          success: function (data) {
-            data.forEach(function (element) {
-                var tr = "<tr>";
-                tr += "<td >" + element.receiver_name + "</td>";
-                tr += "<td >" + element.product_name + "</td>";
-                tr += "<td >" + element.quantity + "</td>";
-                tr += "<td >" + element.weight + "</td>";
-                tr += "<td >" + element.remark + "</td>";
-                tr += "</tr>";
-                $("#tbl_deliverydetails_container").append(tr);
+        $.ajax({
+                type: "post",
+                url: BACKEND_URL + "getDeliverDetailsByDeliveryId",
+                data: "deliveryId=" + deliveryId,
+                success: function (data) {
+                  data.forEach(function (element) {
+                      var tr = "<tr>";
+                      tr += "<td >" + element.receiver_name + "</td>";
+                      tr += "<td >" + element.product_name + "</td>";
+                      tr += "<td >" + element.quantity + "</td>";
+                      tr += "<td >" + element.weight + "</td>";
+                      tr += "<td >" + element.remark + "</td>";
+                      tr += "</tr>";
+                      $("#tbl_deliverydetails_container").append(tr);
 
-            });
-            createDataTable('#table_tbl_deliverydetails');
-            $(".data_loader").hide();
-        },
-        error: function (message) {
-            var returnMessage = JSON.parse(message.responseText)
-            alert(returnMessage.message);
-        }
+                  });
+                  createDataTable('#table_tbl_deliverydetails');
+
+              },
+              error: function (message) {
+                  var returnMessage = JSON.parse(message.responseText)
+                  alert(returnMessage.message);
+              }
 
 
-  });
+        });
 }
 function completeDeliveryByStatus(deliveryId)
 {
 
-  var delivery=new FormData;
-  var status='1';
-  delivery.append('deliveryId',deliveryId);
-  delivery.append('status',status);
-  $.ajax({
+        var delivery=new FormData;
+        var status='1';
+        delivery.append('deliveryId',deliveryId);
+        delivery.append('status',status);
+        $.ajax({
+                type: "post",
+                url: BACKEND_URL + "updateDeliveryByStatus",
+                data: delivery,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                  alert(data.message);
+                  destroyDatatable("#table_tbl_delivery","#tbl_delivery_container");
+                  loadDelivery();
+                  loadDeliveryByComplete();
+              },
+              error: function (message) {
+                  var returnMessage = JSON.parse(message.responseText)
+                  alert(returnMessage.message);
+              }
+            });
+}
+function loadDeliveryByComplete()
+{
+        destroyDatatable("#table_tbl_delivery2","#tbl_delivery_container2");
+        $.ajax({
           type: "post",
-          url: Backend_url + "updateDeliveryByStatus",
-          data: delivery,
-          contentType: false,
-          processData: false,
+          url: BACKEND_URL + "getDeliveryByStatus",
+          data: "companyId=" + company_id,
           success: function (data) {
-            alert(data.message);
-            destroyDataTable("#table_tbl_delivery","#tbl_delivery_container");
-            loadDelivery();
-        },
-        error: function (message) {
-            var returnMessage = JSON.parse(message.responseText)
-            alert(returnMessage.message);
-        }
+                  data.forEach(function (element) {
+                  var tr = "<tr onclick='getDeliverDetailsByDeliveryId(" + element.id + ");'>";
+                  tr += "<td >" + element.car_no + "</td>";
+                  tr += "<td >" + element.driver_name + "</td>";
+                  tr += "<td >" + element.driver_phone + "</td>";
+                  tr += "<td >" + element.depart_from + "</td>";
+                  tr += "<td >" + element.depart_to + "</td>";
+                  tr += "<td >" + element.start_dt + "</td>";
+                  tr += "<td >" + element.end_dt + "</td>";
+                  tr += "<td >" + element.arrived + "</td>";
+                  tr += "<td >" + element.remark + "</td>";
+                  tr += "<td >" + element.full_name + "</td>";
+                  tr += "<td >" + element.name + "</td>";
+                  tr += "<td class='alignright'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")>Add DeliveryDetails</button ></td >" ;
+                  tr += "<td class='alignright'><button type='button' class='btn btn-warning' onClick=showDeliveryById("+ element.id +")>Update Delivery</button ></td > ";
+                  tr += "</tr>";
+                  $("#tbl_delivery_container2").append(tr);
 
+                });
+          createDataTable('#table_tbl_delivery2');
+          selectedDataTableTr('#table_tbl_delivery2');
+          }
+        });
+}
+function showDeliveryById(deliveryId)
+{
+          $('#hdeliveryId').val(deliveryId);
+          $("#delivery_form").attr('action', 'javascript:updateDelivery()');
+          var data="deliveryId=" + deliveryId;
+          $.ajax({
+              type: "POST",
+              url: BACKEND_URL + "getDeliveryById",
+              data: data,
+              success: function (data) {
+                  $("#car_number").val(data.car_no);
+                  $("#driver_name").val(data.driver_name);
+                  $("#driver_phone").val(data.driver_phone);
+                  $("#from_city_name").val(data.depart_from);
+                  $("#to_city_name").val(data.depart_to);
+                  $("#start_dt").val(data.start_dt);
+                  $("#arrived_dt").val(data.end_dt);
+                  $("#different_day").val(data.arrived);
+                  $("#delivery_remark").val(data.remark);
+                  $('#modal-delivery').modal('toggle');
+              },
+              error: function (message) {
+                  var returnMessage = JSON.parse(message.responseText)
+                  alert(returnMessage.message);
+              }
+          });
+}
+function updateDelivery()
+{
+        var delivery = new FormData;;
+        delivery.append('deliveryId',$('#hdeliveryId').val());
+        delivery.append('carNumber',$("#car_number").val());
+        delivery.append('driverName',$("#driver_name").val());
+        delivery.append('driverPhone',$("#driver_phone").val());
+        delivery.append('fromCityName',$("#from_city_name").val());
+        delivery.append('toCityName',$("#to_city_name").val());
+        delivery.append('startedDate',$("#start_dt").val());
+        delivery.append('arrivedDate',$("#arrived_dt").val());
+        delivery.append('differentArrived',$("#different_day").val());
+        delivery.append('remark',$("#delivery_remark").val());
 
-  });
+        $.ajax({
+                type: "post",
+                url: BACKEND_URL + "updateDelivery",
+                data: delivery,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                  alert(data.message);
+                  $('#modal-delivery').modal('toggle');
+                  destroyDatatable("#table_tbl_delivery","#tbl_delivery_container");
+                  loadDelivery();
+                  loadDeliveryByComplete();
+               },
+               error: function (message) {
+                   var returnMessage = JSON.parse(message.responseText)
+                   alert(returnMessage.message);
+               }
+
+        });
 }

@@ -71,7 +71,7 @@
                   </div>
                   <div style="margin-top:20px;overflow-x:auto;">
                               <h4 style="text-align:center;font-weight:bold">ခရီးစဥ် ပြီးဆုံး</h4>
-                          <table id="table_tbl_delivery2" class="table table-bordered table-striped" width="100%">
+                          <table id="table_tbl_delivery2" class="table table-bordered " width="100%">
                                 <thead >
                                       <tr>
                                           <th>ကားနံပါတ်</th>
@@ -85,7 +85,6 @@
                                           <th>မှတ်ချက်</th>
                                           <th>လုပ်ဆောင်သည့်သူ</th>
                                           <th>ကုမ္ပဏီအမည်</th>
-                                          <th></th>
                                           <th></th>
                                           <th></th>
                                         </tr>
@@ -151,7 +150,7 @@
             <h4 class="modal-title">ခရီးစဥ် အသစ် </h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-  <form method="post" enctype="multipart/form-data" id="fileUploadForm" action="javascript:saveDelivery(); ">
+  <form method="post" enctype="multipart/form-data" id="delivery_form" action="javascript:saveDelivery(); ">
         <div class="modal-body">
             <div class="row">
                     <div class="col-12">
@@ -378,9 +377,11 @@
   <script src="../Utilities/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
   <script src="../Utilities/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
   <script src="../Utilities/js/delivery.js"></script>
+  <script src="../Utilities/js/common.js"></script>
   <script>
     $('.datepicker').datepicker({ format: 'yyyy-mm-dd' });
     loadDelivery();
+    loadDeliveryByComplete();
     </script>
 </body>
 </html>

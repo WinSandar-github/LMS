@@ -25,6 +25,8 @@ Route::post('/getDeliverDetailsByDeliveryId', array('middleware' => 'cors', 'use
 Route::post('/updateDelivery', array('middleware' => 'cors', 'uses' => 'DeliveryController@updateDelivery'));
 Route::post('/deleteDelivery', array('middleware' => 'cors', 'uses' => 'DeliveryController@deleteDelivery'));
 Route::post('/updateDeliveryByStatus', array('middleware' => 'cors', 'uses' => 'DeliveryController@updateDeliveryByStatus'));
+Route::post('/getDeliveryByStatus', array('middleware' => 'cors', 'uses' => 'DeliveryController@getDeliveryByStatus'));
+Route::post('/getDeliveryById', array('middleware' => 'cors', 'uses' => 'DeliveryController@getDeliveryById'));
 Route::post('/saveDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliveryController@saveDeliverDetail'));
 Route::post('/updateDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliveryController@updateDeliverDetail'));
 Route::post('/deleteDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliveryController@deleteDeliverDetail'));
@@ -48,8 +50,7 @@ Route::post('showGoodReceiptInfo',array('middleware'=>'cors','uses'=>'Goodreceip
 Route::post('updateGoodReceipt',array('middleware'=>'cors','uses'=>'GoodreceiptController@updateGoodReceipt'));
 Route::post('deleteGoodReceipt',array('middleware'=>'cors','uses'=>'GoodreceiptController@deleteGoodReceipt'));
 
-
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+?>

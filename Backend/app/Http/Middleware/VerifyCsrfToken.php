@@ -19,6 +19,8 @@ class VerifyCsrfToken extends Middleware
       'getDelivery',
       'getDeliverDetailsByDeliveryId',
       'updateDeliveryByStatus',
+      'getDeliveryByStatus',
+      'getDeliveryById',
       'updateDelivery',
       'deleteDelivery',
       'saveDeliverDetail',
