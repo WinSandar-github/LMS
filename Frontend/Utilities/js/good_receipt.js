@@ -1,8 +1,8 @@
-﻿var BACKEND_URL = "http://" + window.location.host + "/";
+﻿
 function saveGoodReceipt() {
     var customerName = $("#txt_customer_name").val();
     var date = $("#txt_date").val();
-    const customerCode = 0; 
+    const customerCode = 0;
     const vipCustomerCode = 1;
     var customerStatus = ($('#vip_customer').is(":checked")) ? vipCustomerCode : customerCode;
     var address = $("#txt_address").val();
@@ -91,11 +91,10 @@ function getGoodReceipt() {
 
             });
             createDataTable("#tbl_goodreceipt");
-            
+
         },
-        error: function (message) {
-            var returnMessage = JSON.parse(message.responseText)
-            alert(returnMessage.message);
+        error:function (message){
+          errorMessage(message);
         }
     });
 }
@@ -122,9 +121,8 @@ function showGoodReceiptInfo(goodReceiptId) {
             $('#modal-goodreceipt').modal('toggle');
 
         },
-        error: function (message) {
-            var returnMessage = JSON.parse(message.responseText)
-            alert(returnMessage.message);
+        error:function (message){
+          errorMessage(message);
         }
     });
 }
@@ -159,6 +157,7 @@ function updateGoodReceipt() {
             $("#select_cash_method").val("");
             $("#txt_remark").val("");
             $('#modal-goodreceipt').modal('toggle');
+            destroyDatatable("#tbl_goodreceipt", "#tbl_goodreceipt_body");
             getGoodReceipt();
         }
     };
@@ -176,13 +175,12 @@ function deleteGoodReceipt(senderName, goodReceiptId) {
             url: BACKEND_URL + "deleteGoodReceipt",
             data: data,
             success: function (data) {
-                $('#tbl_goodreceipt').DataTable().destroy();
+                destroyDatatable("#tbl_goodreceipt", "#tbl_goodreceipt_body");
                 getGoodReceipt();
                 alert(data.message);
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("Status: " + textStatus);
-                alert("Error: " + errorThrown);
+            error:function (XMLHttpRequest, textStatus, errorThrown){
+              errorStatus(XMLHttpRequest, textStatus, errorThrown);
             }
         });
     }

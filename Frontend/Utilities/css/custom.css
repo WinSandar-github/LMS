@@ -74,3 +74,12 @@ table th,td{
 .custom-input{
   display: flex;
 }
+.content{
+  clear:both;
+}
+.table_css{
+  margin-top:20px;overflow-x:auto;
+}
+.table_css h4{
+  text-align:center;
+}

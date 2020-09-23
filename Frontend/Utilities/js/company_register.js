@@ -1,5 +1,4 @@
 
-
 function saveCompanyRegister()
 {
   var company_name=$('#companyname').val();
@@ -20,12 +19,8 @@ function saveCompanyRegister()
 
   var form = new FormData;
   var logo_file = document.getElementById('companylogo');
-
-
-    if (logo_file.files.length > 0) {
-
-
-        for (var i = 0; i <= logo_file.files.length - 1; i++) {
+  if (logo_file.files.length > 0) {
+            for (var i = 0; i <= logo_file.files.length - 1; i++) {
 
             var fname = logo_file.files.item(i).name;
             var fsize = logo_file.files.item(i).size;
@@ -55,7 +50,7 @@ function saveCompanyRegister()
     form.append('birthday',birthday);
     form.append('avatar',avatar);
     $.ajax({
-            type: "post",
+            type: "POST",
             url: BACKEND_URL + "saveCompany",
             data: form,
             contentType: false,
@@ -63,9 +58,9 @@ function saveCompanyRegister()
             success: function (data) {
              alert(data.message);
            },
-           error: function (XMLHttpRequest, textStatus, errorThrown) {
-          alert("Status: " + textStatus);
-          alert("Error: " + errorThrown);
+           error:function (XMLHttpRequest, textStatus, errorThrown){
+             errorStatus(XMLHttpRequest, textStatus, errorThrown);
+           }
         }
     });
 }

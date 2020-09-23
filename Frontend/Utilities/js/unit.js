@@ -1,4 +1,4 @@
-var BACKEND_URL = "http://" + window.location.host + "/";
+
 function saveUnit() {
     var unitData = "companyId=" + company_id + "&unitName=" +$("#txt_unit_name").val();
     $.ajax({
@@ -10,9 +10,8 @@ function saveUnit() {
             $("#txt_unit_name").val("");
             getUnit();
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-          alert("Status: " + textStatus);
-          alert("Error: " + errorThrown);
+        error:function (XMLHttpRequest, textStatus, errorThrown){
+          errorStatus(XMLHttpRequest, textStatus, errorThrown);
         }
     });
 }
@@ -23,7 +22,7 @@ function getUnit() {
         url: BACKEND_URL + "getUnit",
         data: "companyId=" + company_id,
         success: function (data) {
-            
+
             data.forEach(function (element) {
                 var tr = "<tr>";
                 tr += "<td >" + element.id + "</td>";
@@ -39,9 +38,8 @@ function getUnit() {
             createDataTable("#tbl_unit");
 
         },
-        error: function (message) {
-            var returnMessage = JSON.parse(message.responseText)
-            alert(returnMessage.message);
+        error:function (message){
+          errorMessage(message);
         }
     });
 }
@@ -58,9 +56,8 @@ function showUnitInfo(unitId) {
             $("#txt_unit_name").val(data.unit_name);
 
         },
-        error: function (message) {
-            var returnMessage = JSON.parse(message.responseText)
-            alert(returnMessage.message);
+        error:function (message){
+          errorMessage(message);
         }
     });
 }
@@ -77,11 +74,10 @@ function updateUnit() {
             $("#unit_form").attr('action', 'javascript:saveUnit()');
             alert(data.message);
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("Status: " + textStatus);
-            alert("Error: " + errorThrown);
+        error:function (XMLHttpRequest, textStatus, errorThrown){
+          errorStatus(XMLHttpRequest, textStatus, errorThrown);
         }
-    }); 
+    });
 }
 function deleteUnit(unitName, unitId) {
     var result = confirm("WARNING: This will delete the unit " + decodeURIComponent(unitName) + " and all related stocks! Press OK to proceed.");
@@ -97,9 +93,8 @@ function deleteUnit(unitName, unitId) {
                 alert(data.message);
 
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("Status: " + textStatus);
-                alert("Error: " + errorThrown);
+            error:function (XMLHttpRequest, textStatus, errorThrown){
+              errorStatus(XMLHttpRequest, textStatus, errorThrown);
             }
         });
     }
@@ -111,8 +106,7 @@ function getUnitSelect(){
         url: BACKEND_URL + "getUnit",
         data: "companyId="+1,
         success: function (data) {
-            console.log(data);
-            data.forEach(function (element) {
+                data.forEach(function (element) {
 
                 var option = document.createElement('option');
                 option.text = element.unit_name;
@@ -121,10 +115,8 @@ function getUnitSelect(){
 
             });
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-
-            alert("Status: " + textStatus);
-            alert("Error: " + errorThrown);
+        error:function (XMLHttpRequest, textStatus, errorThrown){
+          errorStatus(XMLHttpRequest, textStatus, errorThrown);
         }
     });
 }
