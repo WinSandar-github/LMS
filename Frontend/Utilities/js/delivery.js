@@ -79,27 +79,27 @@ function loadDelivery()
                 data: "companyId=" + company_id,
                 success: function (data) {
                   data.forEach(function (element) {
-                      var tr = "<tr onclick='getDeliverDetailsByDeliveryId(" + element.id + ");'>";
-                      tr += "<td >" + element.car_no + "</td>";
-                      tr += "<td >" + element.driver_name + "</td>";
-                      tr += "<td >" + element.driver_phone + "</td>";
-                      tr += "<td >" + element.depart_from + "</td>";
-                      tr += "<td >" + element.depart_to + "</td>";
-                      tr += "<td >" + element.start_dt + "</td>";
-                      tr += "<td >" + element.end_dt + "</td>";
-                      tr += "<td >" + element.arrived + "</td>";
-                      tr += "<td >" + element.remark + "</td>";
-                      tr += "<td >" + element.full_name + "</td>";
-                      tr += "<td >" + element.name + "</td>";
-                      tr += "<td class='alignright'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")>Add DeliveryDetails</button ></td >" ;
-                      tr += "<td class='alignright'><button type='button' class='btn btn-primary' onClick=completeDeliveryByStatus("+ element.id +")>Complete</button ></td > ";
-                      tr += "<td class='alignright'><button type='button' class='btn btn-warning' onClick=showDeliveryById("+ element.id +")>Update Delivery</button ></td > ";
-                      tr += "</tr>";
-                      $("#tbl_delivery_container").append(tr);
+                    var tr = "<tr onclick='getDeliverDetailsByDeliveryId(" + element.id + ");'>";
+                    tr += "<td >" + element.car_no + "</td>";
+                    tr += "<td >" + element.driver_name + "</td>";
+                    tr += "<td >" + element.driver_phone + "</td>";
+                    tr += "<td >" + element.depart_from + "</td>";
+                    tr += "<td >" + element.depart_to + "</td>";
+                    tr += "<td >" + element.start_dt + "</td>";
+                    tr += "<td >" + element.end_dt + "</td>";
+                    tr += "<td >" + element.arrived + "</td>";
+                    tr += "<td >" + element.remark + "</td>";
+                    tr += "<td >" + element.full_name + "</td>";
+                    tr += "<td >" + element.name + "</td>";
+                    tr += "<td class='alignright'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")>Add DeliveryDetails</button ></td >" ;
+                    tr += "<td class='alignright'><button type='button' class='btn btn-primary' onClick=completeDeliveryByStatus("+ element.id +")>Complete</button ></td > ";
+                    tr += "<td class='alignright'><button type='button' class='btn btn-warning' onClick=showDeliveryById("+ element.id +")>Update Delivery</button ></td > ";
+                    tr += "</tr>";
+                    $("#tbl_delivery_container").append(tr);
 
-                  });
-                  createDataTable('#table_tbl_delivery');
-                  selectedDataTableTr('#table_tbl_delivery');
+                });
+                createDataTable('#table_tbl_delivery');
+                selectedDataTableTr('#table_tbl_delivery');
                 },
                 error:function (message){
                   errorMessage(message);

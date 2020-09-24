@@ -61,6 +61,6 @@ function saveCompanyRegister()
            error:function (XMLHttpRequest, textStatus, errorThrown){
              errorStatus(XMLHttpRequest, textStatus, errorThrown);
            }
-        }
+        
     });
 }

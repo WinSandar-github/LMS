@@ -16,10 +16,6 @@ use App\tbl_company;
 use App\User;
 class RegisterController extends Controller
 {
-  protected $header = array ('Content-Type' => 'application/json; charset=UTF-8','charset' => 'utf-8');
-  protected $successMessage=array('message'=>'success.');
-  protected $errorMessage=array('message'=>'there is error occur.');
-  protected $dataMessage=array('message'=>'there is no data.');
   public function saveCompany(Request $request)
   {
            try{
@@ -37,7 +33,6 @@ class RegisterController extends Controller
             else{
               $ref_initials=$company_name[0].$company_name[1].$company_name[2];
             }
-
             $company=new tbl_company();
             $company->name=$request->input('companyname');
             $company->address=$request->input('companyaddress');
@@ -46,11 +41,9 @@ class RegisterController extends Controller
             $company->state=$request->input('state');
             $company->zipcode=$request->input('zip_code');
             $company->phone=$request->input('txt_phone');
-
             $file_ext=$request->input('ext');
             $file_name=$ref_initials.".".$file_ext;
             $request->file('img')->storeAs('public/company_logo',$file_name);
-
             $company->logo=$file_name;
             $company->ref_initials = strtoupper($ref_initials);
             $company->save();
@@ -70,11 +63,10 @@ class RegisterController extends Controller
             $user->password=Hash::make($request->input('txt_password'));
             $user->api_key=str_random(40);
             $user->save();
-            return response()->json($this->successMessage, 200, $this->header, JSON_UNESCAPED_UNICODE);
-
-            }catch (\Exception $e){
-             return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.successMessage'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+          }catch (\Exception $e){
+             return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
            }
-  }
+      }
 }
  ?>
