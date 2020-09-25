@@ -1,4 +1,4 @@
-var BACKEND_URL = "http://" + window.location.host + "/";
+
 function saveCity() {
     var cityData = "company_id=" + company_id + "&city_name=" + $("#txt_city_name").val();
     $.ajax({
@@ -8,26 +8,22 @@ function saveCity() {
         success: function (data) {
             alert(data.message);
             $("#txt_city_name").val("");
-            $('#table_tbl_city').DataTable().destroy();
+            destroyDatatable('#table_tbl_city','#tbl_city_container');
             getCity();
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-          alert("Status: " + textStatus);
-          alert("Error: " + errorThrown);
+        error:function (XMLHttpRequest, textStatus, errorThrown){
+          errorStatus(XMLHttpRequest, textStatus, errorThrown);
         }
     });
 }
 function getCity() {
-    if ($.fn.DataTable.isDataTable('#table_tbl_city')) {
-        $('#table_tbl_city').DataTable().destroy();
-    }
-    $("#tbl_city_container").empty();
+    destroyDatatable('#table_tbl_city','#tbl_city_container');
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getCity",
         data: "company_id=" + company_id,
         success: function (data) {
-            
+
             data.forEach(function (element) {
                 var tr = "<tr>";
                 tr += "<td >" + element.id + "</td>";
@@ -40,23 +36,11 @@ function getCity() {
                 $("#tbl_city_container").append(tr);
 
             });
-            var table_tbl_city = $('#table_tbl_city').DataTable({
-                'destroy': true,
-                'paging': true,
-                'lengthChange': false,
-                "pageLength": 5,
-                'searching': false,
-                'ordering': true,
-                'info': false,
-                'autoWidth': true,
-                "order": [[0, "desc"]]
-            });
-
-        },
-        error: function (message) {
-            var returnMessage = JSON.parse(message.responseText)
-            alert(returnMessage.message);
-        }
+            createDataTable('#table_tbl_city');
+            },
+            error:function (message){
+              errorMessage(message);
+            }
     });
 }
 
@@ -73,9 +57,8 @@ function showCityInfo(city_id) {
             $("#txt_city_name").val(data.city_name);
 
         },
-        error: function (message) {
-            var returnMessage = JSON.parse(message.responseText)
-            alert(returnMessage.message);
+        error:function (message){
+          errorMessage(message);
         }
     });
 }
@@ -88,14 +71,13 @@ function updateCity() {
         data: cityData,
         success: function (data) {
             $("#txt_city_name").val("");
-            $('#table_tbl_city').DataTable().destroy();
+            destroyDatatable('#table_tbl_city','#tbl_city_container');
             getCity();
             $("#city_form").attr('action', 'javascript:saveTblCity()');
             alert(data.message);
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("Status: " + textStatus);
-            alert("Error: " + errorThrown);
+        error:function (XMLHttpRequest, textStatus, errorThrown){
+          errorStatus(XMLHttpRequest, textStatus, errorThrown);
         }
     });
 }
@@ -110,14 +92,13 @@ function deleteCity(city_name, city_id) {
             data: data,
             success: function (data) {
                 $("#txt_city_name").val("");
-                $('#table_tbl_city').DataTable().destroy();
+                destroyDatatable('#table_tbl_city','#tbl_city_container');
                 getCity();
                 alert(data.message);
 
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("Status: " + textStatus);
-                alert("Error: " + errorThrown);
+            error:function (XMLHttpRequest, textStatus, errorThrown){
+              errorStatus(XMLHttpRequest, textStatus, errorThrown);
             }
         });
     }
@@ -129,7 +110,6 @@ function getCitySelect(){
         url: BACKEND_URL + "getCity",
         data: "company_id="+1,
         success: function (data) {
-            console.log(data);
             data.forEach(function (element) {
 
                 var option = document.createElement('option');
@@ -139,10 +119,8 @@ function getCitySelect(){
 
             });
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-
-            alert("Status: " + textStatus);
-            alert("Error: " + errorThrown);
+        error:function (XMLHttpRequest, textStatus, errorThrown){
+          errorStatus(XMLHttpRequest, textStatus, errorThrown);
         }
     });
 }

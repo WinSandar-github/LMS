@@ -1,6 +1,5 @@
 function saveDelivery()
 {
-
         var carNumber = $("#car_number").val();
         var driverName = $("#driver_name").val();
         var driverPhone = $("#driver_phone").val();
@@ -25,24 +24,32 @@ function saveDelivery()
         delivery.append('companyId',company_id);
         delivery.append('status',status);
         delivery.append('userId',user_id);
-        $.ajax({
-                type: "post",
-                url: BACKEND_URL + "saveDelivery",
-                data: delivery,
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                  alert(data.message);
-                  $('#modal-delivery').modal('toggle');
-                  destroyDatatable("#table_tbl_delivery","#tbl_delivery_container");
-                  loadDelivery();
-               },
-               error: function (message) {
-                   var returnMessage = JSON.parse(message.responseText)
-                   alert(returnMessage.message);
-               }
+        if(differentArrived.trim()==""){
+          $("#start_dt").focus();
+          }
+        else if(differentArrived==-1){
+           $("#arrived_dt").focus();
+        }
+        else{
+          $.ajax({
+                  type: "post",
+                  url: BACKEND_URL + "saveDelivery",
+                  data: delivery,
+                  contentType: false,
+                  processData: false,
+                  success: function (data) {
+                    alert(data.message);
+                    $('#modal-delivery').modal('toggle');
+                    destroyDatatable("#table_tbl_delivery","#tbl_delivery_container");
+                    loadDelivery();
+                 },
+                 error:function (XMLHttpRequest, textStatus, errorThrown){
+                   errorStatus(XMLHttpRequest, textStatus, errorThrown);
+                 }
 
-        });
+          });
+        }
+
 }
 function getDifferentDays() {
 
@@ -50,8 +57,8 @@ function getDifferentDays() {
         var endDate = $("#arrived_dt").val();
 
         if (endDate.trim() == "") {
-            $("#different_day").val("0");
-        }
+            $("#different_day").val("-1");
+          }
         else {
             var firstDate = new Date(startDate);
             var lastDate = new Date(endDate);
@@ -62,6 +69,7 @@ function getDifferentDays() {
 
 
 }
+
 function loadDelivery()
 {
         destroyDatatable("#table_tbl_delivery","#tbl_delivery_container");
@@ -71,28 +79,31 @@ function loadDelivery()
                 data: "companyId=" + company_id,
                 success: function (data) {
                   data.forEach(function (element) {
-                      var tr = "<tr onclick='getDeliverDetailsByDeliveryId(" + element.id + ");'>";
-                      tr += "<td >" + element.car_no + "</td>";
-                      tr += "<td >" + element.driver_name + "</td>";
-                      tr += "<td >" + element.driver_phone + "</td>";
-                      tr += "<td >" + element.depart_from + "</td>";
-                      tr += "<td >" + element.depart_to + "</td>";
-                      tr += "<td >" + element.start_dt + "</td>";
-                      tr += "<td >" + element.end_dt + "</td>";
-                      tr += "<td >" + element.arrived + "</td>";
-                      tr += "<td >" + element.remark + "</td>";
-                      tr += "<td >" + element.full_name + "</td>";
-                      tr += "<td >" + element.name + "</td>";
-                      tr += "<td class='alignright'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")>Add DeliveryDetails</button ></td >" ;
-                      tr += "<td class='alignright'><button type='button' class='btn btn-primary' onClick=completeDeliveryByStatus("+ element.id +")>Complete</button ></td > ";
-                      tr += "<td class='alignright'><button type='button' class='btn btn-warning' onClick=showDeliveryById("+ element.id +")>Update Delivery</button ></td > ";
-                      tr += "</tr>";
-                      $("#tbl_delivery_container").append(tr);
+                    var tr = "<tr onclick='getDeliverDetailsByDeliveryId(" + element.id + ");'>";
+                    tr += "<td >" + element.car_no + "</td>";
+                    tr += "<td >" + element.driver_name + "</td>";
+                    tr += "<td >" + element.driver_phone + "</td>";
+                    tr += "<td >" + element.depart_from + "</td>";
+                    tr += "<td >" + element.depart_to + "</td>";
+                    tr += "<td >" + element.start_dt + "</td>";
+                    tr += "<td >" + element.end_dt + "</td>";
+                    tr += "<td >" + element.arrived + "</td>";
+                    tr += "<td >" + element.remark + "</td>";
+                    tr += "<td >" + element.full_name + "</td>";
+                    tr += "<td >" + element.name + "</td>";
+                    tr += "<td class='alignright'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")>Add DeliveryDetails</button ></td >" ;
+                    tr += "<td class='alignright'><button type='button' class='btn btn-primary' onClick=completeDeliveryByStatus("+ element.id +")>Complete</button ></td > ";
+                    tr += "<td class='alignright'><button type='button' class='btn btn-warning' onClick=showDeliveryById("+ element.id +")>Update Delivery</button ></td > ";
+                    tr += "</tr>";
+                    $("#tbl_delivery_container").append(tr);
 
-                  });
-                  createDataTable('#table_tbl_delivery');
-                  selectedDataTableTr('#table_tbl_delivery');
-              }
+                });
+                createDataTable('#table_tbl_delivery');
+                selectedDataTableTr('#table_tbl_delivery');
+                },
+                error:function (message){
+                  errorMessage(message);
+                }
         });
 }
 function getDeliveryById(deliveryId)
@@ -158,9 +169,8 @@ function saveDeliverDetail()
                   alert(data.message);
                   $('#modal-delivery_details').modal('toggle');
                },
-               error: function (message) {
-                   var returnMessage = JSON.parse(message.responseText)
-                   alert(returnMessage.message);
+               error:function (XMLHttpRequest, textStatus, errorThrown){
+                 errorStatus(XMLHttpRequest, textStatus, errorThrown);
                }
             });
 
@@ -188,17 +198,13 @@ function getDeliverDetailsByDeliveryId(deliveryId)
                   createDataTable('#table_tbl_deliverydetails');
 
               },
-              error: function (message) {
-                  var returnMessage = JSON.parse(message.responseText)
-                  alert(returnMessage.message);
+              error:function (message){
+                errorMessage(message);
               }
-
-
-        });
+            });
 }
 function completeDeliveryByStatus(deliveryId)
 {
-
         var delivery=new FormData;
         var status='1';
         delivery.append('deliveryId',deliveryId);
@@ -215,9 +221,8 @@ function completeDeliveryByStatus(deliveryId)
                   loadDelivery();
                   loadDeliveryByComplete();
               },
-              error: function (message) {
-                  var returnMessage = JSON.parse(message.responseText)
-                  alert(returnMessage.message);
+              error:function (XMLHttpRequest, textStatus, errorThrown){
+                errorStatus(XMLHttpRequest, textStatus, errorThrown);
               }
             });
 }
@@ -250,7 +255,10 @@ function loadDeliveryByComplete()
                 });
           createDataTable('#table_tbl_delivery2');
           selectedDataTableTr('#table_tbl_delivery2');
-          }
+        },
+        error:function (message){
+          errorMessage(message);
+        }
         });
 }
 function showDeliveryById(deliveryId)
@@ -274,9 +282,8 @@ function showDeliveryById(deliveryId)
                   $("#delivery_remark").val(data.remark);
                   $('#modal-delivery').modal('toggle');
               },
-              error: function (message) {
-                  var returnMessage = JSON.parse(message.responseText)
-                  alert(returnMessage.message);
+              error:function (message){
+                errorMessage(message);
               }
           });
 }
@@ -307,9 +314,8 @@ function updateDelivery()
                   loadDelivery();
                   loadDeliveryByComplete();
                },
-               error: function (message) {
-                   var returnMessage = JSON.parse(message.responseText)
-                   alert(returnMessage.message);
+               error:function (XMLHttpRequest, textStatus, errorThrown){
+                 errorStatus(XMLHttpRequest, textStatus, errorThrown);
                }
 
         });

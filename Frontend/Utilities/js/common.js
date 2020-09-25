@@ -1,4 +1,14 @@
 var BACKEND_URL = window.location.origin + "/Backend/" ;
+
+function errorMessage(message) {
+    var returnMessage = JSON.parse(message.responseText)
+    alert(returnMessage.message);
+}
+function errorStatus(XMLHttpRequest, textStatus, errorThrown){
+    alert("Status: " + textStatus);
+    alert("Error: " + errorThrown);
+}
+
 function destroyDatatable(table, tableBody) {
     if ($.fn.DataTable.isDataTable(table)) {
         $(table).DataTable().destroy();
@@ -25,4 +35,7 @@ function selectedDataTableTr(table){
       $(this).addClass('selected').siblings().removeClass('selected');
 
   } );
+}
+function createDatepicker(datepicker){
+  $(datepicker).datepicker({ format: 'yyyy-mm-dd' });
 }
