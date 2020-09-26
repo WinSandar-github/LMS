@@ -14,8 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+
     return view('welcome');
 });
+
 Route::post('/saveCompany', array('middleware' => 'cors', 'uses' => 'RegisterController@saveCompany'));
 Route::post('/updateCompany', array('middleware' => 'cors', 'uses' => 'RegisterController@updateCompany'));
 Route::post('/loginValidate', array('middleware' => 'cors', 'uses' => 'CompanyLoginController@loginValidate'));
@@ -24,6 +26,9 @@ Route::post('/getDelivery', array('middleware' => 'cors', 'uses' => 'DeliveryCon
 Route::post('/getDeliverDetailsByDeliveryId', array('middleware' => 'cors', 'uses' => 'DeliveryController@getDeliverDetailsByDeliveryId'));
 Route::post('/updateDelivery', array('middleware' => 'cors', 'uses' => 'DeliveryController@updateDelivery'));
 Route::post('/deleteDelivery', array('middleware' => 'cors', 'uses' => 'DeliveryController@deleteDelivery'));
+Route::post('/updateDeliveryByStatus', array('middleware' => 'cors', 'uses' => 'DeliveryController@updateDeliveryByStatus'));
+Route::post('/getDeliveryByStatus', array('middleware' => 'cors', 'uses' => 'DeliveryController@getDeliveryByStatus'));
+Route::post('/getDeliveryById', array('middleware' => 'cors', 'uses' => 'DeliveryController@getDeliveryById'));
 Route::post('/saveDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliveryController@saveDeliverDetail'));
 Route::post('/updateDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliveryController@updateDeliverDetail'));
 Route::post('/deleteDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliveryController@deleteDeliverDetail'));
@@ -54,3 +59,4 @@ Route::post('getGoodReceiptInvoice',array('middleware'=>'cors','uses'=>'Goodrece
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+?>

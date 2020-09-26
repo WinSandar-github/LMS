@@ -7,12 +7,11 @@ function saveCity() {
         success: function (data) {
             alert(data.message);
             $("#txt_city_name").val("");
-            $('#table_tbl_city').DataTable().destroy();
+            destroyDatatable('#table_tbl_city','#tbl_city_container');
             getCity();
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-          alert("Status: " + textStatus);
-          alert("Error: " + errorThrown);
+        error: function (message){
+            errorMessage(message);
         }
     });
 }
@@ -23,7 +22,7 @@ function getCity() {
         url: BACKEND_URL + "getCity",
         data: "companyId=" + company_id,
         success: function (data) {
-            
+
             data.forEach(function (element) {
                 var tr = "<tr>";
                 tr += "<td >" + element.id + "</td>";
@@ -40,8 +39,7 @@ function getCity() {
 
         },
         error: function (message) {
-            var returnMessage = JSON.parse(message.responseText)
-            alert(returnMessage.message);
+            errorMessage(message);
         }
     });
 }
@@ -49,7 +47,6 @@ function getCity() {
 function showCityInfo(cityId) {
     $("#city_form").attr('action', 'javascript:updateCity()');
     $("#city_id").val(cityId);
-
     var data = "&cityId=" + cityId;
     $.ajax({
         type: "POST",
@@ -59,9 +56,8 @@ function showCityInfo(cityId) {
             $("#txt_city_name").val(data.city_name);
 
         },
-        error: function (message) {
-            var returnMessage = JSON.parse(message.responseText)
-            alert(returnMessage.message);
+        error:function (message){
+          errorMessage(message);
         }
     });
 }
@@ -74,14 +70,13 @@ function updateCity() {
         data: cityData,
         success: function (data) {
             $("#txt_city_name").val("");
-            $('#table_tbl_city').DataTable().destroy();
+            destroyDatatable('#table_tbl_city','#tbl_city_container');
             getCity();
             $("#city_form").attr('action', 'javascript:saveTblCity()');
             alert(data.message);
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("Status: " + textStatus);
-            alert("Error: " + errorThrown);
+        error: function (message) {
+            errorMessage(message);
         }
     });
 }
@@ -96,14 +91,12 @@ function deleteCity(cityName, cityId) {
             data: data,
             success: function (data) {
                 $("#txt_city_name").val("");
-                $('#table_tbl_city').DataTable().destroy();
+                destroyDatatable('#table_tbl_city','#tbl_city_container');
                 getCity();
                 alert(data.message);
-
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("Status: " + textStatus);
-                alert("Error: " + errorThrown);
+            error: function (message){
+                errorMessage(message);
             }
         });
     }
@@ -123,10 +116,8 @@ function getCitySelect(){
 
             });
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-
-            alert("Status: " + textStatus);
-            alert("Error: " + errorThrown);
+        error: function (message) {
+            errorMessage(message);
         }
     });
 }

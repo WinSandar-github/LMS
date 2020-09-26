@@ -32,7 +32,7 @@
 
       </div>
 
-      <section class="content" style="clear:both;">
+      <section class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
@@ -45,9 +45,9 @@
                   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-delivery">
                       <i class="fa fa-plus"></i>&nbsp;ခရီးစဥ် အသစ်ထည့်ရန်
                   </button>
-                  <div style="margin-top:20px;overflow-x:auto;">
-                        <h4 style="text-align:center;font-weight:bold">မပြီးဆုံးသေးသော ခရီးစဥ်များ</h4>
-                        <table id="table_tbl_delivery" class="table table-bordered " width="100%">
+                  <div class="table_css">
+                        <h4>မပြီးဆုံးသေးသော ခရီးစဥ်များ</h4>
+                        <table id="table_tbl_delivery" class="table table-bordered">
                           <thead >
                                 <tr>
                                         <th>ကားနံပါတ်</th>
@@ -69,9 +69,9 @@
                                 <tbody id="tbl_delivery_container" class="hoverTable"></tbody>
                           </table>
                   </div>
-                  <div style="margin-top:20px;overflow-x:auto;">
-                              <h4 style="text-align:center;font-weight:bold">ခရီးစဥ် ပြီးဆုံး</h4>
-                          <table id="table_tbl_delivery2" class="table table-bordered table-striped" width="100%">
+                  <div class="table_css">
+                              <h4>ခရီးစဥ် ပြီးဆုံး</h4>
+                          <table id="table_tbl_delivery2" class="table table-bordered">
                                 <thead >
                                       <tr>
                                           <th>ကားနံပါတ်</th>
@@ -85,7 +85,6 @@
                                           <th>မှတ်ချက်</th>
                                           <th>လုပ်ဆောင်သည့်သူ</th>
                                           <th>ကုမ္ပဏီအမည်</th>
-                                          <th></th>
                                           <th></th>
                                           <th></th>
                                         </tr>
@@ -103,15 +102,15 @@
 
         </div>
       </section>
-      <section class="content" style="clear:both;">
+      <section class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
               <div class="card">
                 <div class="card-body">
-                    <div style="margin-top:20px;overflow-x:auto;">
-                        <h4 style="text-align:center;font-weight:bold">ပစ္စည်း စာရင်း</h4>
-                        <table id="table_tbl_deliverydetails" class="table table-bordered table-striped" width="100%">
+                    <div class="table_css">
+                        <h4>ပစ္စည်း စာရင်း</h4>
+                        <table id="table_tbl_deliverydetails" class="table table-bordered">
                           <thead>
                                 <tr>
                                         <th>Customer အမည််</th>
@@ -151,7 +150,7 @@
             <h4 class="modal-title">ခရီးစဥ် အသစ် </h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-  <form method="post" enctype="multipart/form-data" id="fileUploadForm" action="javascript:saveDelivery(); ">
+  <form method="post" enctype="multipart/form-data" id="delivery_form" action="javascript:saveDelivery(); ">
         <div class="modal-body">
             <div class="row">
                     <div class="col-12">
@@ -163,7 +162,7 @@
                                     <i class="fas fa-truck-moving"></i>
                                   </span>
                                 </div>
-                            <input type="text" class="form-control" placeholder="ကားနံပါတ် ထည့်ရန်" id="car_number">
+                            <input type="text" class="form-control" placeholder="ကားနံပါတ် ထည့်ရန်" id="car_number" required oninvalid="this.setCustomValidity('ကားနံပါတ် ထည့်ရန်')" oninput="setCustomValidity('')">
                           </div>
                         </div>
                     </div>
@@ -178,7 +177,7 @@
                                     <i class="fas fa-user-tie"></i>
                                   </span>
                                 </div>
-                            <input type="text" class="form-control" id="driver_name" name="driver_name" placeholder="ယာဥ်မောင်းသူ နာမည် ထည့်ရန်">
+                            <input type="text" class="form-control" id="driver_name" name="driver_name" placeholder="ယာဥ်မောင်းသူ နာမည် ထည့်ရန်" required oninvalid="this.setCustomValidity('ယာဥ်မောင်းသူ နာမည် ထည့်ရန်')" oninput="setCustomValidity('')">
                           </div>
                         </div>
                     </div>
@@ -191,7 +190,7 @@
                                     <i class="fas fa-mobile-alt"></i>
                                   </span>
                                 </div>
-                            <input type="text" class="form-control" id="driver_phone" name="driver_phone" placeholder="ယာဥ်မောင်းသူ ဖုန်းနံပါတ် ထည့်ရန်">
+                            <input type="text" class="form-control" id="driver_phone" name="driver_phone" placeholder="ယာဥ်မောင်းသူ ဖုန်းနံပါတ် ထည့်ရန်" required oninvalid="this.setCustomValidity('ယာဥ်မောင်းသူ ဖုန်းနံပါတ် ထည့်ရန်')" oninput="setCustomValidity('')">
                           </div>
                         </div>
                     </div>
@@ -207,7 +206,7 @@
                                     <i class="fas fa-home"></i>
                                   </span>
                                 </div>
-                            <input type="text" class="form-control" id="from_city_name" autocomplete="off"  placeholder="စတင်ထွက်ခွါသည့် မြို့"/>
+                            <input type="text" class="form-control" id="from_city_name" autocomplete="off"  placeholder="စတင်ထွက်ခွါသည့် မြို့" required oninvalid="this.setCustomValidity('စတင်ထွက်ခွါသည့် မြိ ထည့်ရန်')" oninput="setCustomValidity('')"/>
                           </div>
                         </div>
                     </div>
@@ -220,7 +219,7 @@
                                     <i class="fas fa-home"></i>
                                   </span>
                                 </div>
-                            <input type="text" class="form-control" id="to_city_name" autocomplete="off"  placeholder="ရောက်ရှိသည့် မြို့">
+                            <input type="text" class="form-control" id="to_city_name" autocomplete="off"  placeholder="ရောက်ရှိသည့် မြို့" required oninvalid="this.setCustomValidity('ရောက်ရှိသည့် မြို့ ထည့်ရန်')" oninput="setCustomValidity('')">
                           </div>
                         </div>
                     </div>
@@ -237,7 +236,7 @@
                               <div class="form-group">
                                   <label for="exampleInputEmail1">ရောက်ရှိသည့် အချိန်</label>
 
-                                  <input type="text" class="form-control datepicker" autocomplete="off" id="arrived_dt" placeholder="ရောက်ရှိသည့် အချိန် ထည့်ရန်" onchange="getDifferentDays(this.form)">
+                                  <input type="text" class="form-control datepicker" autocomplete="off" id="arrived_dt" placeholder="ရောက်ရှိသည့် အချိန် ထည့်ရန်" onchange="getDifferentDays(this.form)" >
 
                               </div>
                       </div>
@@ -265,7 +264,7 @@
                                           <i class="fas fa-info-circle"></i>
                                         </span>
                                       </div>
-                                  <input class="form-control" type="text" id="delivery_remark" placeholder="မှတ်ချက်ရေးရန်" />
+                                  <input class="form-control" type="text" id="delivery_remark" placeholder="မှတ်ချက်ရေးရန်" required oninvalid="this.setCustomValidity('မှတ်ချက်ရေးရန်')" oninput="setCustomValidity('')"/>
                                 </div>
                               </div>
                           </div>
@@ -306,7 +305,9 @@
                             <th>အလေးချိန်</th>
                             <th>မြို့အမည်</th>
                             <th>Remark</th>
-
+                            <th>Input</th>
+                            <th></th>
+                            <th></th>
                             <th>Print</th>
                         </tr>
                     </thead>
@@ -329,7 +330,11 @@
                         </td>
                         <td></td>
                         <td>
-                            <input type="text" class="form-control" name="total_weight" id="total_weight" placeholder="Customer Name" disabled />
+                            <input type="text" class="form-control" name="total_weight" id="total_weight" placeholder="0" disabled />
+                        </td>
+                        <td></td>
+                        <td>
+                          <td><input type="number" id="qty_1" value="0"></td>
                         </td>
                         <td></td>
                         <td></td>
@@ -372,9 +377,11 @@
   <script src="../Utilities/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
   <script src="../Utilities/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
   <script src="../Utilities/js/delivery.js"></script>
+  <script src="../Utilities/js/common.js"></script>
   <script>
-    $('.datepicker').datepicker({ format: 'yyyy-mm-dd' });
-    loadDelivery();
-    </script>
+      createDatepicker('.datepicker');
+      loadDelivery();
+      loadDeliveryByComplete();
+  </script>
 </body>
 </html>

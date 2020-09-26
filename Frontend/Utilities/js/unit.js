@@ -9,9 +9,8 @@ function saveUnit() {
             $("#txt_unit_name").val("");
             getUnit();
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-          alert("Status: " + textStatus);
-          alert("Error: " + errorThrown);
+        error: function (message) {
+            errorMessage(message);
         }
     });
 }
@@ -22,7 +21,7 @@ function getUnit() {
         url: BACKEND_URL + "getUnit",
         data: "companyId=" + company_id,
         success: function (data) {
-            
+
             data.forEach(function (element) {
                 var tr = "<tr>";
                 tr += "<td >" + element.id + "</td>";
@@ -38,9 +37,8 @@ function getUnit() {
             createDataTable("#tbl_unit");
 
         },
-        error: function (message) {
-            var returnMessage = JSON.parse(message.responseText)
-            alert(returnMessage.message);
+        error:function (message){
+          errorMessage(message);
         }
     });
 }
@@ -57,9 +55,8 @@ function showUnitInfo(unitId) {
             $("#txt_unit_name").val(data.unit_name);
 
         },
-        error: function (message) {
-            var returnMessage = JSON.parse(message.responseText)
-            alert(returnMessage.message);
+        error:function (message){
+          errorMessage(message);
         }
     });
 }
@@ -76,11 +73,10 @@ function updateUnit() {
             $("#unit_form").attr('action', 'javascript:saveUnit()');
             alert(data.message);
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("Status: " + textStatus);
-            alert("Error: " + errorThrown);
+        error:function (XMLHttpRequest, textStatus, errorThrown){
+          errorStatus(XMLHttpRequest, textStatus, errorThrown);
         }
-    }); 
+    });
 }
 function deleteUnit(unitName, unitId) {
     var result = confirm("WARNING: This will delete the unit " + decodeURIComponent(unitName) + " and all related stocks! Press OK to proceed.");
@@ -96,9 +92,8 @@ function deleteUnit(unitName, unitId) {
                 alert(data.message);
 
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("Status: " + textStatus);
-                alert("Error: " + errorThrown);
+            error: function (message) {
+                errorMessage(message);
             }
         });
     }
@@ -111,7 +106,6 @@ function getUnitSelect(){
         data: "companyId="+2,
         success: function (data) {
             data.forEach(function (element) {
-
                 var option = document.createElement('option');
                 option.text = element.unit_name;
                 option.value = element.id;
@@ -120,8 +114,7 @@ function getUnitSelect(){
             });
         },
         error: function (message) {
-            var returnMessage = JSON.parse(message.responseText)
-            alert(returnMessage.message);
+            errorMessage(message);
         }
     });
 }

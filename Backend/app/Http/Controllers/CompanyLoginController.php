@@ -18,13 +18,8 @@ use App\tbl_company;
 use App\User;
 class CompanyLoginController extends Controller
 {
-protected $header = array ('Content-Type' => 'application/json; charset=UTF-8','charset' => 'utf-8');
-protected $successMessage=array('message'=>'success.');
-protected $errorMessage=array('message'=>'there is error occur.');
-protected $dataMessage=array('message'=>'there is no data.');
-public function loginValidate(Request $request)
+	public function loginValidate(Request $request)
 	{
-
 		try{
 			$user_data = json_decode($request->getContent(), true);
 			$email = $user_data['email'];
@@ -37,7 +32,6 @@ public function loginValidate(Request $request)
 				{
 						$user = auth::user();
 						$company_id=$user->company_id;
-
 						$get_data = DB::table('users')
 											->join('tbl_company', 'company_id', '=', 'tbl_company.id')
 											->where('users.company_id','=',$company_id)
@@ -45,14 +39,14 @@ public function loginValidate(Request $request)
 					          	->select('users.*', 'tbl_company.*')
 											->get();
 						if(sizeof($get_data)){
-					        return response()->json($get_data, 200, $this->header, JSON_UNESCAPED_UNICODE);
+					        return response()->json($get_data, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
 					      }
 					  else{
-					      return response()->json($this->dataMessage, 404, $this->header, JSON_UNESCAPED_UNICODE);
+					      return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
 							}
 					}
 				}catch (\Exception $e) {
-            return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.errorMessage'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
 					}
   }
 }

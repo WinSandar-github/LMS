@@ -1,4 +1,3 @@
-var Backend_url = "http://localhost:8000/"
 
 function login() {
 
@@ -12,29 +11,28 @@ function login() {
 
     var xhttp = new XMLHttpRequest();
 
-      xhttp.onreadystatechange = function () {
+    xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
-              if (xhttp.responseText.trim()=="") {
-                  document.getElementById("result").innerHTML = "<h3>Authentication Failed!</h3>";
+            if (xhttp.responseText.trim() == "") {
+                document.getElementById("result").innerHTML = "<h3>Authentication Failed!</h3>";
+            }
+            else {
+                var obj = JSON.parse((xhttp.responseText));
+
+                if (typeof (localStorage) !== "undefined") {
+                    document.getElementById("result").innerHTML = "<h3>Authentication Successful!</h3>";
+                    localStorage.setItem('userinfo', xhttp.responseText);
+
                 }
-              else {
-                    var obj = JSON.parse((xhttp.responseText));
 
-                    if (typeof (localStorage) !== "undefined") {
-                     document.getElementById("result").innerHTML = "<h3>Authentication Successful!</h3>";
-                        localStorage.setItem('userinfo', xhttp.responseText);
-                        location.href = "../CompanyComponents/company_info.html";
+            }
+        }
 
-                  }
-
-              }
-          }
-
-          if (xhttp.readyState == 4 && xhttp.status == 500) {
-              document.write(xhttp.responseText);
-          }
-      };
-      xhttp.open('POST',Backend_url+'loginValidate');
-      xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-      xhttp.send(JSON.stringify(data));
+        if (xhttp.readyState == 4 && xhttp.status == 500) {
+            document.write(xhttp.responseText);
+        }
+    };
+    xhttp.open('POST', BACKEND_URL + 'loginValidate');
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(JSON.stringify(data));
 }

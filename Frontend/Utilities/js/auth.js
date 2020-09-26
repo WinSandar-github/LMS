@@ -5,7 +5,7 @@ if (typeof (localStorage) != "undefined")
     }
     else {
         var user = JSON.parse(localStorage.getItem("userinfo"));
-        
+
         var user_id = user[0]["id"];
         var user_name = user[0]["full_name"];
         var api_key = user[0]["api_key"];

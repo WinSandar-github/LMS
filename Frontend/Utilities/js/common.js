@@ -1,4 +1,14 @@
-var BACKEND_URL = "http://localhost:8000/";
+var BACKEND_URL = "http://" + window.location.host + "/";
+
+function errorMessage(message) {
+    var returnMessage = JSON.parse(message.responseText)
+    alert(returnMessage.message);
+}
+function errorStatus(XMLHttpRequest, textStatus, errorThrown){
+    alert("Status: " + textStatus);
+    alert("Error: " + errorThrown);
+}
+
 function destroyDatatable(table, tableBody) {
     if ($.fn.DataTable.isDataTable(table)) {
         $(table).DataTable().destroy();
@@ -19,13 +29,14 @@ function createDataTable(table) {
     });
 
 }
+
 $("table").on('click', 'tr', function () {
 
     $(this).addClass('selected').siblings().removeClass('selected');
 
 });
 function get_company_info() {
-    var src = "http://localhost:8000/storage/company_logo/" + company_logo;
+    var src = BACKEND_URL + "storage/company_logo/" + company_logo;
     $('#logo').attr("src", src);
     $("#company_name").append(company_name);
     $("#address").append(adress);
@@ -68,3 +79,6 @@ function formatDate(date) {
     return newDate.getDate() + '-' + (newDate.getMonth() + 1) + "-" + newDate.getFullYear();
 }
 
+function createDatepicker(datepicker){
+  $(datepicker).datepicker({ format: 'yyyy-mm-dd' });
+}
