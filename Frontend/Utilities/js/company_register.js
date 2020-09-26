@@ -1,4 +1,4 @@
-var Backend_url = window.location.origin + "/Backend/" ;
+var Backend_url = "http://localhost:8000/" ;
 
 function saveCompanyRegister()
 {

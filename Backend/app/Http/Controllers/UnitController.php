@@ -36,31 +36,23 @@ class UnitController extends Controller
 	}
     public function getUnit(Request $request)
 	{
-        try{
-            $unit = tbl_unit::where("company_id","=",$request->input("companyId"))->get();
-            if(sizeof($unit)){
-                return response()->json($unit, 200, $this->header, JSON_UNESCAPED_UNICODE);
-            }
-            else{
-                return response()->json($this->dataMessage, 404, $this->header, JSON_UNESCAPED_UNICODE);
-            }
-        }catch (\Exception $e) {
-            return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
+        $unit = tbl_unit::where("company_id","=",$request->input("companyId"))->get();
+        if(sizeof($unit)){
+            return response()->json($unit, 200, $this->header, JSON_UNESCAPED_UNICODE);
+        }
+        else{
+            return response()->json($this->dataMessage, 404, $this->header, JSON_UNESCAPED_UNICODE);
         }
 		
 	}
     public function showUnitInfo(Request $request)
 	{
-         try{
-             $unit = tbl_unit::find($request->input("unitId"));
-             if(empty($unit)){
-                return response()->json($this->dataMessage, 404, $this->header, JSON_UNESCAPED_UNICODE);
-             }
-             else{
-                return response()->json($unit, 200, $this->header, JSON_UNESCAPED_UNICODE);
-             }
-         }catch (\Exception $e) {
-             return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
+         $unit = tbl_unit::find($request->input("unitId"));
+         if(empty($unit)){
+            return response()->json($this->dataMessage, 404, $this->header, JSON_UNESCAPED_UNICODE);
+         }
+         else{
+            return response()->json($unit, 200, $this->header, JSON_UNESCAPED_UNICODE);
          }
 	
 	}
@@ -77,13 +69,13 @@ class UnitController extends Controller
 	}
     public function deleteUnit(Request $request)
 	{
-        try{
-            $unit = tbl_unit::find($request->input("unitId"));
-            $unit->delete();
+        $unit = tbl_unit::find($request->input("unitId"));
+        if($unit->delete()){
             return response()->json($this->successMessage, 200, $this->header, JSON_UNESCAPED_UNICODE);
-        }catch (\Exception $e) {
-            return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
         }
+        else{
+            return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
+        } 
 	}
    
 }

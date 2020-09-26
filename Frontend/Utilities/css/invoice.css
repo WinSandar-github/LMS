@@ -1,0 +1,35 @@
+﻿@media print {
+    .noprint {
+        visibility: hidden;
+    }
+}
+
+body {
+    padding: 10px;
+}
+
+
+hr.n1 {
+    border-bottom: 5px double grey;
+}
+h6, table th, td {
+    text-align: center;
+}
+table th {
+    background-color: lightgreen;
+}
+img {
+    width: 80px;
+    height: 80px;
+}
+hr.line {
+    border-bottom: 5px double grey;
+}
+div {
+    text-align: center;
+}
+#company_name, #address {
+    color: #17a2b8;
+    font-weight: 500;
+}
+

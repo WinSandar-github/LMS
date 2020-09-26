@@ -24,8 +24,8 @@ class CityController extends Controller
 	{
         try{
             $city=new tbl_city_list();
-            $city->city_name=$request->input("city_name");
-            $city->company_id=$request->input("company_id");
+            $city->city_name=$request->input("cityName");
+            $city->company_id=$request->input("companyId");
             $city->save();
             return response()->json($this->successMessage, 200, $this->header, JSON_UNESCAPED_UNICODE);
            
@@ -36,39 +36,31 @@ class CityController extends Controller
 	}
     public function getCity(Request $request)
 	{
-        try{
-            $city_list = tbl_city_list::where("company_id","=",$request->input("company_id"))->get();
-            if(sizeof($city_list)){
-                return response()->json($city_list, 200, $this->header, JSON_UNESCAPED_UNICODE);
-            }
-            else{
-                return response()->json($this->dataMessage, 404, $this->header, JSON_UNESCAPED_UNICODE);
-            }
-        }catch (\Exception $e) {
-            return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
+        $cityList = tbl_city_list::where("company_id","=",$request->input("companyId"))->get();
+        if(sizeof($cityList)){
+            return response()->json($cityList, 200, $this->header, JSON_UNESCAPED_UNICODE);
+        }
+        else{
+            return response()->json($this->dataMessage, 404, $this->header, JSON_UNESCAPED_UNICODE);
         }
 		
 	}
     public function getCityInfo(Request $request)
 	{
-         try{
-             $city = tbl_city_list::find($request->input("city_id"));
-             if(empty($city)){
-                return response()->json($this->dataMessage, 404, $this->header, JSON_UNESCAPED_UNICODE);
-             }
-             else{
-                return response()->json($city, 200, $this->header, JSON_UNESCAPED_UNICODE);
-             }
-         }catch (\Exception $e) {
-             return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
+         $city = tbl_city_list::find($request->input("cityId"));
+         if(empty($city)){
+            return response()->json($this->dataMessage, 404, $this->header, JSON_UNESCAPED_UNICODE);
+         }
+         else{
+            return response()->json($city, 200, $this->header, JSON_UNESCAPED_UNICODE);
          }
 	
 	}
     public function updateCity(Request $request)
 	{
         try{
-            $city = tbl_city_list::find($request->input("city_id"));
-		    $city->city_name = $request->input("city_name");
+            $city = tbl_city_list::find($request->input("cityId"));
+		    $city->city_name = $request->input("cityName");
             $city->save();
             return response()->json($this->successMessage, 200, $this->header, JSON_UNESCAPED_UNICODE);
         }catch (\Exception $e) {
@@ -77,11 +69,11 @@ class CityController extends Controller
 	}
     public function deleteCity(Request $request)
 	{
-        try{
-            $city = tbl_city_list::find($request->input("city_id"));
-            $city->delete();
-            return response()->json($this->successMessage, 200, $this->header, JSON_UNESCAPED_UNICODE);
-        }catch (\Exception $e) {
+        $city = tbl_city_list::find($request->input("cityId"));
+        if($city->delete()){
+             return response()->json($this->successMessage, 200, $this->header, JSON_UNESCAPED_UNICODE);
+        }
+        else{
             return response()->json($this->errorMessage, 500, $this->header, JSON_UNESCAPED_UNICODE);
         }
 	}

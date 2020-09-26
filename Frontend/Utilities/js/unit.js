@@ -1,6 +1,5 @@
-var BACKEND_URL = "http://" + window.location.host + "/";
 function saveUnit() {
-    var unitData = "companyId=" + company_id + "&unitName=" +$("#txt_unit_name").val();
+    var unitData = "companyId=" + company_id + "&unitName=" + $("#txt_unit_name").val();
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "createUnit",
@@ -29,9 +28,9 @@ function getUnit() {
                 tr += "<td >" + element.id + "</td>";
                 tr += "<td >" + element.unit_name + "</td>";
                 tr += "<td class='alignright'><div class='btn-group'>" +
-                    "<button type='button' class='btn btn-warning btn-xs' onClick='showUnitInfo(" + element.id + ")'>" +
+                    "<button type='button' class='btn btn-warning btn-edit btn-xs' onClick='showUnitInfo(" + element.id + ")'>" +
                     "<li class='fas fa-edit'></li></button> ";
-                tr += "<button type='button' class='btn btn-danger btn-xs' onClick=deleteUnit(\"" + encodeURIComponent(element.unit_name) + "\"," + element.id + ")><li class='fa fa-trash' ></li ></button ></div ></td > ";
+                tr += "<button type='button' class='btn btn-danger btn-delete btn-xs' onClick=deleteUnit(\"" + encodeURIComponent(element.unit_name) + "\"," + element.id + ")><li class='fa fa-trash' ></li ></button ></div ></td > ";
                 tr += "</tr>";
                 $("#tbl_unit_body").append(tr);
 
@@ -109,9 +108,8 @@ function getUnitSelect(){
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getUnit",
-        data: "companyId="+1,
+        data: "companyId="+2,
         success: function (data) {
-            console.log(data);
             data.forEach(function (element) {
 
                 var option = document.createElement('option');
@@ -121,10 +119,9 @@ function getUnitSelect(){
 
             });
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-
-            alert("Status: " + textStatus);
-            alert("Error: " + errorThrown);
+        error: function (message) {
+            var returnMessage = JSON.parse(message.responseText)
+            alert(returnMessage.message);
         }
     });
 }

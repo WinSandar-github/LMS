@@ -1,7 +1,7 @@
 if (typeof (localStorage) != "undefined")
 {
     if (localStorage.getItem("userinfo") == null) {
-        location.href = "login.html";
+        location.href = "../authComponents/login.html";
     }
     else {
         var user = JSON.parse(localStorage.getItem("userinfo"));
@@ -14,6 +14,7 @@ if (typeof (localStorage) != "undefined")
         var adress = user[0]["address"];
         var ref_initials = user[0]["ref_initials"];
         var role = user[0]["role"];
+        var company_name = user[0]["name"];
 
     }
 }

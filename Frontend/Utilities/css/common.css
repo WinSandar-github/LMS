@@ -1,0 +1,64 @@
+﻿body {
+    font-family: 'Padauk' !important;
+}
+
+table th, td {
+    white-space: nowrap;
+}
+
+#company_name, #user_name {
+    color: #17a2b8;
+    font-weight: 600 !important;
+}
+.btn-edit {
+    background-color: #78e84a !important;
+    border-color: #78e84a !important;
+}.btn-edit:hover {
+    background-color: #64c93a !important;
+    border-color: #64c93a !important;
+ }
+.btn-delete {
+    background-color: #fa3d45 !important;
+    border-color: #fa3d45 !important;
+    color: black !important;
+}
+.btn-delete:hover {
+    background-color: #f4111a !important;
+    border-color: #f4111a !important;
+    color: black !important;
+}
+.btn-print {
+    background-color: #3d8ee6 !important;
+    border-color: #3d8ee6 !important;
+    color: black !important;
+}
+
+.btn-print:hover {
+    background-color: #2a7fdb !important;
+    border-color: #2a7fdb !important;
+    color: black !important;
+}
+.btn-order {
+    background-color: #38a9ea !important;
+    border-color: #38a9ea !important;
+    color: black !important;
+}
+
+.btn-order:hover {
+    background-color: #5498e1 !important;
+    border-color: #5498e1 !important;
+    color: black !important;
+}
+.btn-product {
+    background-color: #82d995 !important;
+    border-color: #82d995 !important;
+    color: black !important;
+}
+
+.btn-product:hover {
+    background-color: #3bd35e !important;
+    border-color: #3bd35e !important;
+    color: black !important;
+}
+
+

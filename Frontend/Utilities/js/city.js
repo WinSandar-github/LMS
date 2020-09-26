@@ -1,6 +1,5 @@
-var BACKEND_URL = "http://" + window.location.host + "/";
 function saveCity() {
-    var cityData = "company_id=" + company_id + "&city_name=" + $("#txt_city_name").val();
+    var cityData = "companyId=" + company_id + "&cityName=" + $("#txt_city_name").val();
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "createCity",
@@ -18,14 +17,11 @@ function saveCity() {
     });
 }
 function getCity() {
-    if ($.fn.DataTable.isDataTable('#table_tbl_city')) {
-        $('#table_tbl_city').DataTable().destroy();
-    }
-    $("#tbl_city_container").empty();
+    destroyDatatable("#table_tbl_city", "#tbl_city_container");
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getCity",
-        data: "company_id=" + company_id,
+        data: "companyId=" + company_id,
         success: function (data) {
             
             data.forEach(function (element) {
@@ -33,24 +29,14 @@ function getCity() {
                 tr += "<td >" + element.id + "</td>";
                 tr += "<td >" + element.city_name + "</td>";
                 tr += "<td class='alignright'><div class='btn-group'>" +
-                    "<button type='button' class='btn btn-warning btn-xs' onClick='showCityInfo(" + element.id + ")'>" +
+                    "<button type='button' class='btn btn-warning btn-edit btn-xs' onClick='showCityInfo(" + element.id + ")'>" +
                     "<li class='fas fa-edit'></li></button> ";
-                tr += "<button type='button' class='btn btn-danger btn-xs' onClick=deleteCity(\"" + encodeURIComponent(element.city_name) + "\"," + element.id + ")><li class='fa fa-trash' ></li ></button ></div ></td > ";
+                tr += "<button type='button' class='btn btn-danger btn-delete btn-xs' onClick=deleteCity(\"" + encodeURIComponent(element.city_name) + "\"," + element.id + ")><li class='fa fa-trash' ></li ></button ></div ></td > ";
                 tr += "</tr>";
                 $("#tbl_city_container").append(tr);
 
             });
-            var table_tbl_city = $('#table_tbl_city').DataTable({
-                'destroy': true,
-                'paging': true,
-                'lengthChange': false,
-                "pageLength": 5,
-                'searching': false,
-                'ordering': true,
-                'info': false,
-                'autoWidth': true,
-                "order": [[0, "desc"]]
-            });
+            createDataTable("#table_tbl_city");
 
         },
         error: function (message) {
@@ -60,11 +46,11 @@ function getCity() {
     });
 }
 
-function showCityInfo(city_id) {
+function showCityInfo(cityId) {
     $("#city_form").attr('action', 'javascript:updateCity()');
-    $("#city_id").val(city_id);
+    $("#city_id").val(cityId);
 
-    var data = "&city_id=" + city_id;
+    var data = "&cityId=" + cityId;
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getCityInfo",
@@ -81,7 +67,7 @@ function showCityInfo(city_id) {
 }
 
 function updateCity() {
-    var cityData = "city_id=" + $("#city_id").val() + "&city_name=" + $("#txt_city_name").val();
+    var cityData = "cityId=" + $("#city_id").val() + "&cityName=" + $("#txt_city_name").val();
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "updateCity",
@@ -100,10 +86,10 @@ function updateCity() {
     });
 }
 
-function deleteCity(city_name, city_id) {
-    var result = confirm("WARNING: This will delete the city " + decodeURIComponent(city_name) + " and all related stocks! Press OK to proceed.");
+function deleteCity(cityName, cityId) {
+    var result = confirm("WARNING: This will delete the city " + decodeURIComponent(cityName) + " and all related stocks! Press OK to proceed.");
     if (result) {
-        var data = "city_id=" + city_id;
+        var data = "cityId=" + city_id;
         $.ajax({
             type: "POST",
             url: BACKEND_URL + "deleteCity",
@@ -127,11 +113,9 @@ function getCitySelect(){
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getCity",
-        data: "company_id="+1,
+        data: "companyId=" + company_id,
         success: function (data) {
-            console.log(data);
             data.forEach(function (element) {
-
                 var option = document.createElement('option');
                 option.text = element.city_name;
                 option.value = element.id;

@@ -46,6 +46,10 @@ Route::post('getGoodReceipt/{imcompleteOrderStatus}',array('middleware'=>'cors',
 Route::post('showGoodReceiptInfo',array('middleware'=>'cors','uses'=>'GoodreceiptController@showGoodReceiptInfo'));
 Route::post('updateGoodReceipt',array('middleware'=>'cors','uses'=>'GoodreceiptController@updateGoodReceipt'));
 Route::post('deleteGoodReceipt',array('middleware'=>'cors','uses'=>'GoodreceiptController@deleteGoodReceipt'));
+//For Goodreceiptdetail CRUD
+Route::post('createGoodReciptDetails',array('middleware'=>'cors','uses'=>'GoodreceiptController@createGoodReciptDetails'));
+Route::post('getGoodReceiptDetail',array('middleware'=>'cors','uses'=>'GoodreceiptController@getGoodReceiptDetail'));
+Route::post('getGoodReceiptInvoice',array('middleware'=>'cors','uses'=>'GoodreceiptController@getGoodReceiptInvoice'));
 
 Auth::routes();
 
