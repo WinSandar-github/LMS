@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script type="text/javascript" src="../Utilities/js/auth.js"></script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Logistics | Delivery</title>
@@ -17,7 +16,7 @@
   <link rel="stylesheet" href="../Utilities/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../Utilities/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="../Utilities/css/custom.css">
-
+  <link rel="stylesheet" href="../Utilities/css/common.css" />
 </head>
 <body class="sidebar-mini layout-fixed layout-navbar-fixed text-sm">
   <div class="wrapper">
@@ -269,10 +268,28 @@
                               </div>
                           </div>
                 </div>
-
+                <div class="row">
+                  <div class="col-12">
+                      <div class="form-group">
+                          <label for="exampleInputEmail1">အခြေအနေ</label>
+                          <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fas fa-info-circle"></i>
+                                </span>
+                              </div>
+                              <select class="form-control" id="selected_status">
+                                <option value="0">Processing</option>
+                                <option value="1">Completed</option>
+                              </select>
+                        </div>
+                      </div>
+                  </div>
+                </div>
         </div>
 
         <div class="modal-footer">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button class="btn btn-primary" type="submit">
                             <i class="fa fa-floppy-o"></i>  Save
                     </button>
@@ -347,6 +364,7 @@
         </div>
 
         <div class="modal-footer">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button class="btn btn-primary" type="submit">
                       <i class="fa fa-floppy-o"></i>  Save
               </button>
@@ -378,6 +396,7 @@
   <script src="../Utilities/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
   <script src="../Utilities/js/delivery.js"></script>
   <script src="../Utilities/js/common.js"></script>
+  <script type="text/javascript" src="../Utilities/js/auth.js"></script>
   <script>
       createDatepicker('.datepicker');
       loadDelivery();

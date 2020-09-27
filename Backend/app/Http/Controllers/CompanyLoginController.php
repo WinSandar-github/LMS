@@ -20,7 +20,6 @@ class CompanyLoginController extends Controller
 {
 	public function loginValidate(Request $request)
 	{
-		try{
 			$user_data = json_decode($request->getContent(), true);
 			$email = $user_data['email'];
 			$password = $user_data['password'];
@@ -45,9 +44,7 @@ class CompanyLoginController extends Controller
 					      return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
 							}
 					}
-				}catch (\Exception $e) {
-            return response()->json(config('common.errorMessage'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
-					}
+
   }
 }
 ?>
