@@ -49,17 +49,43 @@ function saveCompanyRegister() {
     form.append('birthday', birthday);
     form.append('avatar', avatar);
     $.ajax({
-        type: "POST",
-        url: BACKEND_URL + "saveCompany",
-        data: form,
-        contentType: false,
-        processData: false,
-        success: function (data) {
-            alert(data.message);
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            errorStatus(XMLHttpRequest, textStatus, errorThrown);
-        }
+            type: "POST",
+            url: BACKEND_URL + "saveCompany",
+            data: form,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+             alert(data.message);
+             location.href='../CompanyComponents/company_info.html';
+           },
+           error:function (XMLHttpRequest, textStatus, errorThrown){
+             errorStatus(XMLHttpRequest, textStatus, errorThrown);
+           }
 
     });
+}
+function loadOpen(){
+  document.getElementById("defaultBack").click();
+}
+function openInfo(evt, infoName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(infoName).style.display = "block";
+  if(infoName=='Next'){
+    document.getElementById('defaultBack').style.display = "block";
+		document.getElementById('defaultNext').style.display = "none";
+    document.getElementById('btnLogin').style.display = "block";
+    document.getElementById('defaultBack').style.float = "left";
+	}
+	else if(infoName=='Back'){
+		document.getElementById('defaultBack').style.display = "none";
+		document.getElementById('defaultNext').style.display = "block";
+    }
 }

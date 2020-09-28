@@ -61,4 +61,65 @@ table th, td {
     color: black !important;
 }
 
+.rowClass{
+  padding:100px;
+}
+.radio{
+  text-align: center;
+}
+.container{
+  padding: 15px 0px 15px 0px;
+}
+.custom-input{
+  display: flex;
+}
+.content{
+  clear:both;
+}
+.table_css{
+  margin-top:20px;overflow-x:auto;
+}
+.table_css h4{
+  text-align:center;
+}
+.date_range_filter{
+  margin : 10px;
+}
+.company_info h2,span{
+  text-align: center;
+}
+.hr{
+  border-bottom: 5px double grey;
+}
+.ui-thead{
+  background-color: #B2EBF2;
+}
+.border-tr{
+  border-bottom: 1px solid black;
+}
+.border-tr td,table tr{
+  text-align: center;
+}
 
+.header-card{
+  background-color: #E1F5FE;
+}
+.custom-class{
+  background-color: #ECEFF1;
+}
+.btn-login{
+  background-color: #B2EBF2;
+}
+.tabcontent {
+  display: none;
+
+}
+.icon{
+  color:#2196f3;
+}
+.company_info h2,h4{
+  text-align:center;
+  margin:3px;
+  font-size: 18px;
+  font-weight: bold;
+}
