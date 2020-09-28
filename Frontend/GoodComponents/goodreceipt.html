@@ -1,38 +1,34 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Logistics | GoodReceipt</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../Utilities/plugins/fontawesome-free/css/all.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../Utilities/dist/css/adminlte.min.css">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="../Utilities/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="../Utilities/plugins/daterangepicker/daterangepicker.css">
-  <link rel="stylesheet" href="../Utilities/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../Utilities/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="../Utilities/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="../Utilities/css/custom.css">
-  <style>
-      body {
-          font-family: 'Padauk' !important;
-      }
-
-  </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Logistics | GoodReceipt</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../Utilities/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../Utilities/dist/css/adminlte.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../Utilities/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="../Utilities/plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="../Utilities/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../Utilities/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../Utilities/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="../Utilities/plugins/datatables-select/css/select.bootstrap4.min.css">
+    <link rel="stylesheet" href="../Utilities/css/custom.css" />
+    <link rel="stylesheet" href="../Utilities/css/common.css" />
 </head>
 <body class="sidebar-mini layout-fixed layout-navbar-fixed text-sm">
     <div class="wrapper">
 
         <!-- Navbar -->
-        <header class="main-header"></header>
+        <header class="main-header"> </header>
 
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
@@ -65,7 +61,6 @@
                                         <table id="tbl_goodreceipt" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>ID</th>
                                                     <th>Cash Method</th>
                                                     <th>ပစ္စည်းလက်ခံ နံပါတ်</th>
                                                     <th>ကုန်သည်အမည်</th>
@@ -91,6 +86,38 @@
                     </div>
                     <!-- /.row (main row) -->
                 </div><!-- /.container-fluid -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">ပစ္စည်းလက်ခံ အသေးစိပ်</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div style="overflow-x:auto;">
+                                        <table id="tbl_goodreceipt_detail" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>ပစ္စည်းအမည်</th>
+                                                    <th>အရေအတွက်</th>
+                                                    <th>အတိုင်းအတာစံ</th>
+                                                    <th>အလေးချိန်</th>
+                                                    <th>မှတ်ချက်</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbl_goodreceipt_detail_body" class="hoverTable"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.row (main row) -->
+                </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->
         </div>
@@ -103,99 +130,168 @@
                         <h4 class="modal-title">Add/Update GoodReceipt</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                        <form enctype="multipart/form-data" action="javascript:saveGoodReceipt();" id="goodReceiptForm">
-                            <div class="modal-body">
-                                <input type="hidden" id="goodReceiptId" value="" />
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">ကုန်သည်အမည်</label>
-                                            <input type="text" class="form-control" id="txt_customer_name" name="txt_customer_name" placeholder="Customer အမည်">
-                                        </div>
+                    <form enctype="multipart/form-data" action="javascript:saveGoodReceipt();" id="goodReceiptForm">
+                        <div class="modal-body">
+                            <input type="hidden" id="goodReceiptId" value="" />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">ကုန်သည်အမည်</label>
+                                        <input type="text" class="form-control" id="txt_customer_name" name="txt_customer_name" placeholder="Customer အမည်">
                                     </div>
-                                    <div class="col-md-6">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <div class="form-group">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">နေ့စွဲ</label>
-                                                <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd-mm-yyyy" data-mask id="txt_date" placeholder="နေ့စွဲ ထည့်ရန်">
-                                            </div>
+                                            <label for="exampleInputEmail1">နေ့စွဲ</label>
+                                            <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd-mm-yyyy" data-mask id="txt_date" placeholder="နေ့စွဲ ထည့်ရန်">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-check">
-                                            <label class="form-check-label" for="check1">
-                                                <input type="checkbox" class="form-check-input" id="vip_customer" name="vip_customer">VIP Customer?
-                                            </label>
-                                        </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="check1">
+                                            <input type="checkbox" class="form-check-input" id="vip_customer" name="vip_customer">VIP Customer?
+                                        </label>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">နေရပ်လိပ်စာ</label>
-                                            <textarea class="form-control" id="txt_address" name="txt_address" placeholder="နေရပ်လိပ်စာ"></textarea>
-                                        </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">နေရပ်လိပ်စာ</label>
+                                        <textarea class="form-control" id="txt_address" name="txt_address" placeholder="နေရပ်လိပ်စာ"></textarea>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">ကုန်ပို့သူအမည်</label>
-                                            <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်">
-                                        </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">ကုန်ပို့သူအမည်</label>
+                                        <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်">
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">မြို့အမည် ရွေးရန်</label>
-                                                <select class="form-control" id="select_city" name="select_city">
-                                                    <option value="" selected disabled>မြို့အမည် ရွေးရန်</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>
-                                <div class="row">
-
-                                    <div class="col-md-6">
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">ဖုန်းနံပါတ်</label>
-                                            <input type="text" class="form-control" id="txt_phno" placeholder="ဖုန်းနံပါတ် ထည့်ရန်">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Cash Method ရွေးရန်</label>
-                                            <select class="form-control" id="select_cash_method">
-                                                <option value="" selected disabled>Cash Method ရွေးရန်</option>
-                                                <option value="ငွေရှင်းပြီး">ငွေရှင်းပြီး</option>
-                                                <option value="ဂိတ်ဆုံး">ဂိတ်ဆုံး</option>
+                                            <label for="exampleInputEmail1">မြို့အမည် ရွေးရန်</label>
+                                            <select class="form-control" id="select_city" name="select_city">
+                                                <option value="" selected disabled>မြို့အမည် ရွေးရန်</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">မှတ်ချက်</label>
-                                            <textarea type="text" class="form-control" id="txt_remark" name="txt_remark" placeholder="မှတ်ချက် ထည့်ရန်"></textarea>
-                                        </div>
-                                    </div>
 
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">ဖုန်းနံပါတ်</label>
+                                        <input type="text" class="form-control" id="txt_phno" placeholder="ဖုန်းနံပါတ် ထည့်ရန်">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Cash Method ရွေးရန်</label>
+                                        <select class="form-control" id="select_cash_method">
+                                            <option value="" selected disabled>Cash Method ရွေးရန်</option>
+                                            <option value="ငွေရှင်းပြီး">ငွေရှင်းပြီး</option>
+                                            <option value="ဂိတ်ဆုံး">ဂိတ်ဆုံး</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">မှတ်ချက်</label>
+                                        <textarea type="text" class="form-control" id="txt_remark" name="txt_remark" placeholder="မှတ်ချက် ထည့်ရန်"></textarea>
+                                    </div>
                                 </div>
 
                             </div>
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-floppy-o"></i> Save
-                                </button>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">
+                                <i class="fa fa-floppy-o"></i> Save
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modal-product">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Product</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <form enctype="multipart/form-data" action="javascript:saveProduct();" id="productForm">
+                        <input type="hidden" id="goodReceiptId" />
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">ပစ္စည်း အမည်</label>
+                                        <input type="text" class="form-control" id="txt_product_name" name="txt_product_name" placeholder="ပစ္စည်း အမည်">
+                                    </div>
+                                </div>
                             </div>
-                        </form>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">အတိုင်းအတာ ရွေးရန်</label>
+                                            <select class="form-control" id="select_unit" name="select_unit">
+                                                <option value="" selected disabled>အတိုင်းအတာရွေးရန်</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">အရေအတွက်</label>
+                                        <input type="text" class="form-control" id="txt_quantity" name="txt_quantity" placeholder="အရည်အတွက် ထည့်ရန်">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">အလေးချိန်</label>
+                                        <input type="text" class="form-control" id="txt_weight" name="txt_weight" placeholder="အလေးချိန် ထည့်ရန်">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">မှတ်ချက်</label>
+                                        <input type="text" class="form-control" id="txt_product_remark" name="txt_product_remark" placeholder="မှတ်ချက် ထည့်ရန်">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">
+                                <i class="fa fa-floppy-o"></i> Save
+                            </button>
+                        </div>
+                    </form>
 
                 </div>
             </div>
@@ -229,16 +325,16 @@
     <!-- InputMask -->
     <script src="../Utilities/plugins/moment/moment.min.js"></script>
     <script src="../Utilities/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
-    <script src="../Utilities/js/auth.js"></script>
     <script src="../Utilities/js/city.js"></script>
     <script src="../Utilities/js/unit.js"></script>
     <script src="../Utilities/js/good_receipt.js"></script>
     <script src="../Utilities/js/common.js"></script>
-
+    <script src="../Utilities/js/auth.js"></script>
     <script>
         $('#txt_date').inputmask();
-        //getCitySelect();
+        getCitySelect();
         getGoodReceipt();
+        getUnitSelect();
     </script>
 </body>
 </html>

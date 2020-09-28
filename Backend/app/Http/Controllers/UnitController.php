@@ -19,39 +19,30 @@ class UnitController extends Controller
             $unit->company_id=$request->input("companyId");
             $unit->save();
             return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
-          }catch (\Exception $e) {
+        }catch (\Exception $e) {
             return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
-  }
+    }
   public function getUnit(Request $request)
-	{
-        try{
-            $unit = tbl_unit::where("company_id","=",$request->input("companyId"))->get();
-            if(sizeof($unit)){
-                return response()->json($unit, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
-            }
-            else{
-                return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
-            }
-        }catch (\Exception $e) {
-            return response()->jsonconfig('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+	{   
+        $unit = tbl_unit::where("company_id","=",$request->input("companyId"))->get();
+        if(sizeof($unit)){
+            return response()->json($unit, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
-
-	}
-  public function showUnitInfo(Request $request)
+        else{
+            return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+        }
+    }
+    public function showUnitInfo(Request $request)
 	{
-         try{
-             $unit = tbl_unit::find($request->input("unitId"));
-             if(empty($unit)){
-                return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
-             }
-             else{
-                return response()->json($unit, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
-             }
-         }catch (\Exception $e) {
-             return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+         $unit = tbl_unit::find($request->input("unitId"));
+         if(empty($unit)){
+            return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
          }
-  }
+         else{
+            return response()->json($unit, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+         }
+    }
   public function updateUnit(Request $request)
 	{
         try{
@@ -65,13 +56,12 @@ class UnitController extends Controller
 	}
   public function deleteUnit(Request $request)
 	{
-        try{
-            $unit = tbl_unit::find($request->input("unitId"));
-            $unit->delete();
-            return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
-        }catch (\Exception $e) {
-            return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
-        }
+        $unit = tbl_unit::find($request->input("unitId"));
+        if($unit->delete()){
+           return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);}
+        else{
+             return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+        } 
 	}
 }
 ?>

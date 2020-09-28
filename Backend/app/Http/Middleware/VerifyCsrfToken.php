@@ -40,7 +40,9 @@ class VerifyCsrfToken extends Middleware
       'getGoodReceipt/*',
       'showGoodReceiptInfo',
       'updateGoodReceipt',
-      'deleteGoodReceipt'
-
+      'deleteGoodReceipt',
+      'createGoodReciptDetails',
+      'getGoodReceiptDetail',
+      'getGoodReceiptInvoice',
     ];
 }
