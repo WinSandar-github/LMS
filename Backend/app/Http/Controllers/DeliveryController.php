@@ -15,6 +15,10 @@ use Session;
 use DB;
 use App\tbl_delivery;
 use App\tbl_delivery_details;
+use App\tbl_good_receipt;
+use App\tbl_company;
+use App\tbl_order;
+use App\tbl_order_details;
 class DeliveryController extends Controller
 {
   public function saveDelivery(Request $request)
@@ -41,7 +45,6 @@ class DeliveryController extends Controller
    }
   public function getDelivery(Request $request)
   {
-    try{
     $delivery = DB::table('tbl_delivery')
               ->join('tbl_company','company_id','tbl_company.id')
               ->join('users', 'user_id', '=', 'users.id')
@@ -57,14 +60,12 @@ class DeliveryController extends Controller
       else{
           return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
       }
-  }catch (\Exception $e) {
-      return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
   }
-}
   public function saveDeliverDetail(Request $request)
   {
       try{
         $deliverDetails=new tbl_delivery_details();
+        $date=new DateTime();
         $deliverDetails->receiver_name=$request->input("receiverName");
         $deliverDetails->product_name=$request->input("productName");
         $deliverDetails->total_quantity=$request->input("totalQuantity");
@@ -72,6 +73,7 @@ class DeliveryController extends Controller
         $deliverDetails->weight=$request->input("weight");
         $deliverDetails->to_city_name=$request->input("toCityName");
         $deliverDetails->remark=$request->input("remark");
+        $deliverDetails->out_date=$date;
         $deliverDetails->user_id=$request->input("userId");
         $deliverDetails->company_id=$request->input("companyId");
         $deliverDetails->delivery_id=$request->input("deliveryId");
@@ -86,8 +88,7 @@ class DeliveryController extends Controller
   }
   public function getDeliverDetailsByDeliveryId(Request $request)
   {
-      try{
-        $deliverDetails =tbl_delivery_details::where('delivery_id','=',$request->input('deliveryId'))
+      $deliverDetails =tbl_delivery_details::where('delivery_id','=',$request->input('deliveryId'))
                           ->get();
           if(sizeof($deliverDetails)){
               return response()->json($deliverDetails, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -95,25 +96,11 @@ class DeliveryController extends Controller
           else{
               return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
           }
-      }catch (\Exception $e) {
-          return response()->json(config('common.errorMessage'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
-      }
   }
-  public function updateDeliveryByStatus(Request $request)
-  {
-    try{
-        $delivery = tbl_delivery::find($request->input("deliveryId"));
-        $delivery->status = $request->input("status");
-        $delivery->save();
-        return response()->json(config('common.successMessage'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
-    }catch (\Exception $e) {
-        return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
-    }
-  }
+  
   public function getDeliveryByStatus(Request $request)
   {
-    try{
-      $delivery = DB::table('tbl_delivery')
+    $delivery = DB::table('tbl_delivery')
                 ->join('tbl_company','company_id','tbl_company.id')
                 ->join('users', 'user_id', '=', 'users.id')
                 ->where('users.company_id','=',$request->input("companyId"))
@@ -128,23 +115,16 @@ class DeliveryController extends Controller
         else{
             return response()->json(config('common.dataMessage'), 404,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
-    }catch (\Exception $e) {
-        return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
-    }
   }
   public function getDeliveryById(Request $request)
   {
-    try{
-        $delivery = tbl_delivery::find($request->input("deliveryId"));
+      $delivery = tbl_delivery::find($request->input("deliveryId"));
         if(empty($delivery)){
            return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
         else{
            return response()->json($delivery, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
-    }catch (\Exception $e) {
-        return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
-    }
   }
   public function updateDelivery(Request $request)
   {
@@ -159,11 +139,45 @@ class DeliveryController extends Controller
         $delivery->end_dt=$request->input("arrivedDate");
         $delivery->arrived=$request->input("differentArrived");
         $delivery->remark=$request->input("remark");
+        $delivery->status=$request->input("status");
         $delivery->save();
         return response()->json(config('common.successMessage'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
     }catch (\Exception $e) {
         return response()->json(config('common.errorMessage'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
     }
+  }
+  public function getCompanyInfoBydeliveryId(Request $request)
+  {
+    $infodetails =DB::table('tbl_delivery')
+          ->join('tbl_company','company_id','tbl_company.id')
+          ->join('tbl_delivery_details','tbl_delivery.id','tbl_delivery_details.delivery_id')
+          ->where('tbl_delivery.id','=',$request->input("deliveryId"))
+          ->where('tbl_delivery_details.delivery_id','=',$request->input("deliveryId"))
+          ->select('tbl_company.*','tbl_delivery.*','tbl_delivery_details.out_date')
+          ->get();
+      if(sizeof($infodetails)){
+        return response()->json($infodetails,200, config('common.header'),JSON_UNESCAPED_UNICODE);
+      }
+      else{
+          return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+      }
+
+  }
+  public function getInvoiceDetailsBydeliveryId(Request $request)
+  {
+    $invoicedetails =DB::table('tbl_delivery_details')
+          ->join('tbl_good_receipt', 'tbl_delivery_details.good_receipt_id','=','tbl_good_receipt.id')
+          ->join('tbl_city_lists', 'tbl_city_lists.id','=','tbl_good_receipt.city_id')
+          ->join('tbl_order', 'tbl_good_receipt.order_no','=','tbl_order.order_no')
+          ->join('tbl_order_details', 'tbl_order.id','=','tbl_order_details.order_id')
+          ->select('tbl_good_receipt.customer_name','tbl_city_lists.city_name','tbl_order.*','tbl_order_details.*')
+          ->get();
+      if(sizeof($invoicedetails)){
+        return response()->json($invoicedetails,200, config('common.header'),JSON_UNESCAPED_UNICODE);
+      }
+      else{
+          return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+      }
   }
 }
  ?>

@@ -9,7 +9,7 @@ function saveDelivery()
         var arrivedDate = $("#arrived_dt").val();
         var differentArrived = $("#different_day").val();
         var remark = $("#delivery_remark").val();
-        var status=0;
+        var status=$('#selected_status').val();
 
         var delivery = new FormData;;
         delivery.append('carNumber',carNumber);
@@ -32,7 +32,7 @@ function saveDelivery()
         }
         else{
           $.ajax({
-                  type: "post",
+                  type: "POST",
                   url: BACKEND_URL + "saveDelivery",
                   data: delivery,
                   contentType: false,
@@ -74,7 +74,7 @@ function loadDelivery()
 {
         destroyDatatable("#table_tbl_delivery","#tbl_delivery_container");
         $.ajax({
-                type: "post",
+                type: "POST",
                 url: BACKEND_URL + "getDelivery",
                 data: "companyId=" + company_id,
                 success: function (data) {
@@ -91,15 +91,14 @@ function loadDelivery()
                     tr += "<td >" + element.remark + "</td>";
                     tr += "<td >" + element.full_name + "</td>";
                     tr += "<td >" + element.name + "</td>";
-                    tr += "<td class='alignright'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")>Add DeliveryDetails</button ></td >" ;
-                    tr += "<td class='alignright'><button type='button' class='btn btn-primary' onClick=completeDeliveryByStatus("+ element.id +")>Complete</button ></td > ";
-                    tr += "<td class='alignright'><button type='button' class='btn btn-warning' onClick=showDeliveryById("+ element.id +")>Update Delivery</button ></td > ";
+                    tr += "<td class='alignright'><button type='button' class='btn btn-product' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")><i class='fas fa-plus'></i>  Add DeliveryDetails</button ></td >" ;
+                    tr += "<td class='alignright'><button type='button' class='btn btn-edit' onClick=showDeliveryById("+ element.id +")><i class='fas fa-edit'></i></button ></td > ";
+                    tr += "<td class='alignright'><button type='button' class='btn btn-print' onClick=printDeliveryById("+ element.id +")><i class='fas fa-print'> Print</button ></td > ";
                     tr += "</tr>";
                     $("#tbl_delivery_container").append(tr);
 
                 });
                 createDataTable('#table_tbl_delivery');
-                selectedDataTableTr('#table_tbl_delivery');
                 },
                 error:function (message){
                   errorMessage(message);
@@ -160,7 +159,7 @@ function saveDeliverDetail()
         deliveryDetails.append('orderDetailsId',orderDetailsId);
 
         $.ajax({
-                type: "post",
+                type: "POST",
                 url: BACKEND_URL + "saveDeliverDetail",
                 data: deliveryDetails,
                 contentType: false,
@@ -180,7 +179,7 @@ function getDeliverDetailsByDeliveryId(deliveryId)
         destroyDatatable("#table_tbl_deliverydetails","#tbl_deliverydetails_container");
 
         $.ajax({
-                type: "post",
+                type: "POST",
                 url: BACKEND_URL + "getDeliverDetailsByDeliveryId",
                 data: "deliveryId=" + deliveryId,
                 success: function (data) {
@@ -203,34 +202,12 @@ function getDeliverDetailsByDeliveryId(deliveryId)
               }
             });
 }
-function completeDeliveryByStatus(deliveryId)
-{
-        var delivery=new FormData;
-        var status='1';
-        delivery.append('deliveryId',deliveryId);
-        delivery.append('status',status);
-        $.ajax({
-                type: "post",
-                url: BACKEND_URL + "updateDeliveryByStatus",
-                data: delivery,
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                  alert(data.message);
-                  destroyDatatable("#table_tbl_delivery","#tbl_delivery_container");
-                  loadDelivery();
-                  loadDeliveryByComplete();
-              },
-              error:function (XMLHttpRequest, textStatus, errorThrown){
-                errorStatus(XMLHttpRequest, textStatus, errorThrown);
-              }
-            });
-}
+
 function loadDeliveryByComplete()
 {
         destroyDatatable("#table_tbl_delivery2","#tbl_delivery_container2");
         $.ajax({
-          type: "post",
+          type: "POST",
           url: BACKEND_URL + "getDeliveryByStatus",
           data: "companyId=" + company_id,
           success: function (data) {
@@ -247,15 +224,15 @@ function loadDeliveryByComplete()
                   tr += "<td >" + element.remark + "</td>";
                   tr += "<td >" + element.full_name + "</td>";
                   tr += "<td >" + element.name + "</td>";
-                  tr += "<td class='alignright'><button type='button' class='btn btn-info' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")>Add DeliveryDetails</button ></td >" ;
-                  tr += "<td class='alignright'><button type='button' class='btn btn-warning' onClick=showDeliveryById("+ element.id +")>Update Delivery</button ></td > ";
+                  tr += "<td class='alignright'><button type='button' class='btn btn-product' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")><i class='fas fa-plus'> Add DeliveryDetails</button ></td >" ;
+                  tr += "<td class='alignright'><button type='button' class='btn btn-edit' onClick=showDeliveryById("+ element.id +")><i class='fas fa-edit'></i></button ></td > ";
+                  tr += "<td class='alignright'><button type='button' class='btn btn-print' onClick=printDeliveryById("+ element.id +")><i class='fas fa-print'> Print</button ></td > ";
                   tr += "</tr>";
                   $("#tbl_delivery_container2").append(tr);
 
                 });
           createDataTable('#table_tbl_delivery2');
-          selectedDataTableTr('#table_tbl_delivery2');
-        },
+          },
         error:function (message){
           errorMessage(message);
         }
@@ -280,6 +257,7 @@ function showDeliveryById(deliveryId)
                   $("#arrived_dt").val(data.end_dt);
                   $("#different_day").val(data.arrived);
                   $("#delivery_remark").val(data.remark);
+                  $("#selected_status").val(data.status);
                   $('#modal-delivery').modal('toggle');
               },
               error:function (message){
@@ -300,9 +278,9 @@ function updateDelivery()
         delivery.append('arrivedDate',$("#arrived_dt").val());
         delivery.append('differentArrived',$("#different_day").val());
         delivery.append('remark',$("#delivery_remark").val());
-
+        delivery.append('status',$("#selected_status").val());
         $.ajax({
-                type: "post",
+                type: "POST",
                 url: BACKEND_URL + "updateDelivery",
                 data: delivery,
                 contentType: false,
@@ -310,7 +288,6 @@ function updateDelivery()
                 success: function (data) {
                   alert(data.message);
                   $('#modal-delivery').modal('toggle');
-                  destroyDatatable("#table_tbl_delivery","#tbl_delivery_container");
                   loadDelivery();
                   loadDeliveryByComplete();
                },
@@ -319,4 +296,56 @@ function updateDelivery()
                }
 
         });
+}
+function printDeliveryById(deliveryId)
+{
+    location.href='deliver_invoice.html';
+    localStorage.setItem("deliveryId", deliveryId);
+}
+function loadInvoiceDelivery(){
+  var deliveryId = localStorage.getItem("deliveryId");
+  $.ajax({
+          type: "POST",
+          url: BACKEND_URL + "getCompanyInfoBydeliveryId",
+          data: "deliveryId=" + deliveryId,
+          success: function (data) {
+            $('.companyName').append(data[0].name);
+            $('.companyAddress').append(data[0].city+','+data[0].address);
+            $('.companyPhone').append(data[0].phone);
+            $('.driverName').append(data[0].driver_name);
+            $('.carNumber').append(data[0].car_no);
+            var outDate=data[0].out_date;
+            var splitDate=outDate.split('-');
+            var completDate=splitDate[2]+'/'+splitDate[1]+'/'+splitDate[0];
+            $('.incomeDate').append(completDate);
+
+            $.ajax({
+                  type: "POST",
+                  url: BACKEND_URL + "getInvoiceDetailsBydeliveryId",
+                  data: "deliveryId=" + deliveryId,
+                  success: function (data) {
+                    data.forEach(function (element){
+                      var tr = "<tr class='border-tr'>";
+                      tr += "<td >" + element.order_no + "</td>";
+                      tr += "<td >" + element.customer_name + "</td>";
+                      tr += "<td >" + element.city_name + "</td>";
+                      tr += "<td >" + element.product_name + "</td>";
+                      tr += "<td >" + element.quantity+" "+ element.unit+ "</td>";
+                      tr += "<td >" + element.order_total+ "</td>";
+                      tr += "<td >" +  element.labour + "</td>";
+                      tr += "<td><button type='button' class='btn btn-print'><i class='fas fa-print'></i> Print</button ></td >" ;
+                      tr += "</tr>";
+                      $("#tbl_invoice_container").append(tr);
+                    });
+                  },
+                error:function (message){
+                  errorMessage(message);
+                }
+              });
+        },
+        error:function (message){
+          errorMessage(message);
+        }
+      });
+
 }

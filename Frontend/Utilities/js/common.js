@@ -1,5 +1,14 @@
 var BACKEND_URL = "http://" + window.location.host + "/";
 
+
+function logout() {
+    if (localStorage.getItem("userinfo") == null) {
+        location.href = "../AuthComponents/login.html";
+    } else {
+        localStorage.removeItem("userinfo");
+        location.href = "../AuthComponents/login.html";
+    }
+}
 function errorMessage(message) {
     var returnMessage = JSON.parse(message.responseText)
     alert(returnMessage.message);
@@ -16,7 +25,7 @@ function destroyDatatable(table, tableBody) {
     $(tableBody).empty();
 }
 function createDataTable(table) {
-    $(table).DataTable({
+  $(table).DataTable({
         'destroy': true,
         'paging': true,
         'lengthChange': false,
@@ -29,12 +38,14 @@ function createDataTable(table) {
     });
 
 }
-
 $("table").on('click', 'tr', function () {
 
     $(this).addClass('selected').siblings().removeClass('selected');
 
 });
+function createDatepicker(datepicker){
+  $(datepicker).datepicker({ format: 'yyyy-mm-dd' });
+}
 function get_company_info() {
     var src = BACKEND_URL + "storage/company_logo/" + company_logo;
     $('#logo').attr("src", src);
@@ -79,6 +90,22 @@ function formatDate(date) {
     return newDate.getDate() + '-' + (newDate.getMonth() + 1) + "-" + newDate.getFullYear();
 }
 
-function createDatepicker(datepicker){
-  $(datepicker).datepicker({ format: 'yyyy-mm-dd' });
+function dateRange(dateRange,startDate,endDate,table){
+  var dataTable=$(table).DataTable({
+        'destroy': true,
+        'paging': true,
+        'lengthChange': false,
+        "pageLength": 5,
+        'searching': true,
+        'ordering': true,
+        'info': false,
+        'autoWidth': true,
+        "order": [[0, "desc"]]
+    });
+    $(dateRange).click(function () {
+      startDateFilter = document.getElementById(startDate).value;
+      endDateFilter = document.getElementById(endDate).value;
+      dataTable.search(startDateFilter+' '+endDateFilter)
+      .draw();
+    });
 }

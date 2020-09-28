@@ -19,11 +19,11 @@ function login() {
             else {
                 var obj = JSON.parse((xhttp.responseText));
 
-                if (typeof (localStorage) !== "undefined") {
-                    document.getElementById("result").innerHTML = "<h3>Authentication Successful!</h3>";
-                    localStorage.setItem('userinfo', xhttp.responseText);
-
-                }
+                    if (typeof (localStorage) !== "undefined") {
+                     document.getElementById("result").innerHTML = "<h3>Authentication Successful!</h3>";
+                      localStorage.setItem('userinfo', xhttp.responseText);
+                      location.href='../CompanyComponents/company_info.html';
+                  }
 
             }
         }

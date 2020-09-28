@@ -18,7 +18,6 @@ class VerifyCsrfToken extends Middleware
       'saveDelivery',
       'getDelivery',
       'getDeliverDetailsByDeliveryId',
-      'updateDeliveryByStatus',
       'getDeliveryByStatus',
       'getDeliveryById',
       'updateDelivery',
@@ -44,5 +43,9 @@ class VerifyCsrfToken extends Middleware
       'createGoodReciptDetails',
       'getGoodReceiptDetail',
       'getGoodReceiptInvoice',
+      'getGoodInOutByCompanyId',
+      'getInvoiceDetailsBydeliveryId',
+      'getCompanyInfoBydeliveryId'
+
     ];
 }
