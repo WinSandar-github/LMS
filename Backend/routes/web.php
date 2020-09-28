@@ -55,7 +55,8 @@ Route::post('deleteGoodReceipt',array('middleware'=>'cors','uses'=>'GoodreceiptC
 Route::post('createGoodReciptDetails',array('middleware'=>'cors','uses'=>'GoodreceiptController@createGoodReciptDetails'));
 Route::post('getGoodReceiptDetail',array('middleware'=>'cors','uses'=>'GoodreceiptController@getGoodReceiptDetail'));
 Route::post('getGoodReceiptInvoice',array('middleware'=>'cors','uses'=>'GoodreceiptController@getGoodReceiptInvoice'));
-
+//For Order
+Route::post('createOrder',array('middleware'=>'cors','uses'=>'OrderController@createOrder'));
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
