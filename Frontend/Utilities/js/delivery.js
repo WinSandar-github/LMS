@@ -310,7 +310,8 @@ function loadInvoiceDelivery(){
           data: "deliveryId=" + deliveryId,
           success: function (data) {
             $('.companyName').append(data[0].name);
-            $('.companyAddress').append(data[0].address);
+            $('.companyAddress').append(data[0].city+','+data[0].address);
+            $('.companyPhone').append(data[0].phone);
             $('.driverName').append(data[0].driver_name);
             $('.carNumber').append(data[0].car_no);
             var outDate=data[0].out_date;
@@ -332,7 +333,7 @@ function loadInvoiceDelivery(){
                       tr += "<td >" + element.quantity+" "+ element.unit+ "</td>";
                       tr += "<td >" + element.order_total+ "</td>";
                       tr += "<td >" +  element.labour + "</td>";
-                      tr += "<td><button type='button' class='btn btn-info' >Print</button ></td >" ;
+                      tr += "<td><button type='button' class='btn btn-print'><i class='fas fa-print'></i> Print</button ></td >" ;
                       tr += "</tr>";
                       $("#tbl_invoice_container").append(tr);
                     });

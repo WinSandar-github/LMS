@@ -1,4 +1,5 @@
-var BACKEND_URL = "http://" + window.location.host + "/";
+//var BACKEND_URL = "http://" + window.location.host + "/";
+var BACKEND_URL="http://logistic.local/";
 
 function logout() {
     if (localStorage.getItem("userinfo") == null) {

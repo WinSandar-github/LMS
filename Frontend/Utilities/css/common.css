@@ -117,3 +117,9 @@ table th, td {
 .icon{
   color:#2196f3;
 }
+.company_info h2,h4{
+  text-align:center;
+  margin:3px;
+  font-size: 18px;
+  font-weight: bold;
+}
