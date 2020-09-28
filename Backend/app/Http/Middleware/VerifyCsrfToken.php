@@ -40,6 +40,9 @@ class VerifyCsrfToken extends Middleware
       'showGoodReceiptInfo',
       'updateGoodReceipt',
       'deleteGoodReceipt',
+      'createGoodReciptDetails',
+      'getGoodReceiptDetail',
+      'getGoodReceiptInvoice',
       'getGoodInOutByCompanyId',
       'getInvoiceDetailsBydeliveryId',
       'getCompanyInfoBydeliveryId'

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDateToGoodreceiptTable extends Migration
+class AddIndateToTblGoodReceiptTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddDateToGoodreceiptTable extends Migration
     public function up()
     {
         Schema::table('tbl_good_receipt', function (Blueprint $table) {
-              $table->date('date');
+            $table->date('in_date');
         });
     }
 
@@ -26,7 +26,7 @@ class AddDateToGoodreceiptTable extends Migration
     public function down()
     {
         Schema::table('tbl_good_receipt', function (Blueprint $table) {
-            $table->dropColumn('date');
+            //
         });
     }
 }
