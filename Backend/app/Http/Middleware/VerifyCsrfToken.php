@@ -45,7 +45,9 @@ class VerifyCsrfToken extends Middleware
       'getGoodReceiptInvoice',
       'getGoodInOutByCompanyId',
       'getInvoiceDetailsBydeliveryId',
-      'getCompanyInfoBydeliveryId'
+      'getCompanyInfoBydeliveryId',
+      'getInvoiceDetailsByorderNo',
+      'getCompanyDetailBydeliveryId'
 
     ];
 }
