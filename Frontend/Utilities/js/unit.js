@@ -103,7 +103,7 @@ function getUnitSelect(){
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getUnit",
-        data: "companyId="+2,
+        data: "companyId=" + company_id,
         success: function (data) {
             data.forEach(function (element) {
                 var option = document.createElement('option');
