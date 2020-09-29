@@ -2,10 +2,10 @@ var BACKEND_URL = "http://" + window.location.host + "/";
 
 function logout() {
     if (localStorage.getItem("userinfo") == null) {
-        location.href = "../AuthComponents/login.html";
+        location.href = "../authComponents/login.html";
     } else {
         localStorage.removeItem("userinfo");
-        location.href = "../AuthComponents/login.html";
+        location.href = "../authComponents/login.html";
     }
 }
 function errorMessage(message) {
