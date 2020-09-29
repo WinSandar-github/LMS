@@ -1,12 +1,11 @@
 var BACKEND_URL = "http://" + window.location.host + "/";
 
-
 function logout() {
     if (localStorage.getItem("userinfo") == null) {
-        location.href = "../AuthComponents/login.html";
+        location.href = "../authComponents/login.html";
     } else {
         localStorage.removeItem("userinfo");
-        location.href = "../AuthComponents/login.html";
+        location.href = "../authComponents/login.html";
     }
 }
 function errorMessage(message) {
@@ -108,4 +107,10 @@ function dateRange(dateRange,startDate,endDate,table){
       dataTable.search(startDateFilter+' '+endDateFilter)
       .draw();
     });
+}
+function thousands_separators(num)
+{
+  var num_parts = num.toString().split(".");
+  num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return num_parts.join(".");
 }

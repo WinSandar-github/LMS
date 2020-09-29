@@ -303,6 +303,7 @@ function printDeliveryById(deliveryId)
     localStorage.setItem("deliveryId", deliveryId);
 }
 function loadInvoiceDelivery(){
+  destroyDatatable("#tbl_invoice","#tbl_invoice_container");
   var deliveryId = localStorage.getItem("deliveryId");
   $.ajax({
           type: "POST",
@@ -318,7 +319,8 @@ function loadInvoiceDelivery(){
             var splitDate=outDate.split('-');
             var completDate=splitDate[2]+'/'+splitDate[1]+'/'+splitDate[0];
             $('.incomeDate').append(completDate);
-
+            document.getElementById("td_car_number").innerHTML = thousands_separators(data[0].car_no);
+            document.getElementById("td_out_date").innerHTML = completDate;
             $.ajax({
                   type: "POST",
                   url: BACKEND_URL + "getInvoiceDetailsBydeliveryId",
@@ -331,16 +333,34 @@ function loadInvoiceDelivery(){
                       tr += "<td >" + element.city_name + "</td>";
                       tr += "<td >" + element.product_name + "</td>";
                       tr += "<td >" + element.quantity+" "+ element.unit+ "</td>";
-                      tr += "<td >" + element.order_total+ "</td>";
+                      tr += "<td >" + thousands_separators(element.order_total)+ "</td>";
                       tr += "<td >" +  element.labour + "</td>";
-                      tr += "<td><button type='button' class='btn btn-print'><i class='fas fa-print'></i> Print</button ></td >" ;
+                      tr += "<td><button type='button' class='btn btn-print' onclick=invoiceByOrderNo(\""+encodeURIComponent(element.order_no)+ "\")><i class='fas fa-print'></i> Print</button ></td >" ;
                       tr += "</tr>";
                       $("#tbl_invoice_container").append(tr);
+                      var labourPrice=element.labour;
+                      var orderTotal=element.order_total;
+                      var table = document.getElementById("tbl_invoice"), sumPrice = 0; sumLabour = 0;
+                      for (var i = 1; i < table.rows.length; i++) {
+                          sumPrice = sumPrice + parseFloat((table.rows[i].cells[5].innerHTML).replace(/,/g, ''));
+                          sumLabour = sumLabour + parseFloat((table.rows[i].cells[6].innerHTML).replace(/,/g, ''));
+                        }
+                        document.getElementById("sumPrice").innerHTML = thousands_separators(sumPrice);
+                        document.getElementById("sumLabour").innerHTML = thousands_separators(sumLabour);
+                        document.getElementById("td_total_price").innerHTML = thousands_separators(sumPrice);
+                        var gateLabourPrice=[sumPrice*$('#comission_percent').val()]/100;
+                        $("#gate_labour_price").val(thousands_separators(gateLabourPrice)) ;
+                        $("#labour_price").val(thousands_separators(labourPrice));
+                        var allSumPrice=parseInt(gateLabourPrice)+parseInt($('#labour').val().split(",").join(""))+parseInt($('#land_price').val().split(",").join(""))+parseInt(labourPrice);
+                        $("#all_sum_price").val(thousands_separators(allSumPrice));
+                        $("#paid_price").val(thousands_separators(orderTotal));
+                        $("#balance_price").val(thousands_separators(parseInt(allSumPrice)-parseInt(orderTotal)));
                     });
                   },
                 error:function (message){
                   errorMessage(message);
                 }
+
               });
         },
         error:function (message){
@@ -348,4 +368,82 @@ function loadInvoiceDelivery(){
         }
       });
 
+}
+function comissionPercent()
+{
+  var totalPrice=  document.getElementById("td_total_price").innerHTML;
+  var comissionPercent=document.getElementById("comission_percent").value;
+  var gateLabourPrice=(parseInt(totalPrice.split(',').join(""))*parseInt(comissionPercent.split('%').join(""))/100);
+  $("#gate_labour_price").val(thousands_separators(gateLabourPrice));
+
+  var allSumPrice=parseInt($("#gate_labour_price").val().split(",").join(""))+parseInt($('#labour').val().split(",").join(""))+parseInt($('#land_price').val().split(",").join(""))+parseInt($("#labour_price").val().split(",").join(""));
+  $("#all_sum_price").val(thousands_separators(allSumPrice));
+  $("#balance_price").val(thousands_separators(parseInt($("#all_sum_price").val().split(",").join(""))-parseInt($("#paid_price").val().split(",").join(""))));
+  document.getElementById("labour").value=thousands_separators($('#labour').val());
+}
+function invoiceByOrderNo(orderNo)
+{
+  location.href='invoice.html';
+  localStorage.setItem("orderNo", orderNo);
+}
+function loadInvoiceByOrderNo()
+{
+  destroyDatatable("#tbl_order_invoice","#tbl_order_invoice_container");
+  var orderNo = localStorage.getItem("orderNo");
+  var deliveryId = localStorage.getItem("deliveryId");
+  $.ajax({
+          type: "POST",
+          url: BACKEND_URL + "getCompanyDetailBydeliveryId",
+          data: "deliveryId=" + deliveryId,
+          success: function (data) {
+            $('.companyName').append(data[0].name);
+            $('.companyAddress').append(data[0].city+','+data[0].address);
+            $('.companyPhone').append(data[0].phone);
+            $('.driverName').append(data[0].driver_name);
+            $('.carNumber').append(data[0].car_no);
+            var outDate=data[0].out_date;
+            var splitDate=outDate.split('-');
+            var completDate=splitDate[2]+'/'+splitDate[1]+'/'+splitDate[0];
+            $('.incomeDate').append(completDate);
+            $('.customerName').append(data[0].customer_name);
+            $('.senderName').append(data[0].sender_name);
+            $('.orderNo').append(data[0].order_no);
+            $('.toCityName').append(data[0].city_name);
+
+            $.ajax({
+                  type: "POST",
+                  url: BACKEND_URL + "getInvoiceDetailsByorderNo",
+                  data: "orderNo=" + orderNo,
+                  success: function (data) {
+                    for(var i=0;i<data.length;i++){
+                      data.forEach(function (element){
+                        var tr = "<tr class='border-tr'>";
+                        tr += "<td >" + (i+1) + "</td>";
+                        tr += "<td >" + element.product_name + "</td>";
+                        tr += "<td >" + element.quantity+" "+ element.unit+ "</td>";
+                        tr += "<td >" + thousands_separators(element.product_price)+ "</td>";
+                        tr += "</tr>";
+                        $("#tbl_order_invoice_container").append(tr);
+                        document.getElementById("order_total_price").innerHTML = thousands_separators(element.order_total);
+                        document.getElementById("order_labour_price").innerHTML = thousands_separators(element.labour);
+                        document.getElementById("order_sum").innerHTML = thousands_separators(element.total);
+                        document.getElementById("order_land_price").innerHTML = thousands_separators(element.land);
+                      });
+                    }
+
+                  },
+                error:function (message){
+                  errorMessage(message);
+                }
+
+              });
+        },
+        error:function (message){
+          errorMessage(message);
+        }
+      });
+}
+function back()
+{
+  location.href="deliver_invoice.html";
 }
