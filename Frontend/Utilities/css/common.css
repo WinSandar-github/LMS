@@ -94,13 +94,17 @@ table th, td {
 .ui-thead{
   background-color: #B2EBF2;
 }
-.border-tr{
-  border-bottom: 1px solid black;
+.border-tr,table tr{
+  border-bottom: 1px solid #CFD8DC;
+
 }
 .border-tr td,table tr{
   text-align: center;
 }
-
+.tr-class th{
+  border-top: none;
+  text-align: center;
+  }
 .header-card{
   background-color: #E1F5FE;
 }
@@ -122,4 +126,15 @@ table th, td {
   margin:3px;
   font-size: 18px;
   font-weight: bold;
+}
+.company_info h6{
+  text-align:center;
+  margin:3px;
+  font-size: 15px;
+}
+.table_price{
+  float:right;
+}
+.table_price td,input{
+  text-align: right;
 }
