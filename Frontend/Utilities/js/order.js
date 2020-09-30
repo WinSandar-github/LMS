@@ -4,15 +4,17 @@
         url: BACKEND_URL + "getGoodReceiptDetail",
         data: "goodReceiptId=" + goodReceiptId,
         success: function (data) {
-            $("#hiddenOrderno").val(data[0]["order_no"]);
-            $("#hiddenGoodReceiptId").val(data[0]["good_receipt_id"]);
+            var goodReceipt = data[0].good_receipt_by_detail;
+            var unit = data[0].unit_by_detail;
+            $("#hiddenOrderno").val(goodReceipt.order_no);
+            $("#hiddenGoodReceiptId").val(goodReceipt.id);
             data.forEach(function (element) {
                 var tr = "<tr>";
                 tr += "<td >" + "<input type='text' value='"+element.product_name+"'>" + "</td>";
                 tr += "<td >" + "<input type='text' value='" + Math.round(element.qty) + "'>" + "</td>";
                 tr += "<td >" + "<input type='text' id='productQuantity' value='" + Math.round(element.qty) + "'>" + "</td>";
                 tr += "<td >" + "<input type='text' id='productWeight' value='" + element.weight + "'>" + "</td>";
-                tr += "<td >" + "<input type='text' id='productUnit' value='"+element.unit_name +"'>" + "</td>";
+                tr += "<td >" + "<input type='text' id='productUnit' value='" + unit.unit_name +"'>" + "</td>";
                 tr += "<td >" + "<input type='text' id='productPrice' value='0' onkeyup='getTotalPerProduct(this)'>" + "</td>";
                 tr += "<td >" + "<input type='text' id='total' value='0'>" + "</td>";
                 tr += "</tr>";

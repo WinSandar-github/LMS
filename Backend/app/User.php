@@ -36,4 +36,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+     public function goodReceipt()
+    {
+        return $this->hasMany('App\tbl_good_receipt');
+    }
 }

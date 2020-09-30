@@ -65,17 +65,18 @@ function get_goodreceipt_invoicedetail() {
             $("#senderName").append(data[0]["sender_name"]);
             $("#orderNo").append(data[0]["order_no"]);
             $("#date").append(formatDate(data[0]["date"]));
-            $("#city").append(data[0]["city_name"]);
+            $("#city").append(data[0].city_list.city_name);
             $("#cashRemark").append(data[0]["cash_method"])
-            data.forEach(function (element) {
+            var goodReceiptDetail = data[0].good_receipt_detail;
+            var length = (data[0].good_receipt_detail).length;
+            for (var detail = 0; detail < length; detail++) {
                 var tr = "<tr>";
-                tr += "<td style='text-align:center;'>" + "#"+ "</td>";
-                tr += "<td style='text-align:center;'>" + element.product_name + "</td>";
-                tr += "<td style='text-align:center;'>" + element.qty + "</td>";
+                tr += "<td style='text-align:center;'>" + "#" + "</td>";
+                tr += "<td style='text-align:center;'>" + goodReceiptDetail[detail]["product_name"] + "</td>";
+                tr += "<td style='text-align:center;'>" + Math.round(goodReceiptDetail[detail]["qty"]) + "</td>";
                 tr += "</tr>";
                 $("#tbl_invoice_container").append(tr);
-
-            });
+            }
 
         },
         error: function (message) {

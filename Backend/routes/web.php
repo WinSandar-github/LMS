@@ -57,6 +57,9 @@ Route::post('deleteGoodReceipt',array('middleware'=>'cors','uses'=>'GoodreceiptC
 Route::post('createGoodReciptDetails',array('middleware'=>'cors','uses'=>'GoodreceiptController@createGoodReciptDetails'));
 Route::post('getGoodReceiptDetail',array('middleware'=>'cors','uses'=>'GoodreceiptController@getGoodReceiptDetail'));
 Route::post('getGoodReceiptInvoice',array('middleware'=>'cors','uses'=>'GoodreceiptController@getGoodReceiptInvoice'));
+Route::post('showGoodReceiptDetailInfo',array('middleware'=>'cors','uses'=>'GoodreceiptController@showGoodReceiptDetailInfo'));
+Route::post('updateGoodReceiptDetail',array('middleware'=>'cors','uses'=>'GoodreceiptController@updateGoodReceiptDetail'));
+Route::post('deleteGoodReceiptDetail',array('middleware'=>'cors','uses'=>'GoodreceiptController@deleteGoodReceiptDetail'));
 
 Route::post('getCompanyInfoBydeliveryId',array('middleware'=>'cors','uses'=>'DeliveryController@getCompanyInfoBydeliveryId'));
 Route::post('getInvoiceDetailsBydeliveryId',array('middleware'=>'cors','uses'=>'DeliveryController@getInvoiceDetailsBydeliveryId'));
