@@ -29,20 +29,21 @@ class CompanyLoginController extends Controller
 			);
 			if(auth::attempt($data))
 				{
-						$user = auth::user();
+					    $user = auth::user();
 						$company_id=$user->company_id;
 						$get_data = DB::table('users')
 											->join('tbl_company', 'company_id', '=', 'tbl_company.id')
 											->where('users.company_id','=',$company_id)
 											->where('tbl_company.id','=',$company_id)
-					          	->select('users.*', 'tbl_company.*')
-											->get();
+					          	->select('users.*', 'tbl_company.*')->get();
+
 						if(sizeof($get_data)){
 					        return response()->json($get_data, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
 					      }
 					  else{
+                        
 					      return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
-							}
+						}
 					}
 
   }

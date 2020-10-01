@@ -29,7 +29,6 @@ Route::post('updateDelivery', array('middleware' => 'cors', 'uses' => 'DeliveryC
 Route::post('deleteDelivery', array('middleware' => 'cors', 'uses' => 'DeliveryController@deleteDelivery'));
 Route::post('getDeliveryByStatus', array('middleware' => 'cors', 'uses' => 'DeliveryController@getDeliveryByStatus'));
 Route::post('getDeliveryById', array('middleware' => 'cors', 'uses' => 'DeliveryController@getDeliveryById'));
-
 //for deliverdetails
 Route::post('saveDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliveryController@saveDeliverDetail'));
 Route::post('updateDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliveryController@updateDeliverDetail'));
@@ -40,7 +39,6 @@ Route::post('getCity',array('middleware'=>'cors','uses'=>'CityController@getCity
 Route::post('getCityInfo',array('middleware'=>'cors','uses'=>'CityController@getCityInfo'));
 Route::post('updateCity',array('middleware'=>'cors','uses'=>'CityController@updateCity'));
 Route::post('deleteCity',array('middleware'=>'cors','uses'=>'CityController@deleteCity'));
-
 //For Unit CRUD
 Route::post('createUnit',array('middleware'=>'cors','uses'=>'UnitController@createUnit'));
 Route::post('getUnit',array('middleware'=>'cors','uses'=>'UnitController@getUnit'));
@@ -67,6 +65,9 @@ Route::post('getInvoiceDetailsBydeliveryId',array('middleware'=>'cors','uses'=>'
 Route::post('getGoodInOutByCompanyId',array('middleware'=>'cors','uses'=>'GoodInOutController@getGoodInOutByCompanyId'));
 //For Order
 Route::post('createOrder',array('middleware'=>'cors','uses'=>'OrderController@createOrder'));
+Route::post('getOrder/{deliveryStatus}',array('middleware'=>'cors','uses'=>'OrderController@getOrder'));
+Route::post('getOrderDetail',array('middleware'=>'cors','uses'=>'OrderController@getOrderDetail'));
+Route::post('deleteOrder',array('middleware'=>'cors','uses'=>'OrderController@deleteOrder'));
 
 Auth::routes();
 

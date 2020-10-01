@@ -41,4 +41,8 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\tbl_good_receipt');
     }
+    public function order()
+    {
+        return $this->hasMany('App\tbl_order');
+    }
 }

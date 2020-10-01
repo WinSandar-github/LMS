@@ -51,4 +51,39 @@ class OrderController extends Controller
             return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
     }
+    public function getOrder(Request $request,$deliveryStatus)
+	{
+        $goodReceipt = tbl_order::with('userByOrder')
+                                ->where("tbl_order.company_id","=",$request->input("companyId"))
+                                ->where("tbl_order.delivery_status","=",$deliveryStatus)
+                                ->get();
+        if(sizeof($goodReceipt)){
+            return response()->json($goodReceipt, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+        }
+        else{
+           return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+        }
+    }
+     public function getOrderDetail(Request $request)
+	{
+        $orderDetail=tbl_order_details::where("order_id","=",$request->input("orderId"))
+                                      ->get();
+        if(sizeof($orderDetail)){
+             return response()->json($orderDetail, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+        }
+        else{
+             return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+        }
+	}
+     public function deleteOrder(Request $request)
+	{
+        $order = tbl_order::find($request->input("orderId"));
+        if($order->delete()){
+            return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+        }
+        else{
+            return response()->json(config('common.errorMessage'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
+        }  
+	}
+    
 }
