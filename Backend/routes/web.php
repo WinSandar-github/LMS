@@ -64,10 +64,14 @@ Route::post('getInvoiceDetailsByorderId',array('middleware'=>'cors','uses'=>'Del
 
 //for GoodInOut
 Route::post('getGoodInOutByCompanyId',array('middleware'=>'cors','uses'=>'GoodInOutController@getGoodInOutByCompanyId'));
+
 Route::post('getInvoiceDetailsByorderNo',array('middleware'=>'cors','uses'=>'DeliveryController@getInvoiceDetailsByorderNo'));
 Route::post('getCompanyDetailBydeliveryId',array('middleware'=>'cors','uses'=>'DeliveryController@getCompanyDetailBydeliveryId'));
 //for statementcarlist
 Route::post('saveStatementCarList',array('middleware'=>'cors','uses'=>'StatementCarListController@saveStatementCarList'));
+
+//For Order
+Route::post('createOrder',array('middleware'=>'cors','uses'=>'OrderController@createOrder'));
 
 Auth::routes();
 

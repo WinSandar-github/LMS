@@ -132,8 +132,9 @@ class GoodreceiptController extends Controller
      public function getGoodReceiptDetail(Request $request)
 	{
         $goodReceiptDetail=DB::table('tbl_good_receipt_details')
-                        ->select('tbl_good_receipt_details.id','tbl_good_receipt_details.product_name','tbl_good_receipt_details.qty','tbl_good_receipt_details.unit','tbl_good_receipt_details.weight','tbl_good_receipt_details.remark','tbl_unit.unit_name')
+                        ->select('tbl_good_receipt_details.id','tbl_good_receipt.order_no','tbl_good_receipt_details.good_receipt_id','tbl_good_receipt_details.product_name','tbl_good_receipt_details.qty','tbl_good_receipt_details.unit','tbl_good_receipt_details.weight','tbl_good_receipt_details.remark','tbl_unit.unit_name')
                         ->join('tbl_unit','tbl_good_receipt_details.unit','=','tbl_unit.id')
+                        ->join('tbl_good_receipt','tbl_good_receipt_details.good_receipt_id','=','tbl_good_receipt.id')
                         ->where("tbl_good_receipt_details.good_receipt_id","=",$request->input("goodReceiptId"))
                         ->get();
         if(sizeof($goodReceiptDetail)){

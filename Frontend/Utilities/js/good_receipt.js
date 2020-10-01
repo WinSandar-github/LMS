@@ -89,7 +89,7 @@ function getGoodReceipt() {
 
             });
             createDataTable("#tbl_goodreceipt");
-            $('.btn-disable').prop('disabled', true);
+            
         },
         error:function (message){
           errorMessage(message);
@@ -236,7 +236,7 @@ function getGoodReceiptDetail(goodReceiptId) {
             data.forEach(function (element) {
                 var tr = "<tr>";
                 tr += "<td >" + element.product_name + "</td>";
-                tr += "<td >" + element.qty + "</td>";
+                tr += "<td >" + Math.round(element.qty) + "</td>";
                 tr += "<td >" + element.unit_name + "</td>";
                 tr += "<td >" + element.weight + "</td>";
                 tr += "<td >" + element.remark + "</td>";
@@ -251,7 +251,7 @@ function getGoodReceiptDetail(goodReceiptId) {
 
             });
 
-            $('.btn-disable').prop('disabled', true);
+            
             createDataTable("#tbl_goodreceipt_detail");
 
         },

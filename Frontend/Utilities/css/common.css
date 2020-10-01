@@ -3,7 +3,7 @@
 }
 
 table th, td {
-    white-space: nowrap;
+    /*white-space: nowrap;*/
 }
 
 #company_name, #user_name {

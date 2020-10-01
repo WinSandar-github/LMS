@@ -297,7 +297,162 @@
             </div>
         </div>
 
+        <div class="modal" id="modal-order">
+            <div class="modal-dialog  modal-lg order-modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h5 class="modal-title">ဘောင်ချာဖွင့်ရန်</h5>
+
+                    </div>
+                    <div class="modal-body">
+                        <div style="text-align:center;">
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" id="manual" name="optradio" value="manual" checked>Manual
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label" for="radio1">
+                                    <input type="radio" class="form-check-input" id="quantity" name="optradio" value="quantity">Quantity * Price
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label" for="radio2">
+                                    <input type="radio" class="form-check-input" id="weight" name="optradio" value="weight">Weight * Price
+                                </label>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <input type="hidden" id="hiddenTotal" />
+                            <input type="hidden" id="hiddenOrderno" />
+                            <input type="hidden" id="hiddenGoodReceiptId" />
+                            <div style="overflow-x:auto;">
+                                <table class="table table-bordered table-striped" id="tbl_order">
+                                    <thead>
+                                        <tr>
+                                            <th style=" white-space: pre !important;">ပစ္စည်း အမည်</th>
+                                            <th style=" white-space: pre !important;">စုစုပေါင်း အရေအတွက်</th>
+                                            <th style=" white-space: pre !important;">တင်ပို့မည့် အရေအတွက်</th>
+                                            <th style=" white-space: pre !important;">အလေး ချိန်</th>
+                                            <th style=" white-space: pre !important;">အတိုင်းအတာစံ</th>
+                                            <th style=" white-space: pre !important;">စျေးနှုန်း</th>
+                                            <th style=" white-space: pre !important;">စုစုပေါင်း</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbl_order_body"></tbody>
+
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-info" onclick="createOrder();">
+                            <i class="fa fa-floppy-o"></i> Save
+                        </button>
+                    </div>
+
+                    <!--<form enctype="multipart/form-data" action="javascript:saveOrder();" id="orderForm">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">ပစ္စည်း အမည်</label>
+                        <input type="text" class="form-control" id="txt_customer_name" name="txt_customer_name" placeholder="Customer အမည်">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">စုစုပေါင်း အရေအတွက်</label>
+                        <input type="text" class="form-control" id="txt_address" name="txt_address" placeholder="နေရပ်လိပ်စာ">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">တင်ပို့မည့် အရေအတွက်</label>
+                        <input type="text" class="form-control" id="txt_address" name="txt_address" placeholder="နေရပ်လိပ်စာ"></input>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">အလေးချိန်</label>
+                        <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">အတိုင်းအတာစံ</label>
+                        <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">စျေးနှုန်း</label>
+                        <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">စုစုပေါင်း</label>
+                        <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">
+                            အလုပ်သမားခ:
+                        </label>
+                        <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">စိုက်ငွေ:</label>
+                        <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">
+                            စုစုပေါင်း:
+                        </label>
+                        <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-footer" style="clear:both;">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-info">
+                <i class="fa fa-floppy-o"></i> Save
+            </button>
+        </div>
+    </form>-->
+
+                </div>
+            </div>
+        </div>
+
+
     </div>
+
     <!-- ./wrapper -->
     <!-- jQuery -->
     <script src="../Utilities/plugins/jquery/jquery.min.js"></script>
@@ -330,6 +485,7 @@
     <script src="../Utilities/js/good_receipt.js"></script>
     <script src="../Utilities/js/common.js"></script>
     <script src="../Utilities/js/auth.js"></script>
+    <script src="../Utilities/js/order.js"></script>
     <script>
         $('#txt_date').inputmask();
         getCitySelect();
