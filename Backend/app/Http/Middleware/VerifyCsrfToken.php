@@ -47,7 +47,9 @@ class VerifyCsrfToken extends Middleware
       'getInvoiceDetailsBydeliveryId',
       'getCompanyInfoBydeliveryId',
       'getInvoiceDetailsByorderNo',
-      'getCompanyDetailBydeliveryId'
+      'getCompanyDetailBydeliveryId',
+      'getInvoiceDetailsByorderId',
+      'saveStatementCarList'
 
     ];
 }

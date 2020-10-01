@@ -11,7 +11,7 @@ function saveDelivery()
         var remark = $("#delivery_remark").val();
         var status=$('#selected_status').val();
 
-        var delivery = new FormData;;
+        var delivery = new FormData;
         delivery.append('carNumber',carNumber);
         delivery.append('driverName',driverName);
         delivery.append('driverPhone',driverPhone);
@@ -78,6 +78,7 @@ function loadDelivery()
                 url: BACKEND_URL + "getDelivery",
                 data: "companyId=" + company_id,
                 success: function (data) {
+                  console.log(data);
                   data.forEach(function (element) {
                     var tr = "<tr onclick='getDeliverDetailsByDeliveryId(" + element.id + ");'>";
                     tr += "<td >" + element.car_no + "</td>";
@@ -89,8 +90,8 @@ function loadDelivery()
                     tr += "<td >" + element.end_dt + "</td>";
                     tr += "<td >" + element.arrived + "</td>";
                     tr += "<td >" + element.remark + "</td>";
-                    tr += "<td >" + element.full_name + "</td>";
-                    tr += "<td >" + element.name + "</td>";
+                    tr += "<td >" + element.users['full_name'] + "</td>";
+                    tr += "<td >" + element.company_delivery['name'] + "</td>";
                     tr += "<td class='alignright'><button type='button' class='btn btn-product' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")><i class='fas fa-plus'></i>  Add DeliveryDetails</button ></td >" ;
                     tr += "<td class='alignright'><button type='button' class='btn btn-edit' onClick=showDeliveryById("+ element.id +")><i class='fas fa-edit'></i></button ></td > ";
                     tr += "<td class='alignright'><button type='button' class='btn btn-print' onClick=printDeliveryById("+ element.id +")><i class='fas fa-print'> Print</button ></td > ";
@@ -301,85 +302,142 @@ function printDeliveryById(deliveryId)
 {
     location.href='deliver_invoice.html';
     localStorage.setItem("deliveryId", deliveryId);
+
 }
 function loadInvoiceDelivery(){
-  destroyDatatable("#tbl_invoice","#tbl_invoice_container");
-  var deliveryId = localStorage.getItem("deliveryId");
-  $.ajax({
-          type: "POST",
-          url: BACKEND_URL + "getCompanyInfoBydeliveryId",
-          data: "deliveryId=" + deliveryId,
-          success: function (data) {
-            $('.companyName').append(data[0].name);
-            $('.companyAddress').append(data[0].city+','+data[0].address);
-            $('.companyPhone').append(data[0].phone);
-            $('.driverName').append(data[0].driver_name);
-            $('.carNumber').append(data[0].car_no);
-            var outDate=data[0].out_date;
-            var splitDate=outDate.split('-');
-            var completDate=splitDate[2]+'/'+splitDate[1]+'/'+splitDate[0];
-            $('.incomeDate').append(completDate);
-            document.getElementById("td_car_number").innerHTML = thousands_separators(data[0].car_no);
-            document.getElementById("td_out_date").innerHTML = completDate;
-            $.ajax({
-                  type: "POST",
-                  url: BACKEND_URL + "getInvoiceDetailsBydeliveryId",
-                  data: "deliveryId=" + deliveryId,
-                  success: function (data) {
-                    data.forEach(function (element){
-                      var tr = "<tr class='border-tr'>";
-                      tr += "<td >" + element.order_no + "</td>";
-                      tr += "<td >" + element.customer_name + "</td>";
-                      tr += "<td >" + element.city_name + "</td>";
-                      tr += "<td >" + element.product_name + "</td>";
-                      tr += "<td >" + element.quantity+" "+ element.unit+ "</td>";
-                      tr += "<td >" + thousands_separators(element.order_total)+ "</td>";
-                      tr += "<td >" +  element.labour + "</td>";
-                      tr += "<td><button type='button' class='btn btn-print' onclick=invoiceByOrderNo(\""+encodeURIComponent(element.order_no)+ "\")><i class='fas fa-print'></i> Print</button ></td >" ;
-                      tr += "</tr>";
-                      $("#tbl_invoice_container").append(tr);
-                      var labourPrice=element.labour;
-                      var orderTotal=element.order_total;
-                      var table = document.getElementById("tbl_invoice"), sumPrice = 0; sumLabour = 0;
-                      for (var i = 1; i < table.rows.length; i++) {
-                          sumPrice = sumPrice + parseFloat((table.rows[i].cells[5].innerHTML).replace(/,/g, ''));
-                          sumLabour = sumLabour + parseFloat((table.rows[i].cells[6].innerHTML).replace(/,/g, ''));
-                        }
-                        document.getElementById("sumPrice").innerHTML = thousands_separators(sumPrice);
-                        document.getElementById("sumLabour").innerHTML = thousands_separators(sumLabour);
-                        document.getElementById("td_total_price").innerHTML = thousands_separators(sumPrice);
-                        var gateLabourPrice=[sumPrice*$('#comission_percent').val()]/100;
-                        $("#gate_labour_price").val(thousands_separators(gateLabourPrice)) ;
-                        $("#labour_price").val(thousands_separators(labourPrice));
-                        var allSumPrice=parseInt(gateLabourPrice)+parseInt($('#labour').val().split(",").join(""))+parseInt($('#land_price').val().split(",").join(""))+parseInt(labourPrice);
-                        $("#all_sum_price").val(thousands_separators(allSumPrice));
-                        $("#paid_price").val(thousands_separators(orderTotal));
-                        $("#balance_price").val(thousands_separators(parseInt(allSumPrice)-parseInt(orderTotal)));
-                    });
-                  },
-                error:function (message){
-                  errorMessage(message);
-                }
+    destroyDatatable("#tbl_invoice","#tbl_invoice_container");
+    var deliveryId = localStorage.getItem("deliveryId");
+    $('.companyName').html("");
+    $('.companyAddress').html("");
+    $('.companyPhone').html("");
+    $('.driverName').html("");
+    $('.carNumber').html("");
+    $('.incomeDate').html("");
+    var alldata=new Array();
+    $.ajax({
+            type: "POST",
+            url: BACKEND_URL + "getCompanyInfoBydeliveryId",
+            data: "deliveryId=" + deliveryId,
+            success: function (data) {
+              $('.companyName').append(data[0].company_delivery.name);
+              $('.companyAddress').append(data[0].company_delivery.address);
+              $('.companyPhone').append(data[0].company_delivery.phone);
+              $('.driverName').append(data[0].driver_name);
+              $('.carNumber').append(data[0].car_no);
+              var outDate=data[0].delivery_details[0].out_date;
+              var splitDate=outDate.split('-');
+              var completDate=splitDate[2]+'/'+splitDate[1]+'/'+splitDate[0];
+              $('.incomeDate').append(completDate);
+              document.getElementById("td_car_number").innerHTML = thousands_separators(data[0].car_no);
+              document.getElementById("print_car_number").innerHTML = thousands_separators(data[0].car_no);
+              document.getElementById("td_out_date").innerHTML = completDate;
+              document.getElementById("td_delivery_date").innerHTML = outDate;
+              var goodReceipt=data[0].delivery_details;
+              var orderTotal=0;
+              var labourTotal=0;
+              for(var g=0;g<goodReceipt.length;g++){
 
-              });
-        },
-        error:function (message){
-          errorMessage(message);
-        }
-      });
+                var goodReceiptId=goodReceipt[g].good_receipt_id;
+
+                $.ajax({
+                    type: "POST",
+                    url: BACKEND_URL + "getInvoiceDetailsBydeliveryId",
+                    data: "goodReceiptId=" + goodReceiptId,
+                    success: function (alldata) {
+                      var orderId=alldata[0].good_receipt_order[0].id;
+                      if(alldata[0].cash_method=='ငွေရှင်းပြီး')
+                      {
+                        orderTotal +=alldata[0].good_receipt_order[0].order_total;
+
+                      }
+                       labourTotal +=alldata[0].good_receipt_order[0].labour;
+
+                      $.ajax({
+                        type: "POST",
+                        url: BACKEND_URL + "getInvoiceDetailsByorderId",
+                        data: "orderId=" + orderId,
+                        success: function (orderdetails) {
+                            orderdetails.forEach(function(details){
+
+                            alldata.forEach(function (element){
+
+                              var tr = "<tr class='border-tr'>";
+                              tr += "<td >" + element.good_receipt_order[0].order_no + "</td>";
+                              tr += "<td >" + element.customer_name + "</td>";
+                              tr += "<td >" + element.good_receipt_city.city_name + "</td>";
+                              tr += "<td >" + details.product_name + "</td>";
+                              tr += "<td >" + details.quantity+" "+ details.unit+ "</td>";
+                              tr += "<td >" + thousands_separators(element.good_receipt_order[0].order_total)+ "</td>";
+                              tr += "<td >" +  thousands_separators(element.good_receipt_order[0].labour) + "</td>";
+                              tr += "<td><button type='button' class='btn btn-print' onclick=invoiceByOrderNo(\""+encodeURIComponent(element.order_no)+ "\")><i class='fas fa-print'></i> Print</button ></td >" ;
+                              tr += "</tr>";
+                              $("#tbl_invoice_container").append(tr);
+                              var table = document.getElementById("tbl_invoice"), sumPrice = 0; sumLabour = 0;
+                              for (var i = 1; i < table.rows.length; i++) {
+                                  sumPrice = sumPrice + parseFloat((table.rows[i].cells[5].innerHTML).replace(/,/g, ''));
+                                }
+                                document.getElementById("sumPrice").innerHTML = thousands_separators(sumPrice);
+                                document.getElementById("sumLabour").innerHTML = thousands_separators(sumLabour);
+                                document.getElementById("td_total_price").innerHTML = thousands_separators(orderTotal);
+                                document.getElementById("print_total_price").innerHTML = thousands_separators(orderTotal);
+                                var comissionPercent=$('#comission_percent').val();
+                               var gateLabourPrice=[(orderTotal)*(comissionPercent)]/100;
+                               $("#gate_labour_price").val(thousands_separators(gateLabourPrice));
+                               $("#labour_price").val(thousands_separators(labourTotal));
+                               document.getElementById("print_labour_price").innerHTML = thousands_separators(labourTotal);
+                               var advance=$('#advance').val();
+                               var landPrice=$('#land_price').val();
+                               var allSumPrice=parseInt(gateLabourPrice)+parseInt(advance)+parseInt(landPrice)+parseInt(labourTotal);
+                               $("#all_sum_price").val(thousands_separators(allSumPrice));
+                               document.getElementById("print_land_price").innerHTML = '0';
+                               $("#paid_price").val(thousands_separators(orderTotal));
+                               document.getElementById("print_paid_price").innerHTML = thousands_separators(orderTotal);
+                               $("#balance_price").val(thousands_separators(parseInt(allSumPrice)-parseInt(orderTotal)));
+
+                            });
+                          });
+                        },
+                      error:function (message){
+                        errorMessage(message);
+                      }
+
+                    });
+                    },
+                  error:function (message){
+                    errorMessage(message);
+                  }
+
+                });
+
+              }
+
+
+          },
+          error:function (message){
+            errorMessage(message);
+          }
+        });
 
 }
 function comissionPercent()
 {
   var totalPrice=  document.getElementById("td_total_price").innerHTML;
   var comissionPercent=document.getElementById("comission_percent").value;
-  var gateLabourPrice=(parseInt(totalPrice.split(',').join(""))*parseInt(comissionPercent.split('%').join(""))/100);
+  document.getElementById("print_comission_percent").innerHTML=comissionPercent;
+  var gateLabourPrice=((removeComma(totalPrice)*removePercent(comissionPercent))/100);
   $("#gate_labour_price").val(thousands_separators(gateLabourPrice));
-
-  var allSumPrice=parseInt($("#gate_labour_price").val().split(",").join(""))+parseInt($('#labour').val().split(",").join(""))+parseInt($('#land_price').val().split(",").join(""))+parseInt($("#labour_price").val().split(",").join(""));
+  document.getElementById("print_gate_labour_price").innerHTML = thousands_separators(gateLabourPrice);
+  var advance=$('#advance').val();
+  var landPrice=$('#land_price').val();
+  var labourPrice=$("#labour_price").val();
+  var paidPrice=$("#paid_price").val();
+  var allSumPrice=parseInt(gateLabourPrice)+parseInt(advance)+parseInt(landPrice)+parseInt(labourPrice);
   $("#all_sum_price").val(thousands_separators(allSumPrice));
-  $("#balance_price").val(thousands_separators(parseInt($("#all_sum_price").val().split(",").join(""))-parseInt($("#paid_price").val().split(",").join(""))));
-  document.getElementById("labour").value=thousands_separators($('#labour').val());
+  document.getElementById("print_all_sum_price").innerHTML = thousands_separators(allSumPrice);
+  $("#balance_price").val(thousands_separators(parseInt(allSumPrice)-parseInt(paidPrice)));
+  document.getElementById("print_balance_price").innerHTML = thousands_separators(parseInt(allSumPrice)-parseInt(paidPrice));
+  document.getElementById("advance").value=thousands_separators(advance);
+  document.getElementById("print_advance").innerHTML=thousands_separators(advance);
 }
 function invoiceByOrderNo(orderNo)
 {

@@ -114,3 +114,11 @@ function thousands_separators(num)
   num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return num_parts.join(".");
 }
+function removeComma(number){
+  var numberPart=parseInt(number.split(',').join(""));
+  return numberPart;
+}
+function removePercent(number){
+  var numberPart=parseInt(number.split('%').join(""));
+  return numberPart;
+}
