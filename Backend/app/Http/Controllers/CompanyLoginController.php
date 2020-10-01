@@ -20,32 +20,25 @@ class CompanyLoginController extends Controller
 {
 	public function loginValidate(Request $request)
 	{
-			$user_data = json_decode($request->getContent(), true);
-			$email = $user_data['email'];
-			$password = $user_data['password'];
-			$data=  array(
-				'email' => $email,
-				'password' => $password
-			);
-			if(auth::attempt($data))
-				{
-					    $user = auth::user();
-						$company_id=$user->company_id;
-						$get_data = DB::table('users')
-											->join('tbl_company', 'company_id', '=', 'tbl_company.id')
-											->where('users.company_id','=',$company_id)
-											->where('tbl_company.id','=',$company_id)
-					          	->select('users.*', 'tbl_company.*')->get();
+		$user_data = json_decode($request->getContent(), true);
+	    $email = $user_data['email'];
+		$password = $user_data['password'];
+		$data=  array(
+			'email' => $email,
+			'password' => $password
+		);
+		if(auth::attempt($data))
+		{
+			$user = tbl_company::with('users')->where('id','=',auth::user()->company_id)->get();
 
-						if(sizeof($get_data)){
-					        return response()->json($get_data, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
-					      }
-					  else{
+			if(sizeof($user)){
+				return response()->json($user, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+			}
+			else{
                         
-					      return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
-						}
-					}
-
-  }
+			    return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+		    }
+		}
+    }
 }
 ?>

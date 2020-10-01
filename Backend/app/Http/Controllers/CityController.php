@@ -23,7 +23,8 @@ class CityController extends Controller
             return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
 
         }catch (\Exception $e) {
-            return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+
+          return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
   }
   public function getCity(Request $request)

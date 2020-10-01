@@ -58,11 +58,17 @@ Route::post('getGoodReceiptInvoice',array('middleware'=>'cors','uses'=>'Goodrece
 Route::post('showGoodReceiptDetailInfo',array('middleware'=>'cors','uses'=>'GoodreceiptController@showGoodReceiptDetailInfo'));
 Route::post('updateGoodReceiptDetail',array('middleware'=>'cors','uses'=>'GoodreceiptController@updateGoodReceiptDetail'));
 Route::post('deleteGoodReceiptDetail',array('middleware'=>'cors','uses'=>'GoodreceiptController@deleteGoodReceiptDetail'));
-
+//for invoice
 Route::post('getCompanyInfoBydeliveryId',array('middleware'=>'cors','uses'=>'DeliveryController@getCompanyInfoBydeliveryId'));
 Route::post('getInvoiceDetailsBydeliveryId',array('middleware'=>'cors','uses'=>'DeliveryController@getInvoiceDetailsBydeliveryId'));
+Route::post('getInvoiceDetailsByorderId',array('middleware'=>'cors','uses'=>'DeliveryController@getInvoiceDetailsByorderId'));
 //for GoodInOut
 Route::post('getGoodInOutByCompanyId',array('middleware'=>'cors','uses'=>'GoodInOutController@getGoodInOutByCompanyId'));
+
+Route::post('getInvoiceDetailsByorderNo',array('middleware'=>'cors','uses'=>'DeliveryController@getInvoiceDetailsByorderNo'));
+Route::post('getCompanyDetailBydeliveryId',array('middleware'=>'cors','uses'=>'DeliveryController@getCompanyDetailBydeliveryId'));
+//for statementcarlist
+Route::post('saveStatementCarList',array('middleware'=>'cors','uses'=>'StatementCarListController@saveStatementCarList'));
 //For Order
 Route::post('createOrder',array('middleware'=>'cors','uses'=>'OrderController@createOrder'));
 Route::post('getOrder/{deliveryStatus}',array('middleware'=>'cors','uses'=>'OrderController@getOrder'));

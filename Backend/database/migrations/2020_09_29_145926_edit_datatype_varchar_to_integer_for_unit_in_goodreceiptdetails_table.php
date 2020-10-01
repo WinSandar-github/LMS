@@ -14,7 +14,7 @@ class EditDatatypeVarcharToIntegerForUnitInGoodreceiptdetailsTable extends Migra
     public function up()
     {
         Schema::table('tbl_good_receipt_details', function (Blueprint $table) {
-             $table->bigInteger('unit')->change();
+            $table->bigInteger('unit')->change();
         });
     }
 
