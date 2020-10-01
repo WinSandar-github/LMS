@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class tbl_delivery_details extends Model
 {
-    //
+  protected $table = 'tbl_delivery_details';
+  protected $primaryKey = 'id';
+  public function delivery()
+  {
+      return $this->belongsTo('App\tbl_delivery','id');
+  }
+  
+
 }
