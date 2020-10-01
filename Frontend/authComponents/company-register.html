@@ -18,12 +18,12 @@
                 <div class="col-md-8 mx-auto">
 										<div class="card">
 												<div class="card-header header-card">
-													<h2 class="text-center"><i class="fas fa-spell-check icon"></i> Registration Form <i class="fas fa-spell-check icon"></i></h2>
+													<h2 class="text-center">Registration Form </i></h2>
 												</div>
 
                         <div class="card-body">
 													<form method="post" enctype="multipart/form-data" action="javascript:saveCompanyRegister();" name="register_form" id="register_form">
-															<div id="Back" class="tabcontent">
+
 																				<div class="row">
 																							<div class="col-6">
 																								<div class="form-group">
@@ -59,38 +59,8 @@
 																							</div>
 																						</div>
 																						</div>
-																						<div class="row">
-																							<div class="col-12">
-																								<label class="icon">အ‌ကြောင်းအရာ ***</label>
-																							</div>
-																						</div>
-																						<div class="row">
-																							<div class="col-12">
-																								<div class="form-group">
-																									<div class="form-wrapper">
-																											<textarea class="form-control" cols="155" rows="5" id="description" required oninvalid="this.setCustomValidity('အ‌ကြောင်းအရာ ထည့်ရန်')" oninput="setCustomValidity('')" placeholder="အ‌ကြောင်းအရာ ထည့်ရန်"></textarea>
-																									</div>
-																								</div>
-																							</div>
-																						</div>
-																						<div class="row">
-																							<div class="col-6">
-																								<div class="form-group">
-																									<div class="form-wrapper">
-																										<label class="icon">မြို့အမည် ***</label>
-																										<input type="text" class="form-control" id="city" required oninvalid="this.setCustomValidity('မြို့အမည် ထည့်ရန်')" oninput="setCustomValidity('')" placeholder="မြို့အမည် ထည့်ရန်">
-																									</div>
-																								</div>
-																							</div>
-																							<div class="col-6">
-																								<div class="form-group">
-																									<div class="form-wrapper">
-																										<label class="icon">ပြည်နယ်/တိုင်း ***</label>
-																										<input type="text" class="form-control" id="state"  required oninvalid="this.setCustomValidity('ပြည်နယ်/တိုင်း ထည့်ရန်')" oninput="setCustomValidity('')" placeholder="ပြည်နယ်/တိုင်း ထည့်ရန်">
-																									</div>
-																								</div>
-																							</div>
-																						</div>
+
+
 																						<div class="row">
 																							<div class="col-12">
 																								<div class="form-wrapper">
@@ -99,20 +69,8 @@
 																								</div>
 																							</div>
 																						</div>
-																</div>
+																						<br/>
 
-																<div id="Next" class="tabcontent">
-																						<div class="radio">
-
-																								<input class="radio-input" type="radio" name="gender" value="ဦး" checked />
-																								<label class="radio-label">
-																									ဦး
-																								</label>
-																									<input class="radio-input" type="radio" name="gender" value="ဒေါ်"/>
-																								<label class="radio-label">
-																								ဒေါ်
-																								</label>
-																						</div>
 																						<div class="row">
 																								<div class="col-6">
 																									<div class="form-group">
@@ -168,15 +126,8 @@
 																										</div>
 																						</div>
 																						<div class="row">
-																										<div class="col-6">
-																											<div class="form-group">
-																													<div class="form-wrapper">
-																														<label class="icon">avatar ***</label>
-																														<input type="text" class="form-control" id="avatar" required oninvalid="this.setCustomValidity('avatar ထည့်ရန်')" oninput="setCustomValidity('')" placeholder="avatar ထည့်ရန်">
-																													</div>
-																											</div>
-																										</div>
-																										<div class="col-6">
+
+																										<div class="col-12">
 																												<div class="form-group">
 																													<div class="form-wrapper">
 																														<label class="icon">စကားဝှက် ***</label>
@@ -186,22 +137,12 @@
 																										</div>
 																							</div>
 
-																</div>
-
-																<br/>
-
-																	<div class="row">
+															<div class="row">
+																			<div class="col-4"></div>
 																			<div class="col-4">
-																				<button type="button"class="tablinks tabcontent btn btn-login form-control" onclick="openInfo(event, 'Back')" id="defaultBack">Back</button>
+																				<button type="submit" class="btn btn-login form-control" id="btnLogin">Register Now</button>
 																			</div>
-																			<div class="col-4">
-
-																			  <button type="button" class="tablinks btn btn-login form-control" onclick="openInfo(event, 'Next')" id="defaultNext">Next</button>
-
-																			</div>
-																			<div class="col-4">
-																				<button type="submit" class="tabcontent btn btn-login form-control" id="btnLogin">Register Now</button>
-																			</div>
+																			<div class="col-4"></div>
 																	</div>
 
 														</form>
@@ -218,8 +159,6 @@
 	<script src="../Utilities/js/common.js"></script>
 	<script>
 		createDatepicker('.datepicker');
-		loadOpen();
-
 	</script>
 	</script>
 </html>

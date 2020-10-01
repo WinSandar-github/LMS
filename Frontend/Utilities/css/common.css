@@ -61,12 +61,7 @@ table th, td {
     color: black !important;
 }
 
-.rowClass{
-  padding:100px;
-}
-.radio{
-  text-align: center;
-}
+
 .container{
   padding: 15px 0px 15px 0px;
 }
@@ -85,7 +80,7 @@ table th, td {
 .date_range_filter{
   margin : 10px;
 }
-.company_info h2,span{
+.company_info h2,.company_info span{
   text-align: center;
 }
 .hr{
@@ -94,18 +89,22 @@ table th, td {
 .ui-thead{
   background-color: #B2EBF2;
 }
-.border-tr{
-  border-bottom: 1px solid black;
+.border-tr,table tr{
+  border-bottom: 1px solid #CFD8DC;
+
 }
 .border-tr td,table tr{
   text-align: center;
 }
-
+.tr-class th{
+  border-top: none;
+  text-align: center;
+  }
 .header-card{
-  background-color: #E1F5FE;
+  background-color: #80DEEA;
 }
 .custom-class{
-  background-color: #ECEFF1;
+  background-color: #E1F5FE;
 }
 .btn-login{
   background-color: #B2EBF2;
@@ -122,4 +121,22 @@ table th, td {
   margin:3px;
   font-size: 18px;
   font-weight: bold;
+}
+.company_info h6{
+  text-align:center;
+  margin:3px;
+  font-size: 15px;
+}
+
+.table_price{
+  float:right;
+}
+.table_price td,.table_price input,#print_table td{
+  text-align: right;
+}
+#print_table,#print_button{
+  display: none;
+}
+#print_table{
+  text-align: center;
 }

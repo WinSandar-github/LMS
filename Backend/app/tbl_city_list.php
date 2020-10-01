@@ -12,4 +12,8 @@ class tbl_city_list extends Eloquent
     {
         return $this->hasMany('App\tbl_good_receipt','id');
     }
+     public function cityGoodReceipt()
+     {
+         return $this->hasMany('App\tbl_good_receipt','id');
+     }
 }

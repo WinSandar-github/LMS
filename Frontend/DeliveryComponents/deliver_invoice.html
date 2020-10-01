@@ -27,6 +27,7 @@
   <div class="">
 
     <section>
+
         <div class="company_info">
 
               <h2 class="companyName"></h2>
@@ -67,16 +68,196 @@
                   <th>ကုန်သည်အမည်</th>
                   <th>မြို့ အမည်</th>
                   <th>ပစ္စည်းအမည်</th>
-                  <th>အရေ အတွက်</th>
+                  <th>အရေအတွက်</th>
                   <th>သင့်ငွေ</th>
                   <th>လ/သစိုက်သင့်ငွေ</th>
                   <th>Print</th>
                 </tr>
+
               </thead>
               <tbody id="tbl_invoice_container" class="hoverTable"></tbody>
+
             </table>
+            <table class="table">
+              <tfoot>
+                <tr class="tr-class">
+                  <th ></th>
+                  <th ></th>
+                  <th ></th>
+                  <th ></th>
+                  <th style="width:10%"></th>
+                  <th style="width:9%" id="sumPrice"></th>
+                  <th style="width:17%" id="sumLabour"></th>
+                  <th style="width:13%">Print</th>
+                </tr>
+              </tfoot>
+            </table>
+            </div>
           </div>
           <div class="col-1"></div>
+        </div>
+        <div class="company_info">
+
+
+              <h6>အထက်ပါကုန်များ ပျောက်ဆုံးပါက ယာဥ်မောင်း တာ၀န်သာဖြစ်သည်။</h6>
+              <h6>" * " ပါသောကုန်များသည် ရန်ကုန်ရှင်းပြီးသော ကုန်များဖြစ်သည်။</h6>
+
+        </div>
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col-10">
+            <hr class='hr'/>
+          </div>
+          <div class="col-1"></div>
+        </div>
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col-10">
+            <table class="table">
+              <thead class="table_price" id="price_table">
+
+                <tr class="tr-class">
+                  <td id='td_car_number'></td>
+                  <td id="td_out_date"></td>
+                </tr>
+                <tr class="tr-class">
+                  <td>ကားခရငွေ စုစုပေါင်း</td>
+                  <td id="td_total_price">
+
+                  </td>
+                </tr>
+                <tr class="tr-class">
+                  <td>ကေါ်မရှင်(%)</td>
+                  <td>
+                    <input type="text" value="8" placeholder="8%" id="comission_percent" onchange="comissionPercent();"/>
+                  </td>
+                </tr>
+                <tr class="tr-class">
+                  <td>ဂိတ်လုပ်သားခ</td>
+                  <td >
+                    <input type="text" id="gate_labour_price" readonly/>
+                  </td>
+                </tr>
+                <tr class="tr-class">
+                  <td>လုပ်သားခ</td>
+                  <td>
+                    <input type="text" value="10,000" id="advance" placeholder="0" onchange="comissionPercent();"/>
+                  </td>
+                </tr>
+                <tr class="tr-class">
+                  <td>လ/သစိုက်သင့်ငွေ</td>
+                  <td>
+                    <input type="text" id="labour_price" readonly/>
+                  </td>
+                </tr>
+                <tr class="tr-class">
+                  <td>စိုက်ငွေ</td>
+                  <td>
+                    <input type="text" value="0" id="land_price" readonly/>
+                  </td>
+                </tr>
+                <tr class="tr-class">
+                  <td>စုစုပေါင်း</td>
+                  <td >
+                    <input type="text" id="all_sum_price" readonly/>
+                  </td>
+                </tr>
+                <tr class="tr-class">
+                  <td>ရှင်းပြီးငွေ</td>
+                  <td >
+                    <input type="text" id="paid_price" readonly/>
+                  </td>
+                </tr>
+                <tr class="tr-class">
+                  <td  colspan="2">
+                    <input type="text" id="balance_price" readonly/>
+                  </td>
+                </tr>
+              </thead>
+            </table>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-5"></div>
+          <div class="col-2">
+            <table class="table table-bordered">
+              <thead id="print_table">
+
+                <tr class="tr-class">
+                  <td id='print_car_number'></td>
+                  <td id="td_delivery_date"></td>
+                </tr>
+                <tr class="tr-class">
+                  <td>ကားခရငွေ စုစုပေါင်း</td>
+                  <td id="print_total_price">
+
+                  </td>
+                </tr>
+                <tr class="tr-class">
+                  <td>ကေါ်မရှင်(%)</td>
+                  <td id="print_comission_percent">
+
+                  </td>
+                </tr>
+                <tr class="tr-class">
+                  <td>ဂိတ်လုပ်သားခ</td>
+                  <td id="print_gate_labour_price">
+
+                  </td>
+                </tr>
+                <tr class="tr-class">
+                  <td>လုပ်သားခ</td>
+                  <td id="print_advance">
+
+                  </td>
+                </tr>
+                <tr class="tr-class">
+                  <td>လ/သစိုက်သင့်ငွေ</td>
+                  <td id="print_labour_price">
+
+                  </td>
+                </tr>
+                <tr class="tr-class">
+                  <td>စိုက်ငွေ</td>
+                  <td id="print_land_price">
+
+                  </td>
+                </tr>
+                <tr class="tr-class">
+                  <td>စုစုပေါင်း</td>
+                  <td id="print_all_sum_price">
+
+                  </td>
+                </tr>
+                <tr class="tr-class">
+                  <td>ရှင်းပြီးငွေ</td>
+                  <td id="print_paid_price">
+
+                  </td>
+                </tr>
+                <tr class="tr-class">
+                  <td  colspan="2" id="print_balance_price">
+
+                  </td>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div class="col-5"></div>
+        </div>
+        <div class="row">
+          <div class="col-5"></div>
+          <div class="col-2">
+            <button type="button" class="btn btn-info" onclick="saveStatementCarList();" id="save_button">Save For Report</button>
+          </div>
+          <div class="col-5"></div>
+        </div>
+        <div class="row">
+          <div class="col-6"></div>
+          <div class="col-1">
+            <button type="button" onclick="javascript: window.print();" class="btn btn-print" id="print_button">Print</button>
+          <div class="col-5"></div>
         </div>
     </section>
   </div>
@@ -105,6 +286,7 @@
   <script src="../Utilities/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
   <script src="../Utilities/js/delivery.js"></script>
   <script src="../Utilities/js/common.js"></script>
+  <script src="../Utilities/js/statement-car-list.js"></script>
   <script type="text/javascript">
     loadInvoiceDelivery();
   </script>
