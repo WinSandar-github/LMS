@@ -16,9 +16,17 @@ class tbl_good_receipt extends Eloquent
     {
         return $this->belongsTo('App\User','user_id');
     }
-     public function cityList()
+    public function cityList()
     {
         return $this->belongsTo('App\tbl_city_list','city_id');
+    }
+    public function goodReceiptCity()
+    {
+        return $this->belongsTo('App\tbl_city_list','city_id');
+     }
+    public function goodReceiptOrder()
+    {
+        return $this->hasMany('App\tbl_order','id');
     }
      public function goodReceiptCity()
      {

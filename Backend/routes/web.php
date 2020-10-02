@@ -69,6 +69,9 @@ Route::post('getCompanyDetailBydeliveryId',array('middleware'=>'cors','uses'=>'D
 Route::post('saveStatementCarList',array('middleware'=>'cors','uses'=>'StatementCarListController@saveStatementCarList'));
 //For Order
 Route::post('createOrder',array('middleware'=>'cors','uses'=>'OrderController@createOrder'));
+Route::post('getOrder/{deliveryStatus}',array('middleware'=>'cors','uses'=>'OrderController@getOrder'));
+Route::post('getOrderDetail',array('middleware'=>'cors','uses'=>'OrderController@getOrderDetail'));
+Route::post('deleteOrder',array('middleware'=>'cors','uses'=>'OrderController@deleteOrder'));
 
 Auth::routes();
 
