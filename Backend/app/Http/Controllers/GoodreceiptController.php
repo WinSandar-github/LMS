@@ -22,14 +22,13 @@ class GoodreceiptController extends Controller
             $getRunningno=tbl_good_receipt::where("company_id","=",$goodReceiptData["companyId"])
 										  ->max('running_number');
 
-      			if($getRunningno==null){
-                      $runningNumber=1;
+      		if($getRunningno==null){
+                $runningNumber=1;
 
-      			}
-      			else{
-                      $runningNumber=$getRunningno+1;
-
-      			}
+      	    }
+      	    else{
+                $runningNumber=$getRunningno+1;
+      		}
             $goodReceipt=new tbl_good_receipt();
             $goodReceipt->sender_name=$goodReceiptData["senderName"];
             $date=$goodReceiptData["date"];
@@ -48,18 +47,16 @@ class GoodreceiptController extends Controller
             $goodReceipt->user_id=$goodReceiptData["userId"];
             $goodReceipt->save();
             return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
-          }catch (\Exception $e) {
-          return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+        }catch (\Exception $e) {
+            return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
     }
     public function getGoodReceipt(Request $request,$orderStatus)
 	{
-        $goodReceipt=DB::table('tbl_good_receipt')
-                        ->select('tbl_good_receipt.id','tbl_good_receipt.sender_name','tbl_good_receipt.cash_method','tbl_good_receipt.customer_name','tbl_good_receipt.order_no','tbl_good_receipt.remark','tbl_good_receipt.date','tbl_good_receipt.order_status','tbl_good_receipt.date','users.full_name')
-                        ->join('users','tbl_good_receipt.user_id','=','users.id')
-                        ->where("tbl_good_receipt.company_id","=",$request->input("companyId"))
-                        ->where("tbl_good_receipt.order_status","=",$orderStatus)
-                        ->get();
+        $goodReceipt = tbl_good_receipt::with('users')
+                                        ->where("tbl_good_receipt.company_id","=",$request->input("companyId"))
+                                        ->where("tbl_good_receipt.order_status","=",$orderStatus)
+                                        ->get();
         if(sizeof($goodReceipt)){
             return response()->json($goodReceipt, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
@@ -123,20 +120,15 @@ class GoodreceiptController extends Controller
             $goodReceiptDetail->remark=$productData["remark"];
             $goodReceiptDetail->save();
             return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
-
         }catch (\Exception $e) {
             return response()->json(config('common.errorMessage'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
-
 	}
      public function getGoodReceiptDetail(Request $request)
 	{
-        $goodReceiptDetail=DB::table('tbl_good_receipt_details')
-                        ->select('tbl_good_receipt_details.id','tbl_good_receipt.order_no','tbl_good_receipt_details.good_receipt_id','tbl_good_receipt_details.product_name','tbl_good_receipt_details.qty','tbl_good_receipt_details.unit','tbl_good_receipt_details.weight','tbl_good_receipt_details.remark','tbl_unit.unit_name')
-                        ->join('tbl_unit','tbl_good_receipt_details.unit','=','tbl_unit.id')
-                        ->join('tbl_good_receipt','tbl_good_receipt_details.good_receipt_id','=','tbl_good_receipt.id')
-                        ->where("tbl_good_receipt_details.good_receipt_id","=",$request->input("goodReceiptId"))
-                        ->get();
+        $goodReceiptDetail=tbl_good_receipt_details::with(['goodReceiptByDetail','unitByDetail'])
+                                                    ->where("tbl_good_receipt_details.good_receipt_id","=",$request->input("goodReceiptId"))
+                                                    ->get();
         if(sizeof($goodReceiptDetail)){
              return response()->json($goodReceiptDetail, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
@@ -147,12 +139,9 @@ class GoodreceiptController extends Controller
 	}
      public function getGoodReceiptInvoice(Request $request)
 	{
-        $goodReceiptDetail=DB::table('tbl_good_receipt')
-                        ->select('tbl_good_receipt.id','tbl_good_receipt.sender_name','tbl_good_receipt.cash_method','tbl_good_receipt.order_no','tbl_good_receipt.remark','tbl_good_receipt.customer_name','tbl_good_receipt.date','tbl_city_list.city_name','tbl_good_receipt_details.product_name','tbl_good_receipt_details.qty')
-                        ->join('tbl_good_receipt_details','tbl_good_receipt.id','=','tbl_good_receipt_details.good_receipt_id')
-                        ->join('tbl_city_list','tbl_good_receipt.city_id','=','tbl_city_list.id')
-                        ->where("tbl_good_receipt.id","=",$request->input("goodReceiptId"))
-                        ->get();
+        $goodReceiptDetail=tbl_good_receipt::with(['cityList','goodReceiptDetail'])
+                                            ->where("tbl_good_receipt.id","=",$request->input("goodReceiptId"))
+                                            ->get();
         if(sizeof($goodReceiptDetail)){
              return response()->json($goodReceiptDetail, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
@@ -161,8 +150,42 @@ class GoodreceiptController extends Controller
         }
 
 	}
-
-
-
+    public function showGoodReceiptDetailInfo(Request $request)
+	{
+         $goodReceiptDetail = tbl_good_receipt_details::find($request->input("goodReceiptDetailId"));
+         if(empty($goodReceiptDetail)){
+            return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+         }
+         else{
+            return response()->json($goodReceiptDetail, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+         }
+    }
+    public function updateGoodReceiptDetail(Request $request)
+	{
+        try{
+            $goodReceiptDetailData = json_decode($request->getContent(), true);
+            $goodReceiptDetail = tbl_good_receipt_details::find($goodReceiptDetailData["goodReceiptDetailId"]);
+            $goodReceiptDetail->product_name=$goodReceiptDetailData["productName"];
+            $goodReceiptDetail->unit=$goodReceiptDetailData["UnitId"];
+            $goodReceiptDetail->qty=$goodReceiptDetailData["quantity"];
+            $goodReceiptDetail->weight=$goodReceiptDetailData["weight"];
+            $goodReceiptDetail->remark=$goodReceiptDetailData["remark"];
+            $goodReceiptDetail->user_id=$goodReceiptDetailData["userId"];
+            $goodReceiptDetail->save();
+            return response()->json(config('common.successMessage'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+        }catch (\Exception $e) {
+            return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+        }
+	}
+    public function deleteGoodReceiptDetail(Request $request)
+	{
+        $goodReceiptDetail = tbl_good_receipt_details::find($request->input("goodReceiptDetailId"));
+        if($goodReceiptDetail->delete()){
+            return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+        }
+        else{
+            return response()->json(config('common.errorMessage'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
+        }  
+	}
 }
 ?>

@@ -77,6 +77,25 @@
                                             </thead>
                                             <tbody id="tbl_goodreceipt_body" class="hoverTable"></tbody>
                                         </table>
+                                        
+                                    </div>
+                                    <div class="table_css">
+                                        <h4>ဘောင်ချာဖွင့် ပြီးသွားသော ပစ္စည်းများ</h4>
+                                        <table id="tbl_complete_goodreceipt" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Cash Method</th>
+                                                    <th>ပစ္စည်းလက်ခံ နံပါတ်</th>
+                                                    <th>ကုန်သည်အမည်</th>
+                                                    <th>ကုန်ပို့သူအမည်</th>
+                                                    <th>မှတ်ချက်</th>
+                                                    <th>နေ့စွဲ</th>
+                                                    <th>လုပ်ဆောင်သည့်သူ</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbl_complete_goodreceipt_body" class="hoverTable"></tbody>
+                                        </table>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -94,7 +113,7 @@
                                     <h3 class="card-title">ပစ္စည်းလက်ခံ အသေးစိပ်</h3>
                                 </div>
                                 <div class="card-body">
-                                    <div style="overflow-x:auto;">
+                                    <div class="table_css">
                                         <table id="tbl_goodreceipt_detail" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
@@ -186,7 +205,6 @@
 
                             </div>
                             <div class="row">
-
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">ဖုန်းနံပါတ်</label>
@@ -237,6 +255,7 @@
                     </div>
                     <form enctype="multipart/form-data" action="javascript:saveProduct();" id="productForm">
                         <input type="hidden" id="goodReceiptId" />
+                        <input type="hidden" id="goodReceiptDetailId" />
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-12">
@@ -298,12 +317,10 @@
         </div>
 
         <div class="modal" id="modal-order">
-            <div class="modal-dialog  modal-lg order-modal-dialog">
+            <div class="modal-dialog  modal-xl order-modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-
                         <h5 class="modal-title">ဘောင်ချာဖွင့်ရန်</h5>
-
                     </div>
                     <div class="modal-body">
                         <div style="text-align:center;">
@@ -328,17 +345,17 @@
                             <input type="hidden" id="hiddenTotal" />
                             <input type="hidden" id="hiddenOrderno" />
                             <input type="hidden" id="hiddenGoodReceiptId" />
-                            <div style="overflow-x:auto;">
+                            <div class="table_css">
                                 <table class="table table-bordered table-striped" id="tbl_order">
                                     <thead>
                                         <tr>
-                                            <th style=" white-space: pre !important;">ပစ္စည်း အမည်</th>
-                                            <th style=" white-space: pre !important;">စုစုပေါင်း အရေအတွက်</th>
-                                            <th style=" white-space: pre !important;">တင်ပို့မည့် အရေအတွက်</th>
-                                            <th style=" white-space: pre !important;">အလေး ချိန်</th>
-                                            <th style=" white-space: pre !important;">အတိုင်းအတာစံ</th>
-                                            <th style=" white-space: pre !important;">စျေးနှုန်း</th>
-                                            <th style=" white-space: pre !important;">စုစုပေါင်း</th>
+                                            <th>ပစ္စည်း အမည်</th>
+                                            <th>စုစုပေါင်း အရေအတွက်</th>
+                                            <th>တင်ပို့မည့် အရေအတွက်</th>
+                                            <th>အလေး ချိန်</th>
+                                            <th>အတိုင်းအတာစံ</th>
+                                            <th>စျေးနှုန်း</th>
+                                            <th>စုစုပေါင်း</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbl_order_body"></tbody>
@@ -355,101 +372,9 @@
                         </button>
                     </div>
 
-                    <!--<form enctype="multipart/form-data" action="javascript:saveOrder();" id="orderForm">
-        <div class="modal-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">ပစ္စည်း အမည်</label>
-                        <input type="text" class="form-control" id="txt_customer_name" name="txt_customer_name" placeholder="Customer အမည်">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">စုစုပေါင်း အရေအတွက်</label>
-                        <input type="text" class="form-control" id="txt_address" name="txt_address" placeholder="နေရပ်လိပ်စာ">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">တင်ပို့မည့် အရေအတွက်</label>
-                        <input type="text" class="form-control" id="txt_address" name="txt_address" placeholder="နေရပ်လိပ်စာ"></input>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">အလေးချိန်</label>
-                        <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">အတိုင်းအတာစံ</label>
-                        <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">စျေးနှုန်း</label>
-                        <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">စုစုပေါင်း</label>
-                        <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">
-                            အလုပ်သမားခ:
-                        </label>
-                        <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်">
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">စိုက်ငွေ:</label>
-                        <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">
-                            စုစုပေါင်း:
-                        </label>
-                        <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်">
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="modal-footer" style="clear:both;">
-            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-info">
-                <i class="fa fa-floppy-o"></i> Save
-            </button>
-        </div>
-    </form>-->
-
                 </div>
             </div>
         </div>
-
 
     </div>
 

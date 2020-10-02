@@ -51,9 +51,13 @@ class VerifyCsrfToken extends Middleware
       'getInvoiceDetailsByorderId',
       'saveStatementCarList',
       'createOrder',
+      'showGoodReceiptDetailInfo',
+      'updateGoodReceiptDetail',
+      'deleteGoodReceiptDetail',
+      'getOrder/*',
+      'getOrderDetail',
+      'deleteOrder',
       'getOrderNoBycompanyId',
       'getGoodReceiptByorderNo'
-
-
     ];
 }

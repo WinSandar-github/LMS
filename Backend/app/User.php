@@ -37,7 +37,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     protected $table = 'users';
-    public function company()
+    public function goodReceipt()
+    {
+        return $this->hasMany('App\tbl_good_receipt');
+    }
+    public function order()
+    {
+        return $this->hasMany('App\tbl_order');
+    }
+     public function company()
     {
         return $this->belongsTo('App\tbl_company','id');
     }
