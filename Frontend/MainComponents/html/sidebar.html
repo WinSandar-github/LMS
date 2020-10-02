@@ -1,6 +1,6 @@
 <!-- Brand Logo -->
 <a href="#" class="brand-link">
-  <img id="company_logo" alt="Company Logo" class="brand-image img-circle elevation-3"
+  <img id="logo" alt="Company Logo" class="brand-image img-circle elevation-3"
        style="opacity: .8">
   <h6 class="brand-text font-weight-light" id="company_name"></h6>
 </a>
@@ -125,8 +125,5 @@
   $('#menu a').filter(function () {
     return this.href == url;
     }).addClass('active');
-    var src = BACKEND_URL + "storage/company_logo/" + company_logo;
-    $('#company_logo').attr("src", src);
-    $("#company_name").append(user[0]["name"])
-    $("#user_name").append(user[0]["full_name"]);
+    get_company_info();
 </script>

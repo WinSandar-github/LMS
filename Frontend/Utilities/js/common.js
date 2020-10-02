@@ -49,7 +49,7 @@ function get_company_info() {
     var src = BACKEND_URL + "storage/company_logo/" + company_logo;
     $('#logo').attr("src", src);
     $("#company_name").append(company_name);
-    $("#address").append(adress);
+    $("#address").append(address);
 }
 function get_goodreceipt_invoicedetail() {
     var currentUrl = window.location.href;

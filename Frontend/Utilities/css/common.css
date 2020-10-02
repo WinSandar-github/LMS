@@ -3,7 +3,7 @@
 }
 
 table th, td {
-    /*white-space: nowrap;*/
+    white-space: nowrap;
 }
 
 #company_name, #user_name {
@@ -116,18 +116,24 @@ table th, td {
 .icon{
   color:#2196f3;
 }
-.company_info h2,h4{
+.company_info h2,.company_info h4{
   text-align:center;
   margin:3px;
   font-size: 18px;
   font-weight: bold;
+
 }
 .company_info h6{
   text-align:center;
   margin:3px;
   font-size: 15px;
 }
-
+.company_info img{
+    display: block;
+    margin-top: 3px;
+    margin-left: auto;
+    margin-right: auto;
+}
 .table_price{
   float:right;
 }
@@ -138,5 +144,12 @@ table th, td {
   display: none;
 }
 #print_table{
+  text-align: center;
+}
+#logo{
+  opacity: .8;
+  width:50;
+}
+.button-css{
   text-align: center;
 }
