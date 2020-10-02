@@ -11,12 +11,13 @@ table th, td {
     font-weight: 600 !important;
 }
 .btn-edit {
-    background-color: #78e84a !important;
-    border-color: #78e84a !important;
-}.btn-edit:hover {
-    background-color: #64c93a !important;
-    border-color: #64c93a !important;
- }
+    background-color: #17a2b8 !important;
+    border-color: #17a2b8 !important;
+}
+    .btn-edit:hover {
+        background-color: #1b92a4 !important;
+        border-color: #1b92a4 !important;
+    }
 .btn-delete {
     background-color: #fa3d45 !important;
     border-color: #fa3d45 !important;
@@ -27,40 +28,25 @@ table th, td {
     border-color: #f4111a !important;
     color: black !important;
 }
-.btn-print {
-    background-color: #3d8ee6 !important;
-    border-color: #3d8ee6 !important;
-    color: black !important;
+tn-order {
+    background-color: #17a2b8 !important;
+    border-color: #17a2b8 !important;
 }
 
-.btn-print:hover {
-    background-color: #2a7fdb !important;
-    border-color: #2a7fdb !important;
-    color: black !important;
-}
-.btn-order {
-    background-color: #38a9ea !important;
-    border-color: #38a9ea !important;
-    color: black !important;
-}
-
-.btn-order:hover {
-    background-color: #5498e1 !important;
-    border-color: #5498e1 !important;
-    color: black !important;
-}
+    .btn-order:hover {
+        background-color: #1b92a4 !important;
+        border-color: #137281 !important;
+    }
 .btn-product {
-    background-color: #82d995 !important;
-    border-color: #82d995 !important;
+    background-color: #17a2b8 !important;
+    border-color: #17a2b8 !important;
     color: black !important;
 }
 
-.btn-product:hover {
-    background-color: #3bd35e !important;
-    border-color: #3bd35e !important;
-    color: black !important;
-}
-
+    .btn-product:hover {
+        background-color: #1b92a4 !important;
+        border-color: #1b92a4 !important;
+    }
 
 .container{
   padding: 15px 0px 15px 0px;
@@ -139,4 +125,15 @@ table th, td {
 }
 #print_table{
   text-align: center;
+}
+.btn-space {
+    margin-right: 5px;
+}
+.page-item.active .page-link {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+.page-link {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
 }

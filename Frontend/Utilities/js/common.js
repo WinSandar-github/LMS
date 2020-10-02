@@ -32,15 +32,15 @@ function createDataTable(table) {
         'searching': false,
         'ordering': true,
         'info': false,
-        'autoWidth': true,
+        'autoWidth': false,
+        "scrollX": true,
+        'select': true,
         "order": [[0, "desc"]]
     });
 
 }
-$("table").on('click', 'tr', function () {
-
-    $(this).addClass('selected').siblings().removeClass('selected');
-
+$('table tbody').on('click', 'tr', function () {
+    $(this).toggleClass('selected');
 });
 function createDatepicker(datepicker){
   $(datepicker).datepicker({ format: 'yyyy-mm-dd' });
@@ -121,4 +121,16 @@ function removeComma(number){
 function removePercent(number){
   var numberPart=parseInt(number.split('%').join(""));
   return numberPart;
+}
+function countColumn(table) {
+    var numCols = $(table).find('tr')[0].cells.length;
+    return numCols;
+}
+function dataMessage(message,table, tableBody) {
+    var noOfColumn=countColumn(table);
+    var dataMsg = JSON.parse(message.responseText);
+    var tr = "<tr>";
+    tr += "<td colspan='" + noOfColumn+"'>" + dataMsg.message + "</td>";
+    tr += "</tr>";
+    $(tableBody).append(tr);
 }

@@ -77,29 +77,35 @@ function getGoodReceiptByStatus(status, table, table_body) {
                 tr += "<td >" + element.users.full_name + "</td>";
                 if (status == imcompleteOrderStatus) {
                     tr += "<td class='alignright'><div class='btn-group'>" +
-                        "<button type='button' class='btn btn-info btn-product btn-md' id='btn-add-prduct' data-toggle='modal' data-target='#modal-product' onClick='addProduct(" + element.id + ")'>" +
-                        "<i class='fas fa-plus'></i> Add Product</button></div></td> ";
-                    tr += "<td class='alignright'><div class='btn-group'>" +
-                        "<button  type='button' class='btn btn-warning btn-edit btn-md' onClick='showGoodReceiptInfo(" + element.id + ")'>" +
-                        "<li class='fas fa-edit' ></li ></button ></div ></td > ";
-                    tr += "<td class='alignright'><div class='btn-group'>" +
-                        "<button type='button' class='btn btn-info btn-order btn-md btn-disable' onClick='addToOrder(" + element.id + ")'>" +
-                        "ဘောင်ချာဖွင့်ရန်</button></div></td> ";
-                    tr += "<td class='alignright'><div class='btn-group'>" +
-                        "<button type='button' class='btn btn-success btn-print btn-md' onClick='printGoodReceipt(" + element.id + ")'>" +
-                        "<i class='fas fa-print'></i> Print</button></div></td> "; 
+                        "<button type='button' class='btn btn-info btn-md btn-space' id='btn-add-prduct' data-toggle='modal' data-target='#modal-product' onClick='addProduct(" + element.id + ")'>" +
+                        "<i class='fas fa-plus'></i> Add Product</button></div>";
+                    tr += "<div class='btn-group'>" +
+                        "<button  type='button' class='btn btn-info btn-md btn-space' onClick='showGoodReceiptInfo(" + element.id + ")'>" +
+                        "<li class='fas fa-edit' ></li ></button ></div >";
+                    tr += "<div class='btn-group'>" +
+                        "<button type='button' class='btn btn-info btn-md btn-space' onClick='addToOrder(" + element.id + ")'>" +
+                        "ဘောင်ချာဖွင့်ရန်</button></div>";
+                    tr += "<div class='btn-group'>" +
+                        "<button type='button' class='btn btn-success btn-print btn-md btn-space' onClick='printGoodReceipt(" + element.id + ")'>" +
+                        "<i class='fas fa-print'></i> Print</button></div>";
+                    tr += "<div class='btn-group'>" +
+                        "<button type='button'  class='btn btn-danger btn-md btn-space' onClick=deleteGoodReceipt(\"" + encodeURIComponent(element.sender_name) + "\"," + element.id + ")>" +
+                        "<li class='fas fa-trash'></li></button></div>";
                 }
-                tr += "<td class='alignright'><div class='btn-group'>" +
-                    "<button type='button'  class='btn btn-danger btn-delete btn-md' onClick=deleteGoodReceipt(\"" + encodeURIComponent(element.sender_name) + "\"," + element.id + ")>" +
-                    "<li class='fas fa-trash'></li></button></div></td> ";
-                tr += "</tr>";
+                else {
+                    tr += "<td class='alignright'><div class='btn-group'>" +
+                        "<button type='button'  class='btn btn-danger btn-md btn-space' onClick=deleteGoodReceipt(\"" + encodeURIComponent(element.sender_name) + "\"," + element.id + ")>" +
+                        "<li class='fas fa-trash'></li></button></div>";
+                    tr += "</tr>";
+                }
+               
                 $(table_body).append(tr);
 
             });
             createDataTable(table);
         },
         error: function (message) {
-            errorMessage(message);
+            dataMessage(message, table, table_body);
         }
     });
 }
@@ -249,10 +255,10 @@ function getGoodReceiptDetail(goodReceiptId) {
                 tr += "<td >" + element.weight + "</td>";
                 tr += "<td >" + element.remark + "</td>";
                 tr += "<td class='alignright'><div class='btn-group'>" +
-                    "<button type='button' class='btn btn-warning btn-edit btn-md btn-disable' onClick='showGoodReceiptDetailsInfo(" + element.id + ")'>" +
-                    "<li class='fas fa-edit' ></li ></button ></div ></td > ";
-                tr += "<td class='alignright'><div class='btn-group'>" +
-                    "<button type='button' class='btn btn-danger btn-delete btn-md btn-disable' onClick=deleteGoodReceiptDetails(\"" + encodeURIComponent(element.product_name) + "\"," + element.id + ")>" +
+                    "<button type='button' class='btn btn-info btn-md btn-space' onClick='showGoodReceiptDetailsInfo(" + element.id + ")'>" +
+                    "<li class='fas fa-edit' ></li ></button ></div >";
+                tr += "<div class='btn-group'>" +
+                    "<button type='button' class='btn btn-danger btn-md' onClick=deleteGoodReceiptDetails(\"" + encodeURIComponent(element.product_name) + "\"," + element.id + ")>" +
                     "<li class='fas fa-trash'></li></button></div></td> ";
                 tr += "</tr>";
                 $("#tbl_goodreceipt_detail_body").append(tr);
@@ -264,7 +270,7 @@ function getGoodReceiptDetail(goodReceiptId) {
 
         },
         error: function (message) {
-            errorMessage(message);
+            dataMessage(message, "#tbl_goodreceipt_detail", "#tbl_goodreceipt_detail_body");
         }
     });
 }

@@ -6,7 +6,7 @@ return [
     ],
     'successMessage'=>['message'=>'success.'],
     'errorMessage'=>['message'=>'there is error occur.'],
-    'dataMessage'=>['message'=>'there is no data.'],
+    'dataMessage'=>['message'=>'No Data.'],
 
 ]
  ?>
