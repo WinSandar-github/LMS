@@ -1,3 +1,5 @@
+const completeOrderStatus = 1;
+const imcompleteOrderStatus = 0;
 function saveGoodReceipt() {
     var customerName = $("#txt_customer_name").val();
     var date = $("#txt_date").val();
@@ -53,11 +55,15 @@ function saveGoodReceipt() {
 
 function getGoodReceipt() {
     destroyDatatable("#tbl_goodreceipt", "#tbl_goodreceipt_body");
-    const completeOrderStatus = 1;
-    const imcompleteOrderStatus = 0;
+    destroyDatatable("#tbl_complete_goodreceipt", "#tbl_complete_goodreceipt_body");
+    getGoodReceiptByStatus(imcompleteOrderStatus, '#tbl_goodreceipt','#tbl_goodreceipt_body');
+    getGoodReceiptByStatus(completeOrderStatus, '#tbl_complete_goodreceipt', '#tbl_complete_goodreceipt_body');
+   
+}
+function getGoodReceiptByStatus(status, table, table_body) {
     $.ajax({
         type: "POST",
-        url:  BACKEND_URL + "getGoodReceipt/" + imcompleteOrderStatus,
+        url: BACKEND_URL + "getGoodReceipt/" + status,
         data: "companyId=" + company_id,
         success: function (data) {
             data.forEach(function (element) {
@@ -68,31 +74,32 @@ function getGoodReceipt() {
                 tr += "<td >" + element.sender_name + "</td>";
                 tr += "<td >" + element.remark + "</td>";
                 tr += "<td >" + formatDate(element.date) + "</td>";
-                tr += "<td >" + element.full_name + "</td>";
-                tr += "<td class='alignright'><div class='btn-group'>" +
-                    "<button type='button' class='btn btn-info btn-product btn-md' id='btn-add-prduct' data-toggle='modal' data-target='#modal-product' onClick='addProduct(" + element.id + ")'>" +
-                    "<i class='fas fa-plus'></i> Add Product</button></div></td> ";
-                tr += "<td class='alignright'><div class='btn-group'>" +
-                    "<button  type='button' class='btn btn-warning btn-edit btn-md' onClick='showGoodReceiptInfo(" + element.id + ")'>" +
-                    "<li class='fas fa-edit' ></li ></button ></div ></td > ";
+                tr += "<td >" + element.users.full_name + "</td>";
+                if (status == imcompleteOrderStatus) {
+                    tr += "<td class='alignright'><div class='btn-group'>" +
+                        "<button type='button' class='btn btn-info btn-product btn-md' id='btn-add-prduct' data-toggle='modal' data-target='#modal-product' onClick='addProduct(" + element.id + ")'>" +
+                        "<i class='fas fa-plus'></i> Add Product</button></div></td> ";
+                    tr += "<td class='alignright'><div class='btn-group'>" +
+                        "<button  type='button' class='btn btn-warning btn-edit btn-md' onClick='showGoodReceiptInfo(" + element.id + ")'>" +
+                        "<li class='fas fa-edit' ></li ></button ></div ></td > ";
+                    tr += "<td class='alignright'><div class='btn-group'>" +
+                        "<button type='button' class='btn btn-info btn-order btn-md btn-disable' onClick='addToOrder(" + element.id + ")'>" +
+                        "ဘောင်ချာဖွင့်ရန်</button></div></td> ";
+                    tr += "<td class='alignright'><div class='btn-group'>" +
+                        "<button type='button' class='btn btn-success btn-print btn-md' onClick='printGoodReceipt(" + element.id + ")'>" +
+                        "<i class='fas fa-print'></i> Print</button></div></td> "; 
+                }
                 tr += "<td class='alignright'><div class='btn-group'>" +
                     "<button type='button'  class='btn btn-danger btn-delete btn-md' onClick=deleteGoodReceipt(\"" + encodeURIComponent(element.sender_name) + "\"," + element.id + ")>" +
                     "<li class='fas fa-trash'></li></button></div></td> ";
-                tr += "<td class='alignright'><div class='btn-group'>" +
-                    "<button type='button' class='btn btn-info btn-order btn-md btn-disable' onClick='addToOrder(" + element.id + ")'>" +
-                    "ဘောင်ချာဖွင့်ရန်</button></div></td> ";
-                tr += "<td class='alignright'><div class='btn-group'>" +
-                    "<button type='button' class='btn btn-success btn-print btn-md' onClick='printGoodReceipt(" + element.id + ")'>" +
-                    "<i class='fas fa-print'></i> Print</button></div></td> ";
                 tr += "</tr>";
-                $("#tbl_goodreceipt_body").append(tr);
+                $(table_body).append(tr);
 
             });
-            createDataTable("#tbl_goodreceipt");
-            
+            createDataTable(table);
         },
-        error:function (message){
-          errorMessage(message);
+        error: function (message) {
+            errorMessage(message);
         }
     });
 }
@@ -228,6 +235,7 @@ function saveProduct() {
 }
 function getGoodReceiptDetail(goodReceiptId) {
     destroyDatatable("#tbl_goodreceipt_detail", "#tbl_goodreceipt_detail_body");
+    $("#goodReceiptId").val(goodReceiptId);
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getGoodReceiptDetail",
@@ -237,7 +245,7 @@ function getGoodReceiptDetail(goodReceiptId) {
                 var tr = "<tr>";
                 tr += "<td >" + element.product_name + "</td>";
                 tr += "<td >" + Math.round(element.qty) + "</td>";
-                tr += "<td >" + element.unit_name + "</td>";
+                tr += "<td >" + element.unit_by_detail.unit_name + "</td>";
                 tr += "<td >" + element.weight + "</td>";
                 tr += "<td >" + element.remark + "</td>";
                 tr += "<td class='alignright'><div class='btn-group'>" +
@@ -262,4 +270,73 @@ function getGoodReceiptDetail(goodReceiptId) {
 }
 function printGoodReceipt(goodReceiptId) {
     window.open("goodreceipt_invoice.html?goodReceiptId=" + goodReceiptId);
+}
+
+function showGoodReceiptDetailsInfo(goodReceitptDetailId) {
+    $("#productForm").attr('action', 'javascript:updateGoodReceiptDetail()');
+    $("#goodReceiptDetailId").val(goodReceitptDetailId);
+
+    var data = "&goodReceiptDetailId=" + goodReceitptDetailId;
+    $.ajax({
+        type: "POST",
+        url: BACKEND_URL + "showGoodReceiptDetailInfo",
+        data: data,
+        success: function (data) {
+            $("#txt_product_name").val(data.product_name);
+            $("#select_unit").val(data.unit);
+            $('#txt_quantity').val(Math.round(data.qty));
+            $("#txt_weight").val(data.weight);
+            $("#txt_product_remark").val(data.remark);
+            $('#modal-product').modal('toggle');
+
+        },
+        error: function (message) {
+            errorMessage(message);
+        }
+    });
+}
+function updateGoodReceiptDetail() {
+    var goodReceiptDetailData = {};
+    goodReceiptDetailData["goodReceiptDetailId"] = $("#goodReceiptDetailId").val();
+    goodReceiptDetailData["productName"] = $("#txt_product_name").val();
+    goodReceiptDetailData["UnitId"] = $("#select_unit").val();
+    goodReceiptDetailData["quantity"] = $("#txt_quantity").val();
+    goodReceiptDetailData["weight"] = $("#txt_weight").val();
+    goodReceiptDetailData["remark"] = $("#txt_product_remark").val();
+    goodReceiptDetailData["userId"] = user_id;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4) {
+            var message = JSON.parse(xhttp.responseText).message;
+            alert(message);
+            $("#txt_product_name").val()
+            $("#txt_product_name").val()
+            $("#txt_quantity").val();
+            $("#txt_weight").val();
+            $("#txt_product_remark").val();
+            $('#modal-product').modal('toggle');
+            getGoodReceiptDetail($("#goodReceiptId").val());
+        }
+    };
+    xhttp.open('POST', BACKEND_URL + 'updateGoodReceiptDetail');
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(JSON.stringify(goodReceiptDetailData));
+}  
+function deleteGoodReceiptDetails(productName, goodReceiptDetailId) {
+    var result = confirm("WARNING: This will delete GoodReceiptDetails from " + decodeURIComponent(productName) + " and all related stocks! Press OK to proceed.");
+    if (result) {
+        var data = "goodReceiptDetailId=" + goodReceiptDetailId;
+        $.ajax({
+            type: "POST",
+            url: BACKEND_URL + "deleteGoodReceiptDetail",
+            data: data,
+            success: function (data) {
+                getGoodReceiptDetail($("#goodReceiptId").val());
+                alert(data.message);
+            },
+            error: function (message) {
+                errorMessage(message);
+            }
+        });
+    }
 }

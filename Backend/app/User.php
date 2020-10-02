@@ -38,6 +38,10 @@ class User extends Authenticatable
     ];
     protected $table = 'users';
     protected $primaryKey = 'id';
+     public function goodReceipt()
+    {
+        return $this->hasMany('App\tbl_good_receipt');
+    }
     public function company()
     {
         return $this->belongsTo('App\tbl_company','id');
