@@ -37,7 +37,7 @@ function saveCompanyRegister()
             contentType: false,
             processData: false,
             success: function (data) {
-             alert(data.message);
+             alert(data);
              location.href='../CompanyComponents/company_info.html';
            },
            error:function (XMLHttpRequest, textStatus, errorThrown){

@@ -15,4 +15,6 @@ class tbl_order extends Model
     {
         return $this->belongsTo('App\tbl_good_receipt','order_id');
     }
+    
+
 }

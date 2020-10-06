@@ -160,3 +160,12 @@ table th, td {
 #result{
   color: red;
 }
+.orderQty{
+  width:50%;
+  border:none;
+  background: white;
+  color: blue;
+}
+.btn-left{
+  float: left;
+}

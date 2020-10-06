@@ -28,17 +28,17 @@ class CompanyLoginController extends Controller
 			'password' => $password
 		);
 		if(auth::attempt($data))
-		{
-			$user = tbl_company::with('users')->where('id','=',auth::user()->company_id)->get();
+			{
+				$user = tbl_company::with('users')->where('id','=',auth::user()->company_id)->get();
 
-			if(sizeof($user)){
-				return response()->json($user, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+				if(sizeof($user)){
+					return response()->json($user, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+				}
+				else{
+
+				    return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+			    }
 			}
-			else{
-                        
-			    return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
-		    }
-		}
     }
 }
 ?>
