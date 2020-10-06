@@ -346,3 +346,22 @@ function deleteGoodReceiptDetails(productName, goodReceiptDetailId) {
         });
     }
 }
+function getVipCustomer() {
+    var select = document.getElementById("selectVipCustomer");
+    $.ajax({
+        type: "POST",
+        url: BACKEND_URL + "getVipCustomer",
+        data: "companyId=" + company_id,
+        success: function (data) {
+            data.forEach(function (element) {
+                var option = document.createElement('option');
+                option.text = element.customer_name;
+                option.value = element.customer_name;
+                select.add(option, 0);
+            });
+        },
+        error: function (message) {
+            errorMessage(message);
+        }
+    });
+}

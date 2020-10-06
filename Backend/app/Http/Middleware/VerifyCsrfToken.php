@@ -56,6 +56,8 @@ class VerifyCsrfToken extends Middleware
       'deleteGoodReceiptDetail',
       'getOrder/*',
       'getOrderDetail',
-      'deleteOrder'
+      'deleteOrder',
+      'getVipCustomer',
+      'getVipCustomerInfo'
     ];
 }

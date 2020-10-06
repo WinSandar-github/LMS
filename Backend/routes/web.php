@@ -74,7 +74,9 @@ Route::post('createOrder',array('middleware'=>'cors','uses'=>'OrderController@cr
 Route::post('getOrder/{deliveryStatus}',array('middleware'=>'cors','uses'=>'OrderController@getOrder'));
 Route::post('getOrderDetail',array('middleware'=>'cors','uses'=>'OrderController@getOrderDetail'));
 Route::post('deleteOrder',array('middleware'=>'cors','uses'=>'OrderController@deleteOrder'));
-
+//For vipCustomer
+Route::post('getVipCustomer',array('middleware'=>'cors','uses'=>'GoodreceiptController@getVipCustomer'));
+Route::post('getVipCustomerInfo',array('middleware'=>'cors','uses'=>'GoodreceiptController@getVipCustomerInfo'));
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
