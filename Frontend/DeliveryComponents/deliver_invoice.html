@@ -30,9 +30,10 @@
 
         <div class="company_info">
 
-              <h2 class="companyName"></h2>
-              <h4 class="companyAddress"></h4>
-              <h4 class="companyPhone"></h4>
+                  <img id="logo" alt="Company Logo" class="brand-image img-circle elevation-3" width="50">
+                  <h2 id="company_name"></h2>
+                  <h4 id="address"></h4>
+
 
         </div>
         <div class="row">
@@ -179,8 +180,8 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-5"></div>
-          <div class="col-2">
+          <div class="col-4"></div>
+          <div class="col-4">
             <table class="table table-bordered">
               <thead id="print_table">
 
@@ -244,20 +245,17 @@
               </thead>
             </table>
           </div>
-          <div class="col-5"></div>
+          <div class="col-4"></div>
         </div>
-        <div class="row">
-          <div class="col-5"></div>
-          <div class="col-2">
+        <div class="button-css">
+
             <button type="button" class="btn btn-info" onclick="saveStatementCarList();" id="save_button">Save For Report</button>
-          </div>
-          <div class="col-5"></div>
+
         </div>
-        <div class="row">
-          <div class="col-6"></div>
-          <div class="col-1">
+        <div class="button-css">
+
             <button type="button" onclick="javascript: window.print();" class="btn btn-print" id="print_button">Print</button>
-          <div class="col-5"></div>
+
         </div>
     </section>
   </div>
@@ -287,8 +285,10 @@
   <script src="../Utilities/js/delivery.js"></script>
   <script src="../Utilities/js/common.js"></script>
   <script src="../Utilities/js/statement-car-list.js"></script>
+  <script type="text/javascript" src="../Utilities/js/auth.js"></script>
   <script type="text/javascript">
     loadInvoiceDelivery();
+    get_company_info();
   </script>
 </body>
 </html>
