@@ -1,6 +1,7 @@
 ﻿const completeDeliveryStatus = 1;
 const imcompleteDeliveryStatus = 0;
 function addToOrder(goodReceiptId) {
+    $("#tbl_order_body").html("");
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getGoodReceiptDetail",
@@ -41,7 +42,7 @@ function addToOrder(goodReceiptId) {
             $('#modal-order').modal('toggle');
         },
         error: function (message) {
-            errorMessage(message);
+            alert("Please add product");
         }
     });
     
@@ -146,12 +147,17 @@ function getOrderByStatus(status,table,tableBody) {
                 tr += "<td >" + (element.user_by_order).full_name + "</td>";
                 if (status == imcompleteDeliveryStatus) {
                     tr += "<td class='alignright'><div class='btn-group'>" +
-                        "<button type='button'  class='btn btn-danger btn-delete btn-md' onClick=deleteOrder(\"" + encodeURIComponent(element.order_no) + "\"," + element.id + ")>" +
-                        "<li class='fas fa-trash'></li></button></div></td> ";
+                        "<button type='button' class='btn btn-success btn-print btn-md btn-space'>" +
+                        "<i class='fas fa-print'></i> Print</button></div>";
+                    tr += "<div class='btn-group'>" +
+                        "<button type='button'  class='btn btn-danger btn-md btn-space' onClick=deleteOrder(\"" + encodeURIComponent(element.order_no) + "\"," + element.id + ")>" +
+                        "<li class='fas fa-trash'></li></button></div></td>";
                 }
-                tr += "<td class='alignright'><div class='btn-group'>" +
-                    "<button type='button' class='btn btn-success btn-print btn-md'>" +
-                    "<i class='fas fa-print'></i> Print</button></div></td> ";
+                else {
+                    tr += "<td class='alignright'><td class='alignright'><div class='btn-group'>" +
+                        "<button type='button' class='btn btn-success btn-print btn-md btn-space'>" +
+                        "<i class='fas fa-print'></i> Print</button></div></td> ";
+                }
                 tr += "</tr>";
                 $(tableBody).append(tr);
 
@@ -159,7 +165,7 @@ function getOrderByStatus(status,table,tableBody) {
             createDataTable(table);
         },
         error: function (message) {
-            errorMessage(message);
+            dataMessage(message, table, tableBody);
         }
     });
 }
@@ -186,7 +192,7 @@ function getOrderDetail(orderId) {
 
         },
         error: function (message) {
-            errorMessage(message);
+            dataMessage(message, "#tbl_order_detail", "#tbl_order_detail_body");
         }
     });
 }
