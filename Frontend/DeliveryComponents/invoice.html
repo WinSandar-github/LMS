@@ -29,9 +29,9 @@
     <section>
         <div class="company_info">
 
-              <h2 class="companyName"></h2>
-              <h4 class="companyAddress"></h4>
-              <h4 class="companyPhone"></h4>
+                <img id="logo" alt="Company Logo" class="brand-image img-circle elevation-3" width="50">
+               <h2 id="company_name"></h2>
+               <h4 id="address"></h4>
 
         </div>
         <br/>
@@ -155,13 +155,11 @@
             </table>
           </div>
         </div>
-        <div class="row">
-          <div class="col-4"></div>
-          <div class="col-4">
+        <div class="button-css">
+
             <button type="button" onclick="javascript: window.print();" class="btn btn-print">Print</button>
             <button type="button" onclick="javascript: back();" class="btn btn-info">Back</button>
-          </div>
-          <div class="col-4"></div>
+          
         </div>
     </section>
   </div>
@@ -190,8 +188,10 @@
   <script src="../Utilities/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
   <script src="../Utilities/js/delivery.js"></script>
   <script src="../Utilities/js/common.js"></script>
+  <script type="text/javascript" src="../Utilities/js/auth.js"></script>
   <script type="text/javascript">
     loadInvoiceByOrderNo();
+    get_company_info();
   </script>
 </body>
 </html>

@@ -72,6 +72,10 @@ Route::post('createOrder',array('middleware'=>'cors','uses'=>'OrderController@cr
 Route::post('getOrder/{deliveryStatus}',array('middleware'=>'cors','uses'=>'OrderController@getOrder'));
 Route::post('getOrderDetail',array('middleware'=>'cors','uses'=>'OrderController@getOrderDetail'));
 Route::post('deleteOrder',array('middleware'=>'cors','uses'=>'OrderController@deleteOrder'));
+//for order by companyId
+Route::post('getOrderNoBycompanyId', array('middleware' => 'cors', 'uses' => 'DeliveryController@getOrderNoBycompanyId'));
+//for goodReceipt by orderNo
+Route::post('getGoodReceiptByorderNo', array('middleware' => 'cors', 'uses' => 'DeliveryController@getGoodReceiptByorderNo'));
 
 Auth::routes();
 

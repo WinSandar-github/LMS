@@ -36,9 +36,6 @@ class RegisterController extends Controller
             $company=new tbl_company();
             $company->name=$request->input('companyname');
             $company->address=$request->input('companyaddress');
-            $company->description=$request->input('description');
-            $company->city=$request->input('city');
-            $company->state=$request->input('state');
             $company->zipcode=$request->input('zip_code');
             $company->phone=$request->input('txt_phone');
             $file_ext=$request->input('ext');
@@ -55,8 +52,6 @@ class RegisterController extends Controller
             $user->phone_no=$request->input('txt_phone');
             $user->address=$request->input('companyaddress');
             $user->birthday=$request->input('birthday');
-            $user->avatar=$request->input('avatar');
-            $user->gender=$request->input('gender');
             $user->role=$request->input('txt_type');
             $user->company_id=$company->id;
             $user->email=$request->input('txt_email');
