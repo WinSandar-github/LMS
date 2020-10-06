@@ -60,7 +60,7 @@ table th, td {
 .table_css{
   margin-top:20px;overflow-x:auto;
 }
-.table_css h4{
+ h4{
   text-align:center;
 }
 .date_range_filter{
@@ -156,4 +156,35 @@ table th, td {
 }
 #result{
   color: red;
+}
+.align-right {
+    text-align: right;
+}
+
+@media print {
+    #print-header {
+        display: block;
+    }
+
+    .no-print {
+        visibility: hidden;
+    }
+}
+
+.select2-results .select2-highlighted {
+    background: #17a2b8 !important;
+    color: #fff;
+}
+
+#print-header {
+    display: none;
+}
+
+.align-center {
+    text-align: center;
+}
+
+img {
+    width: 80px;
+    height: 80px;
 }

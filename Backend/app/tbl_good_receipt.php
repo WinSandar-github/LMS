@@ -12,6 +12,10 @@ class tbl_good_receipt extends Eloquent
     {
         return $this->hasMany('App\tbl_good_receipt_details','id');
     }
+     public function goodReceiptDetailByGoodReceipt()
+    {
+        return $this->hasMany('App\tbl_good_receipt_details','good_receipt_id');
+    }
     public function users()
     {
         return $this->belongsTo('App\User','user_id');
@@ -27,6 +31,10 @@ class tbl_good_receipt extends Eloquent
     public function goodReceiptOrder()
     {
         return $this->hasMany('App\tbl_order','id');
+    }
+    public function orderByGoodReceipt()
+    {
+        return $this->hasMany('App\tbl_order','good_receipt_id');
     }
     public function goodReceiptBygoodreceiptDetails()
    {

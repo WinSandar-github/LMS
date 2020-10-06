@@ -66,8 +66,8 @@ function get_goodreceipt_invoicedetail() {
             $("#date").append(formatDate(data[0]["date"]));
             $("#city").append(data[0].city_list.city_name);
             $("#cashRemark").append(data[0]["cash_method"])
-            var goodReceiptDetail = data[0].good_receipt_detail;
-            var length = (data[0].good_receipt_detail).length;
+            var goodReceiptDetail = data[0].good_receipt_detail_by_good_receipt;
+            var length = goodReceiptDetail.length;
             for (var detail = 0; detail < length; detail++) {
                 var tr = "<tr>";
                 tr += "<td style='text-align:center;'>" + "#" + "</td>";

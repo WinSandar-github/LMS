@@ -76,6 +76,9 @@ Route::post('deleteOrder',array('middleware'=>'cors','uses'=>'OrderController@de
 Route::post('getOrderNoBycompanyId', array('middleware' => 'cors', 'uses' => 'DeliveryController@getOrderNoBycompanyId'));
 //for goodReceipt by orderNo
 Route::post('getGoodReceiptByorderNo', array('middleware' => 'cors', 'uses' => 'DeliveryController@getGoodReceiptByorderNo'));
+//For vipCustomer
+Route::post('getVipCustomer',array('middleware'=>'cors','uses'=>'GoodreceiptController@getVipCustomer'));
+Route::post('getVipCustomerInfo',array('middleware'=>'cors','uses'=>'GoodreceiptController@getVipCustomerInfo'));
 
 Auth::routes();
 
