@@ -37,7 +37,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     protected $table = 'users';
-    protected $primaryKey = 'id';
     public function goodReceipt()
     {
         return $this->hasMany('App\tbl_good_receipt');
@@ -46,7 +45,7 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\tbl_order');
     }
-    public function company()
+     public function company()
     {
         return $this->belongsTo('App\tbl_company','id');
     }

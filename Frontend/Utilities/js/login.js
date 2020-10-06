@@ -1,16 +1,10 @@
-
 function login() {
-
     var email = $('#email').val();
-
     var password = $('#password').val();
     var data = {};
-
     data["email"] = email;
     data["password"] = password;
-
     var xhttp = new XMLHttpRequest();
-
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             if (xhttp.responseText.trim() == "") {
@@ -20,12 +14,10 @@ function login() {
                 var obj = JSON.parse((xhttp.responseText));
 
                     if (typeof (localStorage) !== "undefined") {
-                     document.getElementById("result").innerHTML = "<h3>Authentication Successful!</h3>";
-                      localStorage.setItem('userinfo', xhttp.responseText);
+                     localStorage.setItem('userinfo', xhttp.responseText);
                      location.href='../CompanyComponents/company_info.html';
                   }
-
-            }
+                }
         }
 
         if (xhttp.readyState == 4 && xhttp.status == 500) {

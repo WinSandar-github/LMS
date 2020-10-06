@@ -15,6 +15,7 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <link rel="stylesheet" href="../Utilities/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../Utilities/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../Utilities/plugins/select2/css/select2.css">
   <link rel="stylesheet" href="../Utilities/css/common.css" />
 </head>
 <body class="sidebar-mini layout-fixed layout-navbar-fixed text-sm">
@@ -310,7 +311,7 @@
         <div class="modal-body">
           <div class="row">
               <div class="col-12 box-body table-responsive">
-                <table class="table table-bordered table-hover" id="productdata">
+                <table class="table table-bordered table-hover" id="tbl_product">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -336,13 +337,13 @@
 
                         </td>
                         <td>
-                            <input type="hidden" id="order_ref" />
-                            <select class="form-control select2" id="order_id" name="order_id" data-placeholder="Order ရွေးရန်" onchange="searchOrderNo(this.value);">
-                                <option value="">--Order ရွေးရန်--</option>
+                            <select class="select2" id="selectOrderId" name="order_id" data-placeholder="Order ရွေးရန်" onchange="searchOrderNo(this.value);">
+                                <option>--Order ရွေးရန်--</option>
                             </select>
                         </td>
                         <td></td>
                         <td>
+                          <input type="hidden" id="count">
                             <input type="text" class="form-control" name="total_qty" id="total_qty" placeholder="Qty" disabled />
                         </td>
                         <td></td>
@@ -357,7 +358,7 @@
                         <td></td>
                         <td></td>
                     </tr>
-                    <tbody class="product_table" id="product_table"></tbody>
+                    <tbody class="product_table" id="tbl_product_container"></tbody>
                 </table>
               </div>
             </div>
@@ -394,13 +395,16 @@
   <script src="../Utilities/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
   <script src="../Utilities/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
   <script src="../Utilities/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="../Utilities/plugins/select2/js/select2.js"></script>
   <script src="../Utilities/js/delivery.js"></script>
   <script src="../Utilities/js/common.js"></script>
   <script type="text/javascript" src="../Utilities/js/auth.js"></script>
   <script>
+      $('.select2').select2();
       createDatepicker('.datepicker');
       loadDelivery();
       loadDeliveryByComplete();
+      autoOrderNo();
   </script>
 </body>
 </html>
