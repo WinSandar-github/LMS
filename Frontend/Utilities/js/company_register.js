@@ -1,21 +1,12 @@
-
-function saveCompanyRegister() {
+function saveCompanyRegister()
+{
     var company_name = $('#companyname').val();
     var company_address = $('#companyaddress').val();
-    var gender = $("input[name='gender']:checked").val();
     var txt_name = $('#txt_name').val();
-    var txt_type = $('#txt_type').val();
     var txt_phone = $('#txt_phone').val();
     var txt_email = $('#txt_email').val();
-    var description = $('#description').val();
-    var city = $('#city').val();
-    var state = $('#state').val();
-    var zip_code = $('#zip_code').val();
-    var nrc_passport = $('#nrc_passport').val();
-    var birthday = $('#birthday').val();
     var txt_password = $('#txt_password').val();
-    var avatar = $('#avatar').val();
-
+    var txt_password=$('#confirm_password').val();
     var form = new FormData;
     var logo_file = document.getElementById('companylogo');
     if (logo_file.files.length > 0) {
@@ -35,19 +26,10 @@ function saveCompanyRegister() {
     }
     form.append('companyname', company_name);
     form.append('companyaddress', company_address);
-    form.append('gender', gender);
     form.append('txt_name', txt_name);
-    form.append('txt_type', txt_type);
     form.append('txt_phone', txt_phone);
     form.append('txt_email', txt_email);
     form.append('txt_password', txt_password);
-    form.append('description', description);
-    form.append('city', city);
-    form.append('state', state);
-    form.append('zip_code', zip_code);
-    form.append('nrc_passport', nrc_passport);
-    form.append('birthday', birthday);
-    form.append('avatar', avatar);
     $.ajax({
             type: "POST",
             url: BACKEND_URL + "saveCompany",
@@ -64,3 +46,25 @@ function saveCompanyRegister() {
 
     });
 }
+function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
+$('#confirm_password').on('keyup', function () {
+  if ($('#txt_password').val() == $('#confirm_password').val()) {
+    $('#message').html('Matching').css("color", "blue");
+  } else
+    $('#message').html('Not Matching').css('color', 'red');
+});
+$('#txt_email').on('keyup', function () {
+  const $result = $("#messageEmail");
+  const email = $("#txt_email").val();
+  $result.text("");
+  if (validateEmail(email)) {
+    $result.text(email + " is valid");
+    $result.css("color", "blue");
+  } else{
+    $result.text(email + " is not valid");
+    $result.css("color", "red");
+  }
+});

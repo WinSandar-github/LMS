@@ -1,5 +1,6 @@
 ﻿body {
     font-family: 'Padauk' !important;
+
 }
 
 table th, td {
@@ -60,10 +61,9 @@ table th, td {
     border-color: #3bd35e !important;
     color: black !important;
 }
-
-
 .container{
   padding: 15px 0px 15px 0px;
+
 }
 .custom-input{
   display: flex;
@@ -100,22 +100,7 @@ table th, td {
   border-top: none;
   text-align: center;
   }
-.header-card{
-  background-color: #80DEEA;
-}
-.custom-class{
-  background-color: #E1F5FE;
-}
-.btn-login{
-  background-color: #B2EBF2;
-}
-.tabcontent {
-  display: none;
 
-}
-.icon{
-  color:#2196f3;
-}
 .company_info h2,.company_info h4{
   text-align:center;
   margin:3px;
@@ -152,4 +137,26 @@ table th, td {
 }
 .button-css{
   text-align: center;
+}
+.custom-header{
+  background: white;
+  padding: 15px 0px 5px 0px;
+}
+.custom-header h2{
+  text-transform: uppercase;
+  font-size: 25px;
+  color: #333;
+}
+.btn-register{
+  width: 200px;
+}
+#text-register{
+  font-weight: bold;
+  text-decoration: none;
+}
+.custom-card{
+  margin-top: 10px;
+}
+#result{
+  color: red;
 }
