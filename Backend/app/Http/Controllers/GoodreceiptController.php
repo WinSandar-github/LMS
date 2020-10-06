@@ -139,7 +139,7 @@ class GoodreceiptController extends Controller
 	}
      public function getGoodReceiptInvoice(Request $request)
 	{
-        $goodReceiptDetail=tbl_good_receipt::with(['cityList','goodReceiptDetail'])
+        $goodReceiptDetail=tbl_good_receipt::with(['cityList','goodReceiptDetailByGoodReceipt'])
                                             ->where("tbl_good_receipt.id","=",$request->input("goodReceiptId"))
                                             ->get();
         if(sizeof($goodReceiptDetail)){
@@ -186,6 +186,43 @@ class GoodreceiptController extends Controller
         else{
             return response()->json(config('common.errorMessage'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
         }  
+	}
+     public function getVipCustomer(Request $request)
+	{
+        $vipCustomer=tbl_good_receipt::where("company_id","=",$request->input("companyId"))
+                                     ->where('status','=',1)
+                                     ->groupBy('customer_name')
+                                     ->get();
+        if(sizeof($vipCustomer)){
+             return response()->json($vipCustomer, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+        }
+        else{
+             return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+        }
+
+	}
+     public function getVipCustomerInfo(Request $request)
+	{
+        $startDate=date("Y-m-d", strtotime($request->input("startDate")));
+        $endDate=date("Y-m-d", strtotime($request->input("endDate")));
+        if($startDate==$endDate){
+            $vipCustomer=tbl_good_receipt::with(['goodReceiptDetailByGoodReceipt','goodReceiptOrder'])
+                                         ->where('tbl_good_receipt.customer_name','=',$request->input("customerName"))
+                                         ->get();
+        }
+        else{
+             $vipCustomer=tbl_good_receipt::with(['goodReceiptDetailByGoodReceipt','goodReceiptOrder'])
+                                          ->where('tbl_good_receipt.customer_name','=',$request->input("customerName"))
+                                          ->whereBetween('date',[$startDate, $endDate])
+                                          ->get();
+        }
+        if(sizeof($vipCustomer)){
+             return response()->json($vipCustomer, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+        }
+        else{
+             return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+        }
+
 	}
 }
 ?>

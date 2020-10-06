@@ -28,9 +28,9 @@ function getCity() {
                 tr += "<td >" + element.id + "</td>";
                 tr += "<td >" + element.city_name + "</td>";
                 tr += "<td class='alignright'><div class='btn-group'>" +
-                    "<button type='button' class='btn btn-warning btn-edit btn-xs' onClick='showCityInfo(" + element.id + ")'>" +
+                    "<button type='button' class='btn btn-info btn-xs' onClick='showCityInfo(" + element.id + ")'>" +
                     "<li class='fas fa-edit'></li></button> ";
-                tr += "<button type='button' class='btn btn-danger btn-delete btn-xs' onClick=deleteCity(\"" + encodeURIComponent(element.city_name) + "\"," + element.id + ")><li class='fa fa-trash' ></li ></button ></div ></td > ";
+                tr += "<button type='button' class='btn btn-danger btn-xs' onClick=deleteCity(\"" + encodeURIComponent(element.city_name) + "\"," + element.id + ")><li class='fa fa-trash' ></li ></button ></div ></td > ";
                 tr += "</tr>";
                 $("#tbl_city_container").append(tr);
 
@@ -39,7 +39,7 @@ function getCity() {
 
         },
         error: function (message) {
-            errorMessage(message);
+            dataMessage(message,"#table_tbl_city","#tbl_city_container");
         }
     });
 }
