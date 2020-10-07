@@ -65,6 +65,11 @@ class VerifyCsrfToken extends Middleware
       'getUser',
       'deleteUser',
       'showUserInfo',
-      'updateUser'
+      'updateUser',
+      'getRule',
+      'createRule',
+      'showRuleDetail',
+      'updateRule',
+      'deleteRule'
     ];
 }

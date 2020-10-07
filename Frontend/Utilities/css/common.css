@@ -191,3 +191,10 @@ img {
 .hide{
     display:none;
 }
+.padding-top {
+    padding-top: 20px;
+}
+
+#tbl_rule td {
+   white-space:pre-line;
+}

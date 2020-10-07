@@ -134,3 +134,8 @@ function dataMessage(message,table, tableBody) {
     tr += "</tr>";
     $(tableBody).append(tr);
 }
+function numberRows() {
+    $('table tbody tr').each(function (idx) {
+        $(this).children(":eq(0)").html(idx + 1);
+    });
+}
