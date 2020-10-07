@@ -79,7 +79,12 @@ Route::post('getGoodReceiptByorderNo', array('middleware' => 'cors', 'uses' => '
 //For vipCustomer
 Route::post('getVipCustomer',array('middleware'=>'cors','uses'=>'GoodreceiptController@getVipCustomer'));
 Route::post('getVipCustomerInfo',array('middleware'=>'cors','uses'=>'GoodreceiptController@getVipCustomerInfo'));
-
+//For user
+Route::post('createUser',array('middleware'=>'cors','uses'=>'UserController@createUser'));
+Route::post('getUser',array('middleware'=>'cors','uses'=>'UserController@getUser'));
+Route::post('showUserInfo',array('middleware'=>'cors','uses'=>'UserController@showUserInfo'));
+Route::post('updateUser',array('middleware'=>'cors','uses'=>'UserController@updateUser'));
+Route::post('deleteUser',array('middleware'=>'cors','uses'=>'UserController@deleteUser'));
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

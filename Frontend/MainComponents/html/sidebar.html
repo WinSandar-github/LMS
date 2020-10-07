@@ -119,6 +119,6 @@
     }).addClass('active');
     var src = BACKEND_URL + "storage/company_logo/" + company_logo;
    $('#company_logo').attr("src", src);
-   $("#company_name").append(user[0]["name"])
-   $("#user_name").append(user[0]["full_name"]);
+    $("#company_name").append(user[0]["name"])
+    $("#user_name").append(user[0].users.full_name);
 </script>
