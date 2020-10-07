@@ -24,7 +24,7 @@ class UnitController extends Controller
         }
     }
   public function getUnit(Request $request)
-	{   
+	{
         $unit = tbl_unit::where("company_id","=",$request->input("companyId"))->get();
         if(sizeof($unit)){
             return response()->json($unit, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -61,7 +61,7 @@ class UnitController extends Controller
            return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);}
         else{
              return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
-        } 
+        }
 	}
 }
 ?>

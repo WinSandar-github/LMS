@@ -33,7 +33,7 @@ class GoodInOutController extends Controller
             return response()->json($goodinout,200, config('common.header'),JSON_UNESCAPED_UNICODE);
           }
           else{
-              return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+              return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
           }
 
   }

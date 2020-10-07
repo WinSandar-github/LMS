@@ -28,9 +28,9 @@ class StatementCarListController extends Controller
       $statement->delivery_id=$request->input("deliveryId");
       $statement->status=$request->input("status");
       $statement->save();
-      return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+      return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
       }catch (\Exception $e){
-        return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+        return response()->json(config('common.message.error'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
      }
    }
 }

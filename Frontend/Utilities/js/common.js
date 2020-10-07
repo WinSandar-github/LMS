@@ -10,7 +10,7 @@ function logout() {
 }
 function errorMessage(message) {
     var returnMessage = JSON.parse(message.responseText)
-    alert(returnMessage.message);
+    alert(returnMessage);
 }
 function errorStatus(XMLHttpRequest, textStatus, errorThrown){
     alert("Status: " + textStatus);
