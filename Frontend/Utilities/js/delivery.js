@@ -10,7 +10,6 @@ function saveDelivery()
   var differentArrived = $("#different_day").val();
   var remark = $("#delivery_remark").val();
   var status=$('#selected_status').val();
-
   var delivery = new FormData;
   delivery.append('carNumber',carNumber);
   delivery.append('driverName',driverName);
@@ -38,7 +37,7 @@ function saveDelivery()
             contentType: false,
             processData: false,
             success: function (data) {
-              alert(data.message);
+              alert(data);
               $('#modal-delivery').modal('toggle');
               destroyDatatable("#table_tbl_delivery","#tbl_delivery_container");
               loadDelivery();
@@ -53,7 +52,6 @@ function getDifferentDays()
 {
   var startDate = $("#start_dt").val();
   var endDate = $("#arrived_dt").val();
-
   if (endDate.trim() == "") {
       $("#different_day").val("-1");
     }
@@ -65,7 +63,6 @@ function getDifferentDays()
       $("#different_day").val(differentDay);
   }
 }
-
 function loadDelivery()
 {
   destroyDatatable("#table_tbl_delivery","#tbl_delivery_container");
@@ -74,7 +71,6 @@ function loadDelivery()
           url: BACKEND_URL + "getDelivery",
           data: "companyId=" + company_id,
           success: function (data) {
-            console.log(data);
             data.forEach(function (element) {
               var tr = "<tr onclick='getDeliverDetailsByDeliveryId(" + element.id + ");'>";
               tr += "<td >" + element.car_no + "</td>";
@@ -88,13 +84,12 @@ function loadDelivery()
               tr += "<td >" + element.remark + "</td>";
               tr += "<td >" + element.users['full_name'] + "</td>";
               tr += "<td >" + element.company_delivery['name'] + "</td>";
-              tr += "<td class='alignright'><button type='button' class='btn btn-product' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")><i class='fas fa-plus'></i>  Add DeliveryDetails</button ></td >" ;
-              tr += "<td class='alignright'><button type='button' class='btn btn-edit' onClick=showDeliveryById("+ element.id +")><i class='fas fa-edit'></i></button ></td > ";
-              tr += "<td class='alignright'><button type='button' class='btn btn-print' onClick=printDeliveryById("+ element.id +")><i class='fas fa-print'> Print</button ></td > ";
+              tr += "<td class='alignright'><button type='button' class='btn btn-product btn-space' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")><i class='fas fa-plus'></i>  Add DeliveryDetails</button >"+
+                    "<button type='button' class='btn btn-edit btn-space' onClick=showDeliveryById("+ element.id +")><i class='fas fa-edit'></i></button >"+
+                    "<button type='button' class='btn btn-print btn-space' onClick=printDeliveryById("+ element.id +")><i class='fas fa-print'></i> Print</button ></td > ";
               tr += "</tr>";
               $("#tbl_delivery_container").append(tr);
-
-          });
+            });
           createDataTable('#table_tbl_delivery');
           },
           error:function (message){
@@ -108,61 +103,56 @@ function getDeliveryById(deliveryId)
 }
 function saveDeliverDetail()
 {
-  var tableBody = document.getElementById("product_table");   //tbl_order_details
-  var deliveryId=$('#hdeliveryId').val();
-  var goodReceiptId=1;                                  //tbl_good_receipt
-  var goodReceiptDetailId=1;                           //tbl_good_receipt_details
-  var orderDetailsId=1;                                 //tbl_order_details
-  var receiverName='U Tun';                              //row.cells[1].innerHTML
-  var productName='test';                                //row.cells[2].innerHTML
-  var totalQuantity='100';                               //row.cells[3].innerHTML
-  var quantity='10';                                      //row.cells[4].innerHTML
-  var weight='10kg';                                      //row.cells[5].innerHTML
-  var toCityName='Monywa';                              //row.cells[6].innerHTML
-  var remark='description';                               //row.cells[7].innerHTML
-  var deliveryDetails = new FormData;
-  for (var i = 0, row; row = tableBody.rows[i]; i++)//tbl_order_details
+  var tableBody = document.getElementById("tbl_product_container"),deliveryId=$('#hdeliveryId').val(),deliveryDetails = new Array(),orderData=new Array();
+  for (var i = 0, row; row = tableBody.rows[i]; i++)
   {
-      var productData={};
-      productData['receiverName']=row.cells[1].innerHTML;   //tbl_order_details
-      productData['productName']=row.cells[2].innerHTML;    //tbl_order_details
-      productData['totalQuantity']=row.cells[3].innerHTML;  //tbl_order_details
-      productData['quantity']=row.cells[4].innerHTML;       //tbl_order_details
-      productData['weight']=row.cells[5].innerHTML;         //tbl_order_details
-      productData['toCityName']=row.cells[6].innerHTML;     //tbl_order_details
-      productData['remark']=row.cells[7].innerHTML;         //tbl_order_details
-      productData['userId']=user_id;
-      productData['companyId']=company_id;
-      productData['deliveryId']=deliveryId;
-      productData['goodReceiptId']=goodReceiptId;
-      productData['goodReceiptDetailId']=goodReceiptDetailId;
-      productData['order_details_id']=orderDetailsId;
-
+    var productData={},order={};
+    order['orderId']=row.cells[2].children[0].value;
+    productData['receiverName']=row.cells[1].innerHTML;
+    productData['productName']=row.cells[3].innerHTML;
+    productData['totalQuantity']=row.cells[4].innerHTML;
+    productData['quantity']=row.cells[5].children[0].value;
+    productData['weight']=row.cells[6].innerHTML;
+    productData['toCityName']=row.cells[7].innerHTML;
+    productData['remark']=row.cells[8].innerHTML;
+    productData['goodReceiptId']=row.cells[0].children[0].value;
+    productData['goodReceiptDetailId']=row.cells[0].children[1].value;
+    productData['userId']=user_id;
+    productData['companyId']=company_id;
+    productData['deliveryId']=deliveryId;
+    deliveryDetails.push(productData),orderData.push(order);
   }
+  for(var i=0;i<deliveryDetails.length;i++){
+      if(parseInt(deliveryDetails[i]['totalQuantity'])==parseInt(deliveryDetails[i]['quantity']))
+      {
+        var orderId=orderData[i]['orderId'],deliveryStatus='1',order=new FormData;
+        order.append('orderId',orderId);
+        order.append('deliveryStatus',deliveryStatus);
+        $.ajax({
+                type: "POST",
+                url: BACKEND_URL + "updateOrderStatusByorderId",
+                data: order,
+                contentType: false,
+                processData: false,
+                success: function (data) {
 
-  deliveryDetails.append('receiverName',receiverName);
-  deliveryDetails.append('productName',productName);
-  deliveryDetails.append('totalQuantity',totalQuantity);
-  deliveryDetails.append('quantity',quantity);
-  deliveryDetails.append('weight',weight);
-  deliveryDetails.append('toCityName',toCityName);
-  deliveryDetails.append('remark',remark);
-  deliveryDetails.append('userId',user_id);
-  deliveryDetails.append('companyId',company_id);
-  deliveryDetails.append('deliveryId',deliveryId);
-  deliveryDetails.append('goodReceiptId',goodReceiptId);
-  deliveryDetails.append('goodReceiptDetailId',goodReceiptDetailId);
-  deliveryDetails.append('orderDetailsId',orderDetailsId);
-
+               },
+               error:function (XMLHttpRequest, textStatus, errorThrown){
+                 errorStatus(XMLHttpRequest, textStatus, errorThrown);
+               }
+            });
+      }
+    }
   $.ajax({
           type: "POST",
           url: BACKEND_URL + "saveDeliverDetail",
-          data: deliveryDetails,
+          data: JSON.stringify(deliveryDetails),
           contentType: false,
           processData: false,
           success: function (data) {
-            alert(data.message);
+            alert(data);
             $('#modal-delivery_details').modal('toggle');
+
          },
          error:function (XMLHttpRequest, textStatus, errorThrown){
            errorStatus(XMLHttpRequest, textStatus, errorThrown);
@@ -187,17 +177,14 @@ function getDeliverDetailsByDeliveryId(deliveryId)
                 tr += "<td >" + element.remark + "</td>";
                 tr += "</tr>";
                 $("#tbl_deliverydetails_container").append(tr);
-
-            });
+              });
             createDataTable('#table_tbl_deliverydetails');
-
-        },
+          },
         error:function (message){
           errorMessage(message);
         }
       });
 }
-
 function loadDeliveryByComplete()
 {
   destroyDatatable("#table_tbl_delivery2","#tbl_delivery_container2");
@@ -219,18 +206,14 @@ function loadDeliveryByComplete()
             tr += "<td >" + element.remark + "</td>";
             tr += "<td >" + element.full_name + "</td>";
             tr += "<td >" + element.name + "</td>";
-            tr += "<td class='alignright'><button type='button' class='btn btn-product' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")><i class='fas fa-plus'> Add DeliveryDetails</button ></td >" ;
-            tr += "<td class='alignright'><button type='button' class='btn btn-edit' onClick=showDeliveryById("+ element.id +")><i class='fas fa-edit'></i></button ></td > ";
-            tr += "<td class='alignright'><button type='button' class='btn btn-print' onClick=printDeliveryById("+ element.id +")><i class='fas fa-print'> Print</button ></td > ";
+            tr += "<td class='alignright'><button type='button' class='btn btn-product btn-space' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")><i class='fas fa-plus'> Add DeliveryDetails</button >"+
+                  "<button type='button' class='btn btn-edit btn-space' onClick=showDeliveryById("+ element.id +")><i class='fas fa-edit'></i></button>"+
+                  "<button type='button' class='btn btn-print btn-space' onClick=printDeliveryById("+ element.id +")><i class='fas fa-print'> Print</button ></td> ";
             tr += "</tr>";
             $("#tbl_delivery_container2").append(tr);
-
           });
     createDataTable('#table_tbl_delivery2');
-    },
-  error:function (message){
-    errorMessage(message);
-  }
+    }
   });
 }
 function showDeliveryById(deliveryId)
@@ -281,7 +264,7 @@ function updateDelivery()
           contentType: false,
           processData: false,
           success: function (data) {
-            alert(data.message);
+            alert(data);
             $('#modal-delivery').modal('toggle');
             loadDelivery();
             loadDeliveryByComplete();
@@ -289,29 +272,23 @@ function updateDelivery()
          error:function (XMLHttpRequest, textStatus, errorThrown){
            errorStatus(XMLHttpRequest, textStatus, errorThrown);
          }
-
-  });
+       });
 }
 function printDeliveryById(deliveryId)
 {
   location.href='deliver_invoice.html';
   localStorage.setItem("deliveryId", deliveryId);
-
 }
 function loadInvoiceDelivery()
 {
   destroyDatatable("#tbl_invoice","#tbl_invoice_container");
-  var deliveryId = localStorage.getItem("deliveryId");
-  $('.driverName').html("");
-  $('.carNumber').html("");
-  $('.incomeDate').html("");
-  var alldata=new Array();
+  var deliveryId = localStorage.getItem("deliveryId"),alldata=new Array();
+  $('.driverName').html(""),$('.carNumber').html(""),$('.incomeDate').html("");
   $.ajax({
           type: "POST",
           url: BACKEND_URL + "getCompanyInfoBydeliveryId",
           data: "deliveryId=" + deliveryId,
           success: function (data) {
-
             $('.driverName').append(data[0].driver_name);
             $('.carNumber').append(data[0].car_no);
             var outDate=data[0].delivery_details[0].out_date;
@@ -326,9 +303,7 @@ function loadInvoiceDelivery()
             var orderTotal=0;
             var labourTotal=0;
             for(var g=0;g<goodReceipt.length;g++){
-
               var goodReceiptId=goodReceipt[g].good_receipt_id;
-
               $.ajax({
                   type: "POST",
                   url: BACKEND_URL + "getInvoiceDetailsBydeliveryId",
@@ -341,16 +316,13 @@ function loadInvoiceDelivery()
 
                     }
                      labourTotal +=alldata[0].good_receipt_order[0].labour;
-
-                    $.ajax({
+                     $.ajax({
                       type: "POST",
                       url: BACKEND_URL + "getInvoiceDetailsByorderId",
                       data: "orderId=" + orderId,
                       success: function (orderdetails) {
                           orderdetails.forEach(function(details){
-
                           alldata.forEach(function (element){
-
                             var tr = "<tr class='border-tr'>";
                             tr += "<td >" + element.good_receipt_order[0].order_no + "</td>";
                             tr += "<td >" + element.customer_name + "</td>";
@@ -390,24 +362,18 @@ function loadInvoiceDelivery()
                     error:function (message){
                       errorMessage(message);
                     }
-
                   });
                   },
                 error:function (message){
                   errorMessage(message);
                 }
-
               });
-
             }
-
-
-        },
+          },
         error:function (message){
           errorMessage(message);
         }
       });
-
 }
 function comissionPercent()
 {
@@ -417,10 +383,7 @@ function comissionPercent()
     var gateLabourPrice=((removeComma(totalPrice)*removePercent(comissionPercent))/100);
     $("#gate_labour_price").val(thousands_separators(gateLabourPrice));
     document.getElementById("print_gate_labour_price").innerHTML = thousands_separators(gateLabourPrice);
-    var advance=$('#advance').val();
-    var landPrice=$('#land_price').val();
-    var labourPrice=$("#labour_price").val();
-    var paidPrice=$("#paid_price").val();
+    var advance=$('#advance').val(),landPrice=$('#land_price').val(),labourPrice=$("#labour_price").val(),paidPrice=$("#paid_price").val();
     var allSumPrice=parseInt(gateLabourPrice)+parseInt(advance)+parseInt(landPrice)+parseInt(labourPrice);
     $("#all_sum_price").val(thousands_separators(allSumPrice));
     document.getElementById("print_all_sum_price").innerHTML = thousands_separators(allSumPrice);
@@ -454,7 +417,6 @@ function loadInvoiceByOrderNo()
             $('.senderName').append(data[0].sender_name);
             $('.orderNo').append(data[0].order_no);
             $('.toCityName').append(data[0].city_name);
-
             $.ajax({
                   type: "POST",
                   url: BACKEND_URL + "getInvoiceDetailsByorderNo",
@@ -475,12 +437,10 @@ function loadInvoiceByOrderNo()
                         document.getElementById("order_land_price").innerHTML = thousands_separators(element.land);
                       });
                     }
-
                   },
                 error:function (message){
                   errorMessage(message);
                 }
-
               });
         },
         error:function (message){
@@ -512,8 +472,7 @@ function autoOrderNo()
           }
       });
 }
-const count=0;
-const sumQty=0;
+var count=0;
 function searchOrderNo(orderNo)
 {
   $.ajax({
@@ -522,27 +481,30 @@ function searchOrderNo(orderNo)
         data:"orderNo=" + orderNo,
         success: function (goodReceipt) {
                   var goodReceiptDetail=goodReceipt[0].good_receipt_bygoodreceipt_details;
-                  for(var unit=0;unit < goodReceiptDetail.length;unit++){
-                            sumQty +=parseInt(goodReceiptDetail[unit].qty);
-                            count +=1;
-                            var tr="<tr>";
-                            tr+="<td>"+count+"</td>";
-                            tr+="<td>"+goodReceipt[0].customer_name+"</td>";
-                            tr+="<td>"+goodReceipt[0].order_no+"</td>";
-                            tr+="<td>"+goodReceiptDetail[unit].product_name+"</td>";
-                            tr+="<td>"+goodReceiptDetail[unit].qty+"</td>";
-                            tr+="<td>"+goodReceiptDetail[unit].qty+"</td>";
-                            tr+="<td>"+goodReceiptDetail[unit].weight+"</td>";
-                            tr+="<td>"+goodReceipt[0].good_receipt_city.city_name+"</td>";
-                            tr+="<td>"+goodReceiptDetail[unit].remark+"</td>";
-                            tr+="<td>"+goodReceiptDetail[unit].id+"</td>";
-                            tr+="<td><button type='button' class='btn btn-delete' onclick='deleteDeliveryDetails(this);'><i class='fas fa-trash-alt'></i></button></td>";
-                            tr+="<td><button type='button' class='btn btn-order' disabled></button></td>";
-                            tr+="<td><button type='button' class='btn btn-print' disabled></button></td>";
-                            tr+="</tr>";
-                            $('#tbl_product_container').append(tr);
-                            $('#total_qty').val(sumQty);
+                  goodReceiptDetail.forEach(function (element, index, array){
+                    count +=1;
+                    var tr="<tr>";
+                    tr+="<td><input type='hidden' value='"+goodReceipt[0].id+"'><input type='hidden' value='"+element.id+"'>"+count+"</td>";
+                    tr+="<td>"+goodReceipt[0].customer_name+"</td>";
+                    tr+="<td><input type='hidden' value='"+goodReceipt[0].good_receipt_order[0].id+"'>"+goodReceipt[0].order_no+"</td>";
+                    tr+="<td>"+element.product_name+"</td>";
+                    tr+="<td>"+element.qty+"</td>";
+                    tr+="<td><input type='text' class='orderQty' value='0' id='orderQty"+element.id+"' disabled><input type='number' style='width:50%;' value='0' onblur='orderQtyCalculate("+element.id+","+"this.value)'></td>";
+                    tr+="<td>"+element.weight+"</td>";
+                    tr+="<td>"+goodReceipt[0].good_receipt_city.city_name+"</td>";
+                    tr+="<td>"+element.remark+"</td>";
+                    if(index===0){
+                      tr+="<td ><button type='button' class='btn btn-delete btn-space' onclick='deleteDeliveryDetails(this);'><i class='fas fa-trash-alt'></i></button>"+
+                          "<button type='button' class='btn btn-order btn-space' onClick='addToOrderByOrderNo(" + goodReceipt[0].good_receipt_order[0].id + ")'>ဘောင်ချာဖွင့်ရန်</button>"+
+                          "<button type='button' class='btn btn-print btn-space' onclick=invoiceByOrderNo(\""+encodeURIComponent(goodReceipt[0].order_no)+ "\")><i class='fas fa-print'></i> Print</button></td>";
+                    }
+                    else{
+                      tr+="<td><button type='button' class='btn btn-delete btn-space btn-left' onclick='deleteDeliveryDetails(this);'><i class='fas fa-trash-alt'></i></button></td>";
                         }
+                    tr+="</tr>";
+                    $('#tbl_product_container').append(tr);
+                  });
+
                   },
         error:function (message){
             errorMessage(message);
@@ -553,4 +515,86 @@ function deleteDeliveryDetails(row)
 {
     var i = row.parentNode.parentNode.rowIndex;
     document.getElementById('tbl_product').deleteRow(i);
+}
+function orderQtyCalculate(id,quantity)
+{
+    $('#orderQty'+id).val(quantity);
+}
+function addToOrderByOrderNo(orderId) {
+  $.ajax({
+        type: "POST",
+        url: BACKEND_URL + "getOrderDetailsByorderNo",
+        data: "orderId=" + orderId,
+        success: function (orderdetails) {
+          $('#hiddenOrderId').val(orderId);
+            orderdetails.forEach(function (element) {
+                var tr = "<tr>";
+                tr += "<td>" + "<input type='hidden' value='"+element.id+"'><input type='text' value='"+element.product_name+"'>" + "</td>";
+                tr += "<td >" + "<input type='text' id='productQuantity' value='" + Math.round(element.quantity) + "'>" + "</td>";
+                tr += "<td >" + "<input type='text'  value='" + Math.round(element.product_qty) + "'disabled>" + "</td>";
+                tr += "<td >" + "<input type='text' id='productWeight' value='" + element.weight + "'>" + "</td>";
+                tr += "<td >" + "<input type='hidden' value='"+element.unit_byorder_detail.id+"'><input type='text' id='productUnit' value='" + element.unit_byorder_detail.unit_name + "' disabled>"+"</td>";
+                tr += "<td >" + "<input type='text' id='productPrice' value='0' onkeyup='getTotalPerProduct(this)' >" + "</td>";
+                tr += "<td >" + "<input type='text' id='total' value='0'>" + "</td>";
+                tr += "</tr>";
+                $("#tbl_order_body").append(tr);
+
+            });
+            var tr = "<tr>";
+            tr += "<td colspan='6' style='text-align:right;'>" + "အလုပ်သမားခ:" + "</td>";
+            tr += "<td >" + "<input type='text' id='labourFee' value='0' onkeyup='getTotal();'>" + "</td>";
+            tr += "</tr>";
+            $("#tbl_order_body").append(tr);
+            var tr = "<tr>";
+            tr += "<td colspan='6' style='text-align:right;'>" + "စိုက်ငွေ:" + "</td>";
+            tr += "<td >" + "<input type='text' id='land' value='0' onkeyup='getTotal();'>" + "</td>";
+            tr += "</tr>";
+            $("#tbl_order_body").append(tr);
+            var tr = "<tr>";
+            tr += "<td colspan='6' style='text-align:right;'>" + "စုစုပေါင်း:" + "</td>";
+            tr += "<td >" + "<input type='text' id='totalPrice' value='0'>" + "</td>";
+            tr += "</tr>";
+            $("#tbl_order_body").append(tr);
+            $("#hiddenTotal").val('0');
+            $('#modal-order').modal('toggle');
+        },
+        error: function (message) {
+            errorMessage(message);
+        }
+    });
+
+}
+function updateOrderBygoodReceiptId()
+{
+  var order={},orderData=new Array();
+  order['orderId']=$('#hiddenOrderId').val();
+  order['orderTotal']=$("#hiddenTotal").val();
+  order['total']= $("#totalPrice").val();
+  order['labour']= $("#labourFee").val();
+  order['land']=$("#land").val();
+  orderData.push(order);
+  var tableLength = document.getElementById("tbl_order").rows.length;;
+  for (var i = 1; i < tableLength - 3; i++) {
+      var orderdetails = {};
+      orderdetails['orderdetailId'] = document.getElementById("tbl_order").rows[i].cells[0].firstChild.value;
+      orderdetails['productName'] =document.getElementById("tbl_order").rows[i].cells[0].children[1].value;
+      orderdetails['quantity'] = document.getElementById("tbl_order").rows[i].cells[1].firstChild.value;
+      orderdetails['weight'] = document.getElementById("tbl_order").rows[i].cells[3].firstChild.value;
+      orderdetails['unit'] = document.getElementById("tbl_order").rows[i].cells[4].firstChild.value;
+      orderdetails['productPrice'] = document.getElementById("tbl_order").rows[i].cells[5].firstChild.value;
+      orderdetails['total'] =document.getElementById("tbl_order").rows[i].cells[6].firstChild.value;
+      orderData.push(orderdetails);
+  }
+  $.ajax({
+        type: "POST",
+        url: BACKEND_URL + "updateOrderByorderId",
+        data:JSON.stringify(orderData),
+        success: function (data) {
+                alert(data);
+                $('#modal-order').modal('toggle');
+          },
+        error:function (message){
+            errorMessage(message);
+          }
+      });
 }

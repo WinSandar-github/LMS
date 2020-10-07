@@ -40,9 +40,9 @@ class DeliveryController extends Controller
         $delivery->status=$request->input("status");
         $delivery->user_id=$request->input("userId");
         $delivery->save();
-        return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+        return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
       }catch (\Exception $e){
-        return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+        return response()->json(config('common.message.error'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
      }
    }
   public function getDelivery(Request $request)
@@ -55,33 +55,36 @@ class DeliveryController extends Controller
         return response()->json($delivery,200, config('common.header'),JSON_UNESCAPED_UNICODE);
     }
     else{
-        return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+        return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
       }
   }
   public function saveDeliverDetail(Request $request)
   {
-      try{
+    try{
+      $data = json_decode($request->getContent(), true);
+      for($i=0;$i<count($data);$i++)
+        {
           $deliverDetails=new tbl_delivery_details();
           $date=new DateTime();
-          $deliverDetails->receiver_name=$request->input("receiverName");
-          $deliverDetails->product_name=$request->input("productName");
-          $deliverDetails->total_quantity=$request->input("totalQuantity");
-          $deliverDetails->quantity=$request->input("quantity");
-          $deliverDetails->weight=$request->input("weight");
-          $deliverDetails->to_city_name=$request->input("toCityName");
-          $deliverDetails->remark=$request->input("remark");
+          $deliverDetails->receiver_name=$data[$i]["receiverName"];
+          $deliverDetails->product_name=$data[$i]["productName"];
+          $deliverDetails->total_quantity=$data[$i]["totalQuantity"];
+          $deliverDetails->quantity=$data[$i]["quantity"];
+          $deliverDetails->weight=$data[$i]["weight"];
+          $deliverDetails->to_city_name=$data[$i]["toCityName"];
+          $deliverDetails->remark=$data[$i]["remark"];
           $deliverDetails->out_date=$date;
-          $deliverDetails->user_id=$request->input("userId");
-          $deliverDetails->company_id=$request->input("companyId");
-          $deliverDetails->delivery_id=$request->input("deliveryId");
-          $deliverDetails->good_receipt_id=$request->input("goodReceiptId");
-          $deliverDetails->good_receipt_detail_id=$request->input("goodReceiptDetailId");
-          $deliverDetails->order_details_id=$request->input("orderDetailsId");
+          $deliverDetails->user_id=$data[$i]["userId"];
+          $deliverDetails->company_id=$data[$i]["companyId"];
+          $deliverDetails->delivery_id=$data[$i]["deliveryId"];
+          $deliverDetails->good_receipt_id=$data[$i]["goodReceiptId"];
+          $deliverDetails->good_receipt_detail_id=$data[$i]["goodReceiptDetailId"];
           $deliverDetails->save();
-          return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
-        }catch (\Exception $e){
-          return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
-       }
+        }
+        return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+      }catch (\Exception $e){
+        return response()->json(config('common.message.error'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+     }
   }
   public function getDeliverDetailsByDeliveryId(Request $request)
   {
@@ -91,7 +94,7 @@ class DeliveryController extends Controller
         return response()->json($deliverDetails, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
     }
     else{
-        return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+        return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
     }
   }
 
@@ -105,14 +108,14 @@ class DeliveryController extends Controller
         return response()->json($delivery, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
     }
     else{
-        return response()->json(config('common.dataMessage'), 404,config('common.header'), JSON_UNESCAPED_UNICODE);
-    }
+      return response()->json(config('common.message.data'),404,config('common.header'),JSON_UNESCAPED_UNICODE);
+      }
   }
   public function getDeliveryById(Request $request)
   {
     $delivery = tbl_delivery::find($request->input("deliveryId"));
     if(empty($delivery)){
-       return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+       return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
     }
     else{
       return response()->json($delivery, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -133,9 +136,9 @@ class DeliveryController extends Controller
         $delivery->remark=$request->input("remark");
         $delivery->status=$request->input("status");
         $delivery->save();
-        return response()->json(config('common.successMessage'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+        return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
     }catch (\Exception $e) {
-        return response()->json(config('common.errorMessage'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
+        return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
     }
   }
   public function getCompanyInfoBydeliveryId(Request $request)
@@ -147,7 +150,7 @@ class DeliveryController extends Controller
       return response()->json($infodetails,200, config('common.header'),JSON_UNESCAPED_UNICODE);
     }
     else{
-      return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+      return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
     }
   }
   public function getInvoiceDetailsBydeliveryId(Request $request)
@@ -159,7 +162,7 @@ class DeliveryController extends Controller
       return response()->json($invoicedetails,200, config('common.header'),JSON_UNESCAPED_UNICODE);
     }
     else{
-      return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+      return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
     }
   }
   public function getInvoiceDetailsByorderId(Request $request)
@@ -170,7 +173,7 @@ class DeliveryController extends Controller
       return response()->json($invoiceorder,200, config('common.header'),JSON_UNESCAPED_UNICODE);
     }
     else{
-      return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+      return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
     }
   }
   public function getCompanyDetailBydeliveryId(Request $request)
@@ -188,7 +191,7 @@ class DeliveryController extends Controller
       return response()->json($invoices,200, config('common.header'),JSON_UNESCAPED_UNICODE);
     }
     else{
-      return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+      return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
     }
   }
   public function getInvoiceDetailsByorderNo(Request $request)
@@ -202,7 +205,7 @@ class DeliveryController extends Controller
         return response()->json($invoices,200, config('common.header'),JSON_UNESCAPED_UNICODE);
       }
     else{
-        return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+        return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
       }
   }
   public function getOrderNoBycompanyId(Request $request)
@@ -214,21 +217,71 @@ class DeliveryController extends Controller
         return response()->json($order,200, config('common.header'),JSON_UNESCAPED_UNICODE);
       }
     else{
-        return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+        return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
       }
   }
   public function getGoodReceiptByorderNo(Request $request)
   {
-    $goodReceipt=tbl_good_receipt::with(['goodReceiptBygoodreceiptDetails','goodReceiptCity'])
+    $goodReceipt=tbl_good_receipt::with(['goodReceiptBygoodreceiptDetails','goodReceiptCity','goodReceiptOrder'])
                                   ->where('tbl_good_receipt.order_no','=',$request->input("orderNo"))
                                   ->get();
     if(sizeof($goodReceipt)){
         return response()->json($goodReceipt,200, config('common.header'),JSON_UNESCAPED_UNICODE);
       }
     else{
-        return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+        return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
       }
   }
-
+  public function updateOrderStatusByorderId(Request $request)
+  {
+    try{
+        $order= tbl_order::find($request->input("orderId"));
+        $order->delivery_status=$request->input("deliveryStatus");
+        $order->save();
+        return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+    }catch (\Exception $e) {
+        return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
+    }
+  }
+  public function getOrderDetailsByorderNo(Request $request)
+  {
+    $order=tbl_order_details::with('unitByorderDetail')
+                    ->where('order_id','=',$request->input("orderId"))
+                    ->get();
+    if(sizeof($order)){
+        return response()->json($order,200, config('common.header'),JSON_UNESCAPED_UNICODE);
+      }
+    else{
+        return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+      }
+  }
+  public function updateOrderByorderId(Request $request)
+  {
+    try{
+        $data = json_decode($request->getContent(), true);
+        $order=tbl_order::find($data[0]["orderId"]);
+        $order->order_date=date("Y-m-d");
+        $order->order_total=$data[0]["orderTotal"];
+        $order->total=$data[0]["total"];
+        $order->labour=$data[0]["labour"];
+        $order->land=$data[0]["land"];
+        $order->save();
+        for($i=1;$i<count($data);$i++)
+        {
+          $orderdetail=tbl_order_details::find($data[$i]["orderdetailId"]);
+          $orderdetail->product_name=$data[$i]["productName"];
+          $orderdetail->quantity=$data[$i]["quantity"];
+          $orderdetail->unit=$data[$i]["unit"];
+          $orderdetail->product_price=$data[$i]["productPrice"];
+          $orderdetail->weight=$data[$i]["weight"];
+          $orderdetail->total=$data[$i]["total"];
+          $orderdetail->save();
+        }
+        return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+    }catch (\Exception $e) {
+      return $e->getMessage();
+        return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
+    }
+  }
 }
  ?>

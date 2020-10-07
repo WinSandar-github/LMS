@@ -59,6 +59,9 @@ class VerifyCsrfToken extends Middleware
       'deleteOrder',
       'getOrderNoBycompanyId',
       'getGoodReceiptByorderNo',
+      'updateOrderStatusByorderId',
+      'getOrderDetailsByorderNo',
+      'updateOrderByorderId',
       'getVipCustomer',
       'getVipCustomerInfo'
     ];

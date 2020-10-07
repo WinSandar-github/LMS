@@ -61,8 +61,7 @@
                                         <th>လုပ်ဆောင်သည့်သူ</th>
                                         <th>ကုမ္ပဏီအမည်</th>
                                         <th></th>
-                                        <th></th>
-                                        <th></th>
+
                                   </tr>
                                 </thead>
                                 <tbody id="tbl_delivery_container" class="hoverTable"></tbody>
@@ -85,8 +84,7 @@
                                           <th>လုပ်ဆောင်သည့်သူ</th>
                                           <th>ကုမ္ပဏီအမည်</th>
                                           <th></th>
-                                          <th></th>
-                                          <th></th>
+
                                         </tr>
                                     </thead>
                                     <tbody id="tbl_delivery_container2" class="hoverTable"></tbody>
@@ -115,8 +113,8 @@
                                 <tr>
                                         <th>Customer အမည််</th>
                                         <th>ပစ္စည်းအမည်</th>
-                                        <th>​အရည်အတွက််</th>
-                                        <th>အလေးချိန်ု့</th>
+                                        <th>အရေအတွက်</th>
+                                        <th>အလေးချိန်</th>
                                         <th>မှတ်ချက်</th>
 
                                   </tr>
@@ -309,59 +307,41 @@
   <form method="post" enctype="multipart/form-data" id="fileUploadForm" action="javascript:saveDeliverDetail();">
     <input type="hidden" id="hdeliveryId">
         <div class="modal-body">
-          <div class="row">
-              <div class="col-12 box-body table-responsive">
-                <table class="table table-bordered table-hover" id="tbl_product">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th width="10%">Customer အမည်</th>
-                            <th>Order</th>
-                            <th width="10%">ပစ္စည်းအမည်</th>
-                            <th>စုစုပေါင်း အရေအတွက်</th>
-                            <th>တင်မည့် အရေအတွက်</th>
-                            <th>အလေးချိန်</th>
-                            <th>မြို့အမည်</th>
-                            <th>Remark</th>
-                            <th>Input</th>
-                            <th></th>
-                            <th></th>
-                            <th>Print</th>
-                        </tr>
-                    </thead>
-                    <tr>
-                        <td>#</td>
-                        <td>
-                            <input type="hidden" id="customer_name" />
-                            <input type="text" class="form-control" name="receiver_name" id="receiver_name" placeholder="Customer Name" disabled />
+              <div class="row">
+                <div class="col-4"></div>
+                <div class="col-4">
+                  <label>Order ရွေးရန်</label>
 
-                        </td>
-                        <td>
-                            <select class="select2" id="selectOrderId" name="order_id" data-placeholder="Order ရွေးရန်" onchange="searchOrderNo(this.value);">
-                                <option>--Order ရွေးရန်--</option>
-                            </select>
-                        </td>
-                        <td></td>
-                        <td>
-                          <input type="hidden" id="count">
-                            <input type="text" class="form-control" name="total_qty" id="total_qty" placeholder="Qty" disabled />
-                        </td>
-                        <td></td>
-                        <td>
-                            <input type="text" class="form-control" name="total_weight" id="total_weight" placeholder="0" disabled />
-                        </td>
-                        <td></td>
-                        <td>
-                          <td><input type="number" id="qty_1" value="0"></td>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tbody class="product_table" id="tbl_product_container"></tbody>
-                </table>
+                  <select class="select2" id="selectOrderId" name="order_id" data-placeholder="Order ရွေးရန်" onchange="searchOrderNo(this.value);">
+                          <option>--Order ရွေးရန်--</option>
+                  </select>
+                </div>
+                <div class="col-4"></div>
               </div>
+          <br/>
+          <div class="row">
+            <div class="col-12 box-body table-responsive">
+              <table class="table table-bordered table-hover" id="tbl_product">
+                  <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>Customer</th>
+                          <th>Order</th>
+                          <th>ပစ္စည်းအမည်</th>
+                          <th>စုစုပေါင်းအရေအတွက်</th>
+                          <th>တင်မည့်အရေအတွက်</th>
+                          <th>အလေးချိန်</th>
+                          <th>မြို့အမည်</th>
+                          <th>Remark</th>
+                          <th></th>
+
+                      </tr>
+                  </thead>
+
+                  <tbody class="product_table" id="tbl_product_container"></tbody>
+              </table>
             </div>
+          </div>
         </div>
 
         <div class="modal-footer">
@@ -373,6 +353,66 @@
         </form>
       </div>
     </div>
+  </div>
+  <div class="modal" id="modal-order">
+      <div class="modal-dialog  modal-xl order-modal-dialog">
+          <div class="modal-content">
+            <form method="post" enctype="multipart/form-data" action="javascript:updateOrderBygoodReceiptId();">
+              <div class="modal-header">
+                  <h5 class="modal-title">ဘောင်ချာဖွင့်ရန်</h5>
+              </div>
+              <div class="modal-body">
+
+                  <div style="text-align:center;">
+                      <div class="form-check-inline">
+                          <label class="form-check-label">
+                              <input type="radio" class="form-check-input" id="manual" name="optradio" value="manual">Manual
+                          </label>
+                      </div>
+                      <div class="form-check-inline">
+                          <label class="form-check-label" for="radio1">
+                              <input type="radio" class="form-check-input" id="quantity" name="optradio" value="quantity">Quantity * Price
+                          </label>
+                      </div>
+                      <div class="form-check-inline">
+                          <label class="form-check-label" for="radio2">
+                              <input type="radio" class="form-check-input" id="weight" name="optradio" value="weight">Weight * Price
+                          </label>
+                      </div>
+
+                  </div>
+                  <div class="row">
+                      <input type="hidden" id="hiddenTotal" />
+                      <input type="hidden" id="hiddenOrderId" />
+                      <div class="table_css">
+                          <table class="table table-bordered table-striped" id="tbl_order">
+                              <thead>
+                                  <tr>
+                                      <th>ပစ္စည်း အမည်</th>
+                                      <th>စုစုပေါင်း အရေအတွက်</th>
+                                      <th>တင်ပို့မည့် အရေအတွက်</th>
+                                      <th>အလေး ချိန်</th>
+                                      <th>အတိုင်းအတာစံ</th>
+                                      <th>စျေးနှုန်း</th>
+                                      <th>စုစုပေါင်း</th>
+                                  </tr>
+                              </thead>
+                              <tbody id="tbl_order_body"></tbody>
+
+                          </table>
+                      </div>
+
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-info" >
+                      <i class="fa fa-floppy-o"></i> Save
+                  </button>
+              </div>
+            </form>
+          </div>
+      </div>
   </div>
   <script src="../Utilities/plugins/jquery/jquery.min.js"></script>
 
@@ -399,6 +439,7 @@
   <script src="../Utilities/js/delivery.js"></script>
   <script src="../Utilities/js/common.js"></script>
   <script type="text/javascript" src="../Utilities/js/auth.js"></script>
+  <script src="../Utilities/js/order.js"></script>
   <script>
       $('.select2').select2();
       createDatepicker('.datepicker');
