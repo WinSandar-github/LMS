@@ -85,6 +85,8 @@ Route::post('updateOrderByorderId', array('middleware' => 'cors', 'uses' => 'Del
 //For vipCustomer
 Route::post('getVipCustomer',array('middleware'=>'cors','uses'=>'GoodreceiptController@getVipCustomer'));
 Route::post('getVipCustomerInfo',array('middleware'=>'cors','uses'=>'GoodreceiptController@getVipCustomerInfo'));
+//for get statementcarlist
+Route::post('getStatmentCarList',array('middleware'=>'cors','uses'=>'StatementCarListController@getStatmentCarList'));
 
 Auth::routes();
 

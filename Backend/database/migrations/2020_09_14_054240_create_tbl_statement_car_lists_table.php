@@ -27,7 +27,7 @@ class CreateTblStatementCarListsTable extends Migration
             $table->bigInteger('cash_total');
             $table->bigInteger('all_total');
             $table->integer('status');
-            $table->bigInteger('delivery_detail_id');
+            $table->bigInteger('delivery_id');
             $table->timestamps();
         });
     }
