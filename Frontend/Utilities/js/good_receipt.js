@@ -294,7 +294,6 @@ function showGoodReceiptDetailsInfo(goodReceitptDetailId) {
             $("#txt_weight").val(data.weight);
             $("#txt_product_remark").val(data.remark);
             $('#modal-product').modal('toggle');
-
         },
         error: function (message) {
             errorMessage(message);

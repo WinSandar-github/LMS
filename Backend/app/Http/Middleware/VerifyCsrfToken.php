@@ -65,7 +65,18 @@ class VerifyCsrfToken extends Middleware
       'getVipCustomer',
       'getVipCustomerInfo',
       'getStatmentCarList',
+      'createUser',
+      'getUser',
+      'deleteUser',
+      'showUserInfo',
+      'updateUser',
+      'getRule',
+      'createRule',
+      'showRuleDetail',
+      'updateRule',
+      'deleteRule',
       'getCompany',
       'updateCompanyLogo'
+
     ];
 }

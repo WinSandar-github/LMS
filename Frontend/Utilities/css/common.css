@@ -202,6 +202,17 @@ img {
 .align-right{
   text-align: right;
 }
+
+.hide{
+    display:none;
+}
+.padding-top {
+    padding-top: 20px;
+}
+
+#tbl_rule td {
+   white-space:pre-line;
+}
 .hidden-file{
   visibility: hidden;
   position: absolute;

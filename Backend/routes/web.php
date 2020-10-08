@@ -91,6 +91,20 @@ Route::post('getStatmentCarList',array('middleware'=>'cors','uses'=>'StatementCa
 Route::post('getCompany', array('middleware' => 'cors', 'uses' => 'RegisterController@getCompany'));
 Route::post('updateCompanyLogo', array('middleware' => 'cors', 'uses' => 'RegisterController@updateCompanyLogo'));
 
+//For user
+Route::post('createUser',array('middleware'=>'cors','uses'=>'UserController@createUser'));
+Route::post('getUser',array('middleware'=>'cors','uses'=>'UserController@getUser'));
+Route::post('showUserInfo',array('middleware'=>'cors','uses'=>'UserController@showUserInfo'));
+Route::post('updateUser',array('middleware'=>'cors','uses'=>'UserController@updateUser'));
+Route::post('deleteUser',array('middleware'=>'cors','uses'=>'UserController@deleteUser'));
+//For rule
+Route::post('getRule',array('middleware'=>'cors','uses'=>'RuleController@getRule'));
+Route::post('createRule',array('middleware'=>'cors','uses'=>'RuleController@createRule'));
+Route::post('showRuleDetail',array('middleware'=>'cors','uses'=>'RuleController@showRuleDetail'));
+Route::post('updateRule',array('middleware'=>'cors','uses'=>'RuleController@updateRule'));
+Route::post('deleteRule',array('middleware'=>'cors','uses'=>'RuleController@deleteRule'));
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
