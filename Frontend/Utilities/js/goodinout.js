@@ -5,34 +5,34 @@ function loadGoodInOut()
   $.ajax({
           type: "POST",
           url: BACKEND_URL + "getGoodInOutByCompanyId",
-          data: "companyId=" + company_id,
+          data: "companyId=" + company_id ,
           success: function (data) {
             var exportData=[];
             exportData=data;
             data.forEach(function (element) {
               var tr = "<tr>";
-              tr += "<td >" + element.in_date + "</td>";
-              tr += "<td >" + element.order_no + "</td>";
-              tr += "<td >" + element.customer_name + "</td>";
-              tr += "<td >" + element.sender_name + "</td>";
-              tr += "<td >" + element.city_name + "</td>";
+              tr += "<td >" + element.good_receipt_bydetails.date+ "</td>";
+              tr += "<td >" + element.good_receipt_bydetails.order_no+ "</td>";
+              tr += "<td >" + element.good_receipt_bydetails.customer_name + "</td>";
+              tr += "<td >" + element.good_receipt_bydetails.sender_name + "</td>";
+              tr += "<td >" + element.to_city_name + "</td>";
               tr += "<td >" + element.product_name + "</td>";
-              tr += "<td >" + element.qty + "</td>";
+              tr += "<td >" + element.good_receipt_detail_bydetails.qty + "</td>";
               tr += "<td >" + element.weight + "</td>";
               tr += "<td >" + element.out_date + "</td>";
-              tr += "<td >" + element.car_no + "</td>";
+              tr += "<td >" + element.delivery.car_no + "</td>";
               tr += "<td >" + element.quantity + "</td>";
               tr += "</tr>";
               $("#tbl_goodinout_container").append(tr);
             });
             exportData.forEach(function (element) {
-              if(element.qty!=element.quantity){
-                var goodExport=parseInt(element.qty) - parseInt(element.quantity);
+              if(element.good_receipt_detail_bydetails.qty!=element.quantity){
+                var goodExport=parseInt(element.good_receipt_detail_bydetails.qty) - parseInt(element.quantity);
                 var tr = "<tr>";
-                tr += "<td >" + element.order_no + "</td>";
-                tr += "<td >" + element.customer_name + "</td>";
+                tr += "<td >" + element.good_receipt_bydetails.order_no + "</td>";
+                tr += "<td >" + element.good_receipt_bydetails.customer_name + "</td>";
                 tr += "<td >" + element.product_name + "</td>";
-                tr += "<td >" + element.qty + "</td>";
+                tr += "<td >" + element.good_receipt_detail_bydetails.qty + "</td>";
                 tr += "<td >" + element.quantity + "</td>";
                 tr += "<td >" + goodExport+ "</td>";
                 tr += "</tr>";
@@ -42,8 +42,8 @@ function loadGoodInOut()
           dateRange('#dateRange','startDate','endDate','#table_tbl_goodinout');
           createDataTable('#table_tbl_goodexport');
           },
-          error:function (message){
-            errorMessage(message);
+          error: function (message) {
+              dataMessage(message, "#table_tbl_goodinout", "#tbl_goodinout_container");
           }
   });
 }

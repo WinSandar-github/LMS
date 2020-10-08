@@ -40,4 +40,5 @@ class tbl_good_receipt extends Eloquent
    {
        return $this->hasMany('App\tbl_good_receipt_details','good_receipt_id');
    }
+   
 }

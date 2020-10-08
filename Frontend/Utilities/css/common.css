@@ -58,8 +58,10 @@ table th, td {
   clear:both;
 }
 .table_css{
-  margin-top:20px;overflow-x:auto;
+  margin-top:20px;
+  overflow-x: auto;
 }
+
  h4{
   text-align:center;
 }
@@ -194,6 +196,13 @@ img {
     width: 80px;
     height: 80px;
 }
+.table_css td{
+  text-align: right;
+}
+.align-right{
+  text-align: right;
+}
+
 .hide{
     display:none;
 }

@@ -167,8 +167,9 @@ class DeliveryController extends Controller
   }
   public function getInvoiceDetailsByorderId(Request $request)
   {
-    $invoiceorder=tbl_order_details::where('order_id','=',$request->input("orderId"))
-                                    ->get();
+    $invoiceorder=tbl_order_details::with('unitByorderDetail')
+                                      ->where('order_id','=',$request->input("orderId"))
+                                      ->get();
     if(sizeof($invoiceorder)){
       return response()->json($invoiceorder,200, config('common.header'),JSON_UNESCAPED_UNICODE);
     }
@@ -222,7 +223,7 @@ class DeliveryController extends Controller
   }
   public function getGoodReceiptByorderNo(Request $request)
   {
-    $goodReceipt=tbl_good_receipt::with(['goodReceiptBygoodreceiptDetails','goodReceiptCity','goodReceiptOrder'])
+    $goodReceipt=tbl_good_receipt::with(['goodReceiptBygoodreceiptDetails','goodReceiptCity','orderByGoodReceipt'])
                                   ->where('tbl_good_receipt.order_no','=',$request->input("orderNo"))
                                   ->get();
     if(sizeof($goodReceipt)){
