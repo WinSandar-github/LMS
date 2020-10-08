@@ -5,7 +5,7 @@ function saveCity() {
         url: BACKEND_URL + "createCity",
         data: cityData,
         success: function (data) {
-            alert(data.message);
+            alert(data);
             $("#txt_city_name").val("");
             destroyDatatable('#table_tbl_city','#tbl_city_container');
             getCity();
@@ -72,8 +72,8 @@ function updateCity() {
             $("#txt_city_name").val("");
             destroyDatatable('#table_tbl_city','#tbl_city_container');
             getCity();
-            $("#city_form").attr('action', 'javascript:saveTblCity()');
-            alert(data.message);
+            $("#city_form").attr('action', 'javascript:saveCity()');
+            alert(data);
         },
         error: function (message) {
             errorMessage(message);
@@ -84,7 +84,7 @@ function updateCity() {
 function deleteCity(cityName, cityId) {
     var result = confirm("WARNING: This will delete the city " + decodeURIComponent(cityName) + " and all related stocks! Press OK to proceed.");
     if (result) {
-        var data = "cityId=" + city_id;
+        var data = "cityId=" + cityId;
         $.ajax({
             type: "POST",
             url: BACKEND_URL + "deleteCity",
@@ -93,7 +93,7 @@ function deleteCity(cityName, cityId) {
                 $("#txt_city_name").val("");
                 destroyDatatable('#table_tbl_city','#tbl_city_container');
                 getCity();
-                alert(data.message);
+                alert(data);
             },
             error: function (message){
                 errorMessage(message);

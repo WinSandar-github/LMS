@@ -46,9 +46,9 @@ class OrderController extends Controller
             $goodReceipt=tbl_good_receipt::find($goodReceiptId);
             $goodReceipt->order_status=1;
             $goodReceipt->save();
-            return response()->json(config('common.successMessage'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }catch (\Exception $e) {
-            return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.error'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
     }
     public function getOrder(Request $request,$deliveryStatus)
@@ -61,7 +61,7 @@ class OrderController extends Controller
             return response()->json($goodReceipt, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
         else{
-           return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+           return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
     }
      public function getOrderDetail(Request $request)
@@ -72,17 +72,17 @@ class OrderController extends Controller
              return response()->json($orderDetail, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
         else{
-             return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+             return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
 	}
      public function deleteOrder(Request $request)
 	{
         $order = tbl_order::find($request->input("orderId"));
         if($order->delete()){
-            return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
         else{
-            return response()->json(config('common.errorMessage'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
         }  
 	}
     

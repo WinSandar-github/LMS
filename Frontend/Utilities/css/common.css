@@ -204,3 +204,9 @@ img {
 #tbl_rule td {
    white-space:pre-line;
 }
+#matchPwd{
+    color:red;
+}
+.align-right{
+    text-align:right;
+}

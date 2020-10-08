@@ -1,4 +1,4 @@
-var BACKEND_URL = "http://localhost:8000/";//"http://" + window.location.host + "/";
+var BACKEND_URL = "http://" + window.location.host + "/";
 
 function logout() {
     if (localStorage.getItem("userinfo") == null) {
@@ -126,11 +126,11 @@ function countColumn(table) {
     var numCols = $(table).find('tr')[0].cells.length;
     return numCols;
 }
-function dataMessage(message,table, tableBody) {
+function dataMessage(message, table, tableBody) {
+    var dataMsg = message.responseText;
     var noOfColumn=countColumn(table);
-    var dataMsg = JSON.parse(message.responseText);
     var tr = "<tr>";
-    tr += "<td colspan='" + noOfColumn+"'>" + dataMsg.message + "</td>";
+    tr += "<td colspan='" + noOfColumn + "'>" + dataMsg + "</td>";
     tr += "</tr>";
     $(tableBody).append(tr);
 }

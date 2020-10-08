@@ -113,7 +113,7 @@ function createOrder() {
         url: BACKEND_URL + "createOrder",
         data: JSON.stringify(ordersData),
         success: function (data) {
-            alert(data.message);
+            alert(data);
             $('#modal-order').modal('toggle');
             getGoodReceipt();
             $("#tbl_goodreceipt_detail_body").empty();
@@ -206,7 +206,7 @@ function deleteOrder(orderNo, orderId) {
             success: function (data) {
                 destroyDatatable("#tbl_order", "#tbl_order_body");
                 getOrder();
-                alert(data.message);
+                alert(data);
             },
             error: function (message) {
                 errorMessage(message);

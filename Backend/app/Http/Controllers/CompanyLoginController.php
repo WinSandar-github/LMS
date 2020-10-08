@@ -40,5 +40,28 @@ class CompanyLoginController extends Controller
 			    }
 			}
     }
+    public function resetPassword(Request $request){
+        $userByemail=User::where('email', request('Username'))->first();
+        $userByName=User::where('full_name', request('Username'))->first();
+        if($userByemail){
+            return $this->updatePassword($userByemail,request('password'));
+        }
+        else if($userByName){
+            return $this->updatePassword($userByName,request('password'));
+        }
+        else{
+            return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+        }
+    }
+    public function updatePassword($user,$password){
+        try{
+            $user->password=Hash::make(request('password'));
+            $user->save();
+            $company = tbl_company::with('users')->where('id','=',$user->company_id)->get();
+            return response()->json($company, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+        }catch (\Exception $e){
+            return response()->json(config('common.message.error'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+        }
+     }  
 }
 ?>

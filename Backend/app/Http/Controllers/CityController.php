@@ -20,11 +20,11 @@ class CityController extends Controller
             $city->city_name=$request->input("cityName");
             $city->company_id=$request->input("companyId");
             $city->save();
-            return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
 
         }catch (\Exception $e) {
 
-          return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+          return response()->json(config('common.message.error'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
   }
   public function getCity(Request $request)
@@ -34,14 +34,14 @@ class CityController extends Controller
             return response()->json($cityList, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
         else{
-            return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
   }
   public function getCityInfo(Request $request)
 	{
          $city = tbl_city_list::find($request->input("cityId"));
          if(empty($city)){
-            return response()->json(config('common.dataMessage'), 404,config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.data'), 404,config('common.header'), JSON_UNESCAPED_UNICODE);
          }
          else{
             return response()->json($city, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -53,19 +53,19 @@ class CityController extends Controller
             $city = tbl_city_list::find($request->input("cityId"));
 		    $city->city_name = $request->input("cityName");
             $city->save();
-            return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }catch (\Exception $e) {
-            return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.error'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
 	}
   public function deleteCity(Request $request)
 	{
         $city = tbl_city_list::find($request->input("cityId"));
         if($city->delete()){
-             return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+             return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
         else{
-            return response()->json(config('common.errorMessage'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
 	}
 }

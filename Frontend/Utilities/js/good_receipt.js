@@ -29,7 +29,7 @@ function saveGoodReceipt() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4) {
-                var message = JSON.parse(xhttp.responseText).message;
+                var message = JSON.parse(xhttp.responseText);
                 alert(message);
                 $("#txt_customer_name").val("");
                 $("#txt_date").val("");
@@ -188,7 +188,7 @@ function deleteGoodReceipt(senderName, goodReceiptId) {
             success: function (data) {
                 destroyDatatable("#tbl_goodreceipt", "#tbl_goodreceipt_body");
                 getGoodReceipt();
-                alert(data.message);
+                alert(data);
             },
             error: function (message){
                 errorMessage(message);
@@ -337,7 +337,7 @@ function deleteGoodReceiptDetails(productName, goodReceiptDetailId) {
             data: data,
             success: function (data) {
                 getGoodReceiptDetail($("#goodReceiptId").val());
-                alert(data.message);
+                alert(data);
             },
             error: function (message) {
                 errorMessage(message);
