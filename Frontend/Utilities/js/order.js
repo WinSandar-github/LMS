@@ -45,7 +45,6 @@ function addToOrder(goodReceiptId) {
             alert("Please add product");
         }
     });
-    
 }
 function getTotalPerProduct(td) {
     var row = $(td).closest('tr');

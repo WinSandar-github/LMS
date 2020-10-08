@@ -1,4 +1,4 @@
-var BACKEND_URL = "http://" + window.location.host + "/";
+var BACKEND_URL = "http://localhost:8000/";//"http://" + window.location.host + "/";
 
 function logout() {
     if (localStorage.getItem("userinfo") == null) {
@@ -133,4 +133,9 @@ function dataMessage(message,table, tableBody) {
     tr += "<td colspan='" + noOfColumn+"'>" + dataMsg.message + "</td>";
     tr += "</tr>";
     $(tableBody).append(tr);
+}
+function numberRows() {
+    $('table tbody tr').each(function (idx) {
+        $(this).children(":eq(0)").html(idx + 1);
+    });
 }
