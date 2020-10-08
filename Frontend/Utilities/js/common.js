@@ -89,7 +89,6 @@ function formatDate(date) {
     var newDate = new Date(date);
     return newDate.getDate() + '-' + (newDate.getMonth() + 1) + "-" + newDate.getFullYear();
 }
-
 function dateRange(dateRange,startDate,endDate,table){
   var dataTable=$(table).DataTable({
         'destroy': true,
@@ -100,6 +99,7 @@ function dateRange(dateRange,startDate,endDate,table){
         'ordering': true,
         'info': false,
         'autoWidth': true,
+        "scrollX": true,
         "order": [[0, "desc"]]
     });
     $(dateRange).click(function () {
@@ -130,7 +130,7 @@ function dataMessage(message,table, tableBody) {
     var noOfColumn=countColumn(table);
     var dataMsg = JSON.parse(message.responseText);
     var tr = "<tr>";
-    tr += "<td colspan='" + noOfColumn+"'>" + dataMsg.message + "</td>";
+    tr += "<td colspan='" + noOfColumn+"'>" + dataMsg + "</td>";
     tr += "</tr>";
     $(tableBody).append(tr);
 }

@@ -64,6 +64,7 @@ class VerifyCsrfToken extends Middleware
       'updateOrderByorderId',
       'getVipCustomer',
       'getVipCustomerInfo',
+      'getStatmentCarList',
       'createUser',
       'getUser',
       'deleteUser',
@@ -74,5 +75,6 @@ class VerifyCsrfToken extends Middleware
       'showRuleDetail',
       'updateRule',
       'deleteRule'
+
     ];
 }

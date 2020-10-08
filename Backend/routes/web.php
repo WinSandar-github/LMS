@@ -85,6 +85,9 @@ Route::post('updateOrderByorderId', array('middleware' => 'cors', 'uses' => 'Del
 //For vipCustomer
 Route::post('getVipCustomer',array('middleware'=>'cors','uses'=>'GoodreceiptController@getVipCustomer'));
 Route::post('getVipCustomerInfo',array('middleware'=>'cors','uses'=>'GoodreceiptController@getVipCustomerInfo'));
+//for get statementcarlist
+Route::post('getStatmentCarList',array('middleware'=>'cors','uses'=>'StatementCarListController@getStatmentCarList'));
+
 //For user
 Route::post('createUser',array('middleware'=>'cors','uses'=>'UserController@createUser'));
 Route::post('getUser',array('middleware'=>'cors','uses'=>'UserController@getUser'));
@@ -97,6 +100,7 @@ Route::post('createRule',array('middleware'=>'cors','uses'=>'RuleController@crea
 Route::post('showRuleDetail',array('middleware'=>'cors','uses'=>'RuleController@showRuleDetail'));
 Route::post('updateRule',array('middleware'=>'cors','uses'=>'RuleController@updateRule'));
 Route::post('deleteRule',array('middleware'=>'cors','uses'=>'RuleController@deleteRule'));
+
 
 Auth::routes();
 
