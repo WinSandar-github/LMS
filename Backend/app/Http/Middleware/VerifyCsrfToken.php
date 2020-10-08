@@ -65,6 +65,7 @@ class VerifyCsrfToken extends Middleware
       'getVipCustomer',
       'getVipCustomerInfo',
       'getStatmentCarList',
-
+      'getCompany',
+      'updateCompanyLogo'
     ];
 }

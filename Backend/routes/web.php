@@ -87,6 +87,9 @@ Route::post('getVipCustomer',array('middleware'=>'cors','uses'=>'GoodreceiptCont
 Route::post('getVipCustomerInfo',array('middleware'=>'cors','uses'=>'GoodreceiptController@getVipCustomerInfo'));
 //for get statementcarlist
 Route::post('getStatmentCarList',array('middleware'=>'cors','uses'=>'StatementCarListController@getStatmentCarList'));
+//for get company
+Route::post('getCompany', array('middleware' => 'cors', 'uses' => 'RegisterController@getCompany'));
+Route::post('updateCompanyLogo', array('middleware' => 'cors', 'uses' => 'RegisterController@updateCompanyLogo'));
 
 Auth::routes();
 

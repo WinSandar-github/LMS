@@ -146,31 +146,34 @@ class DeliveryController extends Controller
     $infodetails =tbl_delivery::with(['companyDelivery','deliveryDetails'])
                               ->where('id','=',$request->input("deliveryId"))
                               ->get();
-    if(sizeof($infodetails)){
+   if(sizeof($infodetails)){
       return response()->json($infodetails,200, config('common.header'),JSON_UNESCAPED_UNICODE);
     }
     else{
       return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
     }
+
   }
   public function getInvoiceDetailsBydeliveryId(Request $request)
   {
-    $invoicedetails =tbl_good_receipt::with(['goodReceiptCity','goodReceiptOrder'])
-                                      ->where('tbl_good_receipt.id','=',$request->input("goodReceiptId"))
+    $invoicedetails =tbl_good_receipt::with(['goodReceiptCity','orderByGoodReceipt'])
+                                      ->where('tbl_good_receipt.id','=',$request->input('goodReceiptId'))
                                       ->get();
+
     if(sizeof($invoicedetails)){
       return response()->json($invoicedetails,200, config('common.header'),JSON_UNESCAPED_UNICODE);
     }
     else{
       return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
     }
+
   }
   public function getInvoiceDetailsByorderId(Request $request)
   {
     $invoiceorder=tbl_order_details::with('unitByorderDetail')
-                                      ->where('order_id','=',$request->input("orderId"))
-                                      ->get();
-    if(sizeof($invoiceorder)){
+                                    ->where('order_id','=',$request->input("orderId"))
+                                    ->get();
+   if(sizeof($invoiceorder)){
       return response()->json($invoiceorder,200, config('common.header'),JSON_UNESCAPED_UNICODE);
     }
     else{
