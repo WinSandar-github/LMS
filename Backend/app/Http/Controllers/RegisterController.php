@@ -59,5 +59,63 @@ class RegisterController extends Controller
      return response()->json(config('common.message.error'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
     }
   }
+  public function getCompany(Request $request)
+  {
+      $company = tbl_company::with('users')
+                              ->where('id','=',$request->input("companyId"))
+                              ->get();
+      if(sizeof($company)){
+          return response()->json($company,200, config('common.header'),JSON_UNESCAPED_UNICODE);
+      }
+      else{
+          return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+        }
+  }
+  public function updateCompany(Request $request)
+  {
+    try{
+        $company = tbl_company::find($request->input("companyId"));
+        $string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $company_name=$request->input('companyName');
+        $com_len=strlen($company_name);
+        if($com_len==1){
+          $str = str_shuffle($string);
+          $ref_initials=$company_name[0].(substr($str,0,2));
+          }
+        else if($com_len==2){
+          $str = str_shuffle($string);
+          $ref_initials=$company_name[0].$company_name[1].(substr($str,0,1));
+        }
+        else{
+          $ref_initials=$company_name[0].$company_name[1].$company_name[2];
+        }
+        $company->name=$request->input('companyName');
+        $company->address=$request->input('companyAddress');
+        $company->phone=$request->input('companyPhone');
+        $file_ext=$request->input('companyExt');
+        $newfile=$ref_initials.".".$file_ext;
+        $oldfile= $request->input('companylogo');
+        Storage::move('public/company_logo/'.$oldfile, 'public/company_logo/'.$newfile);
+        $company->logo=$newfile;
+        $company->ref_initials = strtoupper($ref_initials);
+        $company->save();
+        return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+    }catch (\Exception $e) {
+        return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
+    }
+  }
+  public function updateCompanyLogo(Request $request)
+  {
+    try{
+        $company = tbl_company::find($request->input("companyId"));
+        $file_name=strtolower($request->input('refinitials')).".".$request->input('companyExt');
+        $request->file('updatelogo')->storeAs('public/company_logo',$file_name);
+        $company->logo=$file_name;
+        $company->save();
+        return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+    }catch (\Exception $e) {
+        return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
+    }
+  }
 }
  ?>

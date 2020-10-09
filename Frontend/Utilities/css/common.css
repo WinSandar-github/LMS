@@ -213,4 +213,7 @@ img {
 #tbl_rule td {
    white-space:pre-line;
 }
-
+.hidden-file{
+  visibility: hidden;
+  position: absolute;
+}

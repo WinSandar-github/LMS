@@ -74,7 +74,9 @@ class VerifyCsrfToken extends Middleware
       'createRule',
       'showRuleDetail',
       'updateRule',
-      'deleteRule'
+      'deleteRule',
+      'getCompany',
+      'updateCompanyLogo'
 
     ];
 }
