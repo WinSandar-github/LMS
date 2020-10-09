@@ -26,9 +26,9 @@ class UserController extends Controller
             $user->address=$userData["address"];
             $user->company_id=$userData["companyId"];
             $user->save();
-            return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }catch (\Exception $e) {
-            return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.error'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
   }
   public function getUser(Request $request)
@@ -39,24 +39,24 @@ class UserController extends Controller
             return response()->json($user, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
         else{
-           return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+           return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
   }
   public function deleteUser(Request $request)
   {
         $user = User::find(request("userId"));
         if($user->delete()){
-            return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
         else{
-            return response()->json(config('common.errorMessage'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
   }
   public function showUserInfo(Request $request)
   {
          $user = User::find(request("userId"));
          if(empty($user)){
-            return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
          }
          else{
             return response()->json($user, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -70,15 +70,12 @@ class UserController extends Controller
             $user->display_name=$userData["name"];
             $user->full_name=$userData["name"];
             $user->email=$userData["email"];
-            if($userData["password"]!="******"){
-                $user->password=Hash::make($userData["password"]);
-            }
             $user->phone_no=$userData["phoneNo"];
             $user->address=$userData["address"];
             $user->save();
-            return response()->json(config('common.successMessage'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }catch (\Exception $e) {
-            return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.error'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
   }
 }

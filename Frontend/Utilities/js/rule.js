@@ -46,7 +46,7 @@ function updateRule(){
         success: function (data) {
             $('#modal-rule-update').modal('toggle');
             getRule();
-            alert(data.message);
+            alert(data);
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             errorStatus(XMLHttpRequest, textStatus, errorThrown);
@@ -84,7 +84,7 @@ function createRule() {
         url: BACKEND_URL + "createRule",
         data: JSON.stringify(ruleData),
         success: function (data) {
-            alert(data.message); 
+            alert(data); 
             $('#modal-rule').modal('toggle');
             getRule();
             $("#tbl_rule_body").empty();
@@ -105,7 +105,7 @@ function deleteRule() {
             url: BACKEND_URL + "deleteRule",
             data: data,
             success: function (data) {
-                alert(data.message);
+                alert(data);
                 $('#modal-rule-update').modal('toggle');
                 getRule();
             },

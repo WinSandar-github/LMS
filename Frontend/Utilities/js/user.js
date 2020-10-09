@@ -1,4 +1,12 @@
-﻿function createUser() {
+﻿$("#addButton").click(function () {
+    $("#name").val("");
+    $("#email").val("");
+    $("#password").val("");
+    $("#phoneNo").val("");
+    $("#address").val("");
+    $("#passwordArea").css("display", "block");
+});
+function createUser() {
     var name = $("#name").val();
     var email = $("#email").val();
     var password = $("#password").val();
@@ -15,7 +23,7 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4) {
-                var message = JSON.parse(xhttp.responseText).message;
+                var message = JSON.parse(xhttp.responseText);
                 alert(message);
                 $("#name").val("");
                 $("#email").val("");
@@ -75,7 +83,7 @@ function deleteUser(userName, userId) {
             success: function (data) {
                 destroyDatatable("#tbl_user", "#tbl_user_body");
                 getUser();
-                alert(data.message);
+                alert(data);
             },
             error: function (message) {
                 errorMessage(message);
@@ -95,7 +103,7 @@ function showUserInfo(userId) {
         success: function (data) {
             $("#name").val(data.full_name);
             $("#email").val(data.email);
-            $("#password").val("******");
+            $("#passwordArea").css("display","none");
             $("#phoneNo").val(data.phone_no);
             $("#address").val(data.address);
             $('#modal-user').modal('toggle');
@@ -113,11 +121,10 @@ function updateUser() {
     userData["password"] = $("#password").val();
     userData["phoneNo"] = $("#phoneNo").val();
     userData["address"] = $("#address").val();
-    console.log(userData);
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4) {
-            var message = JSON.parse(xhttp.responseText).message;
+            var message = JSON.parse(xhttp.responseText);
             alert(message);
             $("#name").val("");
             $("#email").val("");
