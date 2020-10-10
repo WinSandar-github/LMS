@@ -5,7 +5,7 @@ function saveUnit() {
         url: BACKEND_URL + "createUnit",
         data: unitData,
         success: function (data) {
-            alert(data.message);
+            alert(data);
             $("#txt_unit_name").val("");
             getUnit();
         },
@@ -71,7 +71,7 @@ function updateUnit() {
             $("#txt_unit_name").val("");
             getUnit();
             $("#unit_form").attr('action', 'javascript:saveUnit()');
-            alert(data.message);
+            alert(data);
         },
         error:function (XMLHttpRequest, textStatus, errorThrown){
           errorStatus(XMLHttpRequest, textStatus, errorThrown);
@@ -89,7 +89,7 @@ function deleteUnit(unitName, unitId) {
             success: function (data) {
                 $("#txt_unit_name").val("");
                 getUnit();
-                alert(data.message);
+                alert(data);
 
             },
             error: function (message) {

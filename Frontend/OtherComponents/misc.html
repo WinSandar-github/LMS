@@ -56,19 +56,13 @@
                                 </div>
                                 <div class="card-body">
                                     <form enctype="multipart/form-data" action="javascript:saveCity();" id="city_form">
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <input type="hidden" id="city_id" value="" />
-                                                    <input type="text" class="form-control" id="txt_city_name" placeholder="Enter City Name" autocomplete="off">
-                                                </td>
-                                                <td width="75px" align="right">
-                                                    <button type="submit" class="btn btn-info btn-md">
-                                                        <li class="fas fa-save" /> Save
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                        <input type="hidden" id="city_id" value="" />
+                                        <div class="input-group">
+                                            <input type="text" id="txt_city_name" class="form-control" placeholder="Enter City Name" aria-label="Enter City Name" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-info" type="submit"><i class="fas fa-save" /> Save</i></button>
+                                            </div>
+                                        </div>
                                     </form>
                                    <table id="table_tbl_city" class="table table-bordered table-striped" >
                                         <thead>
@@ -96,19 +90,13 @@
                                 </div>
                                 <div class="card-body">
                                     <form enctype="multipart/form-data" action="javascript:saveUnit();" id="unit_form">
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <input type="hidden" id="unit_id" value="" />
-                                                    <input type="text" class="form-control" id="txt_unit_name" placeholder="Enter Unit Name" autocomplete="off">
-                                                </td>
-                                                <td width="75px" align="right">
-                                                    <button type="submit" class="btn btn-info btn-md">
-                                                        <li class="fas fa-save" /> Save
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                        <input type="hidden" id="unit_id" value="" />
+                                        <div class="input-group">
+                                            <input type="text" id="txt_unit_name" class="form-control" placeholder="Enter Unit Name" aria-label="Enter Unit Name" aria-describedby="basic-addon2" autocomplete="off">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-info" type="submit"><i class="fas fa-save" /> Save</i></button>
+                                            </div>
+                                        </div>
                                     </form>
                                     <table id="tbl_unit" class="table table-bordered table-striped">
                                         <thead>

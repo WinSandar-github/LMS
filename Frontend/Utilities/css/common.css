@@ -209,11 +209,16 @@ img {
 .padding-top {
     padding-top: 20px;
 }
-
-#tbl_rule td {
-   white-space:pre-line;
+#matchPwd{
+    color:red;
+}
+.align-right{
+    text-align:right;
 }
 .hidden-file{
   visibility: hidden;
   position: absolute;
+}
+#tbl_rule td {
+   white-space:pre-line;
 }

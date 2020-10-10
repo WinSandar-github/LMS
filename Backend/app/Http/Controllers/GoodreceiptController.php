@@ -46,9 +46,9 @@ class GoodreceiptController extends Controller
             $goodReceipt->running_number=$runningNumber;
             $goodReceipt->user_id=$goodReceiptData["userId"];
             $goodReceipt->save();
-            return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }catch (\Exception $e) {
-            return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.error'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
     }
     public function getGoodReceipt(Request $request,$orderStatus)
@@ -61,14 +61,14 @@ class GoodreceiptController extends Controller
             return response()->json($goodReceipt, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
         else{
-           return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+           return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
     }
     public function showGoodReceiptInfo(Request $request)
 	{
          $goodReceipt = tbl_good_receipt::find($request->input("goodReceiptId"));
          if(empty($goodReceipt)){
-            return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
          }
          else{
             return response()->json($goodReceipt, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -90,19 +90,19 @@ class GoodreceiptController extends Controller
             $goodReceipt->city_id=$goodReceiptData["cityId"];
             $goodReceipt->address=$goodReceiptData["address"];
             $goodReceipt->save();
-            return response()->json(config('common.successMessage'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }catch (\Exception $e) {
-            return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.error'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
 	}
     public function deleteGoodReceipt(Request $request)
 	{
         $goodReceipt = tbl_good_receipt::find($request->input("goodReceiptId"));
         if($goodReceipt->delete()){
-            return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
         else{
-            return response()->json(config('common.errorMessage'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
 	}
      public function createGoodReciptDetails(Request $request)
@@ -119,9 +119,9 @@ class GoodreceiptController extends Controller
             $goodReceiptDetail->company_id=$productData["companyId"];
             $goodReceiptDetail->remark=$productData["remark"];
             $goodReceiptDetail->save();
-            return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }catch (\Exception $e) {
-            return response()->json(config('common.errorMessage'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
 	}
      public function getGoodReceiptDetail(Request $request)
@@ -133,7 +133,7 @@ class GoodreceiptController extends Controller
              return response()->json($goodReceiptDetail, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
         else{
-             return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+             return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
 
 	}
@@ -146,7 +146,7 @@ class GoodreceiptController extends Controller
              return response()->json($goodReceiptDetail, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
         else{
-             return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+             return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
 
 	}
@@ -154,7 +154,7 @@ class GoodreceiptController extends Controller
 	{
          $goodReceiptDetail = tbl_good_receipt_details::find($request->input("goodReceiptDetailId"));
          if(empty($goodReceiptDetail)){
-            return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
          }
          else{
             return response()->json($goodReceiptDetail, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -172,19 +172,19 @@ class GoodreceiptController extends Controller
             $goodReceiptDetail->remark=$goodReceiptDetailData["remark"];
             $goodReceiptDetail->user_id=$goodReceiptDetailData["userId"];
             $goodReceiptDetail->save();
-            return response()->json(config('common.successMessage'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }catch (\Exception $e) {
-            return response()->json(config('common.errorMessage'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.error'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
 	}
     public function deleteGoodReceiptDetail(Request $request)
 	{
         $goodReceiptDetail = tbl_good_receipt_details::find($request->input("goodReceiptDetailId"));
         if($goodReceiptDetail->delete()){
-            return response()->json(config('common.successMessage'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
         else{
-            return response()->json(config('common.errorMessage'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
+            return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
         }  
 	}
      public function getVipCustomer(Request $request)
@@ -197,7 +197,7 @@ class GoodreceiptController extends Controller
              return response()->json($vipCustomer, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
         else{
-             return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+             return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
 
 	}
@@ -220,7 +220,7 @@ class GoodreceiptController extends Controller
              return response()->json($vipCustomer, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
         else{
-             return response()->json(config('common.dataMessage'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+             return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
 
 	}

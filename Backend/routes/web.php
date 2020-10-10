@@ -85,8 +85,8 @@ Route::post('createRule',array('middleware'=>'cors','uses'=>'RuleController@crea
 Route::post('showRuleDetail',array('middleware'=>'cors','uses'=>'RuleController@showRuleDetail'));
 Route::post('updateRule',array('middleware'=>'cors','uses'=>'RuleController@updateRule'));
 Route::post('deleteRule',array('middleware'=>'cors','uses'=>'RuleController@deleteRule'));
-
-
+//For Password Reset
+Route::post('resetPassword', array('middleware' => 'cors', 'uses' => 'CompanyLoginController@resetPassword'));
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
