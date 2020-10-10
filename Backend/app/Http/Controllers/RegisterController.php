@@ -20,7 +20,7 @@ class RegisterController extends Controller
   {
     try{
        $string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-       $company_name=$request->input('companyname');
+       $company_name=$request->input('company_name');
        $com_len=strlen($company_name);
        if($com_len==1){
          $str = str_shuffle($string);
@@ -34,12 +34,12 @@ class RegisterController extends Controller
          $ref_initials=$company_name[0].$company_name[1].$company_name[2];
        }
        $company=new tbl_company();
-       $company->name=$request->input('companyname');
-       $company->address=$request->input('companyaddress');
+       $company->name=$request->input('company_name');
+       $company->address=$request->input('company_address');
        $company->phone=$request->input('txt_phone');
-       $file_ext=$request->input('ext');
+       $file_ext=$request->input('company_ext');
        $file_name=$ref_initials.".".$file_ext;
-       $request->file('img')->storeAs('public/company_logo',$file_name);
+       $request->file('company_logo')->storeAs('public/company_logo',$file_name);
        $company->logo=$file_name;
        $company->ref_initials = strtoupper($ref_initials);
        $company->save();
@@ -48,7 +48,7 @@ class RegisterController extends Controller
        $user->display_name=$request->input('txt_name');
        $user->full_name=$request->input('txt_name');
        $user->phone_no=$request->input('txt_phone');
-       $user->address=$request->input('companyaddress');
+       $user->address=$request->input('company_address');
        $user->company_id=$company->id;
        $user->email=$request->input('txt_email');
        $user->password=Hash::make($request->input('txt_password'));
@@ -62,8 +62,8 @@ class RegisterController extends Controller
   public function getCompany(Request $request)
   {
       $company = tbl_company::with('users')
-                              ->where('id','=',$request->input("companyId"))
-                              ->get();
+                            ->where('id','=',$request->input("company_id"))
+                            ->get();
       if(sizeof($company)){
           return response()->json($company,200, config('common.header'),JSON_UNESCAPED_UNICODE);
       }
@@ -74,9 +74,9 @@ class RegisterController extends Controller
   public function updateCompany(Request $request)
   {
     try{
-        $company = tbl_company::find($request->input("companyId"));
+        $company = tbl_company::find($request->input("company_id"));
         $string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $company_name=$request->input('companyName');
+        $company_name=$request->input('company_name');
         $com_len=strlen($company_name);
         if($com_len==1){
           $str = str_shuffle($string);
@@ -89,12 +89,12 @@ class RegisterController extends Controller
         else{
           $ref_initials=$company_name[0].$company_name[1].$company_name[2];
         }
-        $company->name=$request->input('companyName');
-        $company->address=$request->input('companyAddress');
-        $company->phone=$request->input('companyPhone');
-        $file_ext=$request->input('companyExt');
+        $company->name=$request->input('company_name');
+        $company->address=$request->input('company_address');
+        $company->phone=$request->input('company_phone');
+        $file_ext=$request->input('company_ext');
         $newfile=$ref_initials.".".$file_ext;
-        $oldfile= $request->input('companylogo');
+        $oldfile= $request->input('company_logo');
         Storage::move('public/company_logo/'.$oldfile, 'public/company_logo/'.$newfile);
         $company->logo=$newfile;
         $company->ref_initials = strtoupper($ref_initials);
@@ -107,9 +107,9 @@ class RegisterController extends Controller
   public function updateCompanyLogo(Request $request)
   {
     try{
-        $company = tbl_company::find($request->input("companyId"));
-        $file_name=strtolower($request->input('refinitials')).".".$request->input('companyExt');
-        $request->file('updatelogo')->storeAs('public/company_logo',$file_name);
+        $company = tbl_company::find($request->input("company_id"));
+        $file_name=strtolower($request->input('ref_initials')).".".$request->input('company_ext');
+        $request->file('company_logo')->storeAs('public/company_logo',$file_name);
         $company->logo=$file_name;
         $company->save();
         return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);

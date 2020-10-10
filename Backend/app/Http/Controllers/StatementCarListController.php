@@ -13,19 +13,19 @@ class StatementCarListController extends Controller
   {
     try{
         $statement=new tbl_statement_car_list();
-        $statement->car_no=$request->input("carNumber");
-        $statement->date=$request->input("deliveryDate");
-        $statement->total_price=$request->input("totalPrice");
+        $statement->car_no=$request->input("car_number");
+        $statement->date=$request->input("delivery_date");
+        $statement->total_price=$request->input("total_price");
         $statement->commission=$request->input("commission");
-        $statement->commission_value=$request->input("commissionValue");
+        $statement->commission_value=$request->input("commission_value");
         $statement->labour=$request->input("labour");
         $statement->advance=$request->input("advance");
         $statement->land=$request->input("land");
-        $statement->final_price=$request->input("finalPrice");
-        $statement->cash_total=$request->input("cashTotal");
-        $statement->all_total=$request->input("allTotal");
-        $statement->delivery_id=$request->input("deliveryId");
-        $statement->company_id=$request->input("companyId");
+        $statement->final_price=$request->input("final_price");
+        $statement->cash_total=$request->input("cash_total");
+        $statement->all_total=$request->input("all_total");
+        $statement->delivery_id=$request->input("delivery_id");
+        $statement->company_id=$request->input("company_id");
         $statement->status=$request->input("status");
         $statement->save();
         return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -35,15 +35,15 @@ class StatementCarListController extends Controller
    }
    public function getStatmentCarList(Request $request)
    {
-     $startDate=date("Y-m-d", strtotime($request->input("startDate")));
-     $endDate=date("Y-m-d", strtotime($request->input("endDate")));
-     if($startDate==$endDate){
-         $statement=tbl_statement_car_list::where('company_id','=',$request->input("companyId"))
+     $start_date=date("Y-m-d", strtotime($request->input("start_date")));
+     $end_date=date("Y-m-d", strtotime($request->input("end_date")));
+     if($start_date==$end_date){
+         $statement=tbl_statement_car_list::where('company_id','=',$request->input("company_id"))
                                             ->get();
      }
      else{
-          $statement=tbl_statement_car_list::where('company_id','=',$request->input("companyId"))
-                                             ->whereBetween('date',[$startDate, $endDate])
+          $statement=tbl_statement_car_list::where('company_id','=',$request->input("company_id"))
+                                             ->whereBetween('date',[$start_date, $end_date])
                                              ->get();
      }
      if(sizeof($statement)){

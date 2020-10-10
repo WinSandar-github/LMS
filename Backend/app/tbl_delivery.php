@@ -19,4 +19,5 @@ class tbl_delivery extends Model
   {
       return $this->hasMany('App\tbl_delivery_details','delivery_id');
   }
+
 }

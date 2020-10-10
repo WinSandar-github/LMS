@@ -34,21 +34,27 @@
                <h4 id="address"></h4>
 
         </div>
-        <br/>
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col-10">
+            <hr class='hr'/>
+          </div>
+          <div class="col-1"></div>
+        </div>
         <div class="row">
           <div class="col-1"></div>
           <div class="col-2">
-            ကုန်သည်အမည်       :<span class="customerName"></span>
+            ကုန်သည်အမည်:<span class="customer_name"></span>
 
           </div>
           <div class="col-2"></div>
           <div class="col-2">
-          ယာဥ်အမှတ်       :<span class="carNumber"></span>
+          ယာဥ်အမှတ်:<span class="car_number"></span>
 
           </div>
           <div class="col-2"></div>
           <div class="col-3">
-            ပစ္စည်းလက်ခံနံပါတ်    :<span class="orderNo"></span>
+            ပစ္စည်းလက်ခံနံပါတ်    :<span class="order_no"></span>
 
 
           </div>
@@ -58,25 +64,25 @@
           <div class="col-1"></div>
           <div class="col-2">
 
-            ကုန်ပို့သူအမည်        :<span class="senderName"></span>
+            ကုန်ပို့သူအမည်: <span class="sender_name"></span>
 
           </div>
           <div class="col-2"></div>
           <div class="col-2">
-              မြို့အမည်         :<span class="toCityName"></span>
+              မြို့အမည်:    <span class="to_city_name"></span>
 
           </div>
           <div class="col-2"></div>
           <div class="col-3">
 
-            ကုန်တင်ပို့သည့်နေ့စွဲ  : <span class="incomeDate"></span>
+            ကုန်တင်ပို့သည့်နေ့စွဲ  : <span class="income_date"></span>
           </div>
           <div class="col-1"></div>
         </div>
         <div class="row">
           <div class="col-1"></div>
           <div class="col-2">
-              ယာဥ်မောင်းအမည်  : <span class="driverName"></span>
+              ယာဥ်မောင်းအမည်:<span class="driver_name"></span>
 
 
           </div>
@@ -101,7 +107,7 @@
                   <th>စဥ်</th>
                   <th>ပစ္စည်းအမည်</th>
                   <th>အရေအတွက်</th>
-                  <th>သင့်ငွေ</th>
+                  <th class='align-right'>သင့်ငွေ</th>
 
                 </tr>
 
@@ -114,52 +120,12 @@
           </div>
           <div class="col-1"></div>
         </div>
-        <div class="row">
-          <div class="col-1"></div>
-          <div class="col-10">
-            <table class="table">
-              <thead class="table_price">
 
-                <tr class="tr-class">
-                  <td>စုစုပေါင်း :</td>
-                  <td id="order_total_price">
-
-                  </td>
-                </tr>
-                <tr class="tr-class">
-                  <td>အလုပ်သမားခ : </td>
-                  <td id="order_labour_price">
-
-                  </td>
-                </tr>
-                <tr class="tr-class">
-                  <td>စိုက်ငွေ</td>
-                  <td id='order_land_price'>
-
-                  </td>
-                </tr>
-                <tr class="tr-class">
-                  <td>စုစုပေါင်းသင့်ငွေ : </td>
-                  <td id="order_sum">
-
-                  </td>
-                </tr>
-                <tr class="tr-class">
-                  <td>တာဝန်ခံ : </td>
-                  <td>
-
-                  </td>
-                </tr>
-
-              </thead>
-            </table>
-          </div>
-        </div>
         <div class="button-css">
 
-            <button type="button" onclick="javascript: window.print();" class="btn btn-print">Print</button>
+            <button type="button" onclick="javascript: window.print();" class="btn btn-success">Print</button>
             <button type="button" onclick="javascript: back();" class="btn btn-info">Back</button>
-          
+
         </div>
     </section>
   </div>
@@ -190,8 +156,8 @@
   <script src="../Utilities/js/common.js"></script>
   <script type="text/javascript" src="../Utilities/js/auth.js"></script>
   <script type="text/javascript">
-    loadInvoiceByOrderNo();
     get_company_info();
+    loadInvoice();
   </script>
 </body>
 </html>

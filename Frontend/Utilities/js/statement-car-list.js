@@ -1,33 +1,33 @@
 function saveStatementCarList()
 {
-  var carNumber = document.getElementById("td_car_number").innerHTML;
-  var deliveryDate = document.getElementById("td_delivery_date").innerHTML;
-  var totalPrice = document.getElementById("td_total_price").innerHTML;
+  var car_number = document.getElementById("td_car_number").innerHTML;
+  var delivery_date = document.getElementById("td_delivery_date").innerHTML;
+  var total_price = document.getElementById("td_total_price").innerHTML;
   var commission = $("#comission_percent").val();
-  var commissionValue =$("#gate_labour_price").val();
+  var commission_value =$("#gate_labour_price").val();
   var labour = $("#labour_price").val();
   var advance=$("#advance").val();
   var land = $("#land_price").val();
-  var finalPrice = $("#all_sum_price").val();
-  var allTotal= $("#paid_price").val();
-  var cashTotal=$("#balance_price").val();
-  var deliveryId=localStorage.getItem("deliveryId");
+  var final_price = $("#all_sum_price").val();
+  var all_total= $("#paid_price").val();
+  var cash_total=$("#balance_price").val();
+  var delivery_id=localStorage.getItem("delivery_id");
   var status='0';
 
   var statement = new FormData;
-  statement.append('carNumber',carNumber);
-  statement.append('deliveryDate',deliveryDate);
-  statement.append('totalPrice',removeComma(totalPrice));
+  statement.append('car_number',car_number);
+  statement.append('delivery_date',delivery_date);
+  statement.append('total_price',removeComma(total_price));
   statement.append('commission',removePercent(commission));
-  statement.append('commissionValue',removeComma(commissionValue));
+  statement.append('commission_value',removeComma(commission_value));
   statement.append('labour',removeComma(labour));
   statement.append('advance',removeComma(advance));
   statement.append('land',removeComma(land));
-  statement.append('finalPrice',removeComma(finalPrice));
-  statement.append('cashTotal',removeComma(cashTotal));
-  statement.append('allTotal',removeComma(allTotal));
-  statement.append('deliveryId',deliveryId);
-  statement.append('companyId',company_id);
+  statement.append('final_price',removeComma(final_price));
+  statement.append('cash_total',removeComma(cash_total));
+  statement.append('all_total',removeComma(all_total));
+  statement.append('delivery_id',delivery_id);
+  statement.append('company_id',company_id);
   statement.append('status',status);
 
   $.ajax({
@@ -38,7 +38,7 @@ function saveStatementCarList()
           processData: false,
           success: function (data) {
             alert(data);
-            loadInvoiceDelivery();
+            loadInvoice();
             document.getElementById("print_table").style.display = "inline";
             document.getElementById("price_table").style.display = "none";
             document.getElementById("save_button").style.display = "none";
@@ -53,13 +53,13 @@ function saveStatementCarList()
 function loadStatmentCarList() {
     $("#tbl_statment_container").html("");
     $("#total").html("");
-    var dateString = $("#date").val();
-    var startDate = dateString.split(' - ')[0];
-    var endDate = dateString.split(' - ')[1];
+    var date_string = $("#date").val();
+    var start_date = date_string.split(' - ')[0];
+    var end_date = date_string.split(' - ')[1];
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getStatmentCarList",
-        data: "companyId=" + company_id + "&startDate=" + startDate + "&endDate=" + endDate,
+        data: "company_id=" + company_id + "&start_date=" + start_date + "&end_date=" + end_date,
         success: function (data) {
             data.forEach(function (element) {
 

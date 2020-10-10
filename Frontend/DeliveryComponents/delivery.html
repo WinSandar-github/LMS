@@ -106,12 +106,12 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-body">
-                    <div class="table_css">
+                    <div>
                         <h4>ပစ္စည်း စာရင်း</h4>
                         <table id="table_tbl_deliverydetails" class="table table-bordered">
                           <thead>
                                 <tr>
-                                        <th>Customer အမည််</th>
+                                        <th>customer</th>
                                         <th>ပစ္စည်းအမည်</th>
                                         <th>အရေအတွက်</th>
                                         <th>အလေးချိန်</th>
@@ -142,7 +142,7 @@
 
   </div>
   <div class="modal fade" id="modal-delivery">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title">ခရီးစဥ် အသစ် </h4>
@@ -289,7 +289,7 @@
 
         <div class="modal-footer">
            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="submit">
+                    <button class="btn btn-info" type="submit">
                             <i class="fa fa-floppy-o"></i>  Save
                     </button>
         </div>
@@ -298,21 +298,21 @@
     </div>
   </div>
   <div class="modal fade" id="modal-delivery_details">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title">ခရီးစဥ် ဘောင်ချာဖွင့်ရန် </h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
   <form method="post" enctype="multipart/form-data" id="fileUploadForm" action="javascript:saveDeliverDetail();">
-    <input type="hidden" id="hdeliveryId">
+    <input type="hidden" id="hdelivery_id">
         <div class="modal-body">
               <div class="row">
                 <div class="col-4"></div>
                 <div class="col-4">
                   <label>Order ရွေးရန်</label>
 
-                  <select class="select2" id="selectOrderId" name="order_id" data-placeholder="Order ရွေးရန်" onchange="searchOrderNo(this.value);">
+                  <select class="select2" id="select_order_id" name="order_id" data-placeholder="Order ရွေးရန်" onchange="searchOrderNo(this.value);">
                           <option>--Order ရွေးရန်--</option>
                   </select>
                 </div>
@@ -346,7 +346,7 @@
 
         <div class="modal-footer">
            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button class="btn btn-primary" type="submit">
+              <button class="btn btn-info" type="submit">
                       <i class="fa fa-floppy-o"></i>  Save
               </button>
         </div>
@@ -355,7 +355,7 @@
     </div>
   </div>
   <div class="modal" id="modal-order">
-      <div class="modal-dialog  modal-xl order-modal-dialog">
+      <div class="modal-dialog  modal-lg order-modal-dialog">
           <div class="modal-content">
             <form method="post" enctype="multipart/form-data" action="javascript:updateOrderBygoodReceiptId();">
               <div class="modal-header">
@@ -363,10 +363,10 @@
               </div>
               <div class="modal-body">
 
-                  <div style="text-align:center;">
+                  <div class="button-css">
                       <div class="form-check-inline">
                           <label class="form-check-label">
-                              <input type="radio" class="form-check-input" id="manual" name="optradio" value="manual">Manual
+                              <input type="radio" class="form-check-input" id="manual" name="optradio" value="manual" checked>Manual
                           </label>
                       </div>
                       <div class="form-check-inline">
@@ -382,8 +382,8 @@
 
                   </div>
                   <div class="row">
-                      <input type="hidden" id="hiddenTotal" />
-                      <input type="hidden" id="hiddenOrderId" />
+                      <input type="hidden" id="hidden_total" />
+                      <input type="hidden" id="hidden_order_id" />
                       <div class="table_css">
                           <table class="table table-bordered table-striped" id="tbl_order">
                               <thead>
@@ -444,7 +444,6 @@
       $('.select2').select2();
       createDatepicker('.datepicker');
       loadDelivery();
-      loadDeliveryByComplete();
       autoOrderNo();
   </script>
 </body>

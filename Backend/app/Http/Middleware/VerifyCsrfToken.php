@@ -6,25 +6,16 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
 
 class VerifyCsrfToken extends Middleware
 {
-    /**
-     * The URIs that should be excluded from CSRF verification.
-     *
-     * @var array
-     */
     protected $except = [
       'saveCompany',
       'loginValidate',
       'updateCompany',
       'saveDelivery',
-      'getDelivery',
       'getDeliverDetailsByDeliveryId',
-      'getDeliveryByStatus',
+      'getDeliveryByStatus/*',
       'getDeliveryById',
       'updateDelivery',
-      'deleteDelivery',
       'saveDeliverDetail',
-      'updateDeliverDetail',
-      'deleteDeliverDetail',
       'createCity',
       'getCity',
       'getCityInfo',
@@ -46,9 +37,6 @@ class VerifyCsrfToken extends Middleware
       'getGoodInOutByCompanyId',
       'getInvoiceDetailsBydeliveryId',
       'getCompanyInfoBydeliveryId',
-      'getInvoiceDetailsByorderNo',
-      'getCompanyDetailBydeliveryId',
-      'getInvoiceDetailsByorderId',
       'saveStatementCarList',
       'createOrder',
       'showGoodReceiptDetailInfo',
@@ -60,7 +48,7 @@ class VerifyCsrfToken extends Middleware
       'getOrderNoBycompanyId',
       'getGoodReceiptByorderNo',
       'updateOrderStatusByorderId',
-      'getOrderDetailsByorderNo',
+      'getOrderDetailsByorderId',
       'updateOrderByorderId',
       'getVipCustomer',
       'getVipCustomerInfo',
