@@ -35,8 +35,6 @@ class VerifyCsrfToken extends Middleware
       'getGoodReceiptDetail',
       'getGoodReceiptInvoice',
       'getGoodInOutByCompanyId',
-      'getInvoiceDetailsBydeliveryId',
-      'getCompanyInfoBydeliveryId',
       'saveStatementCarList',
       'createOrder',
       'showGoodReceiptDetailInfo',
@@ -47,7 +45,6 @@ class VerifyCsrfToken extends Middleware
       'deleteOrder',
       'getOrderNoBycompanyId',
       'getGoodReceiptByorderNo',
-      'updateOrderStatusByorderId',
       'getOrderDetailsByorderId',
       'updateOrderByorderId',
       'getVipCustomer',
@@ -64,7 +61,6 @@ class VerifyCsrfToken extends Middleware
       'updateRule',
       'deleteRule',
       'getCompany',
-      'updateCompanyLogo',
       'resetPassword'
     ];
 }

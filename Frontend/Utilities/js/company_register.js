@@ -176,13 +176,13 @@ function editCompanyLogo()
 }
 function updateCompanyLogo() {
     var logo_form = new FormData();
-    logo_form.append('company_id',company_id);
+    logo_form.append('companyId',company_id);
     logo_form.append('ref_initials',$('#hrefinitials').val());
     var logo_file = document.getElementById('updatelogo');
     validateImage(logo_file,logo_form);
     $.ajax({
         type: "POST",
-        url: BACKEND_URL + "updateCompanyLogo",
+        url: BACKEND_URL + "updateCompany",
         data: logo_form,
         contentType: false,
         processData: false,

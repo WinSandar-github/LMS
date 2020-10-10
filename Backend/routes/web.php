@@ -42,9 +42,6 @@ Route::post('getGoodReceiptInvoice',array('middleware'=>'cors','uses'=>'Goodrece
 Route::post('showGoodReceiptDetailInfo',array('middleware'=>'cors','uses'=>'GoodreceiptController@showGoodReceiptDetailInfo'));
 Route::post('updateGoodReceiptDetail',array('middleware'=>'cors','uses'=>'GoodreceiptController@updateGoodReceiptDetail'));
 Route::post('deleteGoodReceiptDetail',array('middleware'=>'cors','uses'=>'GoodreceiptController@deleteGoodReceiptDetail'));
-//for invoice
-Route::post('getCompanyInfoBydeliveryId',array('middleware'=>'cors','uses'=>'DeliveryController@getCompanyInfoBydeliveryId'));
-Route::post('getInvoiceDetailsBydeliveryId',array('middleware'=>'cors','uses'=>'DeliveryController@getInvoiceDetailsBydeliveryId'));
 //for GoodInOut
 Route::post('getGoodInOutByCompanyId',array('middleware'=>'cors','uses'=>'GoodInOutController@getGoodInOutByCompanyId'));
 //for statementcarlist
@@ -58,8 +55,6 @@ Route::post('deleteOrder',array('middleware'=>'cors','uses'=>'OrderController@de
 Route::post('getOrderNoBycompanyId', array('middleware' => 'cors', 'uses' => 'DeliveryController@getOrderNoBycompanyId'));
 //for goodReceipt by orderNo
 Route::post('getGoodReceiptByorderNo', array('middleware' => 'cors', 'uses' => 'DeliveryController@getGoodReceiptByorderNo'));
-//for orderstatus by orderId
-Route::post('updateOrderStatusByorderId', array('middleware' => 'cors', 'uses' => 'DeliveryController@updateOrderStatusByorderId'));
 //for get orderdetail by orderno
 Route::post('getOrderDetailsByorderId', array('middleware' => 'cors', 'uses' => 'DeliveryController@getOrderDetailsByorderId'));
 //for update order by orderId
@@ -71,7 +66,6 @@ Route::post('getVipCustomerInfo',array('middleware'=>'cors','uses'=>'Goodreceipt
 Route::post('getStatmentCarList',array('middleware'=>'cors','uses'=>'StatementCarListController@getStatmentCarList'));
 //for get company
 Route::post('getCompany', array('middleware' => 'cors', 'uses' => 'RegisterController@getCompany'));
-Route::post('updateCompanyLogo', array('middleware' => 'cors', 'uses' => 'RegisterController@updateCompanyLogo'));
 
 //For user
 Route::post('createUser',array('middleware'=>'cors','uses'=>'UserController@createUser'));

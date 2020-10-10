@@ -115,7 +115,7 @@ function showDeliveryById(delivery_id)
   $.ajax({
       type: "POST",
       url: BACKEND_URL + "getDeliveryById",
-      data:"delivery_id=" + delivery_id,
+      data:"id=" + delivery_id,
       success: function (data) {
           $("#car_number").val(data.car_no);
           $("#driver_name").val(data.driver_name);
@@ -193,7 +193,7 @@ function saveDeliverDetail()
         order.append('delivery_status',delivery_status);
         $.ajax({
                 type: "POST",
-                url: BACKEND_URL + "updateOrderStatusByorderId",
+                url: BACKEND_URL + "updateOrderByorderId",
                 data: order,
                 contentType: false,
                 processData: false,
@@ -253,7 +253,7 @@ function loadInvoice()
   $('.driver_name').html(""),$('.car_number').html(""),$('.income_date').html("");
   $.ajax({
           type: "POST",
-          url: BACKEND_URL + "getCompanyInfoBydeliveryId",
+          url: BACKEND_URL + "getDeliveryById",
           data: "delivery_id=" + delivery_id,
           success: function (data) {
             $('.driver_name').append(data[0].driver_name);
@@ -289,7 +289,7 @@ function loadInvoiceDelivery(good_receipt)
       good_receipt_unique.forEach(function(good_receipt_id){
       $.ajax({
         type: "POST",
-        url: BACKEND_URL + "getInvoiceDetailsBydeliveryId",
+        url: BACKEND_URL + "getGoodReceiptByorderNo",
         data:"good_receipt_id="+good_receipt_id,
         success: function (alldata) {
           var order_id=alldata[0].order_by_good_receipt[0].id;
@@ -386,7 +386,7 @@ function loadInvoiceByOrderNo()
   $('.customer_name').html(""),$('.order_no').html(""),$('.sender_name').html(""),$('.to_city_name').html("");
   $.ajax({
         type: "POST",
-        url: BACKEND_URL + "getInvoiceDetailsBydeliveryId",
+        url: BACKEND_URL + "getGoodReceiptByorderNo",
         data: "good_receipt_id=" + good_receipt_id,
         success: function (good_receipt) {
           var order_id=good_receipt[0].order_by_good_receipt[0].id;
