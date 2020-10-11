@@ -6,13 +6,16 @@ function saveUnit() {
         data: unitData,
         success: function (data) {
             alert(data);
-            $("#txt_unit_name").val("");
-            getUnit();
+            clearUnitForm();
         },
         error: function (message) {
             errorMessage(message);
         }
     });
+}
+function clearUnitForm() {
+    $("#txt_unit_name").val("");
+    getUnit();
 }
 function getUnit() {
     destroyDatatable("#tbl_unit", "#tbl_unit_body");
@@ -21,7 +24,6 @@ function getUnit() {
         url: BACKEND_URL + "getUnit",
         data: "companyId=" + company_id,
         success: function (data) {
-
             data.forEach(function (element) {
                 var tr = "<tr>";
                 tr += "<td >" + element.id + "</td>";
@@ -53,7 +55,6 @@ function showUnitInfo(unitId) {
         data: data,
         success: function (data) {
             $("#txt_unit_name").val(data.unit_name);
-
         },
         error:function (message){
           errorMessage(message);
@@ -68,8 +69,7 @@ function updateUnit() {
         url: BACKEND_URL + "updateUnit",
         data: unitData,
         success: function (data) {
-            $("#txt_unit_name").val("");
-            getUnit();
+            clearUnitForm();
             $("#unit_form").attr('action', 'javascript:saveUnit()');
             alert(data);
         },
@@ -87,10 +87,8 @@ function deleteUnit(unitName, unitId) {
             url: BACKEND_URL + "deleteUnit",
             data: data,
             success: function (data) {
-                $("#txt_unit_name").val("");
-                getUnit();
+                clearUnitForm();
                 alert(data);
-
             },
             error: function (message) {
                 errorMessage(message);

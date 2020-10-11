@@ -6,14 +6,17 @@ function saveCity() {
         data: cityData,
         success: function (data) {
             alert(data);
-            $("#txt_city_name").val("");
-            destroyDatatable('#table_tbl_city','#tbl_city_container');
-            getCity();
+            clearCityForm();
         },
         error: function (message){
             errorMessage(message);
         }
     });
+}
+function clearCityForm() {
+    $("#txt_city_name").val("");
+    destroyDatatable('#table_tbl_city', '#tbl_city_container');
+    getCity();
 }
 function getCity() {
     destroyDatatable("#table_tbl_city", "#tbl_city_container");
@@ -22,7 +25,6 @@ function getCity() {
         url: BACKEND_URL + "getCity",
         data: "companyId=" + company_id,
         success: function (data) {
-
             data.forEach(function (element) {
                 var tr = "<tr>";
                 tr += "<td >" + element.id + "</td>";
@@ -54,7 +56,6 @@ function showCityInfo(cityId) {
         data: data,
         success: function (data) {
             $("#txt_city_name").val(data.city_name);
-
         },
         error:function (message){
           errorMessage(message);
@@ -69,9 +70,7 @@ function updateCity() {
         url: BACKEND_URL + "updateCity",
         data: cityData,
         success: function (data) {
-            $("#txt_city_name").val("");
-            destroyDatatable('#table_tbl_city','#tbl_city_container');
-            getCity();
+            clearCityForm();
             $("#city_form").attr('action', 'javascript:saveCity()');
             alert(data);
         },
@@ -90,9 +89,7 @@ function deleteCity(cityName, cityId) {
             url: BACKEND_URL + "deleteCity",
             data: data,
             success: function (data) {
-                $("#txt_city_name").val("");
-                destroyDatatable('#table_tbl_city','#tbl_city_container');
-                getCity();
+                clearCityForm();
                 alert(data);
             },
             error: function (message){

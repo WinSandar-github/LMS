@@ -23,15 +23,8 @@ function createUser() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4) {
-                var message = JSON.parse(xhttp.responseText);
-                alert(message);
-                $("#name").val("");
-                $("#email").val("");
-                $("#password").val("");
-                $("#phoneNo").val("");
-                $("#address").val("");
-                $('#modal-user').modal('toggle');
-                getUser();
+                successMessage(xhttp);
+                clearUserForm();
             }
         };
         xhttp.open('POST', BACKEND_URL + 'createUser');
@@ -41,6 +34,16 @@ function createUser() {
     else {
         alert("Following value(s) cannot be left empty.\nအမည်\nအီးမေးလ်\nစကားဝှက်\nဖုန်း\nလိပ်စာ");
     }
+}
+function clearUserForm() {
+    $("#name").val("");
+    $("#email").val("");
+    $("#password").val("");
+    $("#phoneNo").val("");
+    $("#address").val("");
+    $('#modal-user').modal('toggle');
+    destroyDatatable("#tbl_user", "#tbl_user_body");
+    getUser();
 }
 function getUser() {
     destroyDatatable("#tbl_user", "#tbl_user_body");
@@ -124,16 +127,8 @@ function updateUser() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4) {
-            var message = JSON.parse(xhttp.responseText);
-            alert(message);
-            $("#name").val("");
-            $("#email").val("");
-            $("#password").val("");
-            $("#phoneNo").val("");
-            $("#address").val("");
-            $('#modal-user').modal('toggle');
-            destroyDatatable("#tbl_user", "#tbl_user_body");
-            getUser();
+            successMessage(xhttp);
+            clearUserForm();
         }
     };
     xhttp.open('POST', BACKEND_URL + 'updateUser');

@@ -15,8 +15,8 @@ class UnitController extends Controller
 	{
         try{
             $unit=new tbl_unit();
-            $unit->unit_name=$request->input("unitName");
-            $unit->company_id=$request->input("companyId");
+            $unit->unit_name=$request->unitName;
+            $unit->company_id=$request->companyId;
             $unit->save();
             return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }catch (\Exception $e) {
@@ -25,7 +25,7 @@ class UnitController extends Controller
     }
   public function getUnit(Request $request)
 	{
-        $unit = tbl_unit::where("company_id","=",$request->input("companyId"))->get();
+        $unit = tbl_unit::where("company_id","=",$request->companyId)->get();
         if(sizeof($unit)){
             return response()->json($unit, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
@@ -35,7 +35,7 @@ class UnitController extends Controller
     }
     public function showUnitInfo(Request $request)
 	{
-         $unit = tbl_unit::find($request->input("unitId"));
+         $unit = tbl_unit::find($request->unitId);
          if(empty($unit)){
             return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
          }
@@ -46,8 +46,8 @@ class UnitController extends Controller
   public function updateUnit(Request $request)
 	{
         try{
-            $unit = tbl_unit::find($request->input("unitId"));
-		    $unit->unit_name = $request->input("unitName");
+            $unit = tbl_unit::find($request->unitId);
+		    $unit->unit_name = $request->unitName;
             $unit->save();
             return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }catch (\Exception $e) {
@@ -56,7 +56,7 @@ class UnitController extends Controller
 	}
   public function deleteUnit(Request $request)
 	{
-        $unit = tbl_unit::find($request->input("unitId"));
+        $unit = tbl_unit::find($request->unitId);
         if($unit->delete()){
            return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);}
         else{

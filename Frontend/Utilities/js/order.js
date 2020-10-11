@@ -24,21 +24,9 @@ function addToOrder(goodReceiptId) {
                 $("#tbl_order_body").append(tr);
 
             });
-            var tr = "<tr>";
-            tr += "<td colspan='6' style='text-align:right;'>" + "အလုပ်သမားခ:" + "</td>";
-            tr += "<td >" + "<input type='text' id='labourFee' value='0' onkeyup='getTotal();'>" + "</td>";
-            tr += "</tr>";
-            $("#tbl_order_body").append(tr);
-            var tr = "<tr>";
-            tr += "<td colspan='6' style='text-align:right;'>" + "စိုက်ငွေ:" + "</td>";
-            tr += "<td >" + "<input type='text' id='land' value='0' onkeyup='getTotal();'>" + "</td>";
-            tr += "</tr>";
-            $("#tbl_order_body").append(tr);
-            var tr = "<tr>";
-            tr += "<td colspan='6' style='text-align:right;'>" + "စုစုပေါင်း:" + "</td>";
-            tr += "<td >" + "<input type='text' id='totalPrice' value='0'>" + "</td>";
-            tr += "</tr>";
-            $("#tbl_order_body").append(tr);
+            appendRows("labourFee", "အလုပ်သမားခ:");
+            appendRows("land", "စိုက်ငွေ:");
+            appendRows("totalPrice", "စုစုပေါင်း:");
             $('#modal-order').modal('toggle');
         },
         error: function (message) {
@@ -46,12 +34,28 @@ function addToOrder(goodReceiptId) {
         }
     });
 }
+function appendRows(id,label) {
+    var tr = "<tr>";
+    tr += "<td colspan='6' style='text-align:right;'>" + label + "</td>";
+    tr += "<td >" + "<input type='text' id='" + id +"' value='0'>" + "</td>";
+    tr += "</tr>";
+    $("#tbl_order_body").append(tr);
+    var new_id = "#" + id;
+    if (id != "totalPrice") {
+        $(new_id).keyup(function () {
+            getTotal();
+        });
+    } 
+}
 function getTotalPerProduct(td) {
     var row = $(td).closest('tr');
     var productQuantity = parseFloat($(row).find('#productQuantity').val());
     var productWeight = parseInt($(row).find('#productWeight').val());
     var productPrice = parseInt($(row).find('#productPrice').val()) ? parseInt($(row).find('#productPrice').val()) : 0;
     var priceMethod = $("input[name='optradio']:checked").val();
+    var tableLength = document.getElementById("tbl_order").rows.length;
+    var productsTotal = new Array();
+    var sumVal = 0;
     switch (priceMethod) {
         case "quantity":
             $(row).find('#total').val(productQuantity * productPrice);
@@ -62,13 +66,10 @@ function getTotalPerProduct(td) {
         default:
             $(row).find('#total').val(productPrice);    
     }
-    var tableLength = document.getElementById("tbl_order").rows.length;
-    var productsTotal = new Array();
     for (var total = 1; total < tableLength - 3; total++) {
         productsTotal[total - 1] = document.getElementById("tbl_order").rows[total].cells[6].firstChild.value;
 
     }
-    var sumVal = 0;
     for (var sumTotal = 0; sumTotal < productsTotal.length; sumTotal++) {
 
         sumVal += Number(productsTotal[sumTotal]);

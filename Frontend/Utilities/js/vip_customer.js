@@ -19,22 +19,24 @@
                     tr += "<td class='align-right'>" + (element.good_receipt_order)[i]["order_total"] + "</td>";
                     tr += "</tr>";
                     $("#tbl_vipCustomer_body").append(tr);
-                }
-                
+                } 
             });
-            var total = 0;
-            $('#tbl_vipCustomer tr').each(function () {
-                var value = parseInt($('td', this).eq(3).text());
-                if (!isNaN(value)) {
-                    total += value;
-                }
-            });
-            $("#total").html(total);
+            getTotal();
         },
         error: function (message) {
             dataMessage(message, "#tbl_vipCustomer", "#tbl_vipCustomer_body");
         }
     });
+}
+function getTotal() {
+    var total = 0;
+    $('#tbl_vipCustomer tr').each(function () {
+        var value = parseInt($('td', this).eq(3).text());
+        if (!isNaN(value)) {
+            total += value;
+        }
+    });
+    $("#total").html(total);
 }
 function printCashReport() {
     var printContents = document.getElementById("print-area").innerHTML;

@@ -29,19 +29,8 @@ function saveGoodReceipt() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4) {
-                var message = JSON.parse(xhttp.responseText);
-                alert(message);
-                $("#txt_customer_name").val("");
-                $("#txt_date").val("");
-                $('#vip_customer').prop('checked', false);
-                $("#txt_address").val("");
-                $("#txt_sender_name").val("");
-                $("#select_city").val("");
-                $("#txt_phno").val("");
-                $("#select_cash_method").val("");
-                $("#txt_remark").val("");
-                $('#modal-goodreceipt').modal('toggle');
-                getGoodReceipt();
+                successMessage(xhttp);
+                clearGoodreceiptForm();
             }
         };
         xhttp.open('POST', BACKEND_URL + 'createGoodRecipt');
@@ -52,7 +41,20 @@ function saveGoodReceipt() {
         alert("Following value(s) cannot be left empty.\nကုန်သည်အမည်\nနေ့စွဲ\nနေရပ်လိပ်စာ\nကုန်ပို့သူအမည်\nမြို့အမည်\nဖုန်းနံပါတ်\nCash Method");
     }
 }
-
+function clearGoodreceiptForm() {
+    $("#txt_customer_name").val("");
+    $("#txt_date").val("");
+    $('#vip_customer').prop('checked', false);
+    $("#txt_address").val("");
+    $("#txt_sender_name").val("");
+    $("#select_city").val("");
+    $("#txt_phno").val("");
+    $("#select_cash_method").val("");
+    $("#txt_remark").val("");
+    $('#modal-goodreceipt').modal('toggle');
+    destroyDatatable("#tbl_goodreceipt", "#tbl_goodreceipt_body");
+    getGoodReceipt();
+}
 function getGoodReceipt() {
     destroyDatatable("#tbl_goodreceipt", "#tbl_goodreceipt_body");
     destroyDatatable("#tbl_complete_goodreceipt", "#tbl_complete_goodreceipt_body");
@@ -156,20 +158,8 @@ function updateGoodReceipt() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4) {
-            var message = JSON.parse(xhttp.responseText).message;
-            alert(message);
-            $("#txt_customer_name").val("");
-            $("#txt_date").val("");
-            $('#vip_customer').prop('checked', false);
-            $("#txt_address").val("");
-            $("#txt_sender_name").val("");
-            $("#select_city").val("");
-            $("#txt_phno").val("");
-            $("#select_cash_method").val("");
-            $("#txt_remark").val("");
-            $('#modal-goodreceipt').modal('toggle');
-            destroyDatatable("#tbl_goodreceipt", "#tbl_goodreceipt_body");
-            getGoodReceipt();
+            successMessage(xhttp);
+            clearGoodreceiptForm();
         }
     };
     xhttp.open('POST', BACKEND_URL + 'updateGoodReceipt');
@@ -220,8 +210,7 @@ function saveProduct() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4) {
-                var message = JSON.parse(xhttp.responseText).message;
-                alert(message);
+                successMessage(xhttp);
                 $("#txt_product_name").val()
                 $("#txt_product_name").val()
                 $("#txt_quantity").val();
@@ -264,10 +253,7 @@ function getGoodReceiptDetail(goodReceiptId) {
                 $("#tbl_goodreceipt_detail_body").append(tr);
 
             });
-
-            
             createDataTable("#tbl_goodreceipt_detail");
-
         },
         error: function (message) {
             dataMessage(message, "#tbl_goodreceipt_detail", "#tbl_goodreceipt_detail_body");
@@ -312,8 +298,7 @@ function updateGoodReceiptDetail() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4) {
-            var message = JSON.parse(xhttp.responseText).message;
-            alert(message);
+            successMessage(xhttp);
             $("#txt_product_name").val()
             $("#txt_product_name").val()
             $("#txt_quantity").val();
@@ -360,7 +345,6 @@ function getVipCustomer() {
             });
         },
         error: function (message) {
-            errorMessage(message);
         }
     });
 }

@@ -54,7 +54,7 @@ class OrderController extends Controller
     public function getOrder(Request $request,$deliveryStatus)
 	{
         $goodReceipt = tbl_order::with('userByOrder')
-                                ->where("tbl_order.company_id","=",$request->input("companyId"))
+                                ->where("tbl_order.company_id","=",$request->companyId)
                                 ->where("tbl_order.delivery_status","=",$deliveryStatus)
                                 ->get();
         if(sizeof($goodReceipt)){
@@ -66,7 +66,7 @@ class OrderController extends Controller
     }
      public function getOrderDetail(Request $request)
 	{
-        $orderDetail=tbl_order_details::where("order_id","=",$request->input("orderId"))
+        $orderDetail=tbl_order_details::where("order_id","=",$request->orderId)
                                       ->get();
         if(sizeof($orderDetail)){
              return response()->json($orderDetail, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -77,7 +77,7 @@ class OrderController extends Controller
 	}
      public function deleteOrder(Request $request)
 	{
-        $order = tbl_order::find($request->input("orderId"));
+        $order = tbl_order::find($request->orderId);
         if($order->delete()){
             return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }

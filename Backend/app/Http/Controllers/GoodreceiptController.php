@@ -19,16 +19,7 @@ class GoodreceiptController extends Controller
 	{
         try{
             $goodReceiptData = json_decode($request->getContent(), true);
-            $getRunningno=tbl_good_receipt::where("company_id","=",$goodReceiptData["companyId"])
-										  ->max('running_number');
-
-      		if($getRunningno==null){
-                $runningNumber=1;
-
-      	    }
-      	    else{
-                $runningNumber=$getRunningno+1;
-      		}
+            $runningNumber= $this->getRunningNo($goodReceiptData["companyId"]);
             $goodReceipt=new tbl_good_receipt();
             $goodReceipt->sender_name=$goodReceiptData["senderName"];
             $date=$goodReceiptData["date"];
@@ -51,10 +42,17 @@ class GoodreceiptController extends Controller
             return response()->json(config('common.message.error'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
     }
+    public function getRunningNo($companyId)
+	{
+        $getMaxRunningNo=tbl_good_receipt::where("company_id","=",$companyId)
+									     ->max('running_number');
+        $runningNo = (!$getMaxRunningNo) ? 1 : $getMaxRunningNo + 1;
+        return $runningNo;
+    }
     public function getGoodReceipt(Request $request,$orderStatus)
 	{
         $goodReceipt = tbl_good_receipt::with('users')
-                                        ->where("tbl_good_receipt.company_id","=",$request->input("companyId"))
+                                        ->where("tbl_good_receipt.company_id","=",$request->companyId)
                                         ->where("tbl_good_receipt.order_status","=",$orderStatus)
                                         ->get();
         if(sizeof($goodReceipt)){
@@ -66,7 +64,7 @@ class GoodreceiptController extends Controller
     }
     public function showGoodReceiptInfo(Request $request)
 	{
-         $goodReceipt = tbl_good_receipt::find($request->input("goodReceiptId"));
+         $goodReceipt = tbl_good_receipt::find($request->goodReceiptId);
          if(empty($goodReceipt)){
             return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
          }
@@ -97,7 +95,7 @@ class GoodreceiptController extends Controller
 	}
     public function deleteGoodReceipt(Request $request)
 	{
-        $goodReceipt = tbl_good_receipt::find($request->input("goodReceiptId"));
+        $goodReceipt = tbl_good_receipt::find($request->goodReceiptId);
         if($goodReceipt->delete()){
             return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
@@ -127,7 +125,7 @@ class GoodreceiptController extends Controller
      public function getGoodReceiptDetail(Request $request)
 	{
         $goodReceiptDetail=tbl_good_receipt_details::with(['goodReceiptByDetail','unitByDetail'])
-                                                    ->where("tbl_good_receipt_details.good_receipt_id","=",$request->input("goodReceiptId"))
+                                                    ->where("tbl_good_receipt_details.good_receipt_id","=",$request->goodReceiptId)
                                                     ->get();
         if(sizeof($goodReceiptDetail)){
              return response()->json($goodReceiptDetail, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -140,7 +138,7 @@ class GoodreceiptController extends Controller
      public function getGoodReceiptInvoice(Request $request)
 	{
         $goodReceiptDetail=tbl_good_receipt::with(['cityList','goodReceiptDetailByGoodReceipt'])
-                                            ->where("tbl_good_receipt.id","=",$request->input("goodReceiptId"))
+                                            ->where("tbl_good_receipt.id","=",$request->goodReceiptId)
                                             ->get();
         if(sizeof($goodReceiptDetail)){
              return response()->json($goodReceiptDetail, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -152,7 +150,7 @@ class GoodreceiptController extends Controller
 	}
     public function showGoodReceiptDetailInfo(Request $request)
 	{
-         $goodReceiptDetail = tbl_good_receipt_details::find($request->input("goodReceiptDetailId"));
+         $goodReceiptDetail = tbl_good_receipt_details::find($request->goodReceiptDetailId);
          if(empty($goodReceiptDetail)){
             return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
          }
@@ -179,7 +177,7 @@ class GoodreceiptController extends Controller
 	}
     public function deleteGoodReceiptDetail(Request $request)
 	{
-        $goodReceiptDetail = tbl_good_receipt_details::find($request->input("goodReceiptDetailId"));
+        $goodReceiptDetail = tbl_good_receipt_details::find($request->goodReceiptDetailId);
         if($goodReceiptDetail->delete()){
             return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
@@ -189,7 +187,7 @@ class GoodreceiptController extends Controller
 	}
      public function getVipCustomer(Request $request)
 	{
-        $vipCustomer=tbl_good_receipt::where("company_id","=",$request->input("companyId"))
+        $vipCustomer=tbl_good_receipt::where("company_id","=",$request->companyId)
                                      ->where('status','=',1)
                                      ->groupBy('customer_name')
                                      ->get();
@@ -203,17 +201,17 @@ class GoodreceiptController extends Controller
 	}
      public function getVipCustomerInfo(Request $request)
 	{
-        $startDate=date("Y-m-d", strtotime($request->input("startDate")));
-        $endDate=date("Y-m-d", strtotime($request->input("endDate")));
+        $startDate=date("Y-m-d", strtotime($request->startDate));
+        $endDate=date("Y-m-d", strtotime($request->endDate));
         if($startDate==$endDate){
             $vipCustomer=tbl_good_receipt::with(['goodReceiptDetailByGoodReceipt','goodReceiptOrder'])
-                                         ->where('tbl_good_receipt.customer_name','=',$request->input("customerName"))
+                                         ->where('tbl_good_receipt.customer_name','=',$request->customerName)
                                          ->get();
         }
         else{
              $vipCustomer=tbl_good_receipt::with(['goodReceiptDetailByGoodReceipt','goodReceiptOrder'])
-                                          ->where('tbl_good_receipt.customer_name','=',$request->input("customerName"))
-                                          ->whereBetween('date',[$startDate, $endDate])
+                                          ->where('tbl_good_receipt.customer_name','=',$request->customerName)
+                                          ->whereBetween('tbl_good_receipt.date',[$startDate, $endDate])
                                           ->get();
         }
         if(sizeof($vipCustomer)){
