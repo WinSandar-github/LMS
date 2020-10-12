@@ -1,5 +1,4 @@
 var BACKEND_URL = "http://" + window.location.host + "/";
-
 function logout() {
     (localStorage.getItem("userinfo")) && localStorage.removeItem("userinfo");
     location.href = "../authComponents/login.html";

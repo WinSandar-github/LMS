@@ -13,9 +13,10 @@ function login()
             }
             else {
                 var obj = JSON.parse((xhttp.responseText));
-
-                    if (typeof (localStorage) !== "undefined") {
-                     localStorage.setItem('userinfo', xhttp.responseText);
+                localStorage.setItem('companyName', obj[0].name);
+                localStorage.setItem('companyLogo', obj[0].logo);
+                  if (typeof (localStorage) !== "undefined") {
+                      localStorage.setItem('userinfo', xhttp.responseText);
                      location.href='../CompanyComponents/company_info.html';
                   }
                 }

@@ -9,11 +9,11 @@ if (typeof (localStorage) != "undefined")
         var user_name = user[0].users["full_name"];
         var api_key = user[0].users["api_key"];
         var company_id = user[0].users["company_id"];
-        var company_logo = user[0]["logo"];
+        var company_logo = localStorage.getItem("companyLogo");
         var address = user[0]["address"];
         var ref_initials = user[0]["ref_initials"];
         var role = user[0].users["role"];
-        var company_name = user[0]["name"];
+        var company_name = localStorage.getItem("companyName");
 
     }
 }

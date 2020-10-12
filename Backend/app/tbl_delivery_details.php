@@ -19,5 +19,8 @@ class tbl_delivery_details extends Model
   {
       return $this->belongsTo('App\tbl_good_receipt_details','id');
   }
-
+  public function companyDeliverydetails()
+  {
+      return $this->belongsTo('App\tbl_company','company_id');
+  }
 }
