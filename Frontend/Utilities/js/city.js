@@ -1,5 +1,5 @@
 function saveCity() {
-    var cityData = "companyId=" + company_id + "&cityName=" + $("#txt_city_name").val();
+    var cityData = "company_id=" + company_id + "&city_name=" + $("#txt_city_name").val();
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "createCity",
@@ -23,7 +23,7 @@ function getCity() {
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getCity",
-        data: "companyId=" + company_id,
+        data: "company_id=" + company_id,
         success: function (data) {
             data.forEach(function (element) {
                 var tr = "<tr>";
@@ -49,7 +49,7 @@ function getCity() {
 function showCityInfo(cityId) {
     $("#city_form").attr('action', 'javascript:updateCity()');
     $("#city_id").val(cityId);
-    var data = "&cityId=" + cityId;
+    var data = "&city_id=" + cityId;
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getCityInfo",
@@ -64,7 +64,7 @@ function showCityInfo(cityId) {
 }
 
 function updateCity() {
-    var cityData = "cityId=" + $("#city_id").val() + "&cityName=" + $("#txt_city_name").val();
+    var cityData = "city_id=" + $("#city_id").val() + "&city_name=" + $("#txt_city_name").val();
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "updateCity",
@@ -83,7 +83,7 @@ function updateCity() {
 function deleteCity(cityName, cityId) {
     var result = confirm("WARNING: This will delete the city " + decodeURIComponent(cityName) + " and all related stocks! Press OK to proceed.");
     if (result) {
-        var data = "cityId=" + cityId;
+        var data = "city_id=" + cityId;
         $.ajax({
             type: "POST",
             url: BACKEND_URL + "deleteCity",
@@ -103,7 +103,7 @@ function getCitySelect(){
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getCity",
-        data: "companyId=" + company_id,
+        data: "company_id=" + company_id,
         success: function (data) {
             data.forEach(function (element) {
                 var option = document.createElement('option');
@@ -114,7 +114,6 @@ function getCitySelect(){
             });
         },
         error: function (message) {
-            errorMessage(message);
         }
     });
 }

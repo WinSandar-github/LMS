@@ -41,8 +41,8 @@ class CompanyLoginController extends Controller
 			}
     }
     public function resetPassword(Request $request){
-        $userByemail=User::where('email', request('Username'))->first();
-        $userByName=User::where('full_name', request('Username'))->first();
+        $userByemail=User::where('email', request('username'))->first();
+        $userByName=User::where('full_name', request('username'))->first();
         if($userByemail){
             return $this->updatePassword($userByemail,request('password'));
         }

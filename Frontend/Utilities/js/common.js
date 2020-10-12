@@ -56,7 +56,7 @@ function getGoodreceiptInvoiceDetails() {
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getGoodReceiptInvoice",
-        data: "goodReceiptId=" + goodReceiptId,
+        data: "good_receipt_id=" + goodReceiptId,
         success: function (data) {
             $("#customerName").append(data[0]["customer_name"]);
             $("#senderName").append(data[0]["sender_name"]);
@@ -126,7 +126,7 @@ function countColumn(table) {
 }
 function dataMessage(message, table, tableBody) {
     var dataMsg = message.responseText;
-    var noOfColumn=countColumn(table);
+    var noOfColumn = countColumn(table);
     var tr = "<tr>";
     tr += "<td colspan='" + noOfColumn + "'>" + dataMsg + "</td>";
     tr += "</tr>";

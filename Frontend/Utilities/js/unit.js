@@ -1,5 +1,5 @@
 function saveUnit() {
-    var unitData = "companyId=" + company_id + "&unitName=" + $("#txt_unit_name").val();
+    var unitData = "company_id=" + company_id + "&unit_name=" + $("#txt_unit_name").val();
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "createUnit",
@@ -22,7 +22,7 @@ function getUnit() {
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getUnit",
-        data: "companyId=" + company_id,
+        data: "company_id=" + company_id,
         success: function (data) {
             data.forEach(function (element) {
                 var tr = "<tr>";
@@ -48,7 +48,7 @@ function showUnitInfo(unitId) {
     $("#unit_form").attr('action', 'javascript:updateUnit()');
     $("#unit_id").val(unitId);
 
-    var data = "&unitId=" + unitId;
+    var data = "&unit_id=" + unitId;
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "showUnitInfo",
@@ -63,7 +63,7 @@ function showUnitInfo(unitId) {
 }
 
 function updateUnit() {
-    var unitData = "unitId=" + $("#unit_id").val() + "&unitName=" + $("#txt_unit_name").val();
+    var unitData = "unit_id=" + $("#unit_id").val() + "&unit_name=" + $("#txt_unit_name").val();
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "updateUnit",
@@ -81,7 +81,7 @@ function updateUnit() {
 function deleteUnit(unitName, unitId) {
     var result = confirm("WARNING: This will delete the unit " + decodeURIComponent(unitName) + " and all related stocks! Press OK to proceed.");
     if (result) {
-        var data = "unitId=" + unitId;
+        var data = "unit_id=" + unitId;
         $.ajax({
             type: "POST",
             url: BACKEND_URL + "deleteUnit",
@@ -101,7 +101,7 @@ function getUnitSelect(){
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getUnit",
-        data: "companyId=" + company_id,
+        data: "company_id=" + company_id,
         success: function (data) {
             data.forEach(function (element) {
                 var option = document.createElement('option');

@@ -13,18 +13,18 @@ function saveGoodReceipt() {
     var cashMethod = $("#select_cash_method option:selected").val();
     var remark = $("#txt_remark").val();
     var goodReceipt = {};
-    goodReceipt['customerName'] = customerName;
+    goodReceipt['customer_name'] = customerName;
     goodReceipt['date'] = date;
-    goodReceipt['customerStatus'] = customerStatus;
+    goodReceipt['status'] = customerStatus;
     goodReceipt['address'] = address;
-    goodReceipt['senderName'] = senderName;
-    goodReceipt['cityId'] = city;
-    goodReceipt['phoneNo'] = phoneNo;
-    goodReceipt['cashMethod'] = cashMethod;
+    goodReceipt['sender_name'] = senderName;
+    goodReceipt['city_id'] = city;
+    goodReceipt['phone_no'] = phoneNo;
+    goodReceipt['cash_method'] = cashMethod;
     goodReceipt['remark'] = remark;
-    goodReceipt['refInitials'] = user[0]["ref_initials"];
-    goodReceipt['companyId'] = company_id;
-    goodReceipt['userId'] = user_id;
+    goodReceipt['ref_initials'] = user[0]["ref_initials"];
+    goodReceipt['company_id'] = company_id;
+    goodReceipt['user_id'] = user_id;
     if (customerName.trim() != "" && address.trim() != "" && senderName.trim() != "" && city != "" && phoneNo.trim() != "" && cashMethod != "") {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -66,7 +66,7 @@ function getGoodReceiptByStatus(status, table, table_body) {
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getGoodReceipt/" + status,
-        data: "companyId=" + company_id,
+        data: "company_id=" + company_id,
         success: function (data) {
             data.forEach(function (element) {
                 var tr = "<tr onclick='getGoodReceiptDetail(" + element.id + ")'>";
@@ -115,7 +115,7 @@ function showGoodReceiptInfo(goodReceiptId) {
     $("#goodReceiptForm").attr('action', 'javascript:updateGoodReceipt()');
     $("#goodReceiptId").val(goodReceiptId);
 
-    var data = "&goodReceiptId=" + goodReceiptId;
+    var data = "&goodReceipt_id=" + goodReceiptId;
     $.ajax({
         type: "POST",
         url:  BACKEND_URL + "showGoodReceiptInfo",
@@ -145,15 +145,15 @@ function updateGoodReceipt() {
     const vipCustomerCode = 1;
     var customerStatus = ($('#vip_customer').is(":checked")) ? vipCustomerCode : customerCode;
     var goodReceiptData = {};
-    goodReceiptData["goodReceiptId"] = $("#goodReceiptId").val();
-    goodReceiptData["customerName"] = $("#txt_customer_name").val();
+    goodReceiptData["goodReceipt_id"] = $("#goodReceiptId").val();
+    goodReceiptData["customer_name"] = $("#txt_customer_name").val();
     goodReceiptData["date"] = $("#txt_date").val();
     goodReceiptData["status"] = customerStatus;
     goodReceiptData["address"] = $("#txt_address").val();
-    goodReceiptData["senderName"] = $("#txt_sender_name").val();
-    goodReceiptData["cityId"] = $("#select_city").val();
-    goodReceiptData["phoneNo"] = $("#txt_phno").val();
-    goodReceiptData["cashMethod"] = $("#select_cash_method").val();
+    goodReceiptData["sender_name"] = $("#txt_sender_name").val();
+    goodReceiptData["city_id"] = $("#select_city").val();
+    goodReceiptData["phone_no"] = $("#txt_phno").val();
+    goodReceiptData["cash_method"] = $("#select_cash_method").val();
     goodReceiptData["remark"] = $("#txt_remark").val();
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -170,7 +170,7 @@ function updateGoodReceipt() {
 function deleteGoodReceipt(senderName, goodReceiptId) {
     var result = confirm("WARNING: This will delete GoodReceipt from " + decodeURIComponent(senderName) + " and all related stocks! Press OK to proceed.");
     if (result) {
-        var data = "goodReceiptId=" + goodReceiptId;
+        var data = "goodReceipt_id=" + goodReceiptId;
         $.ajax({
             type: "POST",
             url: BACKEND_URL + "deleteGoodReceipt",
@@ -199,13 +199,13 @@ function saveProduct() {
     var remark = $("#txt_product_remark").val();
     if (productName.trim() != "" && Unit != "" && quantity.trim() != "" && weight != "") {
         var productDetail = {};
-        productDetail["goodReceiptId"] = $("#goodReceiptId").val();
-        productDetail["productName"] = productName;
-        productDetail["unitId"] = Unit;
-        productDetail["quantity"] = quantity;
+        productDetail["good_receipt_id"] = $("#goodReceiptId").val();
+        productDetail["product_name"] = productName;
+        productDetail["unit_id"] = Unit;
+        productDetail["qty"] = quantity;
         productDetail["weight"] = weight;
-        productDetail["companyId"] = 2;
-        productDetail["userId"] = 1;
+        productDetail["company_id"] = 2;
+        productDetail["user_id"] = 1;
         productDetail["remark"] = remark;
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -234,7 +234,7 @@ function getGoodReceiptDetail(goodReceiptId) {
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getGoodReceiptDetail",
-        data: "goodReceiptId=" + goodReceiptId,
+        data: "good_receipt_id=" + goodReceiptId,
         success: function (data) {
             data.forEach(function (element) {
                 var tr = "<tr>";
@@ -268,7 +268,7 @@ function showGoodReceiptDetailsInfo(goodReceitptDetailId) {
     $("#productForm").attr('action', 'javascript:updateGoodReceiptDetail()');
     $("#goodReceiptDetailId").val(goodReceitptDetailId);
 
-    var data = "&goodReceiptDetailId=" + goodReceitptDetailId;
+    var data = "&goodReceipt_detail_id=" + goodReceitptDetailId;
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "showGoodReceiptDetailInfo",
@@ -288,13 +288,13 @@ function showGoodReceiptDetailsInfo(goodReceitptDetailId) {
 }
 function updateGoodReceiptDetail() {
     var goodReceiptDetailData = {};
-    goodReceiptDetailData["goodReceiptDetailId"] = $("#goodReceiptDetailId").val();
-    goodReceiptDetailData["productName"] = $("#txt_product_name").val();
-    goodReceiptDetailData["UnitId"] = $("#select_unit").val();
-    goodReceiptDetailData["quantity"] = $("#txt_quantity").val();
+    goodReceiptDetailData["goodreceipt_detail_id"] = $("#goodReceiptDetailId").val();
+    goodReceiptDetailData["product_name"] = $("#txt_product_name").val();
+    goodReceiptDetailData["unit_id"] = $("#select_unit").val();
+    goodReceiptDetailData["qty"] = $("#txt_quantity").val();
     goodReceiptDetailData["weight"] = $("#txt_weight").val();
     goodReceiptDetailData["remark"] = $("#txt_product_remark").val();
-    goodReceiptDetailData["userId"] = user_id;
+    goodReceiptDetailData["user_id"] = user_id;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4) {
@@ -315,7 +315,7 @@ function updateGoodReceiptDetail() {
 function deleteGoodReceiptDetails(productName, goodReceiptDetailId) {
     var result = confirm("WARNING: This will delete GoodReceiptDetails from " + decodeURIComponent(productName) + " and all related stocks! Press OK to proceed.");
     if (result) {
-        var data = "goodReceiptDetailId=" + goodReceiptDetailId;
+        var data = "goodreceipt_detail_id=" + goodReceiptDetailId;
         $.ajax({
             type: "POST",
             url: BACKEND_URL + "deleteGoodReceiptDetail",
@@ -335,7 +335,7 @@ function getVipCustomer() {
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getVipCustomer",
-        data: "companyId=" + company_id,
+        data: "company_id=" + company_id,
         success: function (data) {
             data.forEach(function (element) {
                 var option = document.createElement('option');

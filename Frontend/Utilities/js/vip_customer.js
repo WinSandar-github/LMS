@@ -8,7 +8,7 @@
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getVipCustomerInfo",
-        data: "customerName=" + customerName + "&startDate=" + startDate + "&endDate=" + endDate,
+        data: "customer_name=" + customerName + "&start_date=" + startDate + "&end_date=" + endDate,
         success: function (data) {
             data.forEach(function (element) {
                 for (var i = 0; i < (element.good_receipt_order).length; i++) {
