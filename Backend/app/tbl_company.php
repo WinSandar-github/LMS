@@ -1,18 +1,13 @@
 <?php
 
 namespace App;
-
-
 use Illuminate\Database\Eloquent\Model;
 class tbl_company extends Model
 {
   protected $table = 'tbl_company';
-  public function users()
+  public function user()
   {
       return $this->hasOne('App\User','company_id');
   }
-  public function delivery()
-  {
-      return $this->hasMany('App\tbl_delivery','id');
-  }
+
 }

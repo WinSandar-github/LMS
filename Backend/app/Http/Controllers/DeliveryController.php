@@ -27,14 +27,14 @@ class DeliveryController extends Controller
   {
     try{
         $delivery=new tbl_delivery();
-        $delivery->car_no=$request->input("car_number");
+        $delivery->car_no=$request->input("car_no");
         $delivery->driver_name=$request->input("driver_name");
         $delivery->driver_phone=$request->input("driver_phone");
-        $delivery->depart_from=$request->input("from_city_name");
-        $delivery->depart_to=$request->input("to_city_name");
-        $delivery->start_dt=$request->input("started_date");
-        $delivery->end_dt=$request->input("arrived_date");
-        $delivery->arrived=$request->input("different_arrived");
+        $delivery->depart_from=$request->input("depart_from");
+        $delivery->depart_to=$request->input("depart_to");
+        $delivery->start_dt=$request->input("start_dt");
+        $delivery->end_dt=$request->input("end_dt");
+        $delivery->arrived=$request->input("arrived");
         $delivery->remark=$request->input("remark");
         $delivery->company_id=$request->input("company_id");
         $delivery->status=$request->input("status");
@@ -51,21 +51,21 @@ class DeliveryController extends Controller
       $data = json_decode($request->getContent(), true);
       for($i=0;$i<count($data);$i++)
         {
-          $deliver_details=new tbl_delivery_details();
-          $deliver_details->receiver_name=$data[$i]["receiver_name"];
-          $deliver_details->product_name=$data[$i]["product_name"];
-          $deliver_details->total_quantity=$data[$i]["total_quantity"];
-          $deliver_details->quantity=$data[$i]["quantity"];
-          $deliver_details->weight=$data[$i]["weight"];
-          $deliver_details->to_city_name=$data[$i]["to_city_name"];
-          $deliver_details->remark=$data[$i]["remark"];
-          $deliver_details->out_date=date("Y-m-d");
-          $deliver_details->user_id=$data[$i]["user_id"];
-          $deliver_details->company_id=$data[$i]["company_id"];
-          $deliver_details->delivery_id=$data[$i]["delivery_id"];
-          $deliver_details->good_receipt_id=$data[$i]["good_receipt_id"];
-          $deliver_details->good_receipt_detail_id=$data[$i]["good_receipt_detail_id"];
-          $deliver_details->save();
+          $deliverDetails=new tbl_delivery_details();
+          $deliverDetails->receiver_name=$data[$i]["receiver_name"];
+          $deliverDetails->product_name=$data[$i]["product_name"];
+          $deliverDetails->total_quantity=$data[$i]["total_quantity"];
+          $deliverDetails->quantity=$data[$i]["quantity"];
+          $deliverDetails->weight=$data[$i]["weight"];
+          $deliverDetails->to_city_name=$data[$i]["to_city_name"];
+          $deliverDetails->remark=$data[$i]["remark"];
+          $deliverDetails->out_date=date("Y-m-d");
+          $deliverDetails->user_id=$data[$i]["user_id"];
+          $deliverDetails->company_id=$data[$i]["company_id"];
+          $deliverDetails->delivery_id=$data[$i]["delivery_id"];
+          $deliverDetails->good_receipt_id=$data[$i]["good_receipt_id"];
+          $deliverDetails->good_receipt_detail_id=$data[$i]["good_receipt_detail_id"];
+          $deliverDetails->save();
         }
         return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
       }catch (\Exception $e){
@@ -74,10 +74,10 @@ class DeliveryController extends Controller
   }
   public function getDeliverDetailsByDeliveryId(Request $request)
   {
-    $deliver_details =tbl_delivery_details::where('delivery_id','=',$request->input('delivery_id'))
+    $deliverDetails =tbl_delivery_details::where('delivery_id','=',$request->input('delivery_id'))
                                           ->get();
-    if(sizeof($deliver_details)){
-        return response()->json($deliver_details, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+    if(sizeof($deliverDetails)){
+        return response()->json($deliverDetails, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
     }
     else{
         return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -86,12 +86,12 @@ class DeliveryController extends Controller
 
   public function getDeliveryByStatus(Request $request,$status)
   {
-    $delivery = tbl_delivery::with(['users','companyDelivery'])
+    $statusDelivery = tbl_delivery::with(['user','companyDelivery'])
                             ->where('company_id','=',$request->input("company_id"))
                             ->where('status','=',$status)
                             ->get();
-    if(sizeof($delivery)){
-        return response()->json($delivery, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+    if(sizeof($statusDelivery)){
+        return response()->json($statusDelivery, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
     }
     else{
       return response()->json(config('common.message.data'),404,config('common.header'),JSON_UNESCAPED_UNICODE);
@@ -123,13 +123,13 @@ class DeliveryController extends Controller
   {
     try{
         $delivery = tbl_delivery::find($request->input("delivery_id"));
-        $delivery->car_no=$request->input("car_number");
+        $delivery->car_no=$request->input("car_no");
         $delivery->driver_name=$request->input("driver_name");
         $delivery->driver_phone=$request->input("driver_phone");
-        $delivery->depart_from=$request->input("from_city_name");
-        $delivery->depart_to=$request->input("to_city_name");
-        $delivery->start_dt=$request->input("started_date");
-        $delivery->end_dt=$request->input("arrived_date");
+        $delivery->depart_from=$request->input("depart_from");
+        $delivery->depart_to=$request->input("depart_to");
+        $delivery->start_dt=$request->input("start_dt");
+        $delivery->end_dt=$request->input("end_dt");
         $delivery->arrived=$request->input("different_arrived");
         $delivery->remark=$request->input("remark");
         $delivery->status=$request->input("status");
@@ -154,21 +154,21 @@ class DeliveryController extends Controller
   public function getGoodReceiptByorderNo(Request $request)
   {
     if($request->input("order_no")){
-        $good_receipt=tbl_good_receipt::with(['goodReceiptDetailByGoodReceipt','cityList','orderByGoodReceipt'])
+        $goodReceipt=tbl_good_receipt::with(['goodReceiptDetailByGoodReceipt','cityList','orderByGoodReceipts'])
                                       ->where('tbl_good_receipt.order_no','=',$request->input("order_no"))
                                       ->get();
-        if(sizeof($good_receipt)){
-            return response()->json($good_receipt,200, config('common.header'),JSON_UNESCAPED_UNICODE);
+        if(sizeof($goodReceipt)){
+            return response()->json($goodReceipt,200, config('common.header'),JSON_UNESCAPED_UNICODE);
           }
         else{
             return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
           }
       }else {
-        $good_receipt =tbl_good_receipt::with(['cityList','orderByGoodReceipt'])
+        $goodReceipt =tbl_good_receipt::with(['cityList','orderByGoodReceipts'])
                                           ->where('tbl_good_receipt.id','=',$request->input('good_receipt_id'))
                                           ->get();
-        if(sizeof($good_receipt)){
-          return response()->json($good_receipt,200, config('common.header'),JSON_UNESCAPED_UNICODE);
+        if(sizeof($goodReceipt)){
+          return response()->json($goodReceipt,200, config('common.header'),JSON_UNESCAPED_UNICODE);
         }
         else{
           return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -177,11 +177,11 @@ class DeliveryController extends Controller
   }
   public function getOrderDetailsByorderId(Request $request)
   {
-    $order=tbl_order_details::with('unitByorderDetail')
+    $orderDetail=tbl_order_details::with('unitByorderDetail')
                     ->where('order_id','=',$request->input("order_id"))
                     ->get();
-    if(sizeof($order)){
-        return response()->json($order,200, config('common.header'),JSON_UNESCAPED_UNICODE);
+    if(sizeof($orderDetail)){
+        return response()->json($orderDetail,200, config('common.header'),JSON_UNESCAPED_UNICODE);
       }
     else{
         return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -191,9 +191,9 @@ class DeliveryController extends Controller
   {
     if($request->input("order_id")){
           try{
-              $order= tbl_order::find($request->input("order_id"));
-              $order->delivery_status=$request->input("delivery_status");
-              $order->save();
+              $deliveryStatusOrder= tbl_order::find($request->input("order_id"));
+              $deliveryStatusOrder->delivery_status=$request->input("delivery_status");
+              $deliveryStatusOrder->save();
               return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
           }catch (\Exception $e) {
               return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -210,14 +210,14 @@ class DeliveryController extends Controller
             $order->save();
             for($i=1;$i<count($data);$i++)
             {
-              $orderdetail=tbl_order_details::find($data[$i]["orderdetail_id"]);
-              $orderdetail->product_name=$data[$i]["product_name"];
-              $orderdetail->quantity=$data[$i]["quantity"];
-              $orderdetail->unit=$data[$i]["unit"];
-              $orderdetail->product_price=$data[$i]["product_price"];
-              $orderdetail->weight=$data[$i]["weight"];
-              $orderdetail->total=$data[$i]["total"];
-              $orderdetail->save();
+              $orderDetail=tbl_order_details::find($data[$i]["orderdetail_id"]);
+              $orderDetail->product_name=$data[$i]["product_name"];
+              $orderDetail->quantity=$data[$i]["quantity"];
+              $orderDetail->unit=$data[$i]["unit"];
+              $orderDetail->product_price=$data[$i]["product_price"];
+              $orderDetail->weight=$data[$i]["weight"];
+              $orderDetail->total=$data[$i]["total"];
+              $orderDetail->save();
             }
             return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }catch (\Exception $e) {

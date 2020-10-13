@@ -10,12 +10,12 @@ function saveCompanyRegister()
     var form = new FormData;
     var logo_file = document.getElementById('companylogo');
     validateImage(logo_file,form);
-    form.append('company_name', company_name);
-    form.append('company_address', company_address);
-    form.append('txt_name', txt_name);
-    form.append('txt_phone', txt_phone);
-    form.append('txt_email', txt_email);
-    form.append('txt_password', txt_password);
+    form.append('name', company_name);
+    form.append('address', company_address);
+    form.append('full_name', txt_name);
+    form.append('phone', txt_phone);
+    form.append('email', txt_email);
+    form.append('password', txt_password);
     $.ajax({
             type: "POST",
             url: BACKEND_URL + "saveCompany",
@@ -76,8 +76,8 @@ function validateImage(logo_file,logo_form){
           }
                   $('#invalid_file').html("");
                   $('#invalid_size').html("");
-                  logo_form.append('company_logo', logo_file.files[i]);
-                  logo_form.append('company_ext', file_ext);
+                  logo_form.append('logo', logo_file.files[i]);
+                  logo_form.append('ext', file_ext);
       }
     }
 }
@@ -131,11 +131,11 @@ function updateCompanyInfo()
   var file_ext = $('#hfile').val().substr(($('#hfile').val().lastIndexOf('.') + 1));
   var company_info = new FormData;;
   company_info.append('company_id',$('#hcompanyId').val());
-  company_info.append('company_name',$("#txt_company_name").val());
-  company_info.append('company_address',$("#txt_company_address").val());
-  company_info.append('company_phone',$("#txt_company_phone").val());
-  company_info.append('company_ext',file_ext);
-  company_info.append('company_logo',$('#hfile').val());
+  company_info.append('name',$("#txt_company_name").val());
+  company_info.append('address',$("#txt_company_address").val());
+  company_info.append('phone',$("#txt_company_phone").val());
+  company_info.append('ext',file_ext);
+  company_info.append('logo',$('#hfile').val());
   $.ajax({
           type: "POST",
           url: BACKEND_URL + "updateCompany",

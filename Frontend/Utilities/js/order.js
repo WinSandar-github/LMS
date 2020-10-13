@@ -60,7 +60,7 @@ function getTotalPerProduct(td) {
             $(row).find('#total').val(productWeight * productPrice);
             break;
         default:
-            $(row).find('#total').val(productPrice);    
+            $(row).find('#total').val(productPrice);
     }
     var tableLength = document.getElementById("tbl_order").rows.length;
     var productsTotal = new Array();
@@ -186,7 +186,7 @@ function getOrderDetail(orderId) {
                 $("#tbl_order_detail_body").append(tr);
 
             });
-            
+
             createDataTable("#tbl_order_detail");
 
         },
@@ -217,5 +217,5 @@ function deleteOrder(orderNo, orderId) {
 $("#tbl_order_body").on('click', '.btn-print', function () {
     var currentRow = $(this).closest("tr");
     var orderNo = currentRow.find("td:eq(0)").text();
-    window.open("../DeliveryComponents/deliver_invoice.html?orderNo=" + orderNo);
+    window.open("../DeliveryComponents/invoice.html?orderNo=" + orderNo);
 });

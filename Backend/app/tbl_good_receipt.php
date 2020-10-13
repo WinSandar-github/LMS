@@ -29,7 +29,7 @@ class tbl_good_receipt extends Eloquent
     {
         return $this->hasMany('App\tbl_order','id');
     }
-    public function orderByGoodReceipt()
+    public function orderByGoodReceipts()
     {
         return $this->hasMany('App\tbl_order','good_receipt_id');
     }

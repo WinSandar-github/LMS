@@ -11,16 +11,13 @@ class tbl_delivery_details extends Model
   {
       return $this->belongsTo('App\tbl_delivery','delivery_id');
   }
-  public function goodReceiptBydetails()
+  public function goodReceiptBydetail()
   {
       return $this->belongsTo('App\tbl_good_receipt','good_receipt_id');
   }
-  public function goodReceiptDetailBydetails()
+  public function goodReceiptDetailBydetail()
   {
       return $this->belongsTo('App\tbl_good_receipt_details','id');
   }
-  public function companyDeliverydetails()
-  {
-      return $this->belongsTo('App\tbl_company','company_id');
-  }
+
 }

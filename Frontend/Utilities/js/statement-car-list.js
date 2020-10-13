@@ -1,5 +1,6 @@
 function saveStatementCarList()
 {
+  var delivery_id = localStorage.getItem("delivery_id");
   var car_number = document.getElementById("td_car_number").innerHTML;
   var delivery_date = document.getElementById("td_delivery_date").innerHTML;
   var total_price = document.getElementById("td_total_price").innerHTML;
@@ -11,12 +12,11 @@ function saveStatementCarList()
   var final_price = $("#all_sum_price").val();
   var all_total= $("#paid_price").val();
   var cash_total=$("#balance_price").val();
-  var delivery_id=localStorage.getItem("delivery_id");
   var status='0';
 
   var statement = new FormData;
-  statement.append('car_number',car_number);
-  statement.append('delivery_date',delivery_date);
+  statement.append('car_no',car_number);
+  statement.append('date',delivery_date);
   statement.append('total_price',removeComma(total_price));
   statement.append('commission',removePercent(commission));
   statement.append('commission_value',removeComma(commission_value));

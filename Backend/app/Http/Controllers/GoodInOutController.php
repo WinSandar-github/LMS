@@ -15,7 +15,7 @@ class GoodInOutController extends Controller
 {
   public function getGoodInOutByCompanyId(Request $request)
   {
-      $goodinout =tbl_delivery_details::with(['delivery','goodReceiptBydetails','goodReceiptDetailBydetails'])
+      $goodinout =tbl_delivery_details::with(['delivery','goodReceiptBydetail','goodReceiptDetailBydetail'])
                                         ->where('company_id','=',$request->input("company_id"))
                                         ->get();
       if(sizeof($goodinout)){

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class tbl_delivery extends Model
 {
   protected $table = 'tbl_delivery';
-  public function users()
+  public function user()
   {
       return $this->belongsTo('App\User','user_id');
   }
