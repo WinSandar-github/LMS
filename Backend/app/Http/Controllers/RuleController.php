@@ -15,7 +15,7 @@ class RuleController extends Controller
 {
      public function getRule(Request $request)
      {
-           $rule = tbl_rule::where("company_id","=",request("companyId"))
+           $rule = tbl_rule::where("company_id","=",request("company_id"))
                             ->get();
            if(sizeof($rule)){
                 return response()->json($rule, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -31,7 +31,7 @@ class RuleController extends Controller
                 for($rule = 0; $rule < count($Data); $rule++) {
                   $ruleData=new tbl_rule();
                   $ruleData->description=$Data[$rule]["description"];
-                  $ruleData->company_id=$Data[$rule]["companyId"];
+                  $ruleData->company_id=$Data[$rule]["company_id"];
                   $ruleData->save();
                 }
                 return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -41,7 +41,7 @@ class RuleController extends Controller
      }
     public function showRuleDetail(Request $request)
     {
-         $rule = tbl_rule::find(request("ruleId"));
+         $rule = tbl_rule::find(request("rule_id"));
          if(empty($rule)){
             return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
          }
@@ -52,7 +52,7 @@ class RuleController extends Controller
     public function updateRule(Request $request)
 	{
         try{
-            $rule = tbl_rule::find(request("ruleId"));
+            $rule = tbl_rule::find(request("rule_id"));
             $rule->description=request("description");
             $rule->save();
             return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
@@ -62,7 +62,7 @@ class RuleController extends Controller
 	}
     public function deleteRule(Request $request)
 	{
-        $rule = tbl_rule::find(request("ruleId"));
+        $rule = tbl_rule::find(request("rule_id"));
         if($rule->delete()){
             return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
         }

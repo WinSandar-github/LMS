@@ -1,27 +1,29 @@
 function saveUnit() {
-    var unitData = "companyId=" + company_id + "&unitName=" + $("#txt_unit_name").val();
+    var unitData = "company_id=" + company_id + "&unit_name=" + $("#txt_unit_name").val();
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "createUnit",
         data: unitData,
         success: function (data) {
             alert(data);
-            $("#txt_unit_name").val("");
-            getUnit();
+            clearUnitForm();
         },
         error: function (message) {
             errorMessage(message);
         }
     });
 }
+function clearUnitForm() {
+    $("#txt_unit_name").val("");
+    getUnit();
+}
 function getUnit() {
     destroyDatatable("#tbl_unit", "#tbl_unit_body");
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getUnit",
-        data: "companyId=" + company_id,
+        data: "company_id=" + company_id,
         success: function (data) {
-
             data.forEach(function (element) {
                 var tr = "<tr>";
                 tr += "<td >" + element.id + "</td>";
@@ -46,14 +48,13 @@ function showUnitInfo(unitId) {
     $("#unit_form").attr('action', 'javascript:updateUnit()');
     $("#unit_id").val(unitId);
 
-    var data = "&unitId=" + unitId;
+    var data = "&unit_id=" + unitId;
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "showUnitInfo",
         data: data,
         success: function (data) {
             $("#txt_unit_name").val(data.unit_name);
-
         },
         error:function (message){
           errorMessage(message);
@@ -62,14 +63,13 @@ function showUnitInfo(unitId) {
 }
 
 function updateUnit() {
-    var unitData = "unitId=" + $("#unit_id").val() + "&unitName=" + $("#txt_unit_name").val();
+    var unitData = "unit_id=" + $("#unit_id").val() + "&unit_name=" + $("#txt_unit_name").val();
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "updateUnit",
         data: unitData,
         success: function (data) {
-            $("#txt_unit_name").val("");
-            getUnit();
+            clearUnitForm();
             $("#unit_form").attr('action', 'javascript:saveUnit()');
             alert(data);
         },
@@ -81,16 +81,14 @@ function updateUnit() {
 function deleteUnit(unitName, unitId) {
     var result = confirm("WARNING: This will delete the unit " + decodeURIComponent(unitName) + " and all related stocks! Press OK to proceed.");
     if (result) {
-        var data = "unitId=" + unitId;
+        var data = "unit_id=" + unitId;
         $.ajax({
             type: "POST",
             url: BACKEND_URL + "deleteUnit",
             data: data,
             success: function (data) {
-                $("#txt_unit_name").val("");
-                getUnit();
+                clearUnitForm();
                 alert(data);
-
             },
             error: function (message) {
                 errorMessage(message);
@@ -103,7 +101,7 @@ function getUnitSelect(){
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getUnit",
-        data: "companyId=" + company_id,
+        data: "company_id=" + company_id,
         success: function (data) {
             data.forEach(function (element) {
                 var option = document.createElement('option');
