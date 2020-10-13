@@ -114,7 +114,7 @@ function createOrder() {
         url: BACKEND_URL + "createOrder",
         data: JSON.stringify(ordersData),
         success: function (data) {
-            alert(data);
+            successMessage(data);
             $('#modal-order').modal('toggle');
             getGoodReceipt();
             $("#tbl_goodreceipt_detail_body").empty();
@@ -147,11 +147,11 @@ function getOrderByStatus(status,table,tableBody) {
                 tr += "<td >" + (element.user_by_order).full_name + "</td>";
                 if (status == imcompleteDeliveryStatus) {
                     tr += "<td class='alignright'><div class='btn-group'>" +
-                        "<button type='button' class='btn btn-success btn-print btn-md btn-space'>" +
-                        "<i class='fas fa-print'></i> Print</button></div>";
-                    tr += "<div class='btn-group'>" +
                         "<button type='button'  class='btn btn-danger btn-md btn-space' onClick=deleteOrder(\"" + encodeURIComponent(element.order_no) + "\"," + element.id + ")>" +
-                        "<li class='fas fa-trash'></li></button></div></td>";
+                        "<li class='fas fa-trash'></li></button></div>";
+                    tr += "<div class='btn-group'>" +
+                        "<button type='button' class='btn btn-success btn-print btn-md btn-space'>" +
+                        "<i class='fas fa-print'></i> Print</button></div></td>";
                 }
                 else {
                     tr += "<td class='alignright'><td class='alignright'><div class='btn-group'>" +
@@ -207,7 +207,7 @@ function deleteOrder(orderNo, orderId) {
             success: function (data) {
                 destroyDatatable("#tbl_order", "#tbl_order_body");
                 getOrder();
-                alert(data);
+                successMessage(data);
             },
             error: function (message) {
                 errorMessage(message);

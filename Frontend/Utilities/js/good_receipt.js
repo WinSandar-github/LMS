@@ -29,7 +29,8 @@ function saveGoodReceipt() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4) {
-                successMessage(xhttp);
+                var message=removeDoublequote(xhttp);
+                successMessage(message);
                 clearGoodreceiptForm();
             }
         };
@@ -79,24 +80,22 @@ function getGoodReceiptByStatus(status, table, table_body) {
                 tr += "<td >" + element.users.full_name + "</td>";
                 if (status == imcompleteOrderStatus) {
                     tr += "<td class='alignright'><div class='btn-group'>" +
-                        "<button type='button' class='btn btn-info btn-md btn-space' id='btn-add-prduct' data-toggle='modal' data-target='#modal-product' onClick='addProduct(" + element.id + ")'>" +
-                        "<i class='fas fa-plus'></i> Add Product</button></div>";
-                    tr += "<div class='btn-group'>" +
-                        "<button  type='button' class='btn btn-info btn-md btn-space' onClick='showGoodReceiptInfo(" + element.id + ")'>" +
-                        "<li class='fas fa-edit' ></li ></button ></div >";
-                    tr += "<div class='btn-group'>" +
                         "<button type='button' class='btn btn-info btn-md btn-space' onClick='addToOrder(" + element.id + ")'>" +
                         "ဘောင်ချာဖွင့်ရန်</button></div>";
                     tr += "<div class='btn-group'>" +
+                        "<button type='button' class='btn btn-info btn-md btn-add' id='btn-add-prduct' data-toggle='modal' data-target='#modal-product' onClick='addProduct(" + element.id + ")'>" +
+                        "<i class='fas fa-plus'></i></button>";
+                    tr += "<button  type='button' class='btn btn-info btn-edit' onClick='showGoodReceiptInfo(" + element.id + ")'>" +
+                        "<li class='fas fa-edit' ></li ></button >";
+                    tr += "<button type='button'  class='btn btn-danger btn-md btn-space' onClick=deleteGoodReceipt(\"" + encodeURIComponent(element.sender_name) + "\"," + element.id + ")>" +
+                        "<li class='fas fa-trash'></li></button></div>";
+                    tr += "<div class='btn-group'>" +
                         "<button type='button' class='btn btn-success btn-print btn-md btn-space' onClick='printGoodReceipt(" + element.id + ")'>" +
                         "<i class='fas fa-print'></i> Print</button></div>";
-                    tr += "<div class='btn-group'>" +
-                        "<button type='button'  class='btn btn-danger btn-md btn-space' onClick=deleteGoodReceipt(\"" + encodeURIComponent(element.sender_name) + "\"," + element.id + ")>" +
-                        "<li class='fas fa-trash'></li></button></div>";
                 }
                 else {
                     tr += "<td class='alignright'><div class='btn-group'>" +
-                        "<button type='button'  class='btn btn-danger btn-md btn-space' onClick=deleteGoodReceipt(\"" + encodeURIComponent(element.sender_name) + "\"," + element.id + ")>" +
+                        "<button type='button'  class='btn btn-danger btn-md' onClick=deleteGoodReceipt(\"" + encodeURIComponent(element.sender_name) + "\"," + element.id + ")>" +
                         "<li class='fas fa-trash'></li></button></div>";
                     tr += "</tr>";
                 }
@@ -158,7 +157,8 @@ function updateGoodReceipt() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4) {
-            successMessage(xhttp);
+            var message = removeDoublequote(xhttp);
+            successMessage(message);
             clearGoodreceiptForm();
         }
     };
@@ -178,7 +178,7 @@ function deleteGoodReceipt(senderName, goodReceiptId) {
             success: function (data) {
                 destroyDatatable("#tbl_goodreceipt", "#tbl_goodreceipt_body");
                 getGoodReceipt();
-                alert(data);
+                successMessage(data);
             },
             error: function (message){
                 errorMessage(message);
@@ -210,7 +210,8 @@ function saveProduct() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4) {
-                successMessage(xhttp);
+                var message = removeDoublequote(xhttp);
+                successMessage(message);
                 $("#txt_product_name").val()
                 $("#txt_product_name").val()
                 $("#txt_quantity").val();
@@ -298,7 +299,8 @@ function updateGoodReceiptDetail() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4) {
-            successMessage(xhttp);
+            var message = removeDoublequote(xhttp);
+            successMessage(message);
             $("#txt_product_name").val()
             $("#txt_product_name").val()
             $("#txt_quantity").val();

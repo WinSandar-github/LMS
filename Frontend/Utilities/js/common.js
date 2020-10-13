@@ -1,14 +1,18 @@
-var BACKEND_URL = "http://" + window.location.host + "/";
+﻿var BACKEND_URL = "http://" + window.location.host + "/";
 function logout() {
     (localStorage.getItem("userinfo")) && localStorage.removeItem("userinfo");
     location.href = "../authComponents/login.html";
 }
 function successMessage(message) {
-    alert(JSON.parse(message.responseText));
+    toastr.options = toastOptions;
+    toastr.success(message);
 }
 function errorMessage(message) {
-    var returnMessage = JSON.parse(message.responseText)
-    alert(returnMessage);
+    toastr.options = toastOptions;
+}
+function removeDoublequote(xhttp) {
+    var message = xhttp.responseText;
+    return message.replace(/^"|"$/g, '')
 }
 function errorStatus(XMLHttpRequest, textStatus, errorThrown){
     alert("Status: " + textStatus);
@@ -20,6 +24,23 @@ function destroyDatatable(table, tableBody) {
     }
     $(tableBody).empty();
 }
+var toastOptions = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-center",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "1000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+};
 function createDataTable(table) {
   $(table).DataTable({
         'destroy': true,

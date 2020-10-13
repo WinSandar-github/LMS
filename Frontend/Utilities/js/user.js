@@ -5,6 +5,7 @@
     $("#phoneNo").val("");
     $("#address").val("");
     $("#passwordArea").css("display", "block");
+    $("#userForm").attr('action', 'javascript:createUser()');
 });
 function createUser() {
     var name = $("#name").val();
@@ -23,7 +24,7 @@ function createUser() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4) {
-                successMessage(xhttp);
+                successMessage(xhttp.responseText);
                 clearUserForm();
             }
         };
@@ -59,10 +60,9 @@ function getUser() {
                 tr += "<td >" + element.phone_no + "</td>";
                 tr += "<td >" + element.address + "</td>";
                 tr += "<td class='alignright'><div class='btn-group'>" +
-                    "<button  type='button' class='btn btn-info btn-md btn-space' onClick='showUserInfo(" + element.id + ")'>" +
-                    "<li class='fas fa-edit' ></li ></button ></div >";
-                tr += "<div class='btn-group'>" +
-                    "<button type='button'  class='btn btn-danger btn-md btn-space' onClick=deleteUser(\"" + encodeURIComponent(element.full_name) + "\"," + element.id + ")>" +
+                    "<button  type='button' class='btn btn-info btn-md' onClick='showUserInfo(" + element.id + ")'>" +
+                    "<li class='fas fa-edit' ></li ></button >";
+                tr += "<button type='button'  class='btn btn-danger btn-md' onClick=deleteUser(\"" + encodeURIComponent(element.full_name) + "\"," + element.id + ")>" +
                     "<li class='fas fa-trash'></li></button></div></td>";
                 tr += "</tr>";
                 $("#tbl_user_body").append(tr);
@@ -86,7 +86,7 @@ function deleteUser(user_name, user_id) {
             success: function (data) {
                 destroyDatatable("#tbl_user", "#tbl_user_body");
                 getUser();
-                alert(data);
+                successMessage(data);
             },
             error: function (message) {
                 errorMessage(message);
@@ -127,7 +127,7 @@ function updateUser() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4) {
-            successMessage(xhttp);
+            successMessage(xhttp.responseText);
             clearUserForm();
         }
     };
