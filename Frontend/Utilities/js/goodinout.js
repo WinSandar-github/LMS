@@ -5,19 +5,19 @@ function loadGoodInOut()
   $.ajax({
           type: "POST",
           url: BACKEND_URL + "getGoodInOutByCompanyId",
-          data: "companyId=" + company_id ,
+          data: "company_id=" + company_id ,
           success: function (data) {
-            var exportData=[];
-            exportData=data;
+            var export_data=[];
+            export_data=data;
             data.forEach(function (element) {
               var tr = "<tr>";
-              tr += "<td >" + element.good_receipt_bydetails.date+ "</td>";
-              tr += "<td >" + element.good_receipt_bydetails.order_no+ "</td>";
-              tr += "<td >" + element.good_receipt_bydetails.customer_name + "</td>";
-              tr += "<td >" + element.good_receipt_bydetails.sender_name + "</td>";
+              tr += "<td >" + element.good_receipt_bydetail.date+ "</td>";
+              tr += "<td >" + element.good_receipt_bydetail.order_no+ "</td>";
+              tr += "<td >" + element.good_receipt_bydetail.customer_name + "</td>";
+              tr += "<td >" + element.good_receipt_bydetail.sender_name + "</td>";
               tr += "<td >" + element.to_city_name + "</td>";
               tr += "<td >" + element.product_name + "</td>";
-              tr += "<td >" + element.good_receipt_detail_bydetails.qty + "</td>";
+              tr += "<td >" + element.good_receipt_detail_bydetail.qty + "</td>";
               tr += "<td >" + element.weight + "</td>";
               tr += "<td >" + element.out_date + "</td>";
               tr += "<td >" + element.delivery.car_no + "</td>";
@@ -25,16 +25,16 @@ function loadGoodInOut()
               tr += "</tr>";
               $("#tbl_goodinout_container").append(tr);
             });
-            exportData.forEach(function (element) {
-              if(element.good_receipt_detail_bydetails.qty!=element.quantity){
-                var goodExport=parseInt(element.good_receipt_detail_bydetails.qty) - parseInt(element.quantity);
+            export_data.forEach(function (element) {
+              if(element.good_receipt_detail_bydetail.qty!=element.quantity){
+                var good_export=parseInt(element.good_receipt_detail_bydetail.qty) - parseInt(element.quantity);
                 var tr = "<tr>";
-                tr += "<td >" + element.good_receipt_bydetails.order_no + "</td>";
-                tr += "<td >" + element.good_receipt_bydetails.customer_name + "</td>";
+                tr += "<td >" + element.good_receipt_bydetail.order_no + "</td>";
+                tr += "<td >" + element.good_receipt_bydetail.customer_name + "</td>";
                 tr += "<td >" + element.product_name + "</td>";
-                tr += "<td >" + element.good_receipt_detail_bydetails.qty + "</td>";
+                tr += "<td >" + element.good_receipt_detail_bydetail.qty + "</td>";
                 tr += "<td >" + element.quantity + "</td>";
-                tr += "<td >" + goodExport+ "</td>";
+                tr += "<td >" + good_export+ "</td>";
                 tr += "</tr>";
                 $("#tbl_goodexport_container").append(tr);
               }

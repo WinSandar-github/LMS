@@ -9,27 +9,13 @@ function saveCompanyRegister()
     var txt_password=$('#confirm_password').val();
     var form = new FormData;
     var logo_file = document.getElementById('companylogo');
-    if (logo_file.files.length > 0) {
-        for (var i = 0; i <= logo_file.files.length - 1; i++) {
-
-            var fname = logo_file.files.item(i).name;
-            var fsize = logo_file.files.item(i).size;
-
-            var product_photo = document.getElementById('companylogo').files[0].name;
-            var ext = product_photo.substr((product_photo.lastIndexOf('.') + 1));
-            var random_number = Math.floor(1000 + Math.random() * 9000);
-
-            form.append('img', logo_file.files[i]);
-            form.append('ext', ext);
-        }
-
-    }
-    form.append('companyname', company_name);
-    form.append('companyaddress', company_address);
-    form.append('txt_name', txt_name);
-    form.append('txt_phone', txt_phone);
-    form.append('txt_email', txt_email);
-    form.append('txt_password', txt_password);
+    validateImage(logo_file,form);
+    form.append('name', company_name);
+    form.append('address', company_address);
+    form.append('full_name', txt_name);
+    form.append('phone', txt_phone);
+    form.append('email', txt_email);
+    form.append('password', txt_password);
     $.ajax({
             type: "POST",
             url: BACKEND_URL + "saveCompany",
@@ -68,13 +54,40 @@ $('#txt_email').on('keyup', function () {
     $result.css("color", "red");
   }
 });
+function validateImage(logo_file,logo_form){
+
+  if (logo_file.files.length > 0) {
+      for (var i = 0; i <= logo_file.files.length - 1; i++) {
+          var file_name = logo_file.files.item(i).name;
+          var file_size = logo_file.files.item(i).size;
+          var ext = file_name.substr((file_name.lastIndexOf('.') + 1));
+          var file_ext=ext.toLowerCase();
+          if ( file_ext!= "jpeg" && file_ext != "jpg" && file_ext != "png" && file_ext != "bmp" && file_ext != "gif") {
+                  $('#invalid_file').html('invalid file type.This file type must be jpeg,jgg,png,bmp,gif..').css('color', 'red');
+                  $('#invalid_size').html("");
+                  document.getElementById(logo_file).value = '';
+                  return false;
+          }
+          if(file_size > 1024000){
+                  $('#invalid_size').html('Max Upload size is 1MB only').css('color', 'red');
+                  $('#invalid_file').html("");
+                  document.getElementById(logo_file).value = '';
+                  return false;
+          }
+                  $('#invalid_file').html("");
+                  $('#invalid_size').html("");
+                  logo_form.append('logo', logo_file.files[i]);
+                  logo_form.append('ext', file_ext);
+      }
+    }
+}
 function loadCompanyInfo()
 {
   $("#tbl_company_container").html("");
   $.ajax({
           type: "POST",
           url: BACKEND_URL + "getCompany",
-          data: "companyId="+company_id,
+          data: "company_id="+company_id,
           success: function (data) {
            var tr = "<tr>";
            tr += "<td >" + data[0].name + "</td>";
@@ -93,15 +106,14 @@ function loadCompanyInfo()
 
   });
 }
-function showCompanyInfo(companyId)
+function showCompanyInfo(company_id)
 {
-  $('#hcompanyId').val(companyId);
+  $('#hcompanyId').val(company_id);
   $("#companyForm").attr('action', 'javascript:updateCompanyInfo()');
-  var data="companyId=" + companyId;
   $.ajax({
       type: "POST",
       url: BACKEND_URL + "getCompany",
-      data: "companyId="+company_id,
+      data: "company_id="+company_id,
       success: function (data) {
           $("#txt_company_name").val(data[0].name);
           $("#txt_company_address").val(data[0].address);
@@ -116,18 +128,18 @@ function showCompanyInfo(companyId)
 }
 function updateCompanyInfo()
 {
-  var fileExt = $('#hfile').val().substr(($('#hfile').val().lastIndexOf('.') + 1));
-  var companyInfo = new FormData;;
-  companyInfo.append('companyId',$('#hcompanyId').val());
-  companyInfo.append('companyName',$("#txt_company_name").val());
-  companyInfo.append('companyAddress',$("#txt_company_address").val());
-  companyInfo.append('companyPhone',$("#txt_company_phone").val());
-  companyInfo.append('companyExt',fileExt);
-  companyInfo.append('companylogo',$('#hfile').val());
+  var file_ext = $('#hfile').val().substr(($('#hfile').val().lastIndexOf('.') + 1));
+  var company_info = new FormData;;
+  company_info.append('company_id',$('#hcompanyId').val());
+  company_info.append('name',$("#txt_company_name").val());
+  company_info.append('address',$("#txt_company_address").val());
+  company_info.append('phone',$("#txt_company_phone").val());
+  company_info.append('ext',file_ext);
+  company_info.append('logo',$('#hfile').val());
   $.ajax({
           type: "POST",
           url: BACKEND_URL + "updateCompany",
-          data: companyInfo,
+          data: company_info,
           contentType: false,
           processData: false,
           success: function (data) {
@@ -141,11 +153,11 @@ function updateCompanyInfo()
          }
        });
 }
-function loadCompanyLogo(companyId) {
+function loadCompanyLogo(company_id) {
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getCompany",
-        data: "companyId="+companyId,
+        data: "company_id="+company_id,
         success: function (data) {
           $('#hrefinitials').val(data[0].ref_initials);
           var myImageId = BACKEND_URL + "storage/company_logo/" + data[0].logo;
@@ -163,29 +175,15 @@ function editCompanyLogo()
   $('#companyLogoModal').modal('toggle');
 }
 function updateCompanyLogo() {
-    var logoForm = new FormData();
-    logoForm.append('companyId',company_id);
-    logoForm.append('refinitials',$('#hrefinitials').val());
-    var logoFile = document.getElementById('updatelogo');
-    if (logoFile.files.length > 0) {
-        for (var i = 0; i <= logoFile.files.length - 1; i++) {
-
-            var fname = logoFile.files.item(i).name;
-            var fsize = logoFile.files.item(i).size;
-
-            var product_photo = document.getElementById('updatelogo').files[0].name;
-            var ext = product_photo.substr((product_photo.lastIndexOf('.') + 1));
-            var random_number = Math.floor(1000 + Math.random() * 9000);
-            console.log(fname,fsize);
-            logoForm.append('updatelogo', logoFile.files[i]);
-            logoForm.append('companyExt', ext);
-        }
-
-    }
+    var logo_form = new FormData();
+    logo_form.append('companyId',company_id);
+    logo_form.append('ref_initials',$('#hrefinitials').val());
+    var logo_file = document.getElementById('updatelogo');
+    validateImage(logo_file,logo_form);
     $.ajax({
         type: "POST",
-        url: BACKEND_URL + "updateCompanyLogo",
-        data: logoForm,
+        url: BACKEND_URL + "updateCompany",
+        data: logo_form,
         contentType: false,
         processData: false,
         success: function (data) {

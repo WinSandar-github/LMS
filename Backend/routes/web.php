@@ -2,17 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
 
     return view('welcome');
@@ -23,16 +12,12 @@ Route::post('updateCompany', array('middleware' => 'cors', 'uses' => 'RegisterCo
 Route::post('loginValidate', array('middleware' => 'cors', 'uses' => 'CompanyLoginController@loginValidate'));
 //for delivery
 Route::post('saveDelivery', array('middleware' => 'cors', 'uses' => 'DeliveryController@saveDelivery'));
-Route::post('getDelivery', array('middleware' => 'cors', 'uses' => 'DeliveryController@getDelivery'));
 Route::post('getDeliverDetailsByDeliveryId', array('middleware' => 'cors', 'uses' => 'DeliveryController@getDeliverDetailsByDeliveryId'));
 Route::post('updateDelivery', array('middleware' => 'cors', 'uses' => 'DeliveryController@updateDelivery'));
-Route::post('deleteDelivery', array('middleware' => 'cors', 'uses' => 'DeliveryController@deleteDelivery'));
-Route::post('getDeliveryByStatus', array('middleware' => 'cors', 'uses' => 'DeliveryController@getDeliveryByStatus'));
+Route::post('getDeliveryByStatus/{status}', array('middleware' => 'cors', 'uses' => 'DeliveryController@getDeliveryByStatus'));
 Route::post('getDeliveryById', array('middleware' => 'cors', 'uses' => 'DeliveryController@getDeliveryById'));
 //for deliverdetails
 Route::post('saveDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliveryController@saveDeliverDetail'));
-Route::post('updateDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliveryController@updateDeliverDetail'));
-Route::post('deleteDeliverDetail', array('middleware' => 'cors', 'uses' => 'DeliveryController@deleteDeliverDetail'));
 Route::post('createCity',array('middleware'=>'cors','uses'=>'CityController@createCity'));
 Route::post('getCity',array('middleware'=>'cors','uses'=>'CityController@getCity'));
 Route::post('getCityInfo',array('middleware'=>'cors','uses'=>'CityController@getCityInfo'));
@@ -57,14 +42,8 @@ Route::post('getGoodReceiptInvoice',array('middleware'=>'cors','uses'=>'Goodrece
 Route::post('showGoodReceiptDetailInfo',array('middleware'=>'cors','uses'=>'GoodreceiptController@showGoodReceiptDetailInfo'));
 Route::post('updateGoodReceiptDetail',array('middleware'=>'cors','uses'=>'GoodreceiptController@updateGoodReceiptDetail'));
 Route::post('deleteGoodReceiptDetail',array('middleware'=>'cors','uses'=>'GoodreceiptController@deleteGoodReceiptDetail'));
-//for invoice
-Route::post('getCompanyInfoBydeliveryId',array('middleware'=>'cors','uses'=>'DeliveryController@getCompanyInfoBydeliveryId'));
-Route::post('getInvoiceDetailsBydeliveryId',array('middleware'=>'cors','uses'=>'DeliveryController@getInvoiceDetailsBydeliveryId'));
-Route::post('getInvoiceDetailsByorderId',array('middleware'=>'cors','uses'=>'DeliveryController@getInvoiceDetailsByorderId'));
 //for GoodInOut
 Route::post('getGoodInOutByCompanyId',array('middleware'=>'cors','uses'=>'GoodInOutController@getGoodInOutByCompanyId'));
-Route::post('getInvoiceDetailsByorderNo',array('middleware'=>'cors','uses'=>'DeliveryController@getInvoiceDetailsByorderNo'));
-Route::post('getCompanyDetailBydeliveryId',array('middleware'=>'cors','uses'=>'DeliveryController@getCompanyDetailBydeliveryId'));
 //for statementcarlist
 Route::post('saveStatementCarList',array('middleware'=>'cors','uses'=>'StatementCarListController@saveStatementCarList'));
 //For Order
@@ -76,10 +55,8 @@ Route::post('deleteOrder',array('middleware'=>'cors','uses'=>'OrderController@de
 Route::post('getOrderNoBycompanyId', array('middleware' => 'cors', 'uses' => 'DeliveryController@getOrderNoBycompanyId'));
 //for goodReceipt by orderNo
 Route::post('getGoodReceiptByorderNo', array('middleware' => 'cors', 'uses' => 'DeliveryController@getGoodReceiptByorderNo'));
-//for orderstatus by orderId
-Route::post('updateOrderStatusByorderId', array('middleware' => 'cors', 'uses' => 'DeliveryController@updateOrderStatusByorderId'));
 //for get orderdetail by orderno
-Route::post('getOrderDetailsByorderNo', array('middleware' => 'cors', 'uses' => 'DeliveryController@getOrderDetailsByorderNo'));
+Route::post('getOrderDetailsByorderId', array('middleware' => 'cors', 'uses' => 'DeliveryController@getOrderDetailsByorderId'));
 //for update order by orderId
 Route::post('updateOrderByorderId', array('middleware' => 'cors', 'uses' => 'DeliveryController@updateOrderByorderId'));
 //For vipCustomer
@@ -89,7 +66,6 @@ Route::post('getVipCustomerInfo',array('middleware'=>'cors','uses'=>'Goodreceipt
 Route::post('getStatmentCarList',array('middleware'=>'cors','uses'=>'StatementCarListController@getStatmentCarList'));
 //for get company
 Route::post('getCompany', array('middleware' => 'cors', 'uses' => 'RegisterController@getCompany'));
-Route::post('updateCompanyLogo', array('middleware' => 'cors', 'uses' => 'RegisterController@updateCompanyLogo'));
 
 //For user
 Route::post('createUser',array('middleware'=>'cors','uses'=>'UserController@createUser'));

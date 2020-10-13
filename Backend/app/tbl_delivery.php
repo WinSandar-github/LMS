@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class tbl_delivery extends Model
 {
   protected $table = 'tbl_delivery';
-  public function users()
+  public function user()
   {
       return $this->belongsTo('App\User','user_id');
   }
@@ -19,4 +19,5 @@ class tbl_delivery extends Model
   {
       return $this->hasMany('App\tbl_delivery_details','delivery_id');
   }
+
 }

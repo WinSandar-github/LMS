@@ -17,8 +17,11 @@ class tbl_order extends Model
     }
     public function goodreceiptByOrder()
     {
-        return $this->belongsTo('App\tbl_good_receipt','id');
+        return $this->belongsTo('App\tbl_good_receipt','good_receipt_id');
     }
-
+    public function orderdetailsByOrder()
+    {
+        return $this->hasMany('App\tbl_order_details','order_id');
+    }
 
 }

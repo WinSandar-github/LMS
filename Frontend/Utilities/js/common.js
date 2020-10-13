@@ -86,8 +86,8 @@ function formatDate(date) {
     var newDate = new Date(date);
     return newDate.getDate() + '-' + (newDate.getMonth() + 1) + "-" + newDate.getFullYear();
 }
-function dateRange(dateRange,startDate,endDate,table){
-  var dataTable=$(table).DataTable({
+function dateRange(date_range,start_date,end_date,table){
+  var data_table=$(table).DataTable({
         'destroy': true,
         'paging': true,
         'lengthChange': false,
@@ -99,10 +99,10 @@ function dateRange(dateRange,startDate,endDate,table){
         "scrollX": true,
         "order": [[0, "desc"]]
     });
-    $(dateRange).click(function () {
-      startDateFilter = document.getElementById(startDate).value;
-      endDateFilter = document.getElementById(endDate).value;
-      dataTable.search(startDateFilter+' '+endDateFilter)
+    $(date_range).click(function () {
+      start_date_filter = document.getElementById(start_date).value;
+      end_date_filter = document.getElementById(end_date).value;
+      data_table.search(start_date_filter+' '+end_date_filter)
       .draw();
     });
 }
@@ -112,12 +112,12 @@ function thousands_separators(num) {
     return num_parts.join(".");
 }
 function removeComma(number){
-  var numberPart=parseInt(number.split(',').join(""));
-  return numberPart;
+  var number_part=parseInt(number.split(',').join(""));
+  return number_part;
 }
 function removePercent(number){
-  var numberPart=parseInt(number.split('%').join(""));
-  return numberPart;
+  var number_part=parseInt(number.split('%').join(""));
+  return number_part;
 }
 function countColumn(table) {
     var numCols = $(table).find('tr')[0].cells.length;
