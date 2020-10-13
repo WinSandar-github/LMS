@@ -20,8 +20,5 @@ class tbl_good_receipt_details extends Eloquent
     {
        return $this->belongsTo('App\tbl_unit','unit');
     }
-    public function goodreceiptDetailsBygoodReceipt()
-    {
-        return $this->belongsTo('App\tbl_good_receipt','good_receipt_id');
-    }
+    
 }

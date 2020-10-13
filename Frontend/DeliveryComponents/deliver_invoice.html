@@ -29,12 +29,9 @@
     <section>
 
         <div class="company_info">
-
-                  <img id="logo" alt="Company Logo" class="brand-image img-circle elevation-3" width="50">
-                  <h2 id="company_name"></h2>
-                  <h4 id="address"></h4>
-
-
+          <img id="logo" alt="Company Logo" class="brand-image img-circle elevation-3" width="50">
+          <h2 id="company_name"></h2>
+          <h4 id="address"></h4>
         </div>
         <div class="row">
           <div class="col-1"></div>
@@ -46,15 +43,15 @@
         <div class="row">
           <div class="col-1"></div>
           <div class="col-2">
-            ယာဥ်မောင်းအမည်  : <span class="driverName"></span>
+            ယာဥ်မောင်းအမည်  : <span class="driver_name"></span>
           </div>
           <div class="col-2"></div>
           <div class="col-2">
-            ယာဥ်အမှတ်  :<span class="carNumber"></span>
+            ယာဥ်အမှတ်  :<span class="car_number"></span>
           </div>
           <div class="col-2"></div>
           <div class="col-3">
-            ကုန်တင်ပို့သည့်နေ့စွဲ  : <span class="incomeDate"></span>
+            ကုန်တင်ပို့သည့်နေ့စွဲ  : <span class="income_date"></span>
           </div>
           <div class="col-1"></div>
         </div>
@@ -77,9 +74,6 @@
 
               </thead>
               <tbody id="tbl_invoice_container" class="hoverTable"></tbody>
-
-            </table>
-            <table class="table">
               <tfoot>
                 <tr class="tr-class">
                   <th ></th>
@@ -93,6 +87,7 @@
                 </tr>
               </tfoot>
             </table>
+
             </div>
           </div>
           <div class="col-1"></div>
@@ -287,8 +282,8 @@
   <script src="../Utilities/js/statement-car-list.js"></script>
   <script type="text/javascript" src="../Utilities/js/auth.js"></script>
   <script type="text/javascript">
-    loadInvoiceDelivery();
-      getCompanyInfo();
+    get_company_info();
+    loadInvoice();
   </script>
 </body>
 </html>

@@ -43,14 +43,15 @@
 													<div class="col-6">
 															<div class="form-group">
 																<label >ကုမ္ပဏီအမှတ်တံဆိပ် </label>
-																	<input type="file" class="file-upload-default" id="companylogo" name="img[]" required oninvalid="this.setCustomValidity('ကုမ္ပဏီအမှတ်တံဆိပ် ထည့်ရန်')" oninput="setCustomValidity('')">
+																	<input type="file" class="file-upload-default" id="companylogo" name="img" required oninvalid="this.setCustomValidity('ကုမ္ပဏီအမှတ်တံဆိပ် ထည့်ရန်')" oninput="setCustomValidity('')">
 																	<div class="input-group col-xs-12">
 						                        <input type="text" class="form-control file-upload-info" disabled placeholder="ကုမ္ပဏီအမှတ်တံဆိပ်">
 						                        <span class="input-group-append">
 						                          <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
 						                        </span>
 						                      </div>
-
+                                  <span id="invalid_file"></span>
+                                  <span id="invalid_size"></span>
 															</div>
 													</div>
 										</div>
