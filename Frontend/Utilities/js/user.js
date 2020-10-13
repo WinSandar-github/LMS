@@ -14,24 +14,17 @@ function createUser() {
     var address = $("#address").val();
     if (name.trim() != "" && email.trim() != "" && password.trim() != "" && phone.trim() != "" && address.trim() != "") {
         var user = {};
-        user['name'] = name;
+        user['full_name'] = name;
         user['email'] = email;
         user['password'] = password;
-        user['phone'] = phone;
+        user['phone_no'] = phone;
         user['address'] = address;
-        user['companyId'] = company_id;
+        user['company_id'] = company_id;
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4) {
-                var message = JSON.parse(xhttp.responseText);
-                alert(message);
-                $("#name").val("");
-                $("#email").val("");
-                $("#password").val("");
-                $("#phoneNo").val("");
-                $("#address").val("");
-                $('#modal-user').modal('toggle');
-                getUser();
+                successMessage(xhttp);
+                clearUserForm();
             }
         };
         xhttp.open('POST', BACKEND_URL + 'createUser');
@@ -42,12 +35,22 @@ function createUser() {
         alert("Following value(s) cannot be left empty.\nအမည်\nအီးမေးလ်\nစကားဝှက်\nဖုန်း\nလိပ်စာ");
     }
 }
+function clearUserForm() {
+    $("#name").val("");
+    $("#email").val("");
+    $("#password").val("");
+    $("#phoneNo").val("");
+    $("#address").val("");
+    $('#modal-user').modal('toggle');
+    destroyDatatable("#tbl_user", "#tbl_user_body");
+    getUser();
+}
 function getUser() {
     destroyDatatable("#tbl_user", "#tbl_user_body");
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getUser",
-        data: "companyId=" + company_id,
+        data: "company_id=" + company_id,
         success: function (data) {
             data.forEach(function (element) {
                 var tr = "<tr>";
@@ -72,10 +75,10 @@ function getUser() {
         }
     });
 }
-function deleteUser(userName, userId) {
-    var result = confirm("WARNING: This will delete User from " + decodeURIComponent(userName) + " and all related stocks! Press OK to proceed.");
+function deleteUser(user_name, user_id) {
+    var result = confirm("WARNING: This will delete User from " + decodeURIComponent(user_name) + " and all related stocks! Press OK to proceed.");
     if (result) {
-        var data = "userId=" + userId;
+        var data = "user_id=" + user_id;
         $.ajax({
             type: "POST",
             url: BACKEND_URL + "deleteUser",
@@ -95,7 +98,7 @@ function showUserInfo(userId) {
     $("#userForm").attr('action', 'javascript:updateUser()');
     $("#userId").val(userId);
 
-    var data = "&userId=" + userId;
+    var data = "&user_id=" + userId;
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "showUserInfo",
@@ -115,25 +118,17 @@ function showUserInfo(userId) {
 }
 function updateUser() {
     var userData = {};
-    userData["userId"] = $("#userId").val();
-    userData["name"] = $("#name").val();
+    userData["user_id"] = $("#userId").val();
+    userData["full_name"] = $("#name").val();
     userData["email"] = $("#email").val();
     userData["password"] = $("#password").val();
-    userData["phoneNo"] = $("#phoneNo").val();
+    userData["phone_no"] = $("#phoneNo").val();
     userData["address"] = $("#address").val();
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4) {
-            var message = JSON.parse(xhttp.responseText);
-            alert(message);
-            $("#name").val("");
-            $("#email").val("");
-            $("#password").val("");
-            $("#phoneNo").val("");
-            $("#address").val("");
-            $('#modal-user').modal('toggle');
-            destroyDatatable("#tbl_user", "#tbl_user_body");
-            getUser();
+            successMessage(xhttp);
+            clearUserForm();
         }
     };
     xhttp.open('POST', BACKEND_URL + 'updateUser');

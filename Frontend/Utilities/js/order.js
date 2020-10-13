@@ -5,7 +5,7 @@ function addToOrder(goodReceiptId) {
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getGoodReceiptDetail",
-        data: "goodReceiptId=" + goodReceiptId,
+        data: "good_receipt_id=" + goodReceiptId,
         success: function (data) {
             var goodReceipt = data[0].good_receipt_by_detail;
             var unit = data[0].unit_by_detail;
@@ -24,21 +24,9 @@ function addToOrder(goodReceiptId) {
                 $("#tbl_order_body").append(tr);
 
             });
-            var tr = "<tr>";
-            tr += "<td colspan='6' style='text-align:right;'>" + "အလုပ်သမားခ:" + "</td>";
-            tr += "<td >" + "<input type='text' id='labourFee' value='0' onkeyup='getTotal();'>" + "</td>";
-            tr += "</tr>";
-            $("#tbl_order_body").append(tr);
-            var tr = "<tr>";
-            tr += "<td colspan='6' style='text-align:right;'>" + "စိုက်ငွေ:" + "</td>";
-            tr += "<td >" + "<input type='text' id='land' value='0' onkeyup='getTotal();'>" + "</td>";
-            tr += "</tr>";
-            $("#tbl_order_body").append(tr);
-            var tr = "<tr>";
-            tr += "<td colspan='6' style='text-align:right;'>" + "စုစုပေါင်း:" + "</td>";
-            tr += "<td >" + "<input type='text' id='totalPrice' value='0'>" + "</td>";
-            tr += "</tr>";
-            $("#tbl_order_body").append(tr);
+            appendRows("labourFee", "အလုပ်သမားခ:");
+            appendRows("land", "စိုက်ငွေ:");
+            appendRows("totalPrice", "စုစုပေါင်း:");
             $('#modal-order').modal('toggle');
         },
         error: function (message) {
@@ -46,12 +34,28 @@ function addToOrder(goodReceiptId) {
         }
     });
 }
+function appendRows(id,label) {
+    var tr = "<tr>";
+    tr += "<td colspan='6' style='text-align:right;'>" + label + "</td>";
+    tr += "<td >" + "<input type='text' id='" + id +"' value='0'>" + "</td>";
+    tr += "</tr>";
+    $("#tbl_order_body").append(tr);
+    var new_id = "#" + id;
+    if (id != "totalPrice") {
+        $(new_id).keyup(function () {
+            getTotal();
+        });
+    } 
+}
 function getTotalPerProduct(td) {
     var row = $(td).closest('tr');
     var productQuantity = parseFloat($(row).find('#productQuantity').val());
     var productWeight = parseInt($(row).find('#productWeight').val());
     var productPrice = parseInt($(row).find('#productPrice').val()) ? parseInt($(row).find('#productPrice').val()) : 0;
     var priceMethod = $("input[name='optradio']:checked").val();
+    var tableLength = document.getElementById("tbl_order").rows.length;
+    var productsTotal = new Array();
+    var sumVal = 0;
     switch (priceMethod) {
         case "quantity":
             $(row).find('#total').val(productQuantity * productPrice);
@@ -62,13 +66,10 @@ function getTotalPerProduct(td) {
         default:
             $(row).find('#total').val(productPrice);    
     }
-    var tableLength = document.getElementById("tbl_order").rows.length;
-    var productsTotal = new Array();
     for (var total = 1; total < tableLength - 3; total++) {
         productsTotal[total - 1] = document.getElementById("tbl_order").rows[total].cells[6].firstChild.value;
 
     }
-    var sumVal = 0;
     for (var sumTotal = 0; sumTotal < productsTotal.length; sumTotal++) {
 
         sumVal += Number(productsTotal[sumTotal]);
@@ -87,25 +88,25 @@ function getTotal() {
 function createOrder() {
     var ordersData = new Array();
     var order = {};
-    order["orderNo"] = $("#hiddenOrderno").val();
-    order["orderTotal"] = $("#hiddenTotal").val();
+    order["order_no"] = $("#hiddenOrderno").val();
+    order["order_total"] = $("#hiddenTotal").val();
     order["total"] = $("#totalPrice").val();
     order["labour"] = $("#labourFee").val();
     order["land"] = $("#land").val();
-    order["goodReceiptId"] = $("#hiddenGoodReceiptId").val();
-    order["userId"] = user_id;
-    order["companyId"] = company_id;
+    order["goodReceipt_id"] = $("#hiddenGoodReceiptId").val();
+    order["user_id"] = user_id;
+    order["company_id"] = company_id;
     ordersData.push(order);
     var tableLength = document.getElementById("tbl_order").rows.length;
     for (var i = 1; i < tableLength - 3; i++) {
         var orderdetails = {};
-        orderdetails['productName'] = document.getElementById("tbl_order").rows[i].cells[0].firstChild.value;
+        orderdetails['product_name'] = document.getElementById("tbl_order").rows[i].cells[0].firstChild.value;
         orderdetails['quantity'] = document.getElementById("tbl_order").rows[i].cells[2].firstChild.value;
         orderdetails['weight'] = document.getElementById("tbl_order").rows[i].cells[3].firstChild.value;
         orderdetails['unit'] = document.getElementById("tbl_order").rows[i].cells[4].firstChild.value;
-        orderdetails['productPrice'] = document.getElementById("tbl_order").rows[i].cells[5].firstChild.value;
+        orderdetails['product_price'] = document.getElementById("tbl_order").rows[i].cells[5].firstChild.value;
         orderdetails['total'] = document.getElementById("tbl_order").rows[i].cells[6].firstChild.value;
-        orderdetails["userId"] = user_id;
+        orderdetails["user_id"] = user_id;
         ordersData.push(orderdetails);
     }
     $.ajax({
@@ -134,7 +135,7 @@ function getOrderByStatus(status,table,tableBody) {
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getOrder/" + status,
-        data: "companyId=" + company_id,
+        data: "company_id=" + company_id,
         success: function (data) {
             data.forEach(function (element) {
                 var tr = "<tr onclick='getOrderDetail(" + element.id + ")'>";
@@ -173,7 +174,7 @@ function getOrderDetail(orderId) {
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getOrderDetail",
-        data: "orderId=" + orderId,
+        data: "order_id=" + orderId,
         success: function (data) {
             data.forEach(function (element) {
                 var tr = "<tr>";
@@ -198,7 +199,7 @@ function getOrderDetail(orderId) {
 function deleteOrder(orderNo, orderId) {
     var result = confirm("WARNING: This will delete Order from " + decodeURIComponent(orderNo) + " and all related stocks! Press OK to proceed.");
     if (result) {
-        var data = "orderId=" + orderId;
+        var data = "order_id=" + orderId;
         $.ajax({
             type: "POST",
             url: BACKEND_URL + "deleteOrder",

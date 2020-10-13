@@ -3,7 +3,7 @@ function getRule() {
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getRule",
-        data: "companyId=" + company_id,
+        data: "company_id=" + company_id,
         success: function (data) {
             data.forEach(function (element) {
                 var li = document.createElement("li");
@@ -22,7 +22,7 @@ function getRule() {
 }
 function showRuleDetail(ruleId) {
     $("#ruleId").val(ruleId);
-    var data = "&ruleId=" + ruleId;
+    var data = "&rule_id=" + ruleId;
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "showRuleDetail",
@@ -37,7 +37,7 @@ function showRuleDetail(ruleId) {
     });
 }
 function updateRule(){
-    var ruleData = "ruleId=" + $("#ruleId").val() + "&description=" + $("#descriptionInfo").val();
+    var ruleData = "rule_id=" + $("#ruleId").val() + "&description=" + $("#descriptionInfo").val();
     console.log(ruleData);
     $.ajax({
         type: "POST",
@@ -76,7 +76,7 @@ function createRule() {
     for (var i = 1; i < tableLength; i++) {
         var rule = {};
         rule['description'] = document.getElementById("tbl_rule").rows[i].cells[1].innerHTML;
-        rule["companyId"] = company_id;
+        rule["company_id"] = company_id;
         ruleData.push(rule);
     }
     $.ajax({
@@ -99,7 +99,7 @@ function deleteRule() {
     var ruleId = $("#ruleId").val();
     var result = confirm("WARNING: This will delete Rule and all related stocks! Press OK to proceed.");
     if (result) {
-        var data = "ruleId=" + ruleId;
+        var data = "rule_id=" + ruleId;
         $.ajax({
             type: "POST",
             url: BACKEND_URL + "deleteRule",
