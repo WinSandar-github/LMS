@@ -1,12 +1,11 @@
 var BACKEND_URL = "http://" + window.location.host + "/";
 
 function logout() {
-    if (localStorage.getItem("userinfo") == null) {
-        location.href = "../authComponents/login.html";
-    } else {
-        localStorage.removeItem("userinfo");
-        location.href = "../authComponents/login.html";
-    }
+    (localStorage.getItem("userinfo")) && localStorage.removeItem("userinfo");
+    location.href = "../authComponents/login.html";
+}
+function successMessage(message) {
+    alert(JSON.parse(message.responseText));
 }
 function errorMessage(message) {
     var returnMessage = JSON.parse(message.responseText)
@@ -16,7 +15,6 @@ function errorStatus(XMLHttpRequest, textStatus, errorThrown){
     alert("Status: " + textStatus);
     alert("Error: " + errorThrown);
 }
-
 function destroyDatatable(table, tableBody) {
     if ($.fn.DataTable.isDataTable(table)) {
         $(table).DataTable().destroy();
@@ -45,20 +43,20 @@ $('table tbody').on('click', 'tr', function () {
 function createDatepicker(datepicker){
   $(datepicker).datepicker({ format: 'yyyy-mm-dd' });
 }
-function get_company_info() {
+function getCompanyInfo() {
     var src = BACKEND_URL + "storage/company_logo/" + company_logo;
     $('#logo').attr("src", src);
     $("#company_name").append(company_name);
     $("#address").append(address);
 }
-function get_goodreceipt_invoicedetail() {
+function getGoodreceiptInvoiceDetails() {
     var currentUrl = window.location.href;
     var url = new URL(currentUrl);
     var goodReceiptId = url.searchParams.get("goodReceiptId");
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getGoodReceiptInvoice",
-        data: "goodReceiptId=" + goodReceiptId,
+        data: "good_receipt_id=" + goodReceiptId,
         success: function (data) {
             $("#customerName").append(data[0]["customer_name"]);
             $("#senderName").append(data[0]["sender_name"]);
@@ -128,7 +126,7 @@ function countColumn(table) {
 }
 function dataMessage(message, table, tableBody) {
     var dataMsg = message.responseText;
-    var noOfColumn=countColumn(table);
+    var noOfColumn = countColumn(table);
     var tr = "<tr>";
     tr += "<td colspan='" + noOfColumn + "'>" + dataMsg + "</td>";
     tr += "</tr>";

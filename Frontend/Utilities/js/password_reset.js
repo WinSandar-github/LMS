@@ -15,7 +15,7 @@ function resetPassword() {
         alert("Passwords Not Match.");
     }
     else {
-        var resetData = "Username=" + $("#email").val() + "&password=" + $("#confirmPassword").val();
+        var resetData = "username=" + $("#email").val() + "&password=" + $("#confirmPassword").val();
         $.ajax({
             type: "POST",
             url: BACKEND_URL + "resetPassword",

@@ -8,7 +8,7 @@
     $.ajax({
         type: "POST",
         url: BACKEND_URL + "getVipCustomerInfo",
-        data: "customerName=" + customerName + "&startDate=" + startDate + "&endDate=" + endDate,
+        data: "customer_name=" + customerName + "&start_date=" + startDate + "&end_date=" + endDate,
         success: function (data) {
             data.forEach(function (element) {
                 for (var i = 0; i < (element.good_receipt_order).length; i++) {
@@ -19,22 +19,24 @@
                     tr += "<td class='align-right'>" + (element.good_receipt_order)[i]["order_total"] + "</td>";
                     tr += "</tr>";
                     $("#tbl_vipCustomer_body").append(tr);
-                }
-                
+                } 
             });
-            var total = 0;
-            $('#tbl_vipCustomer tr').each(function () {
-                var value = parseInt($('td', this).eq(3).text());
-                if (!isNaN(value)) {
-                    total += value;
-                }
-            });
-            $("#total").html(total);
+            getTotal();
         },
         error: function (message) {
             dataMessage(message, "#tbl_vipCustomer", "#tbl_vipCustomer_body");
         }
     });
+}
+function getTotal() {
+    var total = 0;
+    $('#tbl_vipCustomer tr').each(function () {
+        var value = parseInt($('td', this).eq(3).text());
+        if (!isNaN(value)) {
+            total += value;
+        }
+    });
+    $("#total").html(total);
 }
 function printCashReport() {
     var printContents = document.getElementById("print-area").innerHTML;
