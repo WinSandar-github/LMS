@@ -185,7 +185,7 @@ img {
     display:none;
 }
 .padding-top {
-    padding-top: 20px;
+    padding-top: 2s0px;
 }
 #matchPwd{
     color:red;
@@ -205,5 +205,4 @@ img {
 }
 .btn-edit {
     border-color: #1c7f8f !important;
-}
 }

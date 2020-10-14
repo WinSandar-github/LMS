@@ -128,7 +128,13 @@ function updateUser() {
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4) {
             successMessage(xhttp.responseText);
-            clearUserForm();
+            var userInfo = JSON.parse(localStorage.getItem("userinfo"));
+            var user = userInfo[0].user;
+            if (user.id == $("#userId").val()) {
+                user.full_name = $("#name").val();
+                localStorage.setItem("userinfo", JSON.stringify(userInfo));
+            }
+            location.reload();
         }
     };
     xhttp.open('POST', BACKEND_URL + 'updateUser');
