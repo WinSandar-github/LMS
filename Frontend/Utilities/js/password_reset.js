@@ -2,10 +2,10 @@ function matchPassword() {
     var password = $("#password").val();
     var confirmPassword = $("#confirmPassword").val();
     if (password != confirmPassword) {
-        $("#matchPwd").html("Passwords Not Match.");
+        $("#matchPwd").html("Passwords Not Match.").addClass('alert alert-danger');
     }
     else {
-        $("#matchPwd").html("");
+        $("#matchPwd").html("").removeClass('alert alert-danger ');
     }
 }
 function resetPassword() {
@@ -29,5 +29,5 @@ function resetPassword() {
             }
         });
     }
-    
+
 }

@@ -4,10 +4,11 @@
 		<meta charset="utf-8">
 		<title>Logistics|Login</title>
 		<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+		<link rel="stylesheet" href="../Utilities/plugins/fontawesome-free/css/all.min.css">
 	  <link rel="stylesheet" href="../Utilities/dist/register/css/style.css">
 		<link rel="stylesheet" href="../Utilities/css/common.css">
 	</head>
-	<body style="background:#f0f3f6;">
+	<body class="body-class">
 		<div class="container-scroller">
 			<div class="container-fluid page-body-wrapper">
 	      <div class="main-panel">
@@ -24,42 +25,56 @@
 
 
 	                  <form class="forms-sample" method="post" enctype="multipart/form-data" action="javascript:saveCompanyRegister();">
-												
-												<div class="form-group">
-														<label for="uname1">Email</label>
-														<input class="form-control" type="text" name="username" placeholder="Email" id="email">
-                        </div>
-												<div class="form-group">
-														<label>Password</label>
-														<input class="form-control" type="password" name="pass" placeholder="Password" id="password">
+
+												<div class="row">
+													<div class="col-12">
+														<div class="form-group">
+																<label for="uname1">Email</label>
+																<input class="form-control" type="text" name="username" placeholder="Email" id="email" onkeyup="validateEmail(this.value)">
+																<div id="messageEmail"></div>
+														</div>
+													</div>
 												</div>
 												<div class="row">
-														<div class="col-4"></div>
-														<div class="col-6">
+													<div class="col-12">
+														<div class="form-group">
+																<label>Password</label>
+																<input class="form-control" type="password" name="pass" placeholder="Password" id="password">
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-8"></div>
+													<div class="col-4">
+														<div class="form-group password_reset">
+															<a href="password_reset.html" id='text-register' class="text-info">Forgot Your Password?</a>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-12">
+														<div class="form-group">
 															<div id="result"></div>
 														</div>
+													</div>
 												</div>
 												<div class="row">
-													<div class="col-4"></div>
-                                                    <div class="col-4">
-                                                        <div class="form-group">
-                                                            <button class="btn btn-primary  form-control" type="button" onclick="login();">Login</button>
-                                                        </div>
-                                                        <a href="password_reset.html" id='text-register' class="text-primary">Forgot Your Password?</a>
-                                                    </div>
-													<div class="col-4"></div>
-												</div>
+													<div class="col-12">
+														<div class="form-group ">
+															<button class="btn btn-info form-control btn-login" type="button" onclick="login();">Login</button>
 
-												<div class="row">
-
-														<div class="col-3"></div>
-														<div class="col-7">
-																<div class="form-group">
-																	<span>Don't have an account yet?</span>
-																	<a href="company-register.html" id='text-register'class="text-primary">Register Now</a>
-																</div>
 														</div>
-														<div class="col-3"></div>
+													</div>
+												</div>
+														<div class="or">OR</div>
+														<div class="form-group text-center btn-social">
+															<button class="btn btn-facebook " type="button" ><i class="fab fa-facebook-f"> Facebook</i></button>
+															<button class="btn btn-google " type="button" ><i class="fab fa-google-plus-g"></i> Google</button>
+														</div>
+														<div class="form-group text-center">
+																	<span>Don't have an account yet?</span>
+																	<a href="company-register.html" id='text-register'class="text-info">Register Now</a>
+														</div>
 
 											</div>
 	                  </form>
@@ -83,4 +98,5 @@
 	<script src="../Utilities/dist/register/js/vendor.bundle.base.js"></script>
 	<script src="../Utilities/dist/register/js/template.js"></script>
 	<script src="../Utilities/js/common.js"></script>
+	<script type="text/javascript" src="../Utilities/js/company_register.js"></script>
 </html>

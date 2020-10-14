@@ -9264,6 +9264,7 @@ pre code {
   flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
+  margin-bottom: -10px;
 }
 
 .no-gutters {
@@ -10508,15 +10509,15 @@ pre code {
   display: block;
   width: 100%;
   height: calc(1.5em + 0.75rem + 2px);
-  padding: 0.875rem 1.375rem;
+  padding: .575rem 1.75rem;
   font-size: 0.875rem;
   font-weight: 400;
-  line-height: 1;
+  line-height: 1.5;
   color: #495057;
   background-color: #ffffff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
-  border-radius: 2px;
+  border-radius: .25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
@@ -11148,9 +11149,12 @@ fieldset:disabled a.btn {
 }
 
 .btn-info {
-  color: #212529;
+  /*color: #212529;
   background-color: #0ad7f7;
-  border-color: #0ad7f7;
+  border-color: #0ad7f7;*/
+  color: #fff;
+  background-color: #00ACC1;
+  border-color: #00ACC1;
 }
 
 .btn-info:hover {
@@ -13682,7 +13686,7 @@ a.badge-dark:focus, a.badge-dark.focus {
 
 .alert {
   position: relative;
-  padding: 0.75rem 1.25rem;
+  /*padding: 0.55rem 0.25rem;*/padding: .575rem .75rem;margin-top: 10px;font-size: 0.875rem;
   margin-bottom: 1rem;
   border: 1px solid transparent;
   border-radius: 0.25rem;
@@ -13709,9 +13713,9 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .alert-primary {
-  color: #24287c;
-  background-color: #dadbfc;
-  border-color: #cbcdfa;
+  color: #FAFAFA;
+  background-color: #1720ea;
+  border-color: #1720ea;
 }
 
 .alert-primary hr {
@@ -13779,9 +13783,10 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .alert-danger {
-  color: #7c2f2f;
-  background-color: #fcdede;
-  border-color: #fad1d1;
+  color: #EF5350;
+  background-color: #FFCDD2;
+  border-color: #F8BBD0;
+  padding-left: 28px;
 }
 
 .alert-danger hr {
@@ -20392,7 +20397,7 @@ code {
 }
 
 .card .card-body {
-  padding: 1.875rem 1.875rem;
+  /*padding: 1.875rem 1.875rem;*/
 }
 
 @media (max-width: 991px) {
@@ -20980,11 +20985,13 @@ select.border-dark.tt-hint:focus {
 }
 
 .form-group label {
-  font-size: 1rem;
+  /*font-size: 1rem;
   line-height: 1.4rem;
   vertical-align: top;
   margin-bottom: .5rem;
-  font-weight: bold;
+  font-weight: bold;*/
+  line-height: .9rem;
+  font-weight: 700;
 }
 
 .form-group.has-danger .form-control, .form-group.has-danger .typeahead,
