@@ -117,7 +117,6 @@
   $('#menu a').filter(function () {
     return this.href == url;
     }).addClass('active');
-
    var src = BACKEND_URL + "storage/company_logo/" + company_logo;
    $('#company_logo').attr("src", src);
    $("#company_name").append(company_name)

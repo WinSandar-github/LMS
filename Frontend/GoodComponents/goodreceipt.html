@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="../Utilities/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="../Utilities/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="../Utilities/plugins/datatables-select/css/select.bootstrap4.min.css">
+    <!--Toastr-->
+    <link rel="stylesheet" href="../Utilities/plugins/toastr/toastr.min.css">
     <link rel="stylesheet" href="../Utilities/css/common.css" />
 </head>
 <body class="sidebar-mini layout-fixed layout-navbar-fixed text-sm">
@@ -31,7 +33,7 @@
 
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar elevation-4 sidebar-light-info" ></aside>
+        <aside class="main-sidebar elevation-4 sidebar-light-info"></aside>
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -72,7 +74,7 @@
                                             </thead>
                                             <tbody id="tbl_goodreceipt_body" class="hoverTable"></tbody>
                                         </table>
-                                        
+
                                     </div>
                                     <div>
                                         <h4>ဘောင်ချာဖွင့် ပြီးသွားသော ပစ္စည်းများ</h4>
@@ -108,7 +110,7 @@
                                     <h3 class="card-title">ပစ္စည်းလက်ခံ အသေးစိပ်</h3>
                                 </div>
                                 <div class="card-body">
-                                    <div >
+                                    <div>
                                         <table id="tbl_goodreceipt_detail" class="table table-bordered table-striped full-width">
                                             <thead>
                                                 <tr>
@@ -317,7 +319,7 @@
                         <h5 class="modal-title">ဘောင်ချာဖွင့်ရန်</h5>
                     </div>
                     <div class="modal-body">
-                        <div>
+                        <div class="align-center">
                             <div class="form-check-inline">
                                 <label class="form-check-label">
                                     <input type="radio" class="form-check-input" id="manual" name="optradio" value="manual" checked>Manual
@@ -398,6 +400,8 @@
     <!-- InputMask -->
     <script src="../Utilities/plugins/moment/moment.min.js"></script>
     <script src="../Utilities/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <!--Toastr-->
+    <script src="../Utilities/plugins/toastr/toastr.min.js"></script>
     <script src="../Utilities/js/city.js"></script>
     <script src="../Utilities/js/unit.js"></script>
     <script src="../Utilities/js/good_receipt.js"></script>
