@@ -40,7 +40,7 @@ function loadGoodInOut()
               }
             });
           dateRange('#dateRange','startDate','endDate','#table_tbl_goodinout');
-          createDataTable('#table_tbl_goodexport');
+          //createDataTable('#table_tbl_goodinout');
           },
           error: function (message) {
               dataMessage(message, "#table_tbl_goodinout", "#tbl_goodinout_container");

@@ -32,28 +32,34 @@ function saveCompanyRegister()
 
     });
 }
-function validateEmail(email) {
-  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(email);
-}
-$('#confirm_password').on('keyup', function () {
-  if ($('#txt_password').val() == $('#confirm_password').val()) {
-    $('#message').html('Matching').css("color", "blue");
-  } else
-    $('#message').html('Not Matching').css('color', 'red');
-});
-$('#txt_email').on('keyup', function () {
-  const $result = $("#messageEmail");
-  const email = $("#txt_email").val();
-  $result.text("");
-  if (validateEmail(email)) {
-    $result.text(email + " is valid");
-    $result.css("color", "blue");
-  } else{
-    $result.text(email + " is not valid");
-    $result.css("color", "red");
+function validatePassword(password){
+  if (password.match(/[a-z]/g) && password.match(/[A-Z]/g) && password.match( /[0-9]/g) && password.match( /[^a-zA-Z\d]/g) && password.length >= 8){
+    $('#valid_password').text("Your password is strong.").removeClass('alert alert-danger ').addClass('alert alert-success');
+    return true;
+  }else{
+    $('#valid_password').text("Your password must be at least 8 characters!").addClass('alert alert-danger');
+    return false;
   }
-});
+}
+function validateConfirmPassword(confirm_password){
+  if ($('#txt_password').val() != confirm_password) {
+    $('#message_password').text("Passwords don't match!Try").addClass('alert alert-danger');
+    return false;
+  }else{
+    $('#message_password').html("").removeClass('alert alert-danger ');
+    return true;
+  }
+}
+function validateEmail(email){
+  const valid_email = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (valid_email.test(email)) {
+    $("#messageEmail").html("").removeClass('alert alert-danger');
+      return false;
+  }else{
+      $('#messageEmail').text("Email address is invalid!").addClass('alert alert-danger');
+      return true;
+      }
+}
 function validateImage(logo_file,logo_form){
 
   if (logo_file.files.length > 0) {
@@ -63,19 +69,17 @@ function validateImage(logo_file,logo_form){
           var ext = file_name.substr((file_name.lastIndexOf('.') + 1));
           var file_ext=ext.toLowerCase();
           if ( file_ext!= "jpeg" && file_ext != "jpg" && file_ext != "png" && file_ext != "bmp" && file_ext != "gif") {
-                  $('#invalid_file').html('invalid file type.This file type must be jpeg,jgg,png,bmp,gif..').css('color', 'red');
-                  $('#invalid_size').html("");
-                  document.getElementById(logo_file).value = '';
+                  $('#invalid_file').text('This file type must be jpeg,jgg,png,bmp,gif..').addClass('alert alert-danger');
+                  $('#invalid_size').html("").removeClass('alert alert-danger');
                   return false;
           }
           if(file_size > 1024000){
-                  $('#invalid_size').html('Max Upload size is 1MB only').css('color', 'red');
-                  $('#invalid_file').html("");
-                  document.getElementById(logo_file).value = '';
+                  $('#invalid_size').text('Max Upload size is 1MB only').addClass('alert alert-danger');
+                  $('#invalid_file').html("").removeClass('alert alert-danger');
                   return false;
           }
-                  $('#invalid_file').html("");
-                  $('#invalid_size').html("");
+                  $('#invalid_file').html("").removeClass('alert alert-danger');
+                  $('#invalid_size').html("").removeClass('alert alert-danger');
                   logo_form.append('logo', logo_file.files[i]);
                   logo_form.append('ext', file_ext);
       }
@@ -97,9 +101,8 @@ function loadCompanyInfo()
            tr += "<td class='alignright'><button type='button' class='btn btn-info btn-md btn-space' onClick=showCompanyInfo("+ data[0].id +")><i class='fas fa-edit'></i></button ></td>";
            tr += "</tr>";
            $("#tbl_company_container").append(tr);
-           localStorage.setItem('companyName', data[0].name);
-           localStorage.setItem('companyLogo', data[0].logo);
-         },
+           localStorage.setItem('userinfo',JSON.stringify(data));
+          },
          error:function (XMLHttpRequest, textStatus, errorThrown){
            errorStatus(XMLHttpRequest, textStatus, errorThrown);
          }
