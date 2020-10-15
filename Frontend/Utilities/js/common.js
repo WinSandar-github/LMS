@@ -5,11 +5,15 @@ function logout() {
     location.href = "../authComponents/login.html";
 }
 function successMessage(message) {
-    alert(JSON.parse(message.responseText));
+    toastr.options = toastOptions;
+    toastr.success(message);
 }
 function errorMessage(message) {
-    var returnMessage = JSON.parse(message.responseText)
-    alert(returnMessage);
+    toastr.options = toastOptions;
+}
+function removeDoublequote(xhttp) {
+    var message = xhttp.responseText;
+    return message.replace(/^"|"$/g, '')
 }
 function errorStatus(XMLHttpRequest, textStatus, errorThrown){
     alert("Status: " + textStatus);
@@ -21,8 +25,25 @@ function destroyDatatable(table, tableBody) {
     }
     $(tableBody).empty();
 }
+var toastOptions = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-center",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "1000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+};
 function createDataTable(table) {
-  $(table).DataTable({
+    $(table).DataTable({
         'destroy': true,
         'paging': true,
         'lengthChange': false,
@@ -37,8 +58,15 @@ function createDataTable(table) {
     });
 
 }
+
 $('table tbody').on('click', 'tr', function () {
-    $(this).toggleClass('selected');
+    if ($(this).hasClass('selected')) {
+        $(this).removeClass('selected');
+    }
+    else {
+        $('table tbody tr.selected').removeClass('selected');
+        $(this).addClass('selected');
+    }
 });
 function createDatepicker(datepicker){
   $(datepicker).datepicker({ format: 'yyyy-mm-dd' });
@@ -68,13 +96,13 @@ function getGoodreceiptInvoiceDetails() {
             var length = goodReceiptDetail.length;
             for (var detail = 0; detail < length; detail++) {
                 var tr = "<tr>";
-                tr += "<td style='text-align:center;'>" + "#" + "</td>";
+                tr += "<td style='text-align:center;'>" +  + "</td>";
                 tr += "<td style='text-align:center;'>" + goodReceiptDetail[detail]["product_name"] + "</td>";
                 tr += "<td style='text-align:center;'>" + Math.round(goodReceiptDetail[detail]["qty"]) + "</td>";
                 tr += "</tr>";
                 $("#tbl_invoice_container").append(tr);
             }
-
+            numberRows();
         },
         error: function (message) {
             var returnMessage = JSON.parse(message.responseText)
