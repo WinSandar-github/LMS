@@ -6,12 +6,15 @@
     <title>Logistics | Invoice</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="../Utilities/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../Utilities/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="../Utilities/css/invoice.css">
+
 </head>
 <body>
     <section>
         <div>
-            <img id="logo" />
+            <img id="logo" class="brand-image img-circle elevation-3" />
             <br />
             <span id="company_name"></span>
             <br />
@@ -25,21 +28,23 @@
         <b>ပစ္စည်း လက်ခံ နံပါတ်:</b>&nbsp;&nbsp;<span id="orderNo"></span><br />
         <b>နေ့စွဲ :</b>&nbsp;&nbsp;<span id="date"></span><br />
         <b>မြို့အမည်:</b>&nbsp;&nbsp;<span id="city"></span>
-
-        <table id="tbl_goodreceipt_invoice" class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>စဥ်</th>
-                    <th>ပစ္စည်းအမည်</th>
-                    <th>အရေ အတွက်</th>
-                </tr>
-            </thead>
-            <tbody id="tbl_invoice_container"></tbody>
-        </table>
+        <div id="top-10">
+            <table id="tbl_goodreceipt_invoice" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>စဥ်</th>
+                        <th>ပစ္စည်းအမည်</th>
+                        <th>အရေ အတွက်</th>
+                    </tr>
+                </thead>
+                <tbody id="tbl_invoice_container"></tbody>
+             </table>
+        </div>
+       
         <div id="remark">
             <p>Remark: <b id="cashRemark"></b> </p>
             <p>ကျေးဇူးတင်ပါသည်။</p>
-            <button class="btn btn-flat btn-success noprint" onclick="javascript: window.print();">Print</button>
+            <button class="btn  btn-success noprint" onclick="javascript: window.print();">Print</button>
         </div>
 
     </section>

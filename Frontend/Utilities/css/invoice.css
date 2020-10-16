@@ -5,7 +5,8 @@
 }
 
 body {
-    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 
@@ -32,4 +33,6 @@ div {
     color: #17a2b8;
     font-weight: 500;
 }
-
+#top-10{
+    padding-top:10px;
+}

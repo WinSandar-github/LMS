@@ -5,7 +5,7 @@ function saveCity() {
         url: BACKEND_URL + "createCity",
         data: cityData,
         success: function (data) {
-            alert(data);
+            successMessage(data);
             clearCityForm();
         },
         error: function (message){
@@ -72,7 +72,7 @@ function updateCity() {
         success: function (data) {
             clearCityForm();
             $("#city_form").attr('action', 'javascript:saveCity()');
-            alert(data);
+            successMessage(data);
         },
         error: function (message) {
             errorMessage(message);
@@ -90,7 +90,7 @@ function deleteCity(cityName, cityId) {
             data: data,
             success: function (data) {
                 clearCityForm();
-                alert(data);
+                successMessage(data);
             },
             error: function (message){
                 errorMessage(message);

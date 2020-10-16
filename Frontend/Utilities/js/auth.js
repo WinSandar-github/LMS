@@ -15,6 +15,7 @@ if (typeof (localStorage) != "undefined")
         var role = user[0].user["role"];
         var company_name = user[0]["name"];
 
+
     }
 }
 else {
