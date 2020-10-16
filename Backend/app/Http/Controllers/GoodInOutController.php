@@ -15,16 +15,25 @@ class GoodInOutController extends Controller
 {
   public function getGoodInOutByCompanyId(Request $request)
   {
-      $goodinout =tbl_delivery_details::with(['delivery','goodReceiptBydetail','goodReceiptDetailBydetail'])
-                                        ->where('company_id','=',$request->input("company_id"))
-                                        ->get();
-      if(sizeof($goodinout)){
-          return response()->json($goodinout,200, config('common.header'),JSON_UNESCAPED_UNICODE);
+      $start_date=date("Y-m-d", strtotime($request->input("start_date")));
+      $end_date=date("Y-m-d", strtotime($request->input("end_date")));
+      if($start_date==$end_date){
+        $goodinout =tbl_delivery_details::with(['delivery','goodReceiptBydetail','goodReceiptDetailBydetail'])
+                                          ->where('tbl_delivery_details.company_id','=',$request->input("company_id"))
+                                          ->get();
       }
       else{
-          return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+        $goodinout =tbl_delivery_details::with(['delivery','goodReceiptBydetail','goodReceiptDetailBydetail'])
+                                          ->where('tbl_delivery_details.company_id','=',$request->input("company_id"))
+                                          ->whereBetween('out_date',[$start_date, $end_date])
+                                          ->get();
       }
-
+      if(sizeof($goodinout)){
+           return response()->json($goodinout, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+      }
+      else{
+           return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+      }
   }
 }
  ?>
