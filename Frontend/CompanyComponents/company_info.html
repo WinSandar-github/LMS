@@ -17,6 +17,7 @@
   <!-- DataTables -->
   <link rel="stylesheet" href="../Utilities/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../Utilities/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../Utilities/plugins/toastr/toastr.min.css">
   <link rel="stylesheet" href="../Utilities/css/common.css">
 </head>
 <body class="sidebar-mini layout-fixed layout-navbar-fixed text-sm">
@@ -145,8 +146,11 @@
                       </button>
 
                   </div>
-                  <div class="modal-body">
-                      <img src="" id="companyLogo" alt="" style="width: 450px; height: 400px;"/>
+                  <div class="modal-body image-body">
+                      <div class="image-div">
+                        <img src="" id="companyLogo" class="image-logo" />
+                      </div>
+
                       <input type="hidden" id="hrefinitials">
                   </div>
                   <div class="modal-footer">
@@ -216,7 +220,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../Utilities/dist/js/demo.js"></script>
     <script src="../MainComponents/js/adminlte_view.js"></script>
-
+    <script src="../Utilities/plugins/toastr/toastr.min.js"></script>
     <script src="../Utilities/js/auth.js"></script>
     <script src="../Utilities/js/common.js"></script>
     <script type="text/javascript" src="../Utilities/js/company_register.js"></script>

@@ -3,8 +3,8 @@ function saveDelivery()
   var car_number = $("#car_number").val();
   var driver_name = $("#driver_name").val();
   var driver_phone = $("#driver_phone").val();
-  var from_city_name = $("#from_city_name").val();
-  var to_city_name = $("#to_city_name").val();
+  var from_city_name = $("#select_city").val();
+  var to_city_name = $("#select_city_delivery").val();
   var started_date = $("#start_dt").val();
   var arrived_date = $("#arrived_dt").val();
   var different_arrived = $("#different_day").val();
@@ -14,8 +14,8 @@ function saveDelivery()
   delivery.append('car_no',car_number);
   delivery.append('driver_name',driver_name);
   delivery.append('driver_phone',driver_phone);
-  delivery.append('depart_from',from_city_name);
-  delivery.append('depart_to',to_city_name);
+  delivery.append('from_city_id',from_city_name);
+  delivery.append('to_city_id',to_city_name);
   delivery.append('start_dt',started_date);
   delivery.append('end_dt',arrived_date);
   delivery.append('arrived',different_arrived);
@@ -37,16 +37,28 @@ function saveDelivery()
             contentType: false,
             processData: false,
             success: function (data) {
-              alert(data);
-              $('#modal-delivery').modal('toggle');
-              destroyDatatable("#table_tbl_delivery","#tbl_delivery_container");
-              loadDelivery();
-           },
+              successMessage(data);
+              clearDeliveryForm();
+              },
            error:function (XMLHttpRequest, textStatus, errorThrown){
              errorStatus(XMLHttpRequest, textStatus, errorThrown);
            }
          });
   }
+}
+function clearDeliveryForm(){
+  $("#car_number").val("");
+  $("#driver_name").val("");
+  $("#driver_phone").val("");
+  $("#from_city_name").val("");
+  $("#to_city_name").val("");
+  $("#start_dt").val("");
+  $("#arrived_dt").val("");
+  $("#different_day").val("");
+  $("#delivery_remark").val("");
+  $('#modal-delivery').modal('toggle');
+  destroyDatatable("#table_tbl_delivery","#tbl_delivery_container");
+  loadDelivery();
 }
 function getDifferentDays()
 {
@@ -83,14 +95,14 @@ function loadDeliveryByStatus(status,table,table_body)
             tr += "<td >" + element.car_no + "</td>";
             tr += "<td >" + element.driver_name + "</td>";
             tr += "<td >" + element.driver_phone + "</td>";
-            tr += "<td >" + element.depart_from + "</td>";
-            tr += "<td >" + element.depart_to + "</td>";
+            tr += "<td >" + element.from_city.city_name + "</td>";
+            tr += "<td >" + element.to_city.city_name + "</td>";
             tr += "<td >" + element.start_dt + "</td>";
             tr += "<td >" + element.end_dt + "</td>";
             tr += "<td >" + element.arrived + "</td>";
             tr += "<td >" + element.remark + "</td>";
-            tr += "<td >" + element.user['full_name'] + "</td>";
-            tr += "<td >" + element.company_delivery['name'] + "</td>";
+            tr += "<td >" + element.user.full_name + "</td>";
+            tr += "<td >" + element.company_delivery.name + "</td>";
             tr += "<td class='alignright'><button type='button' class='btn btn-info btn-space' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")><i class='fas fa-plus'></i> Add DeliveryDetails</button>"+
                   "<button type='button' class='btn btn-info btn-space' onClick=showDeliveryById("+ element.id +")><i class='fas fa-edit'></i></button>"+
                   "<button type='button' class='btn btn-success btn-print btn-space' onClick=printDeliveryById("+ element.id +")><i class='fas fa-print'> Print</button ></td> ";
@@ -120,8 +132,8 @@ function showDeliveryById(delivery_id)
           $("#car_number").val(data.car_no);
           $("#driver_name").val(data.driver_name);
           $("#driver_phone").val(data.driver_phone);
-          $("#from_city_name").val(data.depart_from);
-          $("#to_city_name").val(data.depart_to);
+          $("#select_city").val(data.from_city_id);
+          $("#select_city_delivery").val(data.to_city_id);
           $("#start_dt").val(data.start_dt);
           $("#arrived_dt").val(data.end_dt);
           $("#different_day").val(data.arrived);
@@ -141,8 +153,8 @@ function updateDelivery()
   delivery.append('car_no',$("#car_number").val());
   delivery.append('driver_name',$("#driver_name").val());
   delivery.append('driver_phone',$("#driver_phone").val());
-  delivery.append('depart_from',$("#from_city_name").val());
-  delivery.append('depart_to',$("#to_city_name").val());
+  delivery.append('from_city_id',$("#from_city_name").val());
+  delivery.append('to_city_id',$("#to_city_name").val());
   delivery.append('start_dt',$("#start_dt").val());
   delivery.append('end_dt',$("#arrived_dt").val());
   delivery.append('arrived',$("#different_day").val());
@@ -155,7 +167,7 @@ function updateDelivery()
           contentType: false,
           processData: false,
           success: function (data) {
-            alert(data);
+            successMessage(data);
             $('#modal-delivery').modal('toggle');
             loadDelivery();
             },
@@ -213,7 +225,7 @@ function saveDeliverDetail()
           contentType: false,
           processData: false,
           success: function (data) {
-            alert(data);
+            successMessage(data);
             $('#modal-delivery_details').modal('toggle');
           },
          error:function (XMLHttpRequest, textStatus, errorThrown){
@@ -526,7 +538,7 @@ function addToOrderByOrderNo(order_id) {
               appendRows("labourFee", "အလုပ်သမားခ:");
               appendRows("land", "စိုက်ငွေ:");
               appendRows("totalPrice", "စုစုပေါင်း:");
-              $("#hidden_total").val('0');
+              $("#hiddenTotal").val('0');
               $('#modal-order').modal('toggle');
             }
           }
@@ -582,7 +594,7 @@ function updateOrderBygoodReceiptId()
         url: BACKEND_URL + "updateOrderByorderId",
         data:JSON.stringify(order_data),
         success: function (data) {
-                alert(data);
+                successMessage(data);
                 $('#modal-order').modal('toggle');
           },
         error:function (message){

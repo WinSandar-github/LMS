@@ -37,7 +37,7 @@ function saveStatementCarList()
           contentType: false,
           processData: false,
           success: function (data) {
-            alert(data);
+            successMessage(data);
             loadInvoice();
             document.getElementById("print_table").style.display = "inline";
             document.getElementById("price_table").style.display = "none";

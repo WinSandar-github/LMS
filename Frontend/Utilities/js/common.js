@@ -1,5 +1,4 @@
 var BACKEND_URL = "http://" + window.location.host + "/";
-
 function logout() {
     (localStorage.getItem("userinfo")) && localStorage.removeItem("userinfo");
     location.href = "../authComponents/login.html";
@@ -69,7 +68,7 @@ $('table tbody').on('click', 'tr', function () {
     }
 });
 function createDatepicker(datepicker){
-  $(datepicker).datepicker({ format: 'yyyy-mm-dd' });
+  $(datepicker).datepicker({ format: 'yyyy-mm-dd',autoclose:true });
 }
 function getCompanyInfo() {
     var src = BACKEND_URL + "storage/company_logo/" + company_logo;
@@ -110,30 +109,9 @@ function getGoodreceiptInvoiceDetails() {
         }
     });
 }
-
 function formatDate(date) {
     var newDate = new Date(date);
     return newDate.getDate() + '-' + (newDate.getMonth() + 1) + "-" + newDate.getFullYear();
-}
-function dateRange(date_range,start_date,end_date,table){
-  var data_table=$(table).DataTable({
-        'destroy': true,
-        'paging': true,
-        'lengthChange': false,
-        "pageLength": 5,
-        'searching': true,
-        'ordering': true,
-        'info': false,
-        'autoWidth': true,
-        "scrollX": true,
-        "order": [[0, "desc"]]
-    });
-    $(date_range).click(function () {
-      start_date_filter = document.getElementById(start_date).value;
-      end_date_filter = document.getElementById(end_date).value;
-      data_table.search(start_date_filter+' '+end_date_filter)
-      .draw();
-    });
 }
 function thousands_separators(num) {
     var num_parts = num.toString().split(".");

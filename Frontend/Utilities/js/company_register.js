@@ -23,7 +23,7 @@ function saveCompanyRegister()
             contentType: false,
             processData: false,
             success: function (data) {
-             alert(data);
+             successMessage(data);
              location.href='../CompanyComponents/company_info.html';
            },
            error:function (XMLHttpRequest, textStatus, errorThrown){
@@ -33,7 +33,7 @@ function saveCompanyRegister()
     });
 }
 function validatePassword(password){
-  if (password.match(/[a-z]/g) && password.match(/[A-Z]/g) && password.match( /[0-9]/g) && password.match( /[^a-zA-Z\d]/g) && password.length >= 8){
+  if (password.length >= 6){
     $('#valid_password').text("Your password is strong.").removeClass('alert alert-danger ').addClass('alert alert-success');
     return true;
   }else{
@@ -97,7 +97,7 @@ function loadCompanyInfo()
            tr += "<td >" + data[0].name + "</td>";
            tr += "<td >" + data[0].address + "</td>";
            tr += "<td >" + data[0].phone+ "</td>";
-           tr += "<td>" + "<a href='#' onclick='loadCompanyLogo("+data[0].id+")' data-toggle='modal' data-target='#companyLogoModal'>" + data[0].logo + "</a>" + "</td>";
+           tr += "<td>" + "<a href='#' onclick='loadCompanyLogo("+data[0].id+")' id='img' data-toggle='modal' data-target='#companyLogoModal'>" + data[0].logo + "</a>" + "</td>";
            tr += "<td class='alignright'><button type='button' class='btn btn-info btn-md btn-space' onClick=showCompanyInfo("+ data[0].id +")><i class='fas fa-edit'></i></button ></td>";
            tr += "</tr>";
            $("#tbl_company_container").append(tr);
@@ -146,7 +146,7 @@ function updateCompanyInfo()
           contentType: false,
           processData: false,
           success: function (data) {
-            alert(data);
+            successMessage(data);
             $('#modal-company').modal('toggle');
             loadCompanyInfo();
 
@@ -167,9 +167,8 @@ function loadCompanyLogo(company_id) {
           $(".modal-body #companyLogo").attr("src", myImageId);
 
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("Status: " + textStatus);
-            alert("Error: " + errorThrown);
+        error:function (XMLHttpRequest, textStatus, errorThrown){
+          errorStatus(XMLHttpRequest, textStatus, errorThrown);
         }
     });
 }
@@ -190,7 +189,7 @@ function updateCompanyLogo() {
         contentType: false,
         processData: false,
         success: function (data) {
-            alert(data);
+            successMessage(data);
             loadCompanyInfo();
             $('#editModal').modal('toggle');
 

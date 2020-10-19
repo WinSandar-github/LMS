@@ -117,3 +117,22 @@ function getCitySelect(){
         }
     });
 }
+function getCitySelectDelivery(){
+    var select_delivery = document.getElementById("select_city_delivery");
+    $.ajax({
+        type: "POST",
+        url: BACKEND_URL + "getCity",
+        data: "company_id=" + company_id,
+        success: function (data) {
+            data.forEach(function (element) {
+                var option = document.createElement('option');
+                option.text = element.city_name;
+                option.value = element.id;
+                select_delivery.add(option, 0);
+
+            });
+        },
+        error: function (message) {
+        }
+    });
+}
