@@ -30,8 +30,8 @@ class DeliveryController extends Controller
         $delivery->car_no=$request->input("car_no");
         $delivery->driver_name=$request->input("driver_name");
         $delivery->driver_phone=$request->input("driver_phone");
-        $delivery->depart_from=$request->input("depart_from");
-        $delivery->depart_to=$request->input("depart_to");
+        $delivery->from_city_id=$request->input("from_city_id");
+        $delivery->to_city_id=$request->input("to_city_id");
         $delivery->start_dt=$request->input("start_dt");
         $delivery->end_dt=$request->input("end_dt");
         $delivery->arrived=$request->input("arrived");
@@ -86,7 +86,7 @@ class DeliveryController extends Controller
 
   public function getDeliveryByStatus(Request $request,$status)
   {
-    $statusDelivery = tbl_delivery::with(['user','companyDelivery'])
+    $statusDelivery = tbl_delivery::with(['user','companyDelivery','fromCity','toCity'])
                             ->where('company_id','=',$request->input("company_id"))
                             ->where('status','=',$status)
                             ->get();
@@ -126,8 +126,8 @@ class DeliveryController extends Controller
         $delivery->car_no=$request->input("car_no");
         $delivery->driver_name=$request->input("driver_name");
         $delivery->driver_phone=$request->input("driver_phone");
-        $delivery->depart_from=$request->input("depart_from");
-        $delivery->depart_to=$request->input("depart_to");
+        $delivery->from_city_id=$request->input("from_city_id");
+        $delivery->to_city_id=$request->input("to_city_id");
         $delivery->start_dt=$request->input("start_dt");
         $delivery->end_dt=$request->input("end_dt");
         $delivery->arrived=$request->input("different_arrived");

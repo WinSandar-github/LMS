@@ -3,14 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Logistics|Register Form</title>
+  <title>Logistics|Register</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <link rel="stylesheet" href="../Utilities/dist/register/css/style.css">
-	<link rel="stylesheet" href="../Utilities/css/common.css">
+  <link rel="stylesheet" href="../Utilities/plugins/toastr/toastr.min.css">
+  <link rel="stylesheet" href="../Utilities/css/common.css">
 </head>
 
-<body>
+<body class="body-class">
   <div class="container-scroller">
 
         <!-- partial -->
@@ -33,8 +34,7 @@
 													<div class="col-6">
 																<div class="form-group">
 																	<label >ကုမ္ပဏီအမည် </label>
-
-																		<input type="text" class="form-control" id="companyname" required oninvalid="this.setCustomValidity('ကုမ္ပဏီအမည် ထည့်ရန်')" oninput="setCustomValidity('')" placeholder="ကုမ္ပဏီအမည် ထည့်ရန်">
+                                    <input type="text" class="form-control" id="companyname" required oninvalid="this.setCustomValidity('ကုမ္ပဏီအမည် ထည့်ရန်')" oninput="setCustomValidity('')" placeholder="ကုမ္ပဏီအမည် ထည့်ရန်">
 
 
 																</div>
@@ -45,13 +45,13 @@
 																<label >ကုမ္ပဏီအမှတ်တံဆိပ် </label>
 																	<input type="file" class="file-upload-default" id="companylogo" name="img" required oninvalid="this.setCustomValidity('ကုမ္ပဏီအမှတ်တံဆိပ် ထည့်ရန်')" oninput="setCustomValidity('')">
 																	<div class="input-group col-xs-12">
-						                        <input type="text" class="form-control file-upload-info" disabled placeholder="ကုမ္ပဏီအမှတ်တံဆိပ်">
+						                        <input type="text" class="form-control file-upload-info" disabled placeholder="ကုမ္ပဏီအမှတ်တံဆိပ် ထည့်ရန်">
 						                        <span class="input-group-append">
-						                          <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+						                          <button class="file-upload-browse btn btn-info" type="button">Upload</button>
 						                        </span>
 						                      </div>
-                                  <span id="invalid_file"></span>
-                                  <span id="invalid_size"></span>
+                                  <div id="invalid_file"></div>
+                                  <div id="invalid_size"></div>
 															</div>
 													</div>
 										</div>
@@ -63,54 +63,55 @@
 
 														</div>
 													</div>
-													<div class="col-6">
-														<div class="form-group">
-																<label >ဖုန်း </label>
-																	<input type="text" class="form-control" id="txt_phone" required oninvalid="this.setCustomValidity('ဖုန်: ထည့်ရန်')" oninput="setCustomValidity('')" placeholder="ဖုန်: ထည့်ရန်">
+                          <div class="col-6">
+  													<div class="form-group">
+  														<label>အီးမေးလ်</label>
+  															<input type="email" class="form-control" id="txt_email" name="email" required oninvalid="this.setCustomValidity('အီးမေးလ် ထည့်ရန်')" oninput="setCustomValidity('')"  onkeyup="validateEmail(this.value)" placeholder="အီးမေးလ် ထည့်ရန်">
+                                <div id="messageEmail"></div>
+  													</div>
+  												</div>
 
-														</div>
-													</div>
 									</div>
 
 									<div class="row">
 
-												<div class="col-6">
-													<div class="form-group">
-														<label>အီးမေးလ်</label>
-															<input type="email" class="form-control" id="txt_email" name="email" required oninvalid="this.setCustomValidity('အီးမေးလ် ထည့်ရန်')" oninput="setCustomValidity('')" placeholder="အီးမေးလ် ထည့်ရန်">
-                              <span id='messageEmail' ></span>
-													</div>
-												</div>
+
 												<div class="col-6">
 														<div class="form-group">
 															<label>စကားဝှက်</label>
-																<input type="password" class="form-control" id="txt_password" required oninvalid="this.setCustomValidity('စကားဝှက် ထည့်ရန်')" oninput="setCustomValidity('')" placeholder="စကားဝှက် အသစ် ထည့်ရန်" >
-
+																<input type="password" class="form-control" id="txt_password" required oninvalid="this.setCustomValidity('စကားဝှက် ထည့်ရန်')" oninput="setCustomValidity('')"  onkeyup="validatePassword(this.value)" placeholder="စကားဝှက် အသစ် ထည့်ရန်" >
+                                <div id='valid_password'></div>
 														</div>
 												</div>
+                        <div class="col-6">
+                          <div class="form-group">
+                              <label >ဆက်သွယ်ရန်ဖုန်းနံပါတ်</label>
+                                <input type="text" class="form-control" id="txt_phone" required oninvalid="this.setCustomValidity('ဆက်သွယ်ရန်ဖုန်းနံပါတ် ထည့်ရန်')" oninput="setCustomValidity('')" placeholder="ဆက်သွယ်ရန်ဖုန်းနံပါတ် ထည့်ရန်">
+
+                          </div>
+                        </div>
 								</div>
 								<div class="row">
-												<div class="col-6">
-													<div class="form-group">
-															<label >လိပ်စာ </label>
-															<textarea class="form-control" cols="155" rows="2" id="companyaddress" required oninvalid="this.setCustomValidity('လိပ်စာ ထည့်ရန်')" oninput="setCustomValidity('')" placeholder="လိပ်စာ ထည့်ရန်"></textarea>
-													</div>
-												</div>
+
                         <div class="col-6">
 														<div class="form-group">
 															<label>စကားဝှက်အတည် ပြုရန်</label>
-																<input type="password" class="form-control" id="confirm_password" required oninvalid="this.setCustomValidity('စကားဝှက် ထည့်ရန်')" oninput="setCustomValidity('')" placeholder="နောက်တစ်ကြိမ်စကားဝှက် ထည့်ရန်">
-                                <span id='message'></span>
+																<input type="password" class="form-control" id="confirm_password" required oninvalid="this.setCustomValidity('စကားဝှက် ထည့်ရန်')" oninput="setCustomValidity('')" onkeyup="validateConfirmPassword(this.value)" placeholder="နောက်တစ်ကြိမ်စကားဝှက် ထည့်ရန်">
+                                <div id='message_password'></div>
 														</div>
 												</div>
+                        <div class="col-6">
+													<div class="form-group">
+															<label >လိပ်စာ </label>
+															<textarea class="form-control" cols="155" rows="3" id="companyaddress" required oninvalid="this.setCustomValidity('လိပ်စာ ထည့်ရန်')" oninput="setCustomValidity('')" placeholder="လိပ်စာ ထည့်ရန်"></textarea>
+													</div>
+												</div>
 								</div>
-                <div class="row">
-									<div class="col-4"></div>
-									<div class="col-4">
-										<button type="submit" class="btn btn-primary btn-register">Register</button>
+
+									<div class="form-group text-center">
+										<button type="submit" class="btn btn-info">Register</button>
 									</div>
-									<div class="col-4"></div>
-								</div>
+
                   </form>
                 </div>
               </div>
@@ -132,5 +133,6 @@
   <script type="text/javascript" src="../Utilities/plugins/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="../Utilities/js/company_register.js"></script>
 	<script src="../Utilities/js/common.js"></script>
+  <script src="../Utilities/plugins/toastr/toastr.min.js"></script>
 </body>
 </html>

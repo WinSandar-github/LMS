@@ -17,7 +17,7 @@ class tbl_delivery_details extends Model
   }
   public function goodReceiptDetailBydetail()
   {
-      return $this->belongsTo('App\tbl_good_receipt_details','id');
+      return $this->belongsTo('App\tbl_good_receipt_details','good_receipt_detail_id');
   }
 
 }

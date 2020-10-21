@@ -1,11 +1,13 @@
 function loadGoodInOut()
 {
-  destroyDatatable("#table_tbl_goodinout","#tbl_goodinout_container");
-  destroyDatatable("#table_tbl_goodexport","#tbl_goodexport_container");
+  $("#tbl_goodinout_container").html("");
+  var date_string = $("#date").val();
+  var start_date = date_string.split(' - ')[0];
+  var end_date = date_string.split(' - ')[1];
   $.ajax({
           type: "POST",
           url: BACKEND_URL + "getGoodInOutByCompanyId",
-          data: "company_id=" + company_id ,
+          data: "company_id=" + company_id + "&start_date=" + start_date + "&end_date=" + end_date,
           success: function (data) {
             var export_data=[];
             export_data=data;
@@ -39,11 +41,10 @@ function loadGoodInOut()
                 $("#tbl_goodexport_container").append(tr);
               }
             });
-          dateRange('#dateRange','startDate','endDate','#table_tbl_goodinout');
-          createDataTable('#table_tbl_goodexport');
+            createDataTable("#table_tbl_goodinout");
           },
           error: function (message) {
               dataMessage(message, "#table_tbl_goodinout", "#tbl_goodinout_container");
           }
-  });
+        });
 }

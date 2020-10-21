@@ -37,7 +37,7 @@ function saveStatementCarList()
           contentType: false,
           processData: false,
           success: function (data) {
-            alert(data);
+            successMessage(data);
             loadInvoice();
             document.getElementById("print_table").style.display = "inline";
             document.getElementById("price_table").style.display = "none";
@@ -66,14 +66,14 @@ function loadStatmentCarList() {
                   var tr = "<tr>";
                   tr += "<td >" + element.date + "</td>";
                   tr += "<td >" + element.car_no + "</td>";
-                  tr += "<td >" + element.total_price+ "</td>";
-                  tr += "<td >" + element.commission_value + "</td>";
-                  tr += "<td >" + element.labour  + "</td>";
-                  tr += "<td >" + element.advance + "</td>";
-                  tr += "<td >" + element.land + "</td>";
-                  tr += "<td >" + element.final_price + "</td>";
-                  tr += "<td >" + element.all_total + "</td>";
-                  tr += "<td >" + element.cash_total+ "</td>";
+                  tr += "<td class='align-right'>" + element.total_price+ "</td>";
+                  tr += "<td class='align-right'>" + element.commission_value + "</td>";
+                  tr += "<td class='align-right'>" + element.labour  + "</td>";
+                  tr += "<td class='align-right'>" + element.advance + "</td>";
+                  tr += "<td class='align-right'>" + element.land + "</td>";
+                  tr += "<td class='align-right'>" + element.final_price + "</td>";
+                  tr += "<td class='align-right'>" + element.all_total + "</td>";
+                  tr += "<td class='align-right'>" + element.cash_total+ "</td>";
                   tr += "</tr>";
                   $("#tbl_statment_container").append(tr);
 

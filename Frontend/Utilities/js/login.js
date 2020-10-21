@@ -9,15 +9,13 @@ function login()
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             if (xhttp.responseText.trim() == "") {
-                document.getElementById("result").innerHTML = "<h3>Authentication Failed!</h3>";
+                $('#result').text("Authentication Failed!").addClass('alert alert-danger');
             }
             else {
                 var obj = JSON.parse((xhttp.responseText));
-                localStorage.setItem('companyName', obj[0].name);
-                localStorage.setItem('companyLogo', obj[0].logo);
-                  if (typeof (localStorage) !== "undefined") {
+                if (typeof (localStorage) !== "undefined") {
                       localStorage.setItem('userinfo', xhttp.responseText);
-                     location.href='../CompanyComponents/company_info.html';
+                      location.href='../CompanyComponents/company_info.html';
                   }
                 }
         }

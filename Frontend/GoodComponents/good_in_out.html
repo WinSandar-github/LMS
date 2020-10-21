@@ -7,16 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../Utilities/plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="../Utilities/dist/css/adminlte.min.css">
-  <link rel="stylesheet" href="../Utilities/plugins/jquery-ui/jquery-ui.css">
+  <link href="../Utilities/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="../Utilities/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <link rel="stylesheet" href="../Utilities/plugins/daterangepicker/daterangepicker.css">
   <link rel="stylesheet" href="../Utilities/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <link rel="stylesheet" href="../Utilities/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../Utilities/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="../Utilities/plugins/daterangepicker/daterangepicker.css">
   <link rel="stylesheet" href="../Utilities/css/common.css">
+
 </head>
 <body class="sidebar-mini layout-fixed layout-navbar-fixed text-sm">
   <div class="wrapper">
@@ -39,9 +39,22 @@
                 </div>
                 <div class="card-body">
 
-                    <span id="date-label-from" class="date-label">မှ : </span><input class="date_range_filter date datepicker" id="startDate" type="text" />
-                    <span id="date-label-to" class="date-label">သို့ :</span><input class="date_range_filter date datepicker" id="endDate" type="text" />
-                    <Button class="date_range_filter date btn btn-info" id="dateRange">ရှာရန်</Button>
+                  <div class="row">
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <label>မှ - သို့</label>
+                              <div class="input-group">
+                                  <div class="input-group-prepend">
+                                      <span class="input-group-text">
+                                          <i class="far fa-calendar-alt"></i>
+                                      </span>
+                                  </div>
+                                  <input type="text" class="form-control float-right" id="date" onchange="loadGoodInOut();">
+                              </div>
+                          </div>
+
+                      </div>
+                  </div>
 
                   <div>
                       <table id="table_tbl_goodinout" class="table table-bordered">
@@ -135,7 +148,7 @@
 
   <script src="../Utilities/dist/js/demo.js"></script>
   <script src="../MainComponents/js/adminlte_view.js"></script>
-
+  <script src="../Utilities/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
   <script src="../Utilities/plugins/datatables/jquery.dataTables.min.js"></script>
   <script src="../Utilities/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
   <script src="../Utilities/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -146,9 +159,11 @@
   <script src="../Utilities/js/goodinout.js"></script>
   <script type="text/javascript" src="../Utilities/js/auth.js"></script>
   <script>
-      loadGoodInOut();
-      createDatepicker('.datepicker');
-
+  $('#date').daterangepicker({
+      locale: {
+          format: 'DD-MM-YYYY'
+      }
+  });
   </script>
 </body>
 </html>

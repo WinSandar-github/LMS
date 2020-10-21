@@ -13,7 +13,9 @@ if (typeof (localStorage) != "undefined")
         var address = user[0]["address"];
         var ref_initials = user[0]["ref_initials"];
         var role = user[0].user["role"];
-        var company_name = localStorage.getItem("companyName");
+        var company_name = user[0]["name"];
+
+
     }
 }
 else {

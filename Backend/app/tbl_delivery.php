@@ -19,5 +19,12 @@ class tbl_delivery extends Model
   {
       return $this->hasMany('App\tbl_delivery_details','delivery_id');
   }
-
+  public function fromCity()
+  {
+      return $this->belongsTo('App\tbl_city_list','from_city_id');
+  }
+  public function toCity()
+  {
+      return $this->belongsTo('App\tbl_city_list','to_city_id');
+  }
 }

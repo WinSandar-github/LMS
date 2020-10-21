@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../Utilities/plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="../Utilities/dist/css/adminlte.min.css">
-  <link rel="stylesheet" href="../Utilities/plugins/jquery-ui/jquery-ui.css">
+  <link href="../Utilities/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="../Utilities/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <link rel="stylesheet" href="../Utilities/plugins/daterangepicker/daterangepicker.css">
   <link rel="stylesheet" href="../Utilities/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="../Utilities/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../Utilities/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="../Utilities/plugins/select2/css/select2.css">
+  <link rel="stylesheet" href="../Utilities/plugins/toastr/toastr.min.css">
   <link rel="stylesheet" href="../Utilities/css/common.css" />
 </head>
 <body class="sidebar-mini layout-fixed layout-navbar-fixed text-sm">
@@ -204,8 +205,10 @@
                                     <i class="fas fa-home"></i>
                                   </span>
                                 </div>
-                            <input type="text" class="form-control" id="from_city_name" autocomplete="off"  placeholder="စတင်ထွက်ခွါသည့် မြို့" required oninvalid="this.setCustomValidity('စတင်ထွက်ခွါသည့် မြိ ထည့်ရန်')" oninput="setCustomValidity('')"/>
-                          </div>
+                                <select class="form-control" id="select_city" name="select_city">
+                                    <option value="" selected disabled>စတင်ထွက်ခွါသည့် မြို့အမည် ရွေးရန်</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="col-6">
@@ -217,25 +220,38 @@
                                     <i class="fas fa-home"></i>
                                   </span>
                                 </div>
-                            <input type="text" class="form-control" id="to_city_name" autocomplete="off"  placeholder="ရောက်ရှိသည့် မြို့" required oninvalid="this.setCustomValidity('ရောက်ရှိသည့် မြို့ ထည့်ရန်')" oninput="setCustomValidity('')">
-                          </div>
+                                <select class="form-control" id="select_city_delivery" name="select_city">
+                                    <option value="" selected disabled>ရောက်ရှိသည့် မြို့အမည် ရွေးရန်</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                   </div>
                     <div class="row">
                         <div class="col-6">
-                              <div class="form-group">
+                          <div class="form-group">
                                   <label for="exampleInputEmail1">စတင်ထွက်ခွါသည့် အချိန်</label>
-
-                                        <input type="text" class="form-control datepicker" autocomplete="off" id="start_dt" placeholder="စတင်ထွက်ခွါသည့် အချိန် ထည့်ရန်" onchange="getDifferentDays(this.form)">
-                                </div>
+                                  <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                          <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                      </div>
+                                        <input type="text" class="form-control pull-right datepicker"  autocomplete="off" id="start_dt" placeholder="စတင်ထွက်ခွါသည့် အချိန် ထည့်ရန်" onchange="getDifferentDays(this.form)">
+                                    </div>
+                          </div>
                         </div>
                         <div class="col-6">
                               <div class="form-group">
                                   <label for="exampleInputEmail1">ရောက်ရှိသည့် အချိန်</label>
-
-                                  <input type="text" class="form-control datepicker" autocomplete="off" id="arrived_dt" placeholder="ရောက်ရှိသည့် အချိန် ထည့်ရန်" onchange="getDifferentDays(this.form)" >
-
+                                  <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                          <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                      </div>
+                                  <input type="text" class="form-control pull-right datepicker"  autocomplete="off" id="arrived_dt" placeholder="ရောက်ရှိသည့် အချိန် ထည့်ရန်" onchange="getDifferentDays(this.form)" >
+                                </div>
                               </div>
                       </div>
                     </div>
@@ -254,35 +270,36 @@
                               </div>
                           </div>
                           <div class="col-6">
-                              <div class="form-group">
-                                  <label for="exampleInputEmail1">မှတ်ချက်</label>
-                                  <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                          <i class="fas fa-info-circle"></i>
-                                        </span>
-                                      </div>
-                                  <input class="form-control" type="text" id="delivery_remark" placeholder="မှတ်ချက်ရေးရန်" required oninvalid="this.setCustomValidity('မှတ်ချက်ရေးရန်')" oninput="setCustomValidity('')"/>
-                                </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">အခြေအနေ</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text">
+                                        <i class="fas fa-info-circle"></i>
+                                      </span>
+                                    </div>
+                                    <select class="form-control" id="selected_status">
+                                      <option value="0">Processing</option>
+                                      <option value="1">Completed</option>
+                                    </select>
                               </div>
+                            </div>
+
                           </div>
                 </div>
                 <div class="row">
                   <div class="col-12">
-                      <div class="form-group">
-                          <label for="exampleInputEmail1">အခြေအနေ</label>
-                          <div class="input-group">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                  <i class="fas fa-info-circle"></i>
-                                </span>
-                              </div>
-                              <select class="form-control" id="selected_status">
-                                <option value="0">Processing</option>
-                                <option value="1">Completed</option>
-                              </select>
-                        </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">မှတ်ချက်</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">
+                                <i class="fas fa-info-circle"></i>
+                              </span>
+                            </div>
+                        <textarea class="form-control" id="delivery_remark" name="delivery_remark" placeholder="မှတ်ချက်ရေးရန်" required oninvalid="this.setCustomValidity('မှတ်ချက်ရေးရန်')" oninput="setCustomValidity('')"></textarea>
                       </div>
+                    </div>
                   </div>
                 </div>
         </div>
@@ -382,7 +399,7 @@
 
                   </div>
                   <div class="row">
-                      <input type="hidden" id="hidden_total" />
+                      <input type="hidden" id="hiddenTotal" />
                       <input type="hidden" id="hidden_order_id" />
                       <div class="table_css">
                           <table class="table table-bordered table-striped" id="tbl_order">
@@ -416,7 +433,7 @@
   </div>
   <script src="../Utilities/plugins/jquery/jquery.min.js"></script>
 
-  <script src="../Utilities/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <script src="../Utilities/plugins/jquery-ui/jquery-ui.min.js"></script>-
 
   <script>
     $.widget.bridge('uibutton', $.ui.button)
@@ -430,7 +447,7 @@
 
   <script src="../Utilities/dist/js/demo.js"></script>
   <script src="../MainComponents/js/adminlte_view.js"></script>
-
+  <script src="../Utilities/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
   <script src="../Utilities/plugins/datatables/jquery.dataTables.min.js"></script>
   <script src="../Utilities/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
   <script src="../Utilities/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -440,11 +457,16 @@
   <script src="../Utilities/js/common.js"></script>
   <script type="text/javascript" src="../Utilities/js/auth.js"></script>
   <script src="../Utilities/js/order.js"></script>
+  <script src="../Utilities/plugins/toastr/toastr.min.js"></script>
+  <script src="../Utilities/js/city.js"></script>
+  <script src="../Utilities/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
   <script>
       $('.select2').select2();
       createDatepicker('.datepicker');
       loadDelivery();
       autoOrderNo();
+      getCitySelect();
+      getCitySelectDelivery();
   </script>
 </body>
 </html>
