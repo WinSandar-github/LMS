@@ -95,15 +95,8 @@ class RegisterController extends Controller
             $file_ext=$request->input('ext');
             $newfile=$ref_initials.".".$file_ext;
             $oldfile= $request->input('logo');
-            if($oldfile==$newfile){
-              $updateCompany->logo=$oldfile;
-            }else{
-              $updateCompany->logo=$newfile;
-              Storage::move('public/company_logo/'.$oldfile, 'public/company_logo/'.$newfile);
-            }
             $updateCompany->ref_initials = strtoupper($ref_initials);
             $updateCompany->save();
-
             if($request->input('address') || $request->input('phone')){
               $updateUser=User::find($request->input("company_id"));
               $updateUser->phone_no=$request->input('phone');
@@ -123,7 +116,7 @@ class RegisterController extends Controller
         try{
             $updateCompanyByLogo = tbl_company::find($request->input("companyId"));
             $file_name=strtolower($request->input('ref_initials')).".".$request->input('ext');
-            $request->file('logo')->storeAs('public/company_logo',$file_name);
+            $request->file("logo")->storeAs('public/company_logo', $file_name);
             $updateCompanyByLogo->logo=$file_name;
             $updateCompanyByLogo->save();
             return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
