@@ -19,7 +19,6 @@ function login()
                   }
                 }
         }
-
         if (xhttp.readyState == 4 && xhttp.status == 500) {
             document.write(xhttp.responseText);
         }

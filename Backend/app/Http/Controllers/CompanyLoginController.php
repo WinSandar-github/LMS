@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Arr;
+use Laravel\Socialite\Facades\Socialite;
 use File;
 use Hash;
 use DateTime;
@@ -39,29 +40,51 @@ class CompanyLoginController extends Controller
 				    return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
 			    }
 			}
-    }
-    public function resetPassword(Request $request){
-        $userByemail=User::where('email', request('username'))->first();
-        $userByName=User::where('full_name', request('username'))->first();
-        if($userByemail){
-            return $this->updatePassword($userByemail,request('password'));
-        }
-        else if($userByName){
-            return $this->updatePassword($userByName,request('password'));
-        }
-        else{
-            return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
-        }
-    }
-    public function updatePassword($user,$password){
-        try{
-            $user->password=Hash::make(request('password'));
-            $user->save();
-            $company = tbl_company::with('user')->where('id','=',$user->company_id)->get();
-            return response()->json($company, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
-        }catch (\Exception $e){
-            return response()->json(config('common.message.error'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
-        }
-     }
+ }
+	public function resetPassword(Request $request)
+	 {
+		$userByemail=User::where('email', request('username'))->first();
+		$userByName=User::where('full_name', request('username'))->first();
+		if($userByemail){
+				return $this->updatePassword($userByemail,request('password'));
+		}
+		else if($userByName){
+				return $this->updatePassword($userByName,request('password'));
+		}
+		else{
+				return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+		}
+	}
+	public function updatePassword($user,$password)
+	{
+		try{
+				$user->password=Hash::make(request('password'));
+				$user->save();
+				$company = tbl_company::with('user')->where('id','=',$user->company_id)->get();
+				return response()->json($company, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+		}catch (\Exception $e){
+				return response()->json(config('common.message.error'), 500, config('common.header'), JSON_UNESCAPED_UNICODE);
+		}
+	}
+	public function saveUserInfoFacebook(Request $request)
+	{
+		$existingUser = User::where('email', $request->input('email'))->first();
+		if ($existingUser) {
+				$companyUser = tbl_company::with('user')->where('id','=',$existingUser->company_id)->get();
+				return response()->json($companyUser, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+			} else {
+				$newCompany= new tbl_company();
+				$newCompany->email= $request->input('email');
+				$newCompany->save();
+
+				$newUser= new User();
+				$newUser->full_name=$request->input('full_name');
+				$newUser->email= $request->input('email');
+				$newUser->company_id=$newCompany->id;
+				$newUser->save();
+				$companyUser = tbl_company::with('user')->where('id','=',$newCompany->id)->get();
+				return response()->json($companyUser, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
+			}
+	}
 }
 ?>

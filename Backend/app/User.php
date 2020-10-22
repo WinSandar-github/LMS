@@ -53,4 +53,5 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\tbl_delivery','id');
     }
+    
 }
