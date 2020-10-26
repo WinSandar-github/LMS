@@ -81,6 +81,9 @@ Route::post('updateRule',array('middleware'=>'cors','uses'=>'RuleController@upda
 Route::post('deleteRule',array('middleware'=>'cors','uses'=>'RuleController@deleteRule'));
 //For Password Reset
 Route::post('resetPassword', array('middleware' => 'cors', 'uses' => 'CompanyLoginController@resetPassword'));
+//For facebook login
+Route::post('saveUserInfoFacebook', array('middleware' => 'cors', 'uses' => 'CompanyLoginController@saveUserInfoFacebook'));
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -61,6 +61,7 @@ class VerifyCsrfToken extends Middleware
       'updateRule',
       'deleteRule',
       'getCompany',
-      'resetPassword'
+      'resetPassword',
+      'saveUserInfoFacebook'
     ];
 }
