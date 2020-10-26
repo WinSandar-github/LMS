@@ -97,15 +97,8 @@ class RegisterController extends Controller
             $file_ext=$request->input('ext');
             $newfile=$ref_initials.".".$file_ext;
             $oldfile= $request->input('logo');
-            if($oldfile==$newfile){
-              $updateCompany->logo=$oldfile;
-            }else{
-              $updateCompany->logo=$newfile;
-              Storage::move('public/company_logo/'.$oldfile, 'public/company_logo/'.$newfile);
-            }
             $updateCompany->ref_initials = strtoupper($ref_initials);
             $updateCompany->save();
-
             if($request->input('address') || $request->input('phone')){
               $updateUser=User::find($request->input("company_id"));
               $updateUser->phone_no=$request->input('phone');

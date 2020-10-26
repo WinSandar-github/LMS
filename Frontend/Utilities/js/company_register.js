@@ -102,7 +102,6 @@ function loadCompanyInfo()
            }else{
              tr += "<td>" + "<a href='#' onclick='loadCompanyLogo("+data[0].id+")' id='img' data-toggle='modal' data-target='#companyLogoModal'>" + data[0].logo + "</a>" + "</td>";
            }
-
            tr += "<td class='alignright'><button type='button' class='btn btn-info btn-md btn-space' onClick=showCompanyInfo("+ data[0].id +")><i class='fas fa-edit'></i></button ></td>";
            tr += "</tr>";
            $("#tbl_company_container").append(tr);
