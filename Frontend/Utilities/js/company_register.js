@@ -93,15 +93,14 @@ function loadCompanyInfo()
           url: BACKEND_URL + "getCompany",
           data: "company_id="+company_id,
           success: function (data) {
-           var tr = "<tr>";
+            var tr = "<tr>";
            tr += "<td >" + data[0].name + "</td>";
            tr += "<td >" + data[0].address + "</td>";
-           tr += "<td >" + data[0].phone + "</td>";
-           if (data[0].logo) {
-               tr += "<td>" + "<a href='#' onclick='loadCompanyLogo(" + data[0].id + ")' id='img' data-toggle='modal' data-target='#companyLogoModal'>" + data[0].logo + "</a>" + "</td>";
-           }
-           else {
-               tr += "<td>" + "<a href='#' onclick='loadCompanyLogo(" + data[0].id + ")' id='img' data-toggle='modal' data-target='#companyLogoModal'>" + "Add Logo" + "</a>" + "</td>";
+           tr += "<td >" + data[0].phone+ "</td>";
+           if (data[0].logo=="") {
+             tr += "<td>" + "<a href='#' onclick='loadCompanyLogo("+data[0].id+")' id='img' data-toggle='modal' data-target='#companyLogoModal'>Add logo</a>" + "</td>";
+           }else{
+             tr += "<td>" + "<a href='#' onclick='loadCompanyLogo("+data[0].id+")' id='img' data-toggle='modal' data-target='#companyLogoModal'>" + data[0].logo + "</a>" + "</td>";
            }
            tr += "<td class='alignright'><button type='button' class='btn btn-info btn-md btn-space' onClick=showCompanyInfo("+ data[0].id +")><i class='fas fa-edit'></i></button ></td>";
            tr += "</tr>";
@@ -152,10 +151,8 @@ function updateCompanyInfo()
           processData: false,
           success: function (data) {
             successMessage(data);
-            $('#modal-company').modal('toggle');
-            loadCompanyInfo();
-
-         },
+            location.reload();
+          },
          error:function (XMLHttpRequest, textStatus, errorThrown){
            errorStatus(XMLHttpRequest, textStatus, errorThrown);
          }
@@ -167,7 +164,6 @@ function loadCompanyLogo(company_id) {
         url: BACKEND_URL + "getCompany",
         data: "company_id="+company_id,
         success: function (data) {
-          $('#hrefinitials').val(data[0].ref_initials);
           var myImageId = BACKEND_URL + "storage/company_logo/" + data[0].logo;
           $(".modal-body #companyLogo").attr("src", myImageId);
 
@@ -184,7 +180,6 @@ function editCompanyLogo()
 function updateCompanyLogo() {
     var logo_form = new FormData();
     logo_form.append('companyId',company_id);
-    logo_form.append('ref_initials',$('#hrefinitials').val());
     var logo_file = document.getElementById('updatelogo');
     validateImage(logo_file,logo_form);
     $.ajax({
@@ -195,10 +190,8 @@ function updateCompanyLogo() {
         processData: false,
         success: function (data) {
             successMessage(data);
-            loadCompanyInfo();
-            $('#editModal').modal('toggle');
-
-            }
+            location.reload();
+          }
 
     });
 }

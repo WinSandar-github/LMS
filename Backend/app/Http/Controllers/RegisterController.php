@@ -38,10 +38,12 @@ class RegisterController extends Controller
        $company->address=$request->input('address');
        $company->phone=$request->input('phone');
        $file_ext=$request->input('ext');
-       $file_name=$ref_initials.".".$file_ext;
+       $company->email=$request->input('email');
+       $company->ref_initials = strtoupper($ref_initials);
+       $company->save();
+       $file_name=$company->id.".".$file_ext;
        $request->file('logo')->storeAs('public/company_logo',$file_name);
        $company->logo=$file_name;
-       $company->ref_initials = strtoupper($ref_initials);
        $company->save();
 
        $user=new User();
@@ -115,8 +117,8 @@ class RegisterController extends Controller
     }else{
         try{
             $updateCompanyByLogo = tbl_company::find($request->input("companyId"));
-            $file_name=strtolower($request->input('ref_initials')).".".$request->input('ext');
-            $request->file("logo")->storeAs('public/company_logo', $file_name);
+            $file_name=$request->input("companyId").".".$request->input('ext');
+            $request->file('logo')->storeAs('public/company_logo',$file_name);
             $updateCompanyByLogo->logo=$file_name;
             $updateCompanyByLogo->save();
             return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);

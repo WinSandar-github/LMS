@@ -83,6 +83,8 @@ Route::post('deleteRule',array('middleware'=>'cors','uses'=>'RuleController@dele
 Route::post('resetPassword', array('middleware' => 'cors', 'uses' => 'CompanyLoginController@resetPassword'));
 //For google login 
 Route::post('createCompanyByGoogle', array('middleware' => 'cors', 'uses' => 'SocialLoginController@createCompanyByGoogle'));
+//For facebook login
+Route::post('saveUserInfoFacebook', array('middleware' => 'cors', 'uses' => 'CompanyLoginController@saveUserInfoFacebook'));
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
