@@ -24,7 +24,7 @@ function saveCompanyRegister()
             processData: false,
             success: function (data) {
              successMessage(data);
-             location.href='../CompanyComponents/company_info.html';
+             location.href='../../Components/Company/company_info.html';
            },
            error:function (XMLHttpRequest, textStatus, errorThrown){
              errorStatus(XMLHttpRequest, textStatus, errorThrown);
@@ -100,9 +100,13 @@ function loadCompanyInfo()
            if (data[0].logo=="") {
              tr += "<td>" + "<a href='#' onclick='loadCompanyLogo("+data[0].id+")' id='img' data-toggle='modal' data-target='#companyLogoModal'>Add logo</a>" + "</td>";
            }else{
-             tr += "<td>" + "<a href='#' onclick='loadCompanyLogo("+data[0].id+")' id='img' data-toggle='modal' data-target='#companyLogoModal'>" + data[0].logo + "</a>" + "</td>";
+             tr += "<td>" + "<a href='#' onclick='loadCompanyLogo("+data[0].id+")' id='img' data-toggle='modal' data-target='#companyLogoModal'>View logo</a>" + "</td>";
            }
-           tr += "<td class='alignright'><button type='button' class='btn btn-info btn-md btn-space' onClick=showCompanyInfo("+ data[0].id +")><i class='fas fa-edit'></i></button ></td>";
+           if(data==""){
+              tr += "<td class='alignright'><button type='button' class='btn btn-info btn-md btn-space' onClick=showCompanyInfo("+ data[0].id +")><i class='fas fa-plus'></i></button ></td>";
+           }else{
+              tr += "<td class='alignright'><button type='button' class='btn btn-info btn-md btn-space' onClick=showCompanyInfo("+ data[0].id +")><i class='fas fa-edit'></i></button ></td>";
+           }
            tr += "</tr>";
            $("#tbl_company_container").append(tr);
            localStorage.setItem('userinfo',JSON.stringify(data));
@@ -125,7 +129,6 @@ function showCompanyInfo(company_id)
           $("#txt_company_name").val(data[0].name);
           $("#txt_company_address").val(data[0].address);
           $("#txt_company_phone").val(data[0].phone);
-          $('#hfile').val(data[0].logo);
           $('#modal-company').modal('toggle');
       },
       error:function (message){
@@ -135,14 +138,11 @@ function showCompanyInfo(company_id)
 }
 function updateCompanyInfo()
 {
-  var file_ext = $('#hfile').val().substr(($('#hfile').val().lastIndexOf('.') + 1));
   var company_info = new FormData;;
   company_info.append('company_id',$('#hcompanyId').val());
   company_info.append('name',$("#txt_company_name").val());
   company_info.append('address',$("#txt_company_address").val());
   company_info.append('phone',$("#txt_company_phone").val());
-  company_info.append('ext',file_ext);
-  company_info.append('logo',$('#hfile').val());
   $.ajax({
           type: "POST",
           url: BACKEND_URL + "updateCompany",
@@ -150,7 +150,7 @@ function updateCompanyInfo()
           contentType: false,
           processData: false,
           success: function (data) {
-            successMessage(data);
+            localStorage.setItem('userinfo',JSON.stringify(data));
             location.reload();
           },
          error:function (XMLHttpRequest, textStatus, errorThrown){
@@ -166,7 +166,6 @@ function loadCompanyLogo(company_id) {
         success: function (data) {
           var myImageId = BACKEND_URL + "storage/company_logo/" + data[0].logo;
           $(".modal-body #companyLogo").attr("src", myImageId);
-
         },
         error:function (XMLHttpRequest, textStatus, errorThrown){
           errorStatus(XMLHttpRequest, textStatus, errorThrown);
@@ -189,9 +188,8 @@ function updateCompanyLogo() {
         contentType: false,
         processData: false,
         success: function (data) {
-            successMessage(data);
+            localStorage.setItem('userinfo',JSON.stringify(data));
             location.reload();
           }
-
-    });
+        });
 }

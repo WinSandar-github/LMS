@@ -114,7 +114,7 @@ table th, td {
 #text-register{
   font-weight: bold;
   text-decoration: none;
-
+  color: #1bb6ce;
 }
 .custom-card{
   margin-top: 10px;

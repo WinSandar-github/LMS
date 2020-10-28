@@ -183,7 +183,7 @@ class GoodreceiptController extends Controller
         }
         else{
             return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
-        }  
+        }
 	}
      public function getVipCustomer(Request $request)
 	{

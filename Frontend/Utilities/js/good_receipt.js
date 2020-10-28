@@ -61,7 +61,7 @@ function getGoodReceipt() {
     destroyDatatable("#tbl_complete_goodreceipt", "#tbl_complete_goodreceipt_body");
     getGoodReceiptByStatus(imcompleteOrderStatus, '#tbl_goodreceipt','#tbl_goodreceipt_body');
     getGoodReceiptByStatus(completeOrderStatus, '#tbl_complete_goodreceipt', '#tbl_complete_goodreceipt_body');
-   
+
 }
 function getGoodReceiptByStatus(status, table, table_body) {
     $.ajax({
@@ -99,7 +99,7 @@ function getGoodReceiptByStatus(status, table, table_body) {
                         "<li class='fas fa-trash'></li></button></div>";
                     tr += "</tr>";
                 }
-               
+
                 $(table_body).append(tr);
 
             });
@@ -204,8 +204,8 @@ function saveProduct() {
         productDetail["unit_id"] = Unit;
         productDetail["qty"] = quantity;
         productDetail["weight"] = weight;
-        productDetail["company_id"] = 2;
-        productDetail["user_id"] = 1;
+        productDetail["company_id"] = company_id;
+        productDetail["user_id"] = user_id;
         productDetail["remark"] = remark;
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -313,7 +313,7 @@ function updateGoodReceiptDetail() {
     xhttp.open('POST', BACKEND_URL + 'updateGoodReceiptDetail');
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.send(JSON.stringify(goodReceiptDetailData));
-}  
+}
 function deleteGoodReceiptDetails(productName, goodReceiptDetailId) {
     var result = confirm("WARNING: This will delete GoodReceiptDetails from " + decodeURIComponent(productName) + " and all related stocks! Press OK to proceed.");
     if (result) {

@@ -19,30 +19,18 @@ class RegisterController extends Controller
   public function saveCompany(Request $request)
   {
     try{
-       $string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-       $company_name=$request->input('name');
-       $com_len=strlen($company_name);
-       if($com_len==1){
-         $str = str_shuffle($string);
-         $ref_initials=$company_name[0].(substr($str,0,2));
-         }
-       else if($com_len==2){
-         $str = str_shuffle($string);
-         $ref_initials=$company_name[0].$company_name[1].(substr($str,0,1));
-       }
-       else{
-         $ref_initials=$company_name[0].$company_name[1].$company_name[2];
-       }
        $company=new tbl_company();
        $company->name=$request->input('name');
        $company->address=$request->input('address');
        $company->phone=$request->input('phone');
        $file_ext=$request->input('ext');
        $company->email=$request->input('email');
+       $company_name=$request->input('name');
+       $ref_initials=$this->getRefernceInitials($request,$company_name);
        $company->ref_initials = strtoupper($ref_initials);
        $company->save();
        $file_name=$company->id.".".$file_ext;
-       $request->file('logo')->storeAs('public/company_logo',$file_name);
+       $request->file('logo')->storeAs('company_logo',$file_name);
        $company->logo=$file_name;
        $company->save();
 
@@ -72,31 +60,17 @@ class RegisterController extends Controller
           return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
         }
   }
+
   public function updateCompany(Request $request)
   {
     if($request->input("company_id")){
         try{
             $updateCompany = tbl_company::find($request->input("company_id"));
-            $string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $company_name=$request->input('name');
-            $com_len=strlen($company_name);
-            if($com_len==1){
-              $str = str_shuffle($string);
-              $ref_initials=$company_name[0].(substr($str,0,2));
-              }
-            else if($com_len==2){
-              $str = str_shuffle($string);
-              $ref_initials=$company_name[0].$company_name[1].(substr($str,0,1));
-            }
-            else{
-              $ref_initials=$company_name[0].$company_name[1].$company_name[2];
-            }
             $updateCompany->name=$request->input('name');
             $updateCompany->address=$request->input('address');
             $updateCompany->phone=$request->input('phone');
-            $file_ext=$request->input('ext');
-            $newfile=$ref_initials.".".$file_ext;
-            $oldfile= $request->input('logo');
+            $company_name=$request->input('name');
+            $ref_initials=$this->getRefernceInitials($request,$company_name);
             $updateCompany->ref_initials = strtoupper($ref_initials);
             $updateCompany->save();
             if($request->input('address') || $request->input('phone')){
@@ -110,23 +84,47 @@ class RegisterController extends Controller
               $updateUser->address=$request->input('address');
               $updateUser->save();
             }
-            return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+            $company = tbl_company::with('user')
+                                  ->where('id','=',$request->input("company_id"))
+                                  ->get();
+            return response()->json($company, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }catch (\Exception $e) {
-            return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
+          return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
     }else{
         try{
             $updateCompanyByLogo = tbl_company::find($request->input("companyId"));
             $file_name=$request->input("companyId").".".$request->input('ext');
-            $request->file('logo')->storeAs('public/company_logo',$file_name);
+            $request->file('logo')->storeAs('company_logo',$file_name);
             $updateCompanyByLogo->logo=$file_name;
             $updateCompanyByLogo->save();
-            return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+            $company = tbl_company::with('user')
+                                  ->where('id','=',$request->input("companyId"))
+                                  ->get();
+            return response()->json($company, 200,config('common.header'), JSON_UNESCAPED_UNICODE);
         }catch (\Exception $e) {
             return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
         }
     }
   }
-
+  public function getRefernceInitials($request,$company_name)
+  {
+    $string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $com_len=strlen($company_name);
+    if($com_len==1){
+      $str = str_shuffle($string);
+      $ref_initials=$company_name[0].(substr($str,0,2));
+      return $ref_initials;
+      }
+    else if($com_len==2){
+      $str = str_shuffle($string);
+      $ref_initials=$company_name[0].$company_name[1].(substr($str,0,1));
+      return $ref_initials;
+    }
+    else{
+      $ref_initials=$company_name[0].$company_name[1].$company_name[2];
+      return $ref_initials;
+    }
+  }
 }
  ?>

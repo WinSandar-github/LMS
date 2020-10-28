@@ -1,7 +1,7 @@
 if (typeof (localStorage) != "undefined")
 {
     if (localStorage.getItem("userinfo") == null) {
-        location.href = "../authComponents/login.html";
+        location.href = "../../Components/Auth/login.html";
     }
     else {
         var user = JSON.parse(localStorage.getItem("userinfo"));
@@ -15,10 +15,9 @@ if (typeof (localStorage) != "undefined")
         var role = user[0].user["role"];
         var company_name = user[0]["name"];
 
-
-    }
+      }
 }
 else {
     alert('Your browser does not support local storage');
-    location.href = "../authComponents/login.html";
+    location.href = "../../Components/Auth/login.html";
   }

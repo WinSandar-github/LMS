@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Logistics | Delivery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../Utilities/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../../Utilities/dist/css/adminlte.min.css">
+  <link href="../../Utilities/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="../../Utilities/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <link rel="stylesheet" href="../../Utilities/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <link rel="stylesheet" href="../../Utilities/plugins/datatables-select/css/select.bootstrap4.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="stylesheet" href="../../Utilities/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../Utilities/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../Utilities/plugins/select2/css/select2.css">
+  <link rel="stylesheet" href="../../Utilities/plugins/toastr/toastr.min.css">
+  <link rel="stylesheet" href="../../Utilities/css/common.css" />
+</head>
+<body class="sidebar-mini layout-fixed layout-navbar-fixed text-sm">
+  <div class="wrapper">
+
+    <header class="main-header"></header>
+
+    <aside class="main-sidebar elevation-4 sidebar-light-info" style="position:fixed;"></aside>
+
+    <div class="content-wrapper">
+
+      <div class="content-header">
+
+      </div>
+
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">ခရီးစဥ်များ</h3>
+
+                </div>
+                <div class="card-body">
+                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-delivery">
+                      <i class="fa fa-plus"></i>&nbsp;ခရီးစဥ် အသစ်ထည့်ရန်
+                  </button>
+                  <div>
+                        <h4>မပြီးဆုံးသေးသော ခရီးစဥ်များ</h4>
+                        <table id="table_tbl_delivery" class="table table-bordered">
+                          <thead >
+                                <tr>
+                                        <th>ကားနံပါတ်</th>
+                                        <th>ယာဥ်မောင်းသူ အမည်</th>
+                                        <th>​ယာဥ်မောင်းသူ ဖုန်းနံပါတ်</th>
+                                        <th>စတင်ထွက်ခွါသည့် မြို့</th>
+                                        <th>ရောက်ရှိသည့် မြို့</th>
+                                        <th>စတင်ထွက်ခွါသည့် အချိန်</th>
+                                        <th>ရောက်ရှိသည့် အချိန်</th>
+                                        <th>ကြာချိန်</th>
+                                        <th>မှတ်ချက်</th>
+                                        <th>လုပ်ဆောင်သည့်သူ</th>
+                                        <th>ကုမ္ပဏီအမည်</th>
+                                        <th></th>
+
+                                  </tr>
+                                </thead>
+                                <tbody id="tbl_delivery_container" class="hoverTable"></tbody>
+                          </table>
+                  </div>
+                  <div>
+                              <h4>ခရီးစဥ် ပြီးဆုံး</h4>
+                          <table id="table_tbl_delivery2" class="table table-bordered">
+                                <thead >
+                                      <tr>
+                                          <th>ကားနံပါတ်</th>
+                                          <th>ယာဥ်မောင်းသူ အမည်</th>
+                                          <th>​ယာဥ်မောင်းသူ ဖုန်းနံပါတ်</th>
+                                          <th>စတင်ထွက်ခွါသည့် မြို့</th>
+                                          <th>ရောက်ရှိသည့် မြို့</th>
+                                          <th>စတင်ထွက်ခွါသည့် အချိန်</th>
+                                          <th>ရောက်ရှိသည့် အချိန်</th>
+                                          <th>ကြာချိန်</th>
+                                          <th>မှတ်ချက်</th>
+                                          <th>လုပ်ဆောင်သည့်သူ</th>
+                                          <th>ကုမ္ပဏီအမည်</th>
+                                          <th></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbl_delivery_container2" class="hoverTable"></tbody>
+                            </table>
+                    </div>
+
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-body">
+                    <div>
+                        <h4>ပစ္စည်း စာရင်း</h4>
+                        <table id="table_tbl_deliverydetails" class="table table-bordered">
+                          <thead>
+                                <tr>
+                                        <th>customer</th>
+                                        <th>ပစ္စည်းအမည်</th>
+                                        <th>အရေအတွက်</th>
+                                        <th>အလေးချိန်</th>
+                                        <th>မှတ်ချက်</th>
+
+                                  </tr>
+                                </thead>
+                                <tbody id="tbl_deliverydetails_container" class="hoverTable"></tbody>
+                          </table>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <footer class="main-footer"></footer>
+
+    <aside class="control-sidebar control-sidebar-dark">
+
+    </aside>
+
+  </div>
+  <div class="modal fade" id="modal-delivery">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">ခရီးစဥ် အသစ် </h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <form enctype="multipart/form-data" id="delivery_form" action="javascript:saveDelivery();">
+        <div class="modal-body">
+            <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">ကားနံပါတ်</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    <i class="fas fa-truck-moving"></i>
+                                  </span>
+                                </div>
+                            <input type="text" class="form-control" placeholder="ကားနံပါတ် ထည့်ရန်" id="car_number" required oninvalid="this.setCustomValidity('ကားနံပါတ် ထည့်ရန်')" oninput="setCustomValidity('')">
+                          </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">ယာဥ်မောင်းသူ နာမည်</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    <i class="fas fa-user-tie"></i>
+                                  </span>
+                                </div>
+                            <input type="text" class="form-control" id="driver_name" name="driver_name" placeholder="ယာဥ်မောင်းသူ နာမည် ထည့်ရန်" required oninvalid="this.setCustomValidity('ယာဥ်မောင်းသူ နာမည် ထည့်ရန်')" oninput="setCustomValidity('')">
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">ယာဥ်မောင်းသူ ဖုန်းနံပါတ်</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    <i class="fas fa-mobile-alt"></i>
+                                  </span>
+                                </div>
+                            <input type="text" class="form-control" id="driver_phone" name="driver_phone" placeholder="ယာဥ်မောင်းသူ ဖုန်းနံပါတ် ထည့်ရန်" required oninvalid="this.setCustomValidity('ယာဥ်မောင်းသူ ဖုန်းနံပါတ် ထည့်ရန်')" oninput="setCustomValidity('')">
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">စတင်ထွက်ခွါသည့် မြို့</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    <i class="fas fa-home"></i>
+                                  </span>
+                                </div>
+                                <select class="form-control" id="select_city" name="select_city">
+                                    <option value="" selected disabled>စတင်ထွက်ခွါသည့် မြို့အမည် ရွေးရန်</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">ရောက်ရှိသည့် မြို့</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    <i class="fas fa-home"></i>
+                                  </span>
+                                </div>
+                                <select class="form-control" id="select_city_delivery" name="select_city">
+                                    <option value="" selected disabled>ရောက်ရှိသည့် မြို့အမည် ရွေးရန်</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                    <div class="row">
+                        <div class="col-6">
+                          <div class="form-group">
+                                  <label for="exampleInputEmail1">စတင်ထွက်ခွါသည့် အချိန်</label>
+                                  <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                          <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                      </div>
+                                        <input type="text" class="form-control datepicker"  autocomplete="off" id="start_dt" placeholder="စတင်ထွက်ခွါသည့် အချိန် ထည့်ရန်" onchange="getDifferentDays(this.form)">
+                                    </div>
+                          </div>
+                        </div>
+                        <div class="col-6">
+                              <div class="form-group">
+                                  <label for="exampleInputEmail1">ရောက်ရှိသည့် အချိန်</label>
+                                  <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                          <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                      </div>
+                                  <input type="text" class="form-control datepicker"  autocomplete="off" id="arrived_dt" placeholder="ရောက်ရှိသည့် အချိန် ထည့်ရန်" onchange="getDifferentDays(this.form)" >
+                                </div>
+                              </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                          <div class="col-6">
+                              <div class="form-group">
+                                  <label for="exampleInputEmail1">ကြာချိန််</label>
+                                  <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                          <i class="fas fa-shipping-fast"></i>
+                                        </span>
+                                      </div>
+                                  <input type="number" class="form-control " id="different_day" placeholder=" ကြာချိန်">
+                                </div>
+                              </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">အခြေအနေ</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text">
+                                        <i class="fas fa-info-circle"></i>
+                                      </span>
+                                    </div>
+                                    <select class="form-control" id="selected_status">
+                                      <option value="0">Processing</option>
+                                      <option value="1">Completed</option>
+                                    </select>
+                              </div>
+                            </div>
+
+                          </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">မှတ်ချက်</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">
+                                <i class="fas fa-info-circle"></i>
+                              </span>
+                            </div>
+                        <textarea class="form-control" id="delivery_remark" name="delivery_remark" placeholder="မှတ်ချက်ရေးရန်" ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        </div>
+
+        <div class="modal-footer">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button class="btn btn-info" type="submit">
+                            <i class="fa fa-floppy-o"></i>  Save
+                    </button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modal-delivery_details">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">ခရီးစဥ် ဘောင်ချာဖွင့်ရန် </h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+  <form method="post" enctype="multipart/form-data" id="fileUploadForm" action="javascript:saveDeliverDetail();">
+    <input type="hidden" id="hdelivery_id">
+        <div class="modal-body">
+              <div class="row">
+                <div class="col-4"></div>
+                <div class="col-4">
+                  <label>Order ရွေးရန်</label>
+
+                  <select class="select2" id="select_order_id" name="order_id" data-placeholder="Order ရွေးရန်" onchange="searchOrderNo(this.value);">
+                          <option>--Order ရွေးရန်--</option>
+                  </select>
+                </div>
+                <div class="col-4"></div>
+              </div>
+          <br/>
+          <div class="row">
+            <div class="col-12 box-body table-responsive">
+              <table class="table table-bordered table-hover" id="tbl_product">
+                  <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>Customer</th>
+                          <th>Order</th>
+                          <th>ပစ္စည်းအမည်</th>
+                          <th>စုစုပေါင်းအရေအတွက်</th>
+                          <th>တင်မည့်အရေအတွက်</th>
+                          <th>အလေးချိန်</th>
+                          <th>မြို့အမည်</th>
+                          <th>Remark</th>
+                          <th></th>
+
+                      </tr>
+                  </thead>
+
+                  <tbody class="product_table" id="tbl_product_container"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button class="btn btn-info" type="submit">
+                      <i class="fa fa-floppy-o"></i>  Save
+              </button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-order">
+      <div class="modal-dialog  modal-lg order-modal-dialog">
+          <div class="modal-content">
+            <form method="post" enctype="multipart/form-data" action="javascript:updateOrderBygoodReceiptId();">
+              <div class="modal-header">
+                  <h5 class="modal-title">ဘောင်ချာဖွင့်ရန်</h5>
+              </div>
+              <div class="modal-body">
+
+                  <div class="button-css">
+                      <div class="form-check-inline">
+                          <label class="form-check-label">
+                              <input type="radio" class="form-check-input" id="manual" name="optradio" value="manual" checked>Manual
+                          </label>
+                      </div>
+                      <div class="form-check-inline">
+                          <label class="form-check-label" for="radio1">
+                              <input type="radio" class="form-check-input" id="quantity" name="optradio" value="quantity">Quantity * Price
+                          </label>
+                      </div>
+                      <div class="form-check-inline">
+                          <label class="form-check-label" for="radio2">
+                              <input type="radio" class="form-check-input" id="weight" name="optradio" value="weight">Weight * Price
+                          </label>
+                      </div>
+
+                  </div>
+                  <div class="row">
+                      <input type="hidden" id="hiddenTotal" />
+                      <input type="hidden" id="hidden_order_id" />
+                      <div class="table_css">
+                          <table class="table table-bordered table-striped" id="tbl_order">
+                              <thead>
+                                  <tr>
+                                      <th>ပစ္စည်း အမည်</th>
+                                      <th>စုစုပေါင်း အရေအတွက်</th>
+                                      <th>တင်ပို့မည့် အရေအတွက်</th>
+                                      <th>အလေး ချိန်</th>
+                                      <th>အတိုင်းအတာစံ</th>
+                                      <th>စျေးနှုန်း</th>
+                                      <th>စုစုပေါင်း</th>
+                                  </tr>
+                              </thead>
+                              <tbody id="tbl_order_body"></tbody>
+
+                          </table>
+                      </div>
+
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-info" >
+                      <i class="fa fa-floppy-o"></i> Save
+                  </button>
+              </div>
+            </form>
+          </div>
+      </div>
+  </div>
+  <script src="../../Utilities/plugins/jquery/jquery.min.js"></script>
+
+  <script src="../../Utilities/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+
+  <script src="../../Utilities/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+  <script src="../../Utilities/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+
+  <script src="../../Utilities/dist/js/adminlte.js"></script>
+
+  <script src="../../Utilities/dist/js/demo.js"></script>
+  <script src="../../Components/Main/js/adminlte_view.js"></script>
+  <script src="../../Utilities/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+  <script src="../../Utilities/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="../../Utilities/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../../Utilities/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="../../Utilities/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="../../Utilities/plugins/select2/js/select2.js"></script>
+  <script src="../../Utilities/js/delivery.js"></script>
+  <script src="../../Utilities/js/common.js"></script>
+  <script type="text/javascript" src="../../Utilities/js/auth.js"></script>
+  <script src="../../Utilities/js/order.js"></script>
+  <script src="../../Utilities/plugins/toastr/toastr.min.js"></script>
+  <script src="../../Utilities/js/city.js"></script>
+  <script src="../../Utilities/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+  <script>
+      $('.select2').select2();
+      createDatepicker('.datepicker');
+      loadDelivery();
+      autoOrderNo();
+      getCitySelect();
+      getCitySelectDelivery();
+  </script>
+</body>
+</html>

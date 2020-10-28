@@ -1,8 +1,8 @@
-var BACKEND_URL = "http://" + window.location.host + "/";
+var BACKEND_URL = "https://www.talyou.com/logistics/Backend/public/";
 
 function logout() {
     (localStorage.getItem("userinfo")) && localStorage.removeItem("userinfo");
-    location.href = "../authComponents/login.html";
+    location.href = "../../Components/Auth/login.html";
 }
 function successMessage(message) {
     toastr.options = toastOptions;
@@ -69,13 +69,14 @@ $('table tbody').on('click', 'tr', function () {
     }
 });
 function createDatepicker(datepicker){
-  $(datepicker).datepicker({ format: 'yyyy-mm-dd',autoclose:true });
+  $(datepicker).datepicker({ format: 'yyyy-mm-dd',autoclose:true,cursor:'pointer' });
 }
 function getCompanyInfo() {
-    var src = BACKEND_URL + "storage/company_logo/" + company_logo;
-    $('#logo').attr("src", src);
-    $("#company_name").append(company_name);
-    $("#address").append(address);
+  $("#company_name").html(""),$("#user_name").html("");
+  var src = BACKEND_URL + "storage/company_logo/" + company_logo;
+  $('#logo').attr("src", src);
+  $("#company_name").append(company_name);
+  $("#address").append(address);
 }
 function getGoodreceiptInvoiceDetails() {
     var currentUrl = window.location.href;
