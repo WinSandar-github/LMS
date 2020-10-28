@@ -45,7 +45,7 @@ function appendRows(id,label) {
         $(new_id).keyup(function () {
             getTotal();
         });
-    } 
+    }
 }
 function getTotalPerProduct(td) {
     var row = $(td).closest('tr');
@@ -218,5 +218,5 @@ function deleteOrder(orderNo, orderId) {
 $("#tbl_order_body").on('click', '.btn-print', function () {
     var currentRow = $(this).closest("tr");
     var orderNo = currentRow.find("td:eq(0)").text();
-    window.open("../DeliveryComponents/invoice.html?orderNo=" + orderNo);
+    window.open("../../Components/Delivery/invoice.html?orderNo=" + orderNo);
 });

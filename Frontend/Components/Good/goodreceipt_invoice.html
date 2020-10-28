@@ -1,0 +1,64 @@
+﻿﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Logistics | Invoice</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../../Utilities/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../Utilities/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../Utilities/css/invoice.css">
+    <link rel="stylesheet" href="../../Utilities/plugins/toastr/toastr.min.css">
+</head>
+<body>
+    <section>
+        <div>
+            <img id="logo" class="brand-image img-circle elevation-3" />
+            <br />
+            <span id="company_name"></span>
+            <br />
+            <span id="address"></span>
+        </div>
+    </section>
+    <hr class="line" />
+    <section>
+        <b>ကုန်သည်အမည် :</b>&nbsp;<span id="customerName"></span><br>
+        <b>ကုန်ပို့သူအမည်:</b>&nbsp;&nbsp;<span id="senderName"></span><br />
+        <b>ပစ္စည်း လက်ခံ နံပါတ်:</b>&nbsp;&nbsp;<span id="orderNo"></span><br />
+        <b>နေ့စွဲ :</b>&nbsp;&nbsp;<span id="date"></span><br />
+        <b>မြို့အမည်:</b>&nbsp;&nbsp;<span id="city"></span>
+        <div id="top-10">
+            <table id="tbl_goodreceipt_invoice" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>စဥ်</th>
+                        <th>ပစ္စည်းအမည်</th>
+                        <th>အရေ အတွက်</th>
+                    </tr>
+                </thead>
+                <tbody id="tbl_invoice_container"></tbody>
+             </table>
+        </div>
+
+        <div id="remark">
+            <p>Remark: <b id="cashRemark"></b> </p>
+            <p>ကျေးဇူးတင်ပါသည်။</p>
+            <button class="btn  btn-success noprint" onclick="javascript: window.print();">Print</button>
+        </div>
+
+    </section>
+    <!-- jQuery -->
+    <script src="../../Utilities/plugins/jquery/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="../../Utilities/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Bootstrap 4-->
+    <script src="../../Utilities/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../Utilities/js/auth.js"></script>
+    <script src="../../Utilities/js/common.js"></script>
+    <script>
+        getCompanyInfo();
+        getGoodreceiptInvoiceDetails();
+    </script>
+</body>
+</html>

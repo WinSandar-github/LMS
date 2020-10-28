@@ -1,28 +1,19 @@
 function saveDelivery()
 {
-  var car_number = $("#car_number").val();
-  var driver_name = $("#driver_name").val();
-  var driver_phone = $("#driver_phone").val();
-  var from_city_name = $("#select_city").val();
-  var to_city_name = $("#select_city_delivery").val();
-  var started_date = $("#start_dt").val();
-  var arrived_date = $("#arrived_dt").val();
-  var different_arrived = $("#different_day").val();
-  var remark = $("#delivery_remark").val();
-  var status=$('#selected_status').val();
-  var delivery = new FormData;
-  delivery.append('car_no',car_number);
-  delivery.append('driver_name',driver_name);
-  delivery.append('driver_phone',driver_phone);
-  delivery.append('from_city_id',from_city_name);
-  delivery.append('to_city_id',to_city_name);
-  delivery.append('start_dt',started_date);
-  delivery.append('end_dt',arrived_date);
-  delivery.append('arrived',different_arrived);
-  delivery.append('remark',remark);
-  delivery.append('company_id',company_id);
-  delivery.append('status',status);
-  delivery.append('user_id',user_id);
+  var different_arrived =$("#different_day").val() ;
+  var delivery = {};
+  delivery['car_no']=$("#car_number").val();
+  delivery['driver_name']=$("#driver_name").val();
+  delivery['driver_phone']=$("#driver_phone").val();
+  delivery['from_city_id']=$("#select_city").val();
+  delivery['to_city_id']=$("#select_city_delivery").val();
+  delivery['start_dt']=$("#start_dt").val();
+  delivery['end_dt']=$("#arrived_dt").val();
+  delivery['arrived']=$("#different_day").val();
+  delivery['remark']=$("#delivery_remark").val();
+  delivery['company_id']=company_id;
+  delivery['status']=$('#selected_status').val();
+  delivery['user_id']=user_id;
   if(different_arrived.trim()==""){
     $("#start_dt").focus();
     }
@@ -30,20 +21,18 @@ function saveDelivery()
      $("#arrived_dt").focus();
   }
   else{
-    $.ajax({
-            type: "POST",
-            url: BACKEND_URL + "saveDelivery",
-            data: delivery,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-              successMessage(data);
-              clearDeliveryForm();
-              },
-           error:function (XMLHttpRequest, textStatus, errorThrown){
-             errorStatus(XMLHttpRequest, textStatus, errorThrown);
-           }
-         });
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4) {
+          var message=removeDoublequote(xhttp);
+          successMessage(message);
+          clearDeliveryForm();
+        }
+    };
+    xhttp.open('POST', BACKEND_URL + 'saveDelivery');
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(JSON.stringify(delivery));
+
   }
 }
 function clearDeliveryForm(){
@@ -168,8 +157,7 @@ function updateDelivery()
           processData: false,
           success: function (data) {
             successMessage(data);
-            $('#modal-delivery').modal('toggle');
-            loadDelivery();
+            location.reload();
             },
          error:function (XMLHttpRequest, textStatus, errorThrown){
            errorStatus(XMLHttpRequest, textStatus, errorThrown);
@@ -226,7 +214,7 @@ function saveDeliverDetail()
           processData: false,
           success: function (data) {
             successMessage(data);
-            $('#modal-delivery_details').modal('toggle');
+            location.reload();
           },
          error:function (XMLHttpRequest, textStatus, errorThrown){
            errorStatus(XMLHttpRequest, textStatus, errorThrown);
@@ -256,7 +244,7 @@ function getDeliverDetailsByDeliveryId(delivery_id)
 }
 function printDeliveryById(delivery_id)
 {
-  window.open("../DeliveryComponents/deliver_invoice.html",localStorage.setItem("delivery_id", delivery_id));
+  window.open("../../Components/Delivery/deliver_invoice.html",localStorage.setItem("delivery_id", delivery_id));
 }
 function loadInvoice()
 {
@@ -327,7 +315,7 @@ function loadInvoiceDelivery(good_receipt)
                    tr += "<td >" + alldata[0].city_list.city_name+ "</td>";
                  }
                  tr += "<td >" +element.product_name + "</td>";
-                 tr += "<td >" + element.quantity+" "+element.unit_byorder_detail.unit_name+ "</td>";
+                 tr += "<td >" + element.quantity+" "+element.unit+ "</td>";
                  if(index===0){
                     tr += "<td >" + thousands_separators( alldata[0].order_by_good_receipts[0].order_total)+ "</td>";
                     tr += "<td >" +  thousands_separators( alldata[0].order_by_good_receipts[0].labour) + "</td>";
@@ -403,7 +391,7 @@ function tableRowClick(table_body){
       var current_row = $(this).closest("tr");
       var order_no = current_row.find("td:eq(2)").text();
     }
-    window.open("../DeliveryComponents/invoice.html?orderNo=" + order_no);
+    window.open("../../Components/Delivery/invoice.html?orderNo=" + order_no);
   });
 }
 function loadInvoiceByOrderNo()
@@ -512,7 +500,7 @@ function addToOrderByOrderNo(order_id) {
                   var tr = "<tr>";
                   tr += "<td >" + (i+1) + "</td>";
                   tr += "<td >" + orderdetails[i].product_name + "</td>";
-                  tr += "<td >" + orderdetails[i].quantity+" "+ orderdetails[i].unit_byorder_detail.unit_name+ "</td>";
+                  tr += "<td >" + orderdetails[i].quantity+" "+ orderdetails[i].unit+ "</td>";
                   tr += "<td class='align-right'>" + thousands_separators(orderdetails[i].product_price)+ "</td>";
                   tr += "</tr>";
                   $("#tbl_order_invoice_container").append(tr);

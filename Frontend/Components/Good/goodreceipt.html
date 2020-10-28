@@ -1,0 +1,418 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Logistics | GoodReceipt</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../Utilities/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../Utilities/dist/css/adminlte.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../Utilities/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="../../Utilities/plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="../../Utilities/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../../Utilities/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../Utilities/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../Utilities/plugins/datatables-select/css/select.bootstrap4.min.css">
+    <!--Toastr-->
+    <link rel="stylesheet" href="../../Utilities/plugins/toastr/toastr.min.css">
+    <link rel="stylesheet" href="../../Utilities/css/common.css" />
+</head>
+<body class="sidebar-mini layout-fixed layout-navbar-fixed text-sm">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        <header class="main-header"> </header>
+
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar elevation-4 sidebar-light-info"></aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">ပစ္စည်းလက်ခံ</h3>
+                                </div>
+                                <div class="card-body">
+
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-goodreceipt">
+                                        <i class="fa fa-plus"></i>&nbsp;အသစ်ထည့်ရန်
+                                    </button>
+
+                                    <div>
+                                        <h4>ဘောင်ချာဖွင့်ရန် ကျန်ရှိနေသော ပစ္စည်းများ</h4>
+                                        <table id="tbl_goodreceipt" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Cash Method</th>
+                                                    <th>ပစ္စည်းလက်ခံ နံပါတ်</th>
+                                                    <th>ကုန်သည်အမည်</th>
+                                                    <th>ကုန်ပို့သူအမည်</th>
+                                                    <th>မှတ်ချက်</th>
+                                                    <th>နေ့စွဲ</th>
+                                                    <th>လုပ်ဆောင်သည့်သူ</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbl_goodreceipt_body" class="hoverTable"></tbody>
+                                        </table>
+
+                                    </div>
+                                    <div>
+                                        <h4>ဘောင်ချာဖွင့် ပြီးသွားသော ပစ္စည်းများ</h4>
+                                        <table id="tbl_complete_goodreceipt" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Cash Method</th>
+                                                    <th>ပစ္စည်းလက်ခံ နံပါတ်</th>
+                                                    <th>ကုန်သည်အမည်</th>
+                                                    <th>ကုန်ပို့သူအမည်</th>
+                                                    <th>မှတ်ချက်</th>
+                                                    <th>နေ့စွဲ</th>
+                                                    <th>လုပ်ဆောင်သည့်သူ</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbl_complete_goodreceipt_body" class="hoverTable"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.row (main row) -->
+                </div><!-- /.container-fluid -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">ပစ္စည်းလက်ခံ အသေးစိပ်</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div>
+                                        <table id="tbl_goodreceipt_detail" class="table table-bordered table-striped full-width">
+                                            <thead>
+                                                <tr>
+                                                    <th>ပစ္စည်းအမည်</th>
+                                                    <th>အရေအတွက်</th>
+                                                    <th>အတိုင်းအတာစံ</th>
+                                                    <th>အလေးချိန်</th>
+                                                    <th>မှတ်ချက်</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbl_goodreceipt_detail_body" class="hoverTable"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.row (main row) -->
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer"></footer>
+        <div class="modal" id="modal-goodreceipt">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add/Update GoodReceipt</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <form enctype="multipart/form-data" action="javascript:saveGoodReceipt();" id="goodReceiptForm">
+                        <div class="modal-body">
+                            <input type="hidden" id="goodReceiptId" value="" />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">ကုန်သည်အမည်</label>
+                                        <input type="text" class="form-control" id="txt_customer_name" name="txt_customer_name" placeholder="Customer အမည်" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">နေ့စွဲ</label>
+                                            <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd-mm-yyyy" data-mask id="txt_date" placeholder="နေ့စွဲ ထည့်ရန်" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="check1">
+                                            <input type="checkbox" class="form-check-input" id="vip_customer" name="vip_customer" autocomplete="off">VIP Customer?
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">နေရပ်လိပ်စာ</label>
+                                        <textarea class="form-control" id="txt_address" name="txt_address" placeholder="နေရပ်လိပ်စာ"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">ကုန်ပို့သူအမည်</label>
+                                        <input type="text" class="form-control" id="txt_sender_name" name="txt_sender_name" placeholder="Sender အမည်" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">မြို့အမည် ရွေးရန်</label>
+                                            <select class="form-control" id="select_city" name="select_city">
+                                                <option value="" selected disabled>မြို့အမည် ရွေးရန်</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">ဖုန်းနံပါတ်</label>
+                                        <input type="text" class="form-control" id="txt_phno" placeholder="ဖုန်းနံပါတ် ထည့်ရန်" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Cash Method ရွေးရန်</label>
+                                        <select class="form-control" id="select_cash_method">
+                                            <option value="" selected disabled>Cash Method ရွေးရန်</option>
+                                            <option value="ငွေရှင်းပြီး">ငွေရှင်းပြီး</option>
+                                            <option value="ဂိတ်ဆုံး">ဂိတ်ဆုံး</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">မှတ်ချက်</label>
+                                        <textarea type="text" class="form-control" id="txt_remark" name="txt_remark" placeholder="မှတ်ချက် ထည့်ရန်"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">
+                                <i class="fa fa-floppy-o"></i> Save
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modal-product">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Product</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <form enctype="multipart/form-data" action="javascript:saveProduct();" id="productForm">
+                        <input type="hidden" id="goodReceiptId" />
+                        <input type="hidden" id="goodReceiptDetailId" />
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">ပစ္စည်း အမည်</label>
+                                        <input type="text" class="form-control" id="txt_product_name" name="txt_product_name" placeholder="ပစ္စည်း အမည်" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">အတိုင်းအတာ ရွေးရန်</label>
+                                            <select class="form-control" id="select_unit" name="select_unit">
+                                                <option value="" selected disabled>အတိုင်းအတာရွေးရန်</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">အရေအတွက်</label>
+                                        <input type="text" class="form-control" id="txt_quantity" name="txt_quantity" placeholder="အရည်အတွက် ထည့်ရန်" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">အလေးချိန်</label>
+                                        <input type="text" class="form-control" id="txt_weight" name="txt_weight" placeholder="အလေးချိန် ထည့်ရန်" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">မှတ်ချက်</label>
+                                        <input type="text" class="form-control" id="txt_product_remark" name="txt_product_remark" placeholder="မှတ်ချက် ထည့်ရန်" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">
+                                <i class="fa fa-floppy-o"></i> Save
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modal-order">
+            <div class="modal-dialog  modal-xl order-modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">ဘောင်ချာဖွင့်ရန်</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="align-center">
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" id="manual" name="optradio" value="manual" checked>Manual
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label" for="radio1">
+                                    <input type="radio" class="form-check-input" id="quantity" name="optradio" value="quantity">Quantity * Price
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label" for="radio2">
+                                    <input type="radio" class="form-check-input" id="weight" name="optradio" value="weight">Weight * Price
+                                </label>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <input type="hidden" id="hiddenTotal" />
+                            <input type="hidden" id="hiddenOrderno" />
+                            <input type="hidden" id="hiddenGoodReceiptId" />
+                            <div class="table_css">
+                                <table class="table table-bordered table-striped" id="tbl_order">
+                                    <thead>
+                                        <tr>
+                                            <th>ပစ္စည်း အမည်</th>
+                                            <th>စုစုပေါင်း အရေအတွက်</th>
+                                            <th>တင်ပို့မည့် အရေအတွက်</th>
+                                            <th>အလေး ချိန်</th>
+                                            <th>အတိုင်းအတာစံ</th>
+                                            <th>စျေးနှုန်း</th>
+                                            <th>စုစုပေါင်း</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbl_order_body"></tbody>
+
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-info" onclick="createOrder();">
+                            <i class="fa fa-floppy-o"></i> Save
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ./wrapper -->
+    <!-- jQuery -->
+    <script src="../../Utilities/plugins/jquery/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="../../Utilities/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4-->
+    <script src="../../Utilities/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="../../Utilities/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../Utilities/dist/js/adminlte.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../../Utilities/dist/js/demo.js"></script>
+    <script src="../../Components/Main/js/adminlte_view.js"></script>
+    <!-- DataTables -->
+    <script src="../../Utilities/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../Utilities/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../../Utilities/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../../Utilities/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <!-- InputMask -->
+    <script src="../../Utilities/plugins/moment/moment.min.js"></script>
+    <script src="../../Utilities/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <!--Toastr-->
+    <script src="../../Utilities/plugins/toastr/toastr.min.js"></script>
+    <script src="../../Utilities/js/city.js"></script>
+    <script src="../../Utilities/js/unit.js"></script>
+    <script src="../../Utilities/js/good_receipt.js"></script>
+    <script src="../../Utilities/js/common.js"></script>
+    <script src="../../Utilities/js/auth.js"></script>
+    <script src="../../Utilities/js/order.js"></script>
+    <script>
+        $('#txt_date').inputmask();
+        getCitySelect();
+        getGoodReceipt();
+        getUnitSelect();
+    </script>
+</body>
+</html>

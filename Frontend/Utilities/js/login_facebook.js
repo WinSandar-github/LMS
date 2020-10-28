@@ -5,15 +5,7 @@ window.fbAsyncInit = function() {
       xfbml      : true,
       version    : 'v8.0'
     });
-    FB.getLoginStatus((response) => {
-      if(response.status === "connected")
-      {
-         fetchUserProfile();
-      }
-      else{
-          facebookLoginByDialog();
-      }
-	});
+    
 }
 document.getElementById('fb-login-button').addEventListener('click', () => {
   FB.login((response) => {

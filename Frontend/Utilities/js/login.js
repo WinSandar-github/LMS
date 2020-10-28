@@ -15,7 +15,7 @@ function login()
                 var obj = JSON.parse((xhttp.responseText));
                 if (typeof (localStorage) !== "undefined") {
                       localStorage.setItem('userinfo', xhttp.responseText);
-                      location.href='../CompanyComponents/company_info.html';
+                      location.href='../../Components/Company/company_info.html';
                   }
                 }
         }

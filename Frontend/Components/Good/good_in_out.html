@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Logistics | GoodInOut</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../Utilities/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../../Utilities/dist/css/adminlte.min.css">
+  <link href="../../Utilities/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="../../Utilities/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <link rel="stylesheet" href="../../Utilities/plugins/daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="../../Utilities/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="stylesheet" href="../../Utilities/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../Utilities/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../Utilities/plugins/daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="../../Utilities/css/common.css">
+
+</head>
+<body class="sidebar-mini layout-fixed layout-navbar-fixed text-sm">
+  <div class="wrapper">
+    <header class="main-header"></header>
+
+    <aside class="main-sidebar elevation-4 sidebar-light-info" style="position:fixed;"></aside>
+      <div class="content-wrapper">
+
+      <div class="content-header">
+
+      </div>
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">ကုန် အ၀င်/ အထွက်စာရင်း</h3>
+
+                </div>
+                <div class="card-body">
+
+                  <div class="row">
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <label>မှ - သို့</label>
+                              <div class="input-group">
+                                  <div class="input-group-prepend">
+                                      <span class="input-group-text">
+                                          <i class="far fa-calendar-alt"></i>
+                                      </span>
+                                  </div>
+                                  <input type="text" class="form-control float-right" id="date" onchange="loadGoodInOut();">
+                              </div>
+                          </div>
+
+                      </div>
+                  </div>
+
+                  <div>
+                      <table id="table_tbl_goodinout" class="table table-bordered">
+                          <thead >
+                                <tr>
+                                        <th>အဝင််နေ့စွဲ</th>
+                                        <th>ပစ္စည်းလက်ခံနံပါတ်</th>
+                                        <th>ကုန်သည် အမည်</th>
+                                        <th>ကုန်ပို့သူ အမည်</th>
+                                        <th>မြို့အမည်</th>
+                                        <th>ပစ္စည်းအမည််</th>
+                                        <th>အဝင်အရေအတွက်</th>
+                                        <th>ကုန်ချိန်</th>
+                                        <th>အထွက်နေ့စွဲ</th>
+                                        <th>ကားနံပါတ်</th>
+                                        <th>အထွက်အရေအတွက်</th>
+                                </tr>
+                            </thead>
+                                <tbody id="tbl_goodinout_container" class="hoverTable"></tbody>
+                        </table>
+                  </div>
+                  <br />
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">ပို့ ရန်ကျန်ရှိ‌နေသော ကုန်များ</h3>
+
+                </div>
+                <div class="card-body">
+                  <div >
+                      <table id="table_tbl_goodexport" class="table table-bordered">
+                          <thead >
+                                <tr>
+                                        <th>ပစ္စည်းလက်ခံနံပါတ်</th>
+                                        <th>ကုန်သည် အမည်</th>
+                                        <th>ပစ္စည်းအမည််</th>
+                                        <th>အရေအတွက်</th>
+                                        <th>ပို့ပီး အရေအတွက်</th>
+                                        <th>ကျန်ရှိအရေအတွက်</th>
+                                </tr>
+                            </thead>
+                                <tbody id="tbl_goodexport_container" class="hoverTable"></tbody>
+                        </table>
+                  </div>
+                  <br />
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <footer class="main-footer"></footer>
+
+
+    <aside class="control-sidebar control-sidebar-dark">
+
+    </aside>
+
+  </div>
+
+  <script src="../../Utilities/plugins/jquery/jquery.min.js"></script>
+
+  <script src="../../Utilities/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+
+  <script src="../../Utilities/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+  <script src="../../Utilities/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+
+  <script src="../../Utilities/dist/js/adminlte.js"></script>
+
+  <script src="../../Utilities/dist/js/demo.js"></script>
+  <script src="../../Components/Main/js/adminlte_view.js"></script>
+  <script src="../../Utilities/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+  <script src="../../Utilities/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="../../Utilities/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../../Utilities/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="../../Utilities/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="../../Utilities/plugins/daterangepicker/moment.min.js"></script>
+  <script src="../../Utilities/plugins/daterangepicker/daterangepicker.js"></script>
+  <script src="../../Utilities/js/common.js"></script>
+  <script src="../../Utilities/js/goodinout.js"></script>
+  <script type="text/javascript" src="../../Utilities/js/auth.js"></script>
+  <script>
+  $('#date').daterangepicker({
+      locale: {
+          format: 'DD-MM-YYYY'
+      }
+  });
+  </script>
+</body>
+</html>

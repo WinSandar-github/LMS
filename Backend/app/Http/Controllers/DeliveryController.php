@@ -26,19 +26,20 @@ class DeliveryController extends Controller
   public function saveDelivery(Request $request)
   {
     try{
+        $data=json_decode($request->getContent(), true);
         $delivery=new tbl_delivery();
-        $delivery->car_no=$request->input("car_no");
-        $delivery->driver_name=$request->input("driver_name");
-        $delivery->driver_phone=$request->input("driver_phone");
-        $delivery->from_city_id=$request->input("from_city_id");
-        $delivery->to_city_id=$request->input("to_city_id");
-        $delivery->start_dt=$request->input("start_dt");
-        $delivery->end_dt=$request->input("end_dt");
-        $delivery->arrived=$request->input("arrived");
-        $delivery->remark=$request->input("remark");
-        $delivery->company_id=$request->input("company_id");
-        $delivery->status=$request->input("status");
-        $delivery->user_id=$request->input("user_id");
+        $delivery->car_no=$data["car_no"];
+        $delivery->driver_name=$data["driver_name"];
+        $delivery->driver_phone=$data["driver_phone"];
+        $delivery->from_city_id=$data["from_city_id"];
+        $delivery->to_city_id=$data["to_city_id"];
+        $delivery->start_dt=$data["start_dt"];
+        $delivery->end_dt=$data["end_dt"];
+        $delivery->arrived=$data["arrived"];
+        $delivery->remark=$data["remark"];
+        $delivery->company_id=$data["company_id"];
+        $delivery->status=$data["status"];
+        $delivery->user_id=$data["user_id"];
         $delivery->save();
         return response()->json(config('common.message.success'), 200, config('common.header'), JSON_UNESCAPED_UNICODE);
       }catch (\Exception $e){
