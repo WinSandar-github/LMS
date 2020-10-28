@@ -204,8 +204,8 @@ function saveProduct() {
         productDetail["unit_id"] = Unit;
         productDetail["qty"] = quantity;
         productDetail["weight"] = weight;
-        productDetail["company_id"] = 2;
-        productDetail["user_id"] = 1;
+        productDetail["company_id"] = company_id;
+        productDetail["user_id"] = user_id;
         productDetail["remark"] = remark;
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {

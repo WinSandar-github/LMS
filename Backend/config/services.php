@@ -29,10 +29,10 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-    /*'facebook' => [
-        'client_id'     => env('FACEBOOK_CLIENT_ID'),
-        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
-        'redirect'      => 'http://logistic.local/login/facebook/callback',
-   ],*/
+    'google' => [
+    'client_id'     => '276909841763-p6rr1i1vgqimi58i8o3on8i63v46mthh.apps.googleusercontent.com',
+    'client_secret' => 't3p3ftWrypH6ewwfdcRo3wCn',
+    'redirect'      => 'http://localhost:8000/auth/google/callback',
+],
 
 ];

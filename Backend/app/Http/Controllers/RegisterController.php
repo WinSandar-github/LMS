@@ -73,7 +73,6 @@ class RegisterController extends Controller
             $ref_initials=$this->getRefernceInitials($request,$company_name);
             $updateCompany->ref_initials = strtoupper($ref_initials);
             $updateCompany->save();
-
             if($request->input('address') || $request->input('phone')){
               $updateUser=User::find($request->input("company_id"));
               $updateUser->phone_no=$request->input('phone');
