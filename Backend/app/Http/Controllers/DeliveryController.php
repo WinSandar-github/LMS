@@ -183,7 +183,7 @@ class DeliveryController extends Controller
   }
   public function getOrderDetailsByorderId(Request $request)
   {
-    $orderDetail=tbl_order_details::with('unitByorderDetail','orderByOrderdetails')
+    $orderDetail=tbl_order_details::with('unitByorderDetail')
                     ->where('order_id','=',$request->input("order_id"))
                     ->get();
     if(sizeof($orderDetail)){
