@@ -17,7 +17,7 @@ function saveDelivery()
   if(different_arrived.trim()==""){
     $("#start_dt").focus();
     }
-  else if(different_arrived==-1){
+  else if(different_arrived=='0'){
      $("#arrived_dt").focus();
   }
   else{
@@ -54,7 +54,7 @@ function getDifferentDays()
   var start_date = $("#start_dt").val();
   var end_date = $("#arrived_dt").val();
   if (end_date.trim() == "") {
-      $("#different_day").val("-1");
+      $("#different_day").val("0");
     }
   else {
       var first_date = new Date(start_date);
@@ -80,14 +80,15 @@ function loadDeliveryByStatus(status,table,table_body)
     data: "company_id=" + company_id,
     success: function (data) {
             data.forEach(function (element) {
+
             var tr = "<tr onclick='getDeliverDetailsByDeliveryId(" + element.id + ");'>";
             tr += "<td >" + element.car_no + "</td>";
             tr += "<td >" + element.driver_name + "</td>";
             tr += "<td >" + element.driver_phone + "</td>";
             tr += "<td >" + element.from_city.city_name + "</td>";
             tr += "<td >" + element.to_city.city_name + "</td>";
-            tr += "<td >" + element.start_dt + "</td>";
-            tr += "<td >" + element.end_dt + "</td>";
+            tr += "<td >" + formatDate(element.start_dt) + "</td>";
+            tr += "<td >" + formatDate(element.end_dt) + "</td>";
             tr += "<td >" + element.arrived + "</td>";
             tr += "<td >" + element.remark + "</td>";
             tr += "<td >" + element.user.full_name + "</td>";
@@ -108,6 +109,7 @@ function loadDeliveryByStatus(status,table,table_body)
 function getDeliveryById(delivery_id)
 {
   $('#hdelivery_id').val(delivery_id);
+  localStorage.setItem("delivery_id", delivery_id);
 }
 function showDeliveryById(delivery_id)
 {
@@ -166,60 +168,56 @@ function updateDelivery()
 }
 function saveDeliverDetail()
 {
-  var table_body = document.getElementById("tbl_product_container"),delivery_id=$('#hdelivery_id').val(),delivery_details = new Array(),order_data=new Array();
+  var table_body = document.getElementById("tbl_product_container"),delivery_id=$('#hdelivery_id').val(),delivery_details = [];
   for (var i = 0, row; row = table_body.rows[i]; i++)
   {
-    var product_data={},order={};
-    order['orderId']=row.cells[2].children[0].value;
-    product_data['receiver_name']=row.cells[1].innerHTML;
+    var product_data={};
+    product_data['receiver_name']=row.cells[1].children[2].value;
     product_data['product_name']=row.cells[3].innerHTML;
-    product_data['total_quantity']=row.cells[4].innerHTML;
+    product_data['total_quantity']=row.cells[4].children[0].value;
     product_data['quantity']=row.cells[5].children[0].value;
-    product_data['weight']=row.cells[6].innerHTML;
-    product_data['to_city_name']=row.cells[7].innerHTML;
-    product_data['remark']=row.cells[8].innerHTML;
-    product_data['good_receipt_id']=row.cells[0].children[0].value;
-    product_data['good_receipt_detail_id']=row.cells[0].children[1].value;
+    product_data['weight']=row.cells[7].children[0].value;
+    product_data['to_city_name']=row.cells[8].innerHTML;
+    product_data['remark']=row.cells[9].innerHTML;
+    product_data['good_receipt_id']=row.cells[1].children[0].value;
+    product_data['order_status']=row.cells[10].children[0].value;
+    if(row.cells[10].children[0].value=='0' || row.cells[10].children[0].value==''){
+      product_data['order_id']=0;
+      product_data['good_receipt_detail_id']=row.cells[1].children[1].value;
+    }else{
+      product_data['order_id']=row.cells[10].children[1].value;
+      product_data['good_receipt_detail_id']=0;
+      product_data['order_detail_id']=row.cells[1].children[1].value;
+      product_data['remaine_qty']=row.cells[6].children[1].value;
+    }
     product_data['user_id']=user_id;
     product_data['company_id']=company_id;
     product_data['delivery_id']=delivery_id;
-    delivery_details.push(product_data),order_data.push(order);
+    delivery_details.push(product_data);
   }
-  for(var i=0;i<delivery_details.length;i++){
-      if(parseInt(delivery_details[i]['total_quantity'])==parseInt(delivery_details[i]['quantity']))
-      {
-        var order_id=order_data[i]['order_id'],delivery_status='1',order=new FormData;
-        order.append('order_id',order_id);
-        order.append('delivery_status',delivery_status);
-        $.ajax({
-                type: "POST",
-                url: BACKEND_URL + "updateOrderByorderId",
-                data: order,
-                contentType: false,
-                processData: false,
-                success: function (data) {
-
-               },
-               error:function (XMLHttpRequest, textStatus, errorThrown){
-                 errorStatus(XMLHttpRequest, textStatus, errorThrown);
-               }
-            });
-      }
-    }
-  $.ajax({
+    $.ajax({
           type: "POST",
           url: BACKEND_URL + "saveDeliverDetail",
           data: JSON.stringify(delivery_details),
-          contentType: false,
-          processData: false,
           success: function (data) {
-            successMessage(data);
-            location.reload();
-          },
-         error:function (XMLHttpRequest, textStatus, errorThrown){
-           errorStatus(XMLHttpRequest, textStatus, errorThrown);
-         }
-      });
+                  $.ajax({
+                        type: "POST",
+                        url: BACKEND_URL + "updateOrderByorderId",
+                        data: JSON.stringify(delivery_details),
+                        success: function (data) {
+                          successMessage(data);
+                          $('#modal-delivery_details').modal('toggle');
+                          loadDelivery();
+                       },
+                       error:function (XMLHttpRequest, textStatus, errorThrown){
+                         errorStatus(XMLHttpRequest, textStatus, errorThrown);
+                       }
+                     });
+                  },
+              error:function (message){
+                alert('Please add to order!');
+              }
+  });
 }
 function getDeliverDetailsByDeliveryId(delivery_id)
 {
@@ -239,17 +237,33 @@ function getDeliverDetailsByDeliveryId(delivery_id)
                 tr += "</tr>";
                 $("#tbl_deliverydetails_container").append(tr);
               });
+              createDataTable("#table_tbl_deliverydetails");
             },
-          });
+            error: function (message) {
+                dataMessage(message, "#table_tbl_deliverydetails", "#tbl_deliverydetails_container");
+            }
+        });
 }
 function printDeliveryById(delivery_id)
 {
-  window.open("../../Components/Delivery/deliver_invoice.html",localStorage.setItem("delivery_id", delivery_id));
+  window.open("../../Components/Delivery/deliver_invoice.html?delivery_id="+delivery_id);
 }
 function loadInvoice()
 {
-  var delivery_id =localStorage.getItem("delivery_id");
-  $('.driver_name').html(""),$('.car_number').html(""),$('.income_date').html("");
+  var currentUrl = window.location.href;
+  var url = new URL(currentUrl);
+  var url=window.location.href.split('/');
+  var last_array=url[url.length - 1].split('?');
+  if (last_array[last_array.length - 2] === 'deliver_invoice.html'){
+    var delivery_id = last_array[last_array.length - 1].split('=');
+    deliveryInvoice(delivery_id[delivery_id.length - 1]);
+  }else{
+    var order_no =last_array[last_array.length - 1].split('=');
+    loadInvoiceByOrderNo(order_no[order_no.length - 1]);
+  }
+}
+function deliveryInvoice(delivery_id){
+  $('.driver_name').html(""),$('.car_number').html("");
   $.ajax({
           type: "POST",
           url: BACKEND_URL + "getDeliveryById",
@@ -258,28 +272,28 @@ function loadInvoice()
             $('.driver_name').append(data[0].driver_name);
             $('.car_number').append(data[0].car_no);
             var out_date=data[0].delivery_details[0].out_date;
-            var split_date=out_date.split('-');
-            var complet_date=split_date[2]+'/'+split_date[1]+'/'+split_date[0];
-            $('.income_date').append(complet_date);
+            $('.income_date').append(formatDate(out_date));
             var url=window.location.href.split('/');
-            if (url[url.length - 1]  === 'deliver_invoice.html') {
+            var last_array=url[url.length - 1].split('?');
+            if (last_array[last_array.length - 2] === 'deliver_invoice.html') {
                   appendTableRow("td_car_number",data[0].car_no);
                   appendTableRow("print_car_number",data[0].car_no);
-                  appendTableRow("td_out_date",complet_date);
-                  appendTableRow("td_delivery_date",complet_date);
+                  appendTableRow("td_out_date",formatDate(out_date));
+                  appendTableRow("td_delivery_date",out_date);
                   loadInvoiceDelivery(data[0].delivery_details);
-              } else {
-                loadInvoiceByOrderNo();
               }
+            },
+            error: function (message) {
+                alert("Please add deliverydetails");
             }
         });
 }
-function loadInvoiceDelivery(good_receipt)
+function loadInvoiceDelivery(delivery_details)
 {
   destroyDatatable("#tbl_invoice","#tbl_invoice_container");
   var order_total=0,labour_total=0,good_receipt_id_array = [];
-  for (var i = 0; i < good_receipt.length; i++) {
-      good_receipt_id_array[i] = good_receipt[i].good_receipt_id;
+  for (var i = 0; i < delivery_details.length; i++) {
+      good_receipt_id_array[i] = delivery_details[i].good_receipt_id;
     }
   function removeDuplicate(data){
     return [...new Set(data)]
@@ -292,11 +306,8 @@ function loadInvoiceDelivery(good_receipt)
         data:"good_receipt_id="+good_receipt_id,
         success: function (alldata) {
           var order_id=alldata[0].order_by_good_receipts[0].id;
-          if(alldata[0].cash_method=='ငွေရှင်းပြီး')
-          {
-            order_total +=alldata[0].order_by_good_receipts[0].order_total;
-          }
-           labour_total +=alldata[0].order_by_good_receipts[0].labour;
+          order_total +=alldata[0].order_by_good_receipts[0].order_total;
+          labour_total +=alldata[0].order_by_good_receipts[0].labour;
            $.ajax({
            type: "POST",
            url: BACKEND_URL + "getOrderDetailsByorderId",
@@ -305,10 +316,17 @@ function loadInvoiceDelivery(good_receipt)
               orderdetails.forEach(function (element, index, array){
                  var tr = "<tr class='border-tr'>";
                  if(index===0){
-                   tr += "<td >" + alldata[0].order_by_good_receipts[0].order_no + "</td>";
-                   tr += "<td >" + alldata[0].customer_name+ "</td>";
-                   tr += "<td >" + alldata[0].city_list.city_name+ "</td>";
-                 }
+                   if(alldata[0].cash_method=='ငွေရှင်းပြီး')
+                   {
+                     tr += "<td >" + alldata[0].order_by_good_receipts[0].order_no +"*"+"</td>";
+                     tr += "<td >" + alldata[0].customer_name+ "</td>";
+                     tr += "<td >" + alldata[0].city_list.city_name+ "</td>";
+                   }else{
+                     tr += "<td >" + alldata[0].order_by_good_receipts[0].order_no +"</td>";
+                     tr += "<td >" + alldata[0].customer_name+ "</td>";
+                     tr += "<td >" + alldata[0].city_list.city_name+ "</td>";
+                   }
+                  }
                  else{
                    tr += "<td >" + ""+ "</td>";
                    tr += "<td >" + alldata[0].customer_name+ "</td>";
@@ -353,7 +371,7 @@ function loadInvoiceDelivery(good_receipt)
                tableRowClick("#tbl_invoice_container");
                }
          });
-        }
+       }
       });
     });
 }
@@ -384,7 +402,8 @@ function comissionPercent()
 function tableRowClick(table_body){
   $(table_body).on('click', '.btn-print', function () {
     var url=window.location.href.split('/');
-    if (url[url.length - 1]  === 'deliver_invoice.html') {
+    var last_array=url[url.length - 1].split('?');
+    if (last_array[last_array.length - 2] === 'deliver_invoice.html') {
       var current_row = $(this).closest("tr");
       var order_no = current_row.find("td:eq(0)").text();
     }else{
@@ -394,23 +413,21 @@ function tableRowClick(table_body){
     window.open("../../Components/Delivery/invoice.html?orderNo=" + order_no);
   });
 }
-function loadInvoiceByOrderNo()
+function loadInvoiceByOrderNo(order_no)
 {
   destroyDatatable("#tbl_order_invoice","#tbl_order_invoice_container");
-  var current_url = window.location.href;
-  var url = new URL(current_url);
-  var order_no = url.searchParams.get("orderNo");
-  $('.customer_name').html(""),$('.order_no').html(""),$('.sender_name').html(""),$('.to_city_name').html("");
+  $('.customer_name').html(""),$('.order_no').html(""),$('.sender_name').html(""),$('.to_city_name').html(""),$('.income_date').html("");
   $.ajax({
         type: "POST",
         url: BACKEND_URL + "getGoodReceiptByorderNo",
         data: "order_no=" + order_no,
         success: function (good_receipt) {
-          var order_id=good_receipt[0].order_by_good_receipts[0].id;
+          var order_id=good_receipt[0].id;
           $('.customer_name').append(good_receipt[0].customer_name);
           $('.sender_name').append(good_receipt[0].sender_name);
           $('.order_no').append(good_receipt[0].order_no);
           $('.to_city_name').append(good_receipt[0].city_list.city_name);
+          $('.income_date').append(formatDate(good_receipt[0].date));
           localStorage.setItem('good_receipt',JSON.stringify(good_receipt[0]));
           addToOrderByOrderNo(order_id);
         }
@@ -418,7 +435,7 @@ function loadInvoiceByOrderNo()
 }
 function back()
 {
-  location.href="deliver_invoice.html";
+  location.href="delivery.html";
 }
 function autoOrderNo()
 {
@@ -437,7 +454,6 @@ function autoOrderNo()
               }
       });
 }
-var count=0;
 function searchOrderNo(order_no)
 {
   $.ajax({
@@ -446,44 +462,95 @@ function searchOrderNo(order_no)
         data:"order_no=" + order_no,
         success: function (good_receipt) {
                   var good_receipt_detail=good_receipt[0].good_receipt_detail_by_good_receipt;
-                  good_receipt_detail.forEach(function (element, index, array){
-                    count +=1;
+                  if(good_receipt[0].order_status=='0'){
+                    good_receipt_detail.forEach(function (element, index, array){
                     var tr="<tr>";
-                    tr+="<td><input type='hidden' value='"+good_receipt[0].id+"'><input type='hidden' value='"+element.id+"'>"+count+"</td>";
-                    tr+="<td>"+good_receipt[0].customer_name+"</td>";
-                    tr+="<td><input type='hidden' value='"+good_receipt[0].order_by_good_receipts[0].id+"'>"+good_receipt[0].order_no+"</td>";
+                    tr+="<td>"+"</td>";
+                    tr+="<td><input type='hidden' value='"+good_receipt[0].id+"'><input type='hidden' value='"+element.id+"'><input type='hidden' value='"+good_receipt[0].customer_name+"'>"+good_receipt[0].customer_name+"</td>";
+                    tr+="<td>"+good_receipt[0].order_no+"</td>";
                     tr+="<td>"+element.product_name+"</td>";
-                    tr+="<td>"+element.qty+"</td>";
-                    tr+="<td><input type='text' class='orderQty' value='0' id='order_qty"+element.id+"' disabled><input type='number' style='width:50%;' value='0' onblur='orderQtyCalculate("+element.id+","+"this.value)'></td>";
-                    tr+="<td>"+element.weight+"</td>";
+                    tr+="<td><input type='hidden' id='total_qty"+element.id+"' value='"+Math.round(element.qty)+"'>"+Math.round(element.qty)+"</td>";
+                    tr+="<td><input type='number' value='"+Math.round(element.qty)+"' onblur='orderQtyCalculate("+element.id+","+"this.value)' onkeyup='orderQtyCalculate("+element.id+","+"this.value)'></td>";//<input type='text' class='orderQty' value='"+element.qty+"' id='order_qty"+element.id+"' disabled>
+                    tr+="<td><input type='hidden' id='remain_qty_product"+element.id+"' value='0'><input type='text' value='0' id='remaine_qty"+element.id+"' disabled>"+"</td>";
+                    tr+="<td><input type='text' value='"+element.weight+"'>"+"</td>";
                     tr+="<td>"+good_receipt[0].city_list.city_name+"</td>";
                     tr+="<td>"+element.remark+"</td>";
                     if(index===0){
-                      tr+="<td ><button type='button' class='btn btn-danger btn-space' onclick='deleteDeliveryDetails(this);'><i class='fas fa-trash'></i></button>"+
-                          "<button type='button' class='btn btn-info btn-space' onClick='addToOrderByOrderNo(" + good_receipt[0].order_by_good_receipts[0].id + ")'>ဘောင်ချာဖွင့်ရန်</button>"+
-                          "<button type='button' class='btn btn-success btn-print btn-space'><i class='fas fa-print'></i> Print</button></td>";
-                    }
-                    else{
-                      tr+="<td><button type='button' class='btn btn-danger btn-space btn-left' onclick='deleteDeliveryDetails(this);'><i class='fas fa-trash'></i></button></td>";
-                        }
-                    tr+="</tr>";
-                    $('#tbl_product_container').append(tr);
+                        tr+="<td class='align-left'><input type='hidden' value='"+good_receipt[0].order_status+"'><button type='button' class='btn btn-danger btn-space' onclick='deleteDeliveryDetails(this);'><i class='fas fa-trash'></i></button>"+
+                            "<button type='button' class='btn btn-success  btn-space' onClick='printGoodReceipt(" + good_receipt[0].id + ")'><i class='fas fa-print'></i> Print</button>"+
+                            "<button type='button' class='btn btn-info btn-space' onClick='addToOrder(" + good_receipt[0].id + ")'>ဘောင်ချာဖွင့်ရန်</button></td>";
+                      }else{
+                        tr+="<td class='align-left'><input type='hidden' value='"+good_receipt[0].order_status+"'><button type='button' class='btn btn-danger btn-space btn-left' onclick='deleteDeliveryDetails(this);'><i class='fas fa-trash'></i></button></td>";
+                      }
+                      tr+="</tr>";
+                      $('#tbl_product_container').append(tr);
                   });
+                  rowCount();
+                }else{
+                    $.ajax({
+                          type: "POST",
+                          url: BACKEND_URL + "getOrderDetailsByorderId",
+                          data:"order_id="+good_receipt[0].order_by_good_receipts[0].id,
+                          success: function (orderdetails) {
+                              orderdetails.forEach(function(unit, orderindex, array){
+                                  var tr="<tr>";
+                                  tr+="<td>"+"</td>";
+                                  tr+="<td><input type='hidden' value='"+good_receipt[0].id+"'><input type='hidden' value='"+unit.id+"'><input type='hidden' value='"+good_receipt[0].customer_name+"'>"+good_receipt[0].customer_name+"</td>";
+                                  tr+="<td>"+good_receipt[0].order_no+"</td>";
+                                  tr+="<td>"+unit.product_name+"</td>";
+                                  tr+="<td><input type='hidden' id='total_qty"+unit.id+"' value='"+Math.round(unit.quantity)+"'>"+Math.round(unit.quantity)+"</td>";
+                                  if(unit.product_qty=='0'){
+                                    tr+="<td><input type='number' value='"+Math.round(unit.quantity)+"' onblur='orderQtyCalculate("+unit.id+","+"this.value)' onkeyup='orderQtyCalculate("+unit.id+","+"this.value)'></td>";//<input type='text' class='orderQty' value='"+element.qty+"' id='order_qty"+element.id+"' disabled>
+                                    tr+="<td><input type='hidden' id='remain_qty_product"+unit.id+"' value='0'><input type='text' value='0' id='remaine_qty"+unit.id+"' disabled>"+"</td>";
+                                  }else{
+                                    tr+="<td><input type='number' value='"+Math.round(unit.quantity+[unit.quantity-unit.product_qty])+"' onblur='orderQtyCalculate("+unit.id+","+"this.value)' onkeyup='orderQtyCalculate("+unit.id+","+"this.value)'></td>";//<input type='text' class='orderQty' value='"+element.qty+"' id='order_qty"+element.id+"' disabled>
+                                    tr+="<td><input type='hidden' id='remain_qty_product"+unit.id+"' value='"+Math.round(unit.quantity-unit.product_qty)+"'><input type='text' value='"+Math.round(unit.quantity-[unit.quantity+unit.product_qty])+"' id='remaine_qty"+unit.id+"' disabled>"+"</td>";
+                                  }
+                                  tr+="<td><input type='text' value='"+unit.weight+"'>"+"</td>";
+                                  tr+="<td>"+good_receipt[0].city_list.city_name+"</td>";
+                                  tr+="<td>"+unit.remark+"</td>";
+                                  if(orderindex===0){
+                                    tr+="<td class='align-left'><input type='hidden' value='"+good_receipt[0].order_status+"'><input type='hidden' value='"+good_receipt[0].order_by_good_receipts[0].id+"'><button type='button' class='btn btn-danger btn-space' onclick='deleteDeliveryDetails(this);'><i class='fas fa-trash'></i></button>"+
+                                      "<button type='button' class='btn btn-success btn-print btn-space'><i class='fas fa-print'></i> Print</button>"+
+                                      "<button type='button' class='btn btn-info btn-space' onClick='addToOrderByOrderNo(" + good_receipt[0].id + ")'>ဘောင်ချာပြန်ဖွင့်ရန်</button></td>";
+                                  }else{
+                                    tr+="<td class='align-left'><input type='hidden' value='"+good_receipt[0].order_status+"'><input type='hidden' value='"+good_receipt[0].order_by_good_receipts[0].id+"'><button type='button' class='btn btn-danger btn-space btn-left' onclick='deleteDeliveryDetails(this);'><i class='fas fa-trash'></i></button></td>";
+                                  }
+                                  tr+="</tr>";
+                                  $('#tbl_product_container').append(tr);
+                                });
+                                rowCount();
+                              }
+                        });
+                  }
                   tableRowClick('#tbl_product_container');
-                  },
+                },
                   error: function (message) {
                       dataMessage(message, '#tbl_product', '#tbl_product_container');
                   }
       });
 }
+function printGoodReceipt(goodReceiptId) {
+    window.open("../../Components/Good/goodreceipt_invoice.html?goodReceiptId=" + goodReceiptId);
+}
 function deleteDeliveryDetails(row)
 {
     var i = row.parentNode.parentNode.rowIndex;
     document.getElementById('tbl_product').deleteRow(i);
+    rowCount();
 }
 function orderQtyCalculate(id,quantity)
 {
-    $('#order_qty'+id).val(quantity);
+    if($('#remain_qty_product'+id).val()=='0'){
+      $('#remaine_qty'+id).val(parseInt($('#total_qty'+id).val())-Number(quantity));
+    }else if($('#remain_qty_product').val()=='0' && quantity==''){
+      $('#remaine_qty'+id).val(parseInt($('#remain_qty_product'+id).val()));
+    }else if($('#remain_qty_product').val()!='0' && quantity==''){
+      $('#remaine_qty'+id).val(parseInt($('#remain_qty_product'+id).val()));
+    }
+    else{
+      $('#remaine_qty'+id).val(parseInt($('#remain_qty_product'+id).val())-Number(quantity));
+    }
 }
 function addToOrderByOrderNo(order_id) {
   var good_receipt=JSON.parse(localStorage.getItem('good_receipt'));
@@ -492,6 +559,7 @@ function addToOrderByOrderNo(order_id) {
         url: BACKEND_URL + "getOrderDetailsByorderId",
         data: "order_id=" + order_id,
         success: function (orderdetails) {
+          $("#tbl_order_delivery_body").html("");
           $('#hidden_order_id').val(order_id);
           var url=window.location.href.split('/');
           var last_array=url[url.length - 1].split('?');
@@ -514,20 +582,19 @@ function addToOrderByOrderNo(order_id) {
               for(var i=0;i<orderdetails.length;i++) {
                   var tr = "<tr>";
                   tr += "<td>" + "<input type='hidden' value='"+orderdetails[i].id+"'><input type='text' value='"+orderdetails[i].product_name+"'>" + "</td>";
-                  tr += "<td >" + "<input type='text' id='productQuantity' value='" + Math.round(orderdetails[i].quantity) + "'>" + "</td>";
-                  tr += "<td >" + "<input type='text'  value='" + Math.round(orderdetails[i].product_qty) + "'disabled>" + "</td>";
-                  tr += "<td >" + "<input type='text' id='productWeight' value='" + orderdetails[i].weight + "'>" + "</td>";
-                  tr += "<td >" + "<input type='hidden' value='"+orderdetails[i].unit_byorder_detail.id+"'><input type='text' id='productUnit' value='" + orderdetails[i].unit_byorder_detail.unit_name + "' disabled>"+"</td>";
-                  tr += "<td >" + "<input type='text' id='productPrice' value='0' onkeyup='getTotalPerProduct(this)' >" + "</td>";
-                  tr += "<td >" + "<input type='text' id='total' value='0'>" + "</td>";
+                  tr += "<td >" + "<input type='text' autocomplete='off' id='productQuantity' value='" + Math.round(orderdetails[i].quantity) + "'>" + "</td>";
+                  tr += "<td >" + "<input type='text' autocomplete='off'  value='" + Math.round(orderdetails[i].quantity-orderdetails[i].product_qty) + "'>" + "</td>";
+                  tr += "<td >" + "<input type='text' autocomplete='off' id='productWeight' value='" + orderdetails[i].weight + "'>" + "</td>";
+                  tr += "<td >" + "<input type='text' id='productUnit' value='" + orderdetails[i].unit + "' disabled>"+"</td>";
+                  tr += "<td >" + "<input type='text' autocomplete='off' id='productPrice' value='0' onkeyup='getTotalByUnit(this)'>" + "</td>";
+                  tr += "<td >" + "<input type='text' id='total' value='0'>" +"</td>";
                   tr += "</tr>";
-                  $("#tbl_order_body").append(tr);
+                  $("#tbl_order_delivery_body").append(tr);
                 }
-              appendRows("labourFee", "အလုပ်သမားခ:");
-              appendRows("land", "စိုက်ငွေ:");
-              appendRows("totalPrice", "စုစုပေါင်း:");
-              $("#hiddenTotal").val('0');
-              $('#modal-order').modal('toggle');
+              appendTBody("labourFee", "အလုပ်သမားခ:");
+              appendTBody("land", "စိုက်ငွေ:");
+              appendTBody("totalPrice", "စုစုပေါင်း:");
+              $('#modal-order-delivey').modal('toggle');
             }
           }
         });
@@ -547,12 +614,12 @@ function createRow(label,value){
     $("#tbl_order_invoice_container").append(tr);
   }
 }
-function appendRows(id,label) {
+function appendTBody(id,label) {
     var tr = "<tr>";
     tr += "<td colspan='6' style='text-align:right;'>" + label + "</td>";
-    tr += "<td >" + "<input type='text' id='" + id +"' value='0'>" + "</td>";
+    tr += "<td >" + "<input type='text' autocomplete='off' id='" + id +"' value='0'>" + "</td>";
     tr += "</tr>";
-    $("#tbl_order_body").append(tr);
+    $("#tbl_order_delivery_body").append(tr);
     var new_id = "#" + id;
     if (id != "totalPrice") {
         $(new_id).keyup(function () {
@@ -560,10 +627,41 @@ function appendRows(id,label) {
         });
     }
 }
+function getTotalByUnit(td) {
+    var row = $(td).closest('tr');
+    var productQuantity = parseFloat($(row).find('#productQuantity').val());
+    var productWeight = parseInt($(row).find('#productWeight').val());
+    var productPrice = parseInt($(row).find('#productPrice').val()) ? parseInt($(row).find('#productPrice').val()) : 0;
+    var priceMethod = $("input[name='optradio']:checked").val();
+    var tabledelivery = document.getElementById("tbl_order_delivery").rows.length;
+    var productsTotal = new Array();
+    var sumVal = 0;
+    switch (priceMethod) {
+        case "quantity":
+            $(row).find('#total').val(productQuantity * productPrice);
+            break;
+        case "weight":
+            $(row).find('#total').val(productWeight * productPrice);
+            break;
+        default:
+            $(row).find('#total').val(productPrice);
+    }
+    for (var total = 1; total < tabledelivery - 3; total++) {
+        productsTotal[total - 1] = document.getElementById("tbl_order_delivery").rows[total].cells[6].firstChild.value;
+
+    }
+    for (var sumTotal = 0; sumTotal < productsTotal.length; sumTotal++) {
+
+        sumVal += Number(productsTotal[sumTotal]);
+    }
+    var total = sumVal + Number($("#labourFee").val()) + Number($("#land").val());
+    $("#totalPrice").val(total);
+    $("#hiddenTotal").val(sumVal);
+}
 function updateOrderBygoodReceiptId()
 {
-  var order={},order_data=new Array();
-  order['order_id']=$('#hidden_order_id').val(),order['order_total']=$("#hidden_total").val(),order['total']= $("#total_price").val(),order['labour']= $("#labour_fee").val(),order['land']=$("#land").val();
+  var order={},order_data=[];
+  order['order_id']=$('#hidden_order_id').val(),order['order_total']=$("#hiddenTotal").val(),order['total']= $("#totalPrice").val(),order['labour']= $("#labourFee").val(),order['land']=$("#land").val();
   order_data.push(order);
   var table_length = document.getElementById("tbl_order").rows.length;
   for (var i = 1; i < table_length - 3; i++) {
@@ -579,11 +677,11 @@ function updateOrderBygoodReceiptId()
   }
   $.ajax({
         type: "POST",
-        url: BACKEND_URL + "updateOrderByorderId",
+        url: BACKEND_URL + "updateOrderBygoodReceiptId",
         data:JSON.stringify(order_data),
         success: function (data) {
                 successMessage(data);
-                $('#modal-order').modal('toggle');
+                $('#modal-order-delivey').modal('toggle');
           },
         error:function (message){
             errorMessage(message);

@@ -13,7 +13,7 @@ function loadGoodInOut()
             export_data=data;
             data.forEach(function (element) {
               var tr = "<tr>";
-              tr += "<td >" + element.good_receipt_bydetail.date+ "</td>";
+              tr += "<td >" + formatDate(element.good_receipt_bydetail.date)+ "</td>";
               tr += "<td >" + element.good_receipt_bydetail.order_no+ "</td>";
               tr += "<td >" + element.good_receipt_bydetail.customer_name + "</td>";
               tr += "<td >" + element.good_receipt_bydetail.sender_name + "</td>";
@@ -21,7 +21,7 @@ function loadGoodInOut()
               tr += "<td >" + element.product_name + "</td>";
               tr += "<td >" + element.good_receipt_detail_bydetail.qty + "</td>";
               tr += "<td >" + element.weight + "</td>";
-              tr += "<td >" + element.out_date + "</td>";
+              tr += "<td >" + formatDate(element.out_date) + "</td>";
               tr += "<td >" + element.delivery.car_no + "</td>";
               tr += "<td >" + element.quantity + "</td>";
               tr += "</tr>";

@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Logistics | GoodInOut</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="../../Utilities/js/auth.js"></script>
   <link rel="stylesheet" href="../../Utilities/plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="../../Utilities/dist/css/adminlte.min.css">
   <link href="../../Utilities/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
@@ -57,7 +58,7 @@
                   </div>
 
                   <div>
-                      <table id="table_tbl_goodinout" class="table table-bordered">
+                      <table id="table_tbl_goodinout" class="table table-bordered table-striped">
                           <thead >
                                 <tr>
                                         <th>အဝင််နေ့စွဲ</th>
@@ -97,7 +98,7 @@
                 </div>
                 <div class="card-body">
                   <div >
-                      <table id="table_tbl_goodexport" class="table table-bordered">
+                      <table id="table_tbl_goodexport" class="table table-bordered table-striped">
                           <thead >
                                 <tr>
                                         <th>ပစ္စည်းလက်ခံနံပါတ်</th>
@@ -157,8 +158,8 @@
   <script src="../../Utilities/plugins/daterangepicker/daterangepicker.js"></script>
   <script src="../../Utilities/js/common.js"></script>
   <script src="../../Utilities/js/goodinout.js"></script>
-  <script type="text/javascript" src="../../Utilities/js/auth.js"></script>
   <script>
+  getCompanyInfo();
   $('#date').daterangepicker({
       locale: {
           format: 'DD-MM-YYYY'

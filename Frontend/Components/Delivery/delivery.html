@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Logistics | Delivery</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="../../Utilities/js/auth.js"></script>
   <link rel="stylesheet" href="../../Utilities/plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="../../Utilities/dist/css/adminlte.min.css">
   <link href="../../Utilities/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" type="text/css">
@@ -45,8 +46,8 @@
                       <i class="fa fa-plus"></i>&nbsp;ခရီးစဥ် အသစ်ထည့်ရန်
                   </button>
                   <div>
-                        <h4>မပြီးဆုံးသေးသော ခရီးစဥ်များ</h4>
-                        <table id="table_tbl_delivery" class="table table-bordered">
+                        <h6 class="h6-title">မပြီးဆုံးသေးသော ခရီးစဥ်များ</h6>
+                        <table id="table_tbl_delivery" class="table table-bordered table-striped ">
                           <thead >
                                 <tr>
                                         <th>ကားနံပါတ်</th>
@@ -68,8 +69,8 @@
                           </table>
                   </div>
                   <div>
-                              <h4>ခရီးစဥ် ပြီးဆုံး</h4>
-                          <table id="table_tbl_delivery2" class="table table-bordered">
+                              <h6 class="h6-title">ခရီးစဥ် ပြီးဆုံး</h6>
+                          <table id="table_tbl_delivery2" class="table table-bordered table-striped ">
                                 <thead >
                                       <tr>
                                           <th>ကားနံပါတ်</th>
@@ -87,7 +88,7 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody id="tbl_delivery_container2" class="hoverTable"></tbody>
+                                    <tbody id="tbl_delivery_container2" class="hoverTable "></tbody>
                             </table>
                     </div>
 
@@ -105,10 +106,13 @@
           <div class="row">
             <div class="col-md-12">
               <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">ပစ္စည်း စာရင်း</h3>
+                </div>
                 <div class="card-body">
                     <div>
-                        <h4>ပစ္စည်း စာရင်း</h4>
-                        <table id="table_tbl_deliverydetails" class="table table-bordered">
+
+                        <table id="table_tbl_deliverydetails" class="table table-bordered table-striped">
                           <thead>
                                 <tr>
                                         <th>customer</th>
@@ -160,7 +164,7 @@
                                     <i class="fas fa-truck-moving"></i>
                                   </span>
                                 </div>
-                            <input type="text" class="form-control" placeholder="ကားနံပါတ် ထည့်ရန်" id="car_number" required oninvalid="this.setCustomValidity('ကားနံပါတ် ထည့်ရန်')" oninput="setCustomValidity('')">
+                            <input type="text" class="form-control" autocomplete="off" placeholder="ကားနံပါတ် ထည့်ရန်" id="car_number" required oninvalid="this.setCustomValidity('ကားနံပါတ် ထည့်ရန်')" oninput="setCustomValidity('')">
                           </div>
                         </div>
                     </div>
@@ -175,7 +179,7 @@
                                     <i class="fas fa-user-tie"></i>
                                   </span>
                                 </div>
-                            <input type="text" class="form-control" id="driver_name" name="driver_name" placeholder="ယာဥ်မောင်းသူ နာမည် ထည့်ရန်" required oninvalid="this.setCustomValidity('ယာဥ်မောင်းသူ နာမည် ထည့်ရန်')" oninput="setCustomValidity('')">
+                            <input type="text" class="form-control" autocomplete="off" id="driver_name" name="driver_name" placeholder="ယာဥ်မောင်းသူ နာမည် ထည့်ရန်" required oninvalid="this.setCustomValidity('ယာဥ်မောင်းသူ နာမည် ထည့်ရန်')" oninput="setCustomValidity('')">
                           </div>
                         </div>
                     </div>
@@ -188,7 +192,7 @@
                                     <i class="fas fa-mobile-alt"></i>
                                   </span>
                                 </div>
-                            <input type="text" class="form-control" id="driver_phone" name="driver_phone" placeholder="ယာဥ်မောင်းသူ ဖုန်းနံပါတ် ထည့်ရန်" required oninvalid="this.setCustomValidity('ယာဥ်မောင်းသူ ဖုန်းနံပါတ် ထည့်ရန်')" oninput="setCustomValidity('')">
+                            <input type="text" class="form-control" autocomplete="off" id="driver_phone" name="driver_phone" placeholder="ယာဥ်မောင်းသူ ဖုန်းနံပါတ် ထည့်ရန်" required oninvalid="this.setCustomValidity('ယာဥ်မောင်းသူ ဖုန်းနံပါတ် ထည့်ရန်')" oninput="setCustomValidity('')">
                           </div>
                         </div>
                     </div>
@@ -296,7 +300,7 @@
                                 <i class="fas fa-info-circle"></i>
                               </span>
                             </div>
-                        <textarea class="form-control" id="delivery_remark" name="delivery_remark" placeholder="မှတ်ချက်ရေးရန်" ></textarea>
+                        <textarea class="form-control" id="delivery_remark" autocomplete="off" name="delivery_remark" placeholder="မှတ်ချက်ရေးရန်" ></textarea>
                       </div>
                     </div>
                   </div>
@@ -314,7 +318,7 @@
     </div>
   </div>
   <div class="modal fade" id="modal-delivery_details">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title">ခရီးစဥ် ဘောင်ချာဖွင့်ရန် </h4>
@@ -346,9 +350,10 @@
                           <th>ပစ္စည်းအမည်</th>
                           <th>စုစုပေါင်းအရေအတွက်</th>
                           <th>တင်မည့်အရေအတွက်</th>
+                          <th>ကျန်ရှိအရေအတွက်</th>
                           <th>အလေးချိန်</th>
                           <th>မြို့အမည်</th>
-                          <th>Remark</th>
+                          <th>မှတ်ချက်</th>
                           <th></th>
 
                       </tr>
@@ -370,16 +375,74 @@
       </div>
     </div>
   </div>
-  <div class="modal" id="modal-order">
-      <div class="modal-dialog  modal-lg order-modal-dialog">
+  <div class="modal" id="modal-order-delivey">
+      <div class="modal-dialog  modal-xl order-modal-dialog">
           <div class="modal-content">
             <form method="post" enctype="multipart/form-data" action="javascript:updateOrderBygoodReceiptId();">
               <div class="modal-header">
                   <h5 class="modal-title">ဘောင်ချာဖွင့်ရန်</h5>
               </div>
               <div class="modal-body">
-
+                <div class="align-center">
                   <div class="button-css">
+                      <div class="form-check-inline">
+                          <label class="form-check-label">
+                              <input type="radio" class="form-check-input" id="manual" name="optradio" value="manual" checked>Manual
+                          </label>
+                      </div>
+                      <div class="form-check-inline">
+                          <label class="form-check-label" for="radio1">
+                              <input type="radio" class="form-check-input" id="quantity" name="optradio" value="quantity">Quantity * Price
+                          </label>
+                      </div>
+                      <div class="form-check-inline">
+                          <label class="form-check-label" for="radio2">
+                              <input type="radio" class="form-check-input" id="weight" name="optradio" value="weight">Weight * Price
+                          </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <input type="hidden" id="hiddenTotal" />
+                      <input type="hidden" id="hidden_order_id" />
+                      <div class="table_css">
+                          <table class="table table-bordered table-striped" id="tbl_order_delivery">
+                              <thead>
+                                  <tr>
+                                      <th>ပစ္စည်း အမည်</th>
+                                      <th>စုစုပေါင်း အရေအတွက်</th>
+                                      <th>တင်ပို့မည့် အရေအတွက်</th>
+                                      <th>အလေး ချိန်</th>
+                                      <th>အတိုင်းအတာစံ</th>
+                                      <th>စျေးနှုန်း</th>
+                                      <th>စုစုပေါင်း</th>
+                                  </tr>
+                              </thead>
+                              <tbody id="tbl_order_delivery_body"></tbody>
+
+                          </table>
+                      </div>
+
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-info" >
+                      <i class="fa fa-floppy-o"></i> Save
+                  </button>
+              </div>
+            </form>
+          </div>
+      </div>
+  </div>
+  <div class="modal" id="modal-order">
+      <div class="modal-dialog  modal-xl order-modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title">ဘောင်ချာဖွင့်ရန်</h5>
+              </div>
+              <div class="modal-body">
+                  <div class="align-center">
                       <div class="form-check-inline">
                           <label class="form-check-label">
                               <input type="radio" class="form-check-input" id="manual" name="optradio" value="manual" checked>Manual
@@ -399,7 +462,8 @@
                   </div>
                   <div class="row">
                       <input type="hidden" id="hiddenTotal" />
-                      <input type="hidden" id="hidden_order_id" />
+                      <input type="hidden" id="hiddenOrderno" />
+                      <input type="hidden" id="hiddenGoodReceiptId" />
                       <div class="table_css">
                           <table class="table table-bordered table-striped" id="tbl_order">
                               <thead>
@@ -422,11 +486,11 @@
               </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-info" >
+                  <button type="submit" class="btn btn-info" onclick="createOrder();">
                       <i class="fa fa-floppy-o"></i> Save
                   </button>
               </div>
-            </form>
+
           </div>
       </div>
   </div>
@@ -454,7 +518,6 @@
   <script src="../../Utilities/plugins/select2/js/select2.js"></script>
   <script src="../../Utilities/js/delivery.js"></script>
   <script src="../../Utilities/js/common.js"></script>
-  <script type="text/javascript" src="../../Utilities/js/auth.js"></script>
   <script src="../../Utilities/js/order.js"></script>
   <script src="../../Utilities/plugins/toastr/toastr.min.js"></script>
   <script src="../../Utilities/js/city.js"></script>
@@ -462,6 +525,7 @@
   <script>
       $('.select2').select2();
       createDatepicker('.datepicker');
+      getCompanyInfo();
       loadDelivery();
       autoOrderNo();
       getCitySelect();

@@ -6,6 +6,7 @@
   <title>Logistics | Statement</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="../../Utilities/js/auth.js"></script>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../../Utilities/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
@@ -69,10 +70,10 @@
                       </div>
                   </div>
                   <div class="table_css">
-                      <table id="table_tbl_statment" class="table table-bordered">
+                      <table id="table_tbl_statment" class="table table-bordered table-striped">
                           <thead >
                               <tr>
-                                    <th>နေ့စွဲ</th>
+                                    <th>ကုန်တင်ပို့သည့်နေ့စွဲ</th>
                                     <th>ကားနံပါတ်</th>
                                     <th>ကားခရငွေ စုစုပေါင်း</th>
                                     <th>ဂိတ်လုပ်သားခ</th>
@@ -147,13 +148,15 @@
   <script src="../../Utilities/plugins/daterangepicker/daterangepicker.js"></script>
   <script src="../../Utilities/js/common.js"></script>
   <script src="../../Utilities/js/statement-car-list.js"></script>
-  <script type="text/javascript" src="../../Utilities/js/auth.js"></script>
+
   <script>
+  getCompanyInfo();
     $('#date').daterangepicker({
         locale: {
             format: 'DD-MM-YYYY'
         }
     });
+
   </script>
 </body>
 </html>

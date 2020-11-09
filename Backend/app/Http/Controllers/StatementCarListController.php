@@ -14,8 +14,7 @@ class StatementCarListController extends Controller
     try{
         $statement=new tbl_statement_car_list();
         $statement->car_no=$request->input("car_no");
-        $date=$request->input("date");
-        $statement->date=date("Y-m-d", strtotime($date));
+        $statement->date=$request->input("date");
         $statement->total_price=$request->input("total_price");
         $statement->commission=$request->input("commission");
         $statement->commission_value=$request->input("commission_value");

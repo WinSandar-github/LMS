@@ -17,6 +17,7 @@ function clearUnitForm() {
     $("#txt_unit_name").val("");
     getUnit();
 }
+var countUnit=0;
 function getUnit() {
     destroyDatatable("#tbl_unit", "#tbl_unit_body");
     $.ajax({
@@ -26,7 +27,7 @@ function getUnit() {
         success: function (data) {
             data.forEach(function (element) {
                 var tr = "<tr>";
-                tr += "<td >" + element.id + "</td>";
+                tr += "<td >" + (countUnit+=1) + "</td>";
                 tr += "<td >" + element.unit_name + "</td>";
                 tr += "<td class='alignright'><div class='btn-group'>" +
                     "<button type='button' class='btn btn-info btn-xs' onClick='showUnitInfo(" + element.id + ")'>" +

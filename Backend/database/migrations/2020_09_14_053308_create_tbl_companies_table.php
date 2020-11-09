@@ -23,8 +23,13 @@ class CreateTblCompaniesTable extends Migration
             $table->integer('zipcode');
             $table->string('logo',225);
             $table->string('phone',50);
+            $table->string('email',125)->unique();
+            $table->string('ref_initials',10);
             $table->timestamps();
         });
+        Artisan::call('db:seed',[
+            '--class' => CompanySeeder::class
+        ]);
     }
 
     /**

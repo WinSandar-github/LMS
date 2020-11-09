@@ -6,7 +6,7 @@ table th, td {
     white-space: nowrap;
 }
 
-#company_name, #user_name {
+#company_name, #user_name,#address {
     color: #17a2b8;
     font-weight: 600 !important;
 }
@@ -46,14 +46,14 @@ table th, td {
 .date_range_filter{
   margin : 10px;
 }
-.company_info h2,.company_info span,h4{
+.company_info h2,.company_info span,.h6-title{
   text-align: center;
 }
 .hr{
   border-bottom: 5px double grey;
 }
 .ui-thead{
-  background-color: #B2EBF2;
+  background-color:lightgreen;
 }
 .border-tr,table tr{
   border-bottom: 1px solid #CFD8DC;
@@ -88,7 +88,7 @@ table th, td {
 .table_price{
   float:right;
 }
-#print_table,#print_button{
+#print_table,#print_button,#back_button{
   display: none;
 }
 .btn-space {
@@ -101,6 +101,8 @@ table th, td {
 #logo{
   opacity: .8;
   width:50;
+  width: 80px;
+  height: 80px;
 }
 .custom-header{
   background: white;
@@ -152,10 +154,6 @@ table th, td {
     text-align: center;
 }
 
-img {
-    width: 80px;
-    height: 80px;
-}
 .hide{
     display:none;
 }
@@ -167,6 +165,9 @@ img {
 }
 .align-right{
     text-align:right;
+}
+.align-left{
+    text-align:left;
 }
 .hidden-file{
   visibility: hidden;
@@ -213,7 +214,7 @@ img {
   width:300px;height:300px;margin:auto;
 }
 .image-logo{
-  width:auto;height:auto;max-width: 100%;max-height: 100%;
+  max-width: 100%;max-height: 100%;margin: auto;display: block;
 }
 
 .btn-add {

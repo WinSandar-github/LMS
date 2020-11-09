@@ -6,6 +6,7 @@
   <title>Logistics | DeliveryDetail</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="../../Utilities/js/auth.js"></script>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../../Utilities/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
@@ -45,59 +46,36 @@
         <div class="row">
           <div class="col-1"></div>
           <div class="col-2">
-            ကုန်သည်အမည်:<span class="customer_name"></span>
-
-          </div>
-          <div class="col-2"></div>
-          <div class="col-2">
-          ယာဥ်အမှတ်:<span class="car_number"></span>
+            <b>ကုန်သည်အမည်:</b><span class="customer_name"></span>
 
           </div>
           <div class="col-2"></div>
           <div class="col-3">
-            ပစ္စည်းလက်ခံနံပါတ်    :<span class="order_no"></span>
-
+            <b>ကုန်တင်ပို့သည့်နေ့စွဲ  :</b> <span class="income_date"></span>
 
           </div>
           <div class="col-1"></div>
+          <div class="col-3">
+
+              <b>ပစ္စည်းလက်ခံနံပါတ်    :</b><span class="order_no"></span>
+          </div>
+
         </div>
         <div class="row">
           <div class="col-1"></div>
           <div class="col-2">
 
-            ကုန်ပို့သူအမည်: <span class="sender_name"></span>
-
-          </div>
-          <div class="col-2"></div>
-          <div class="col-2">
-              မြို့အမည်:    <span class="to_city_name"></span>
+            <b>ကုန်ပို့သူအမည်: </b><span class="sender_name"></span>
 
           </div>
           <div class="col-2"></div>
           <div class="col-3">
-
-            ကုန်တင်ပို့သည့်နေ့စွဲ  : <span class="income_date"></span>
-          </div>
-          <div class="col-1"></div>
-        </div>
-        <div class="row">
-          <div class="col-1"></div>
-          <div class="col-2">
-              ယာဥ်မောင်းအမည်:<span class="driver_name"></span>
-
-
-          </div>
-          <div class="col-2"></div>
-          <div class="col-2">
-
-          </div>
-          <div class="col-2"></div>
-          <div class="col-3">
-
+            <b>မြို့အမည်:  </b>  <span class="to_city_name"></span>
 
           </div>
           <div class="col-1"></div>
         </div>
+
         <br/>
         <div class="row">
           <div class="col-1"></div>
@@ -122,10 +100,10 @@
           <div class="col-1"></div>
         </div>
 
-        <div class="button-css">
-
-            <button type="button" onclick="javascript: window.print();" class="btn btn-success">Print</button>
+        <div class="align-center">
             <button type="button" onclick="javascript: back();" class="btn btn-info">Back</button>
+            <button type="button" onclick="javascript: window.print();" class="btn btn-success">Print</button>
+
 
         </div>
     </section>
@@ -154,7 +132,7 @@
   <script src="../../Utilities/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
   <script src="../../Utilities/js/delivery.js"></script>
   <script src="../../Utilities/js/common.js"></script>
-  <script type="text/javascript" src="../../Utilities/js/auth.js"></script>
+  <script src="../../Utilities/js/good_receipt.js"></script>
   <script type="text/javascript">
     getCompanyInfo();
     loadInvoice();

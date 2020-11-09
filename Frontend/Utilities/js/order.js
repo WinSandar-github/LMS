@@ -154,7 +154,7 @@ function getOrderByStatus(status,table,tableBody) {
                         "<i class='fas fa-print'></i> Print</button></div></td>";
                 }
                 else {
-                    tr += "<td class='alignright'><td class='alignright'><div class='btn-group'>" +
+                    tr += "<td class='alignright'><div class='btn-group'>" +
                         "<button type='button' class='btn btn-success btn-print btn-md btn-space'>" +
                         "<i class='fas fa-print'></i> Print</button></div></td> ";
                 }

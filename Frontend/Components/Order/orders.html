@@ -6,6 +6,7 @@
     <title>Logistics | Orders</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../../Utilities/js/auth.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../../Utilities/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
@@ -53,7 +54,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div>
-                                        <h4>ကားပေါ်တင် ရန်ကျန်ရှိနေသော ဘောင်ချာများ</h4>
+                                        <h6 class="h6-title">ကားပေါ်တင် ရန်ကျန်ရှိနေသော ဘောင်ချာများ</h6>
                                         <table id="tbl_order" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
@@ -71,7 +72,7 @@
 
                                     </div>
                                     <div>
-                                        <h4>ကားပေါ်တင် ပြီးသွားသော ဘောင်ချာများ</h4>
+                                        <h6 class="h6-title">ကားပေါ်တင် ပြီးသွားသော ဘောင်ချာများ</h6>
                                         <table id="tbl_complete_order" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
@@ -163,10 +164,10 @@
     <!--Toastr-->
     <script src="../../Utilities/plugins/toastr/toastr.min.js"></script>
     <script src="../../Utilities/js/common.js"></script>
-    <script src="../../Utilities/js/auth.js"></script>
     <script src="../../Utilities/js/order.js"></script>
     <script>
         getOrder();
+        getCompanyInfo();
     </script>
 </body>
 </html>

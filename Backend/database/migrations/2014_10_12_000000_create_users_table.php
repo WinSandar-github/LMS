@@ -26,9 +26,13 @@ class CreateUsersTable extends Migration
             $table->string('avatar',255);
             $table->string('gender',255);
             $table->string('role',255);
+            $table->string('api_key',225);
             $table->bigInteger('company_id');
             $table->timestamps();
         });
+        Artisan::call('db:seed',[
+               '--class' => UserSeeder::class
+        ]);
     }
 
     /**
