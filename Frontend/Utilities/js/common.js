@@ -1,5 +1,4 @@
 var BACKEND_URL = "https://www.talyou.com/logistics/Backend/public/";
-
 function logout() {
     (localStorage.getItem("userinfo")) && localStorage.removeItem("userinfo");
     location.href = "../../Components/Auth/login.html";
@@ -43,6 +42,7 @@ var toastOptions = {
     "hideMethod": "fadeOut"
 };
 function createDataTable(table) {
+
     $(table).DataTable({
         'destroy': true,
         'paging': true,
@@ -139,9 +139,17 @@ function dataMessage(message, table, tableBody) {
     tr += "<td colspan='" + noOfColumn + "'>" + dataMsg + "</td>";
     tr += "</tr>";
     $(tableBody).append(tr);
+    if(noOfColumn>=11){
+      $(table).addClass('table-responsive');
+    }
 }
 function numberRows() {
     $('table tbody tr').each(function (idx) {
         $(this).children(":eq(0)").html(idx + 1);
+    });
+}
+function rowCount() {
+    $('table tbody tr').each(function (idx) {
+      $(this).children(":eq(0)").html(idx-4);
     });
 }

@@ -18,6 +18,7 @@ function clearCityForm() {
     destroyDatatable('#table_tbl_city', '#tbl_city_container');
     getCity();
 }
+var count=0;
 function getCity() {
     destroyDatatable("#table_tbl_city", "#tbl_city_container");
     $.ajax({
@@ -27,7 +28,7 @@ function getCity() {
         success: function (data) {
             data.forEach(function (element) {
                 var tr = "<tr>";
-                tr += "<td >" + element.id + "</td>";
+                tr += "<td >" + (count+=1) + "</td>";
                 tr += "<td >" + element.city_name + "</td>";
                 tr += "<td class='alignright'><div class='btn-group'>" +
                     "<button type='button' class='btn btn-info btn-xs' onClick='showCityInfo(" + element.id + ")'>" +

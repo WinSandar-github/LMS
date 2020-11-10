@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddRefInitialsToTblCompanyTable extends Migration
+class AddDateToTblGoodReceiptTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddRefInitialsToTblCompanyTable extends Migration
      */
     public function up()
     {
-        Schema::table('tbl_company', function (Blueprint $table) {
-            $table->string('ref_initials',10);
+        Schema::table('tbl_good_receipt', function (Blueprint $table) {
+            $table->date('date');
         });
     }
 
@@ -25,7 +25,7 @@ class AddRefInitialsToTblCompanyTable extends Migration
      */
     public function down()
     {
-        Schema::table('tbl_company', function (Blueprint $table) {
+        Schema::table('tbl_good_receipt', function (Blueprint $table) {
             //
         });
     }

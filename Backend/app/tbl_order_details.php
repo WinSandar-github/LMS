@@ -15,5 +15,5 @@ class tbl_order_details extends Model
   {
      return $this->belongsTo('App\tbl_unit','unit');
   }
-
+  
 }

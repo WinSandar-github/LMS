@@ -29,7 +29,6 @@ function saveStatementCarList()
   statement.append('delivery_id',delivery_id);
   statement.append('company_id',company_id);
   statement.append('status',status);
-
   $.ajax({
           type: "POST",
           url: BACKEND_URL + "saveStatementCarList",
@@ -43,6 +42,7 @@ function saveStatementCarList()
             document.getElementById("price_table").style.display = "none";
             document.getElementById("save_button").style.display = "none";
             document.getElementById("print_button").style.display = "inline";
+            document.getElementById("back_button").style.display = "inline";
          },
          error:function (XMLHttpRequest, textStatus, errorThrown){
            errorStatus(XMLHttpRequest, textStatus, errorThrown);
@@ -64,7 +64,7 @@ function loadStatmentCarList() {
             data.forEach(function (element) {
 
                   var tr = "<tr>";
-                  tr += "<td >" + element.date + "</td>";
+                  tr += "<td >" + formatDate(element.date) + "</td>";
                   tr += "<td >" + element.car_no + "</td>";
                   tr += "<td class='align-right'>" + element.total_price+ "</td>";
                   tr += "<td class='align-right'>" + element.commission_value + "</td>";

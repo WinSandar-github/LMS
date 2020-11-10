@@ -262,7 +262,7 @@ function getGoodReceiptDetail(goodReceiptId) {
     });
 }
 function printGoodReceipt(goodReceiptId) {
-    window.open("goodreceipt_invoice.html?goodReceiptId=" + goodReceiptId);
+    window.open("../../Components/Good/goodreceipt_invoice.html?goodReceiptId=" + goodReceiptId);
 }
 
 function showGoodReceiptDetailsInfo(goodReceitptDetailId) {

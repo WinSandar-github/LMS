@@ -26,12 +26,8 @@ img {
 hr.line {
     border-bottom: 5px double grey;
 }
-div {
+#remark {
     text-align: center;
-}
-#company_name, #address {
-    color: #17a2b8;
-    font-weight: 500;
 }
 #top-10{
     padding-top:10px;

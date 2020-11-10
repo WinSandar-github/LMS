@@ -204,12 +204,12 @@ class GoodreceiptController extends Controller
         $startDate=date("Y-m-d", strtotime($request->start_date));
         $endDate=date("Y-m-d", strtotime($request->end_date));
         if($startDate==$endDate){
-            $vipCustomer=tbl_good_receipt::with(['goodReceiptDetailByGoodReceipt','goodReceiptOrder'])
+            $vipCustomer=tbl_good_receipt::with(['goodReceiptDetailByGoodReceipt','orderByGoodReceipts'])
                                          ->where('tbl_good_receipt.customer_name','=',$request->customer_name)
                                          ->get();
         }
         else{
-             $vipCustomer=tbl_good_receipt::with(['goodReceiptDetailByGoodReceipt','goodReceiptOrder'])
+             $vipCustomer=tbl_good_receipt::with(['goodReceiptDetailByGoodReceipt','orderByGoodReceipts'])
                                           ->where('tbl_good_receipt.customer_name','=',$request->customer_name)
                                           ->whereBetween('tbl_good_receipt.date',[$startDate, $endDate])
                                           ->get();

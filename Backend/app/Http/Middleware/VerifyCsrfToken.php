@@ -63,6 +63,7 @@ class VerifyCsrfToken extends Middleware
       'getCompany',
       'resetPassword',
       'createCompanyByGoogle',
-      'saveUserInfoFacebook'
+      'saveUserInfoFacebook',
+      'updateOrderBygoodReceiptId'
     ];
 }

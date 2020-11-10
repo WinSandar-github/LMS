@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddEmailInCompanyTable extends Migration
+class RenameOrderIdToTblDeliveryDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddEmailInCompanyTable extends Migration
      */
     public function up()
     {
-        Schema::table('tbl_company', function (Blueprint $table) {
-             $table->string('email',225);
+        Schema::table('tbl_delivery_details', function (Blueprint $table) {
+            $table->renameColumn('order_details_id', 'order_id');
         });
     }
 
@@ -25,7 +25,7 @@ class AddEmailInCompanyTable extends Migration
      */
     public function down()
     {
-        Schema::table('tbl_company', function (Blueprint $table) {
+        Schema::table('tbl_delivery_details', function (Blueprint $table) {
             //
         });
     }

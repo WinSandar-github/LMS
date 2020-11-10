@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTblCityListsTable extends Migration
+class AddGoodReceiptDeliveryToTblGoodReceiptTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateTblCityListsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_city_lists', function (Blueprint $table) {
-            $table->id();
-            $table->string('city_name',225);
-            $table->bigInteger('company_id');
-            $table->timestamps();
+        Schema::table('tbl_good_receipt', function (Blueprint $table) {
+            $table->string('good_receipt_delivery',10);
         });
     }
 
@@ -28,6 +25,8 @@ class CreateTblCityListsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_city_lists');
+        Schema::table('tbl_good_receipt', function (Blueprint $table) {
+            //
+        });
     }
 }

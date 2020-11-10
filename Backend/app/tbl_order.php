@@ -17,7 +17,7 @@ class tbl_order extends Model
     }
     public function goodreceiptByOrder()
     {
-        return $this->belongsTo('App\tbl_good_receipt','good_receipt_id');
+        return $this->belongsTo('App\tbl_good_receipt','id');
     }
     public function orderdetailsByOrder()
     {

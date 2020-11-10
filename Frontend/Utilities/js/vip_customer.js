@@ -3,7 +3,7 @@
     $("#total").html("");
     var customerName = $("#selectVipCustomer").val();
     var dateString = $("#date").val();
-    var startDate = dateString.split(' - ')[0];  
+    var startDate = dateString.split(' - ')[0];
     var endDate = dateString.split(' - ')[1];
     $.ajax({
         type: "POST",
@@ -11,15 +11,15 @@
         data: "customer_name=" + customerName + "&start_date=" + startDate + "&end_date=" + endDate,
         success: function (data) {
             data.forEach(function (element) {
-                for (var i = 0; i < (element.good_receipt_order).length; i++) {
+                for (var i = 0; i < (element.order_by_good_receipts).length; i++) {
                     var tr = "<tr>";
                     tr += "<td>" + element.date + "</td>";
                     tr += "<td >" + element.customer_name + "</td>";
                     tr += "<td >" + element.order_no + "</td>";
-                    tr += "<td class='align-right'>" + (element.good_receipt_order)[i]["order_total"] + "</td>";
+                    tr += "<td class='align-right'>" + (element.order_by_good_receipts)[i]["order_total"] + "</td>";
                     tr += "</tr>";
                     $("#tbl_vipCustomer_body").append(tr);
-                } 
+                }
             });
             getTotal();
         },
