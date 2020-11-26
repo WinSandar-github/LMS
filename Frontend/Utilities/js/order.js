@@ -160,7 +160,7 @@ function getOrderByStatus(status,table,tableBody) {
                 }
                 tr += "</tr>";
                 $(tableBody).append(tr);
-
+                tableRowPrint(tableBody);
             });
             createDataTable(table);
         },
@@ -215,8 +215,10 @@ function deleteOrder(orderNo, orderId) {
         });
     }
 }
-$("#tbl_order_body").on('click', '.btn-print', function () {
+function tableRowPrint(table_body){
+  $(table_body).on('click', '.btn-print', function () {
     var currentRow = $(this).closest("tr");
     var orderNo = currentRow.find("td:eq(0)").text();
     window.open("../../Components/Delivery/invoice.html?orderNo=" + orderNo);
-});
+  });
+}

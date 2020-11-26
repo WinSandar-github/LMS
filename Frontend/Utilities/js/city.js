@@ -7,6 +7,7 @@ function saveCity() {
         success: function (data) {
             successMessage(data);
             clearCityForm();
+            location.reload();
         },
         error: function (message){
             errorMessage(message);
@@ -27,8 +28,9 @@ function getCity() {
         data: "company_id=" + company_id,
         success: function (data) {
             data.forEach(function (element) {
+                count+=1;
                 var tr = "<tr>";
-                tr += "<td >" + (count+=1) + "</td>";
+                tr += "<td >" + count + "</td>";
                 tr += "<td >" + element.city_name + "</td>";
                 tr += "<td class='alignright'><div class='btn-group'>" +
                     "<button type='button' class='btn btn-info btn-xs' onClick='showCityInfo(" + element.id + ")'>" +

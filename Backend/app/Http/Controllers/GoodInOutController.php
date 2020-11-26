@@ -18,13 +18,13 @@ class GoodInOutController extends Controller
       $start_date=date("Y-m-d", strtotime($request->input("start_date")));
       $end_date=date("Y-m-d", strtotime($request->input("end_date")));
       if($start_date==$end_date){
-        $goodinout =tbl_delivery_details::with(['delivery','goodReceiptBydetail','goodReceiptDetailBydetail'])
-                                          ->where('tbl_delivery_details.company_id','=',$request->input("company_id"))
+        $goodinout =tbl_delivery_details::with(['delivery','goodReceiptBydetail'])
+                                          ->where('company_id','=',$request->input("company_id"))
                                           ->get();
       }
       else{
-        $goodinout =tbl_delivery_details::with(['delivery','goodReceiptBydetail','goodReceiptDetailBydetail'])
-                                          ->where('tbl_delivery_details.company_id','=',$request->input("company_id"))
+        $goodinout =tbl_delivery_details::with(['delivery','goodReceiptBydetail'])
+                                          ->where('company_id','=',$request->input("company_id"))
                                           ->whereBetween('out_date',[$start_date, $end_date])
                                           ->get();
       }

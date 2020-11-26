@@ -151,13 +151,15 @@
                 </tr>
                 <tr class="tr-class">
                   <td class="align-right">စိုက်ငွေ</td>
-                  <td >
-                    <input type="text" class="align-right" value="0" id="land_price" readonly/>
+                  <td>
+                    <input type="hidden" id="hland_price" value="0">
+                    <input type="text" class="align-right" id="land_price" onchange="comissionPercent();"/>
                   </td>
                 </tr>
                 <tr class="tr-class">
                   <td class="align-right">စုစုပေါင်း</td>
                   <td >
+                    <input type="hidden" id="hall_sum_price">
                     <input type="text" class="align-right"  id="all_sum_price" readonly/>
                   </td>
                 </tr>

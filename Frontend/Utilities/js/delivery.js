@@ -95,7 +95,7 @@ function loadDeliveryByStatus(status,table,table_body)
             tr += "<td >" + element.company_delivery.name + "</td>";
             tr += "<td class='alignright'><button type='button' class='btn btn-info btn-space' data-toggle='modal' data-target='#modal-delivery_details' onClick=getDeliveryById("+ element.id +")><i class='fas fa-plus'></i> Add DeliveryDetails</button>"+
                   "<button type='button' class='btn btn-info btn-space' onClick=showDeliveryById("+ element.id +")><i class='fas fa-edit'></i></button>"+
-                  "<button type='button' class='btn btn-success btn-print btn-space' onClick=printDeliveryById("+ element.id +")><i class='fas fa-print'> Print</button ></td> ";
+                  "<button type='button' class='btn btn-success btn-print btn-space' onClick=printDeliveryById("+ element.id +")><i class='fas fa-print'> Print</button ></td> ";//onClick=printDeliveryById("+ element.id +")
             tr += "</tr>";
             $(table_body).append(tr);
           });
@@ -139,32 +139,29 @@ function showDeliveryById(delivery_id)
 }
 function updateDelivery()
 {
-  var delivery = new FormData;;
-  delivery.append('delivery_id',$('#hdelivery_id').val());
-  delivery.append('car_no',$("#car_number").val());
-  delivery.append('driver_name',$("#driver_name").val());
-  delivery.append('driver_phone',$("#driver_phone").val());
-  delivery.append('from_city_id',$("#from_city_name").val());
-  delivery.append('to_city_id',$("#to_city_name").val());
-  delivery.append('start_dt',$("#start_dt").val());
-  delivery.append('end_dt',$("#arrived_dt").val());
-  delivery.append('arrived',$("#different_day").val());
-  delivery.append('remark',$("#delivery_remark").val());
-  delivery.append('status',$("#selected_status").val());
-  $.ajax({
-          type: "POST",
-          url: BACKEND_URL + "updateDelivery",
-          data: delivery,
-          contentType: false,
-          processData: false,
-          success: function (data) {
-            successMessage(data);
-            location.reload();
-            },
-         error:function (XMLHttpRequest, textStatus, errorThrown){
-           errorStatus(XMLHttpRequest, textStatus, errorThrown);
-         }
-       });
+  var delivery = {};
+  delivery['delivery_id']=$('#hdelivery_id').val();
+  delivery['car_no']=$("#car_number").val();
+  delivery['driver_name']=$("#driver_name").val();
+  delivery['driver_phone']=$("#driver_phone").val();
+  delivery['from_city_id']=$("#select_city").val();
+  delivery['to_city_id']=$("#select_city_delivery").val();
+  delivery['start_dt']=$("#start_dt").val();
+  delivery['end_dt']=$("#arrived_dt").val();
+  delivery['arrived']=$("#different_day").val();
+  delivery['remark']=$("#delivery_remark").val();
+  delivery['status']=$("#selected_status").val();
+  var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4) {
+          var message=removeDoublequote(xhttp);
+          successMessage(message);
+          clearDeliveryForm();
+        }
+    };
+    xhttp.open('POST', BACKEND_URL + 'updateDelivery');
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(JSON.stringify(delivery));
 }
 function saveDeliverDetail()
 {
@@ -246,7 +243,17 @@ function getDeliverDetailsByDeliveryId(delivery_id)
 }
 function printDeliveryById(delivery_id)
 {
-  window.open("../../Components/Delivery/deliver_invoice.html?delivery_id="+delivery_id);
+  $.ajax({
+          type: "POST",
+          url: BACKEND_URL + "getDeliveryById",
+          data: "delivery_id=" + delivery_id,
+          success: function (data) {
+            window.open("../../Components/Delivery/deliver_invoice.html?delivery_id="+delivery_id);
+            },
+            error: function (message) {
+                alert("Please add deliverydetails");
+            }
+        });
 }
 function loadInvoice()
 {
@@ -259,7 +266,13 @@ function loadInvoice()
     deliveryInvoice(delivery_id[delivery_id.length - 1]);
   }else{
     var order_no =last_array[last_array.length - 1].split('=');
-    loadInvoiceByOrderNo(order_no[order_no.length - 1]);
+    var last_order_no=order_no[order_no.length - 1];
+    if(last_order_no[last_order_no.length - 1]=='*'){
+      var replace_star=last_order_no.replace("*",'');
+      loadInvoiceByOrderNo(replace_star);
+    }else{
+      loadInvoiceByOrderNo(order_no[order_no.length - 1]);
+    }
   }
 }
 function deliveryInvoice(delivery_id){
@@ -267,31 +280,34 @@ function deliveryInvoice(delivery_id){
   $.ajax({
           type: "POST",
           url: BACKEND_URL + "getDeliveryById",
-          data: "delivery_id=" + delivery_id,
+          data: "deliveryId=" + delivery_id,
           success: function (data) {
             $('.driver_name').append(data[0].driver_name);
             $('.car_number').append(data[0].car_no);
-            var out_date=data[0].delivery_details[0].out_date;
-            $('.income_date').append(formatDate(out_date));
+            var out_date=data[0].created_at;
+            var currentUrl = window.location.href;
+            var url = new URL(currentUrl);
             var url=window.location.href.split('/');
             var last_array=url[url.length - 1].split('?');
-            if (last_array[last_array.length - 2] === 'deliver_invoice.html') {
-                  appendTableRow("td_car_number",data[0].car_no);
-                  appendTableRow("print_car_number",data[0].car_no);
-                  appendTableRow("td_out_date",formatDate(out_date));
-                  appendTableRow("td_delivery_date",out_date);
-                  loadInvoiceDelivery(data[0].delivery_details);
-              }
-            },
+            if (last_array[last_array.length - 2] === 'deliver_invoice.html'){
+              $('.income_date').append(formatDate(out_date));
+              appendTableRow("td_car_number",data[0].car_no);
+              appendTableRow("print_car_number",data[0].car_no);
+              appendTableRow("td_out_date",formatDate(out_date));
+              appendTableRow("td_delivery_date",out_date);
+              loadInvoiceDelivery(data[0].delivery_details);
+            }
+
+          },
             error: function (message) {
-                alert("Please add deliverydetails");
+                errorMessage(message);
             }
         });
 }
 function loadInvoiceDelivery(delivery_details)
 {
   destroyDatatable("#tbl_invoice","#tbl_invoice_container");
-  var order_total=0,labour_total=0,good_receipt_id_array = [];
+  var order_total=0,labour_total=0,good_receipt_id_array = [],paid_order_total=0,order_land=0;
   for (var i = 0; i < delivery_details.length; i++) {
       good_receipt_id_array[i] = delivery_details[i].good_receipt_id;
     }
@@ -321,11 +337,13 @@ function loadInvoiceDelivery(delivery_details)
                      tr += "<td >" + alldata[0].order_by_good_receipts[0].order_no +"*"+"</td>";
                      tr += "<td >" + alldata[0].customer_name+ "</td>";
                      tr += "<td >" + alldata[0].city_list.city_name+ "</td>";
-                   }else{
+                     paid_order_total+=parseInt(alldata[0].order_by_good_receipts[0].order_total)+parseInt(alldata[0].order_by_good_receipts[0].labour);
+                    }else{
                      tr += "<td >" + alldata[0].order_by_good_receipts[0].order_no +"</td>";
                      tr += "<td >" + alldata[0].customer_name+ "</td>";
                      tr += "<td >" + alldata[0].city_list.city_name+ "</td>";
                    }
+                   order_land+=parseInt(alldata[0].order_by_good_receipts[0].land);
                   }
                  else{
                    tr += "<td >" + ""+ "</td>";
@@ -333,7 +351,7 @@ function loadInvoiceDelivery(delivery_details)
                    tr += "<td >" + alldata[0].city_list.city_name+ "</td>";
                  }
                  tr += "<td >" +element.product_name + "</td>";
-                 tr += "<td >" + element.quantity+" "+element.unit+ "</td>";
+                 tr += "<td >" + Math.round(element.quantity)+" "+element.unit+ "</td>";
                  if(index===0){
                     tr += "<td >" + thousands_separators( alldata[0].order_by_good_receipts[0].order_total)+ "</td>";
                     tr += "<td >" +  thousands_separators( alldata[0].order_by_good_receipts[0].labour) + "</td>";
@@ -357,17 +375,23 @@ function loadInvoiceDelivery(delivery_details)
                     appendTableRow("print_gate_labour_price",gate_labour_price);
                     $("#labour_price").val(thousands_separators(labour_total));
                     appendTableRow("print_labour_price",labour_total);
-                    var advance=$('#advance').val(),land_price=$('#land_price').val();
+                    var advance=$('#advance').val(),land_price=$('#hland_price').val(),print_all_sum_price=$('#hall_sum_price').val();$('#land_price').val(thousands_separators(order_land));
                     appendTableRow("print_advance",advance);
-                    var all_sum_price=parseInt(gate_labour_price)+removeComma(advance)+parseInt(land_price)+parseInt(labour_total);
+                    var all_sum_price=parseInt(gate_labour_price)+removeComma(advance)+parseInt(order_land)+parseInt(labour_total);
                     $("#all_sum_price").val(thousands_separators(all_sum_price));
-                    appendTableRow("print_land_price",land_price);
-                    appendTableRow("print_all_sum_price",all_sum_price);
-                    $("#paid_price").val(thousands_separators(order_total));
-                    appendTableRow("print_paid_price",order_total);
-                    $("#balance_price").val(thousands_separators(parseInt(all_sum_price)-parseInt(order_total)));
-                    appendTableRow("print_balance_price",parseInt(all_sum_price)-parseInt(order_total));
-                    });
+                    if(land_price=='0'){
+                      appendTableRow("print_land_price",thousands_separators(order_land));
+                      appendTableRow("print_all_sum_price",thousands_separators(all_sum_price));
+                      appendTableRow("print_balance_price",parseInt(all_sum_price)-parseInt(paid_order_total));
+                    }else{
+                      appendTableRow("print_land_price",thousands_separators(land_price));
+                      appendTableRow("print_all_sum_price",thousands_separators(print_all_sum_price));
+                      appendTableRow("print_balance_price",parseInt(print_all_sum_price)-parseInt(paid_order_total));
+                    }
+                    $("#paid_price").val(thousands_separators(paid_order_total));
+                    appendTableRow("print_paid_price",paid_order_total);
+                    $("#balance_price").val(thousands_separators(parseInt(all_sum_price)-parseInt(paid_order_total)));
+                  });
                tableRowClick("#tbl_invoice_container");
                }
          });
@@ -391,12 +415,14 @@ function comissionPercent()
     $("#gate_labour_price").val(thousands_separators(gate_labour_price));
     appendTableRow("print_gate_labour_price",gate_labour_price);
     var advance=$('#advance').val(),land_price=$('#land_price').val(),labour_price=$("#labour_price").val(),paid_price=$("#paid_price").val();
-    var all_sum_price=parseInt(gate_labour_price)+removeComma(advance)+parseInt(land_price)+parseInt(labour_price);
+    var all_sum_price=parseInt(gate_labour_price)+removeComma(advance)+removeComma(land_price)+removeComma(labour_price);
     $("#all_sum_price").val(thousands_separators(all_sum_price));
+    $('#hland_price').val(land_price);$('#hall_sum_price').val(all_sum_price);
     appendTableRow("print_all_sum_price",all_sum_price);
     $("#balance_price").val(thousands_separators(parseInt(all_sum_price)-removeComma(paid_price)));
     appendTableRow("print_balance_price",parseInt(all_sum_price)-removeComma(paid_price));
     $('#advance').val(thousands_separators(advance));
+    $('#land_price').val(thousands_separators(land_price));
     appendTableRow("print_advance",advance);
 }
 function tableRowClick(table_body){
@@ -422,12 +448,17 @@ function loadInvoiceByOrderNo(order_no)
         url: BACKEND_URL + "getGoodReceiptByorderNo",
         data: "order_no=" + order_no,
         success: function (good_receipt) {
-          var order_id=good_receipt[0].id;
+          var order_id=good_receipt[0].order_by_good_receipts[0].id;
           $('.customer_name').append(good_receipt[0].customer_name);
           $('.sender_name').append(good_receipt[0].sender_name);
           $('.order_no').append(good_receipt[0].order_no);
           $('.to_city_name').append(good_receipt[0].city_list.city_name);
-          $('.income_date').append(formatDate(good_receipt[0].date));
+          $('.income_date').append(formatDate(good_receipt[0].order_by_good_receipts[0].order_date));
+          $('#cashRemark').append(good_receipt[0].cash_method);
+          if(good_receipt[0].good_receipt_delivery==1){
+              document.getElementById('delivery_data').style.display='block';
+              deliveryInvoice(good_receipt[0].good_receipt_bydelivery[0].delivery_id);
+          }
           localStorage.setItem('good_receipt',JSON.stringify(good_receipt[0]));
           addToOrderByOrderNo(order_id);
         }
@@ -454,6 +485,7 @@ function autoOrderNo()
               }
       });
 }
+var count=0;
 function searchOrderNo(order_no)
 {
   $.ajax({
@@ -464,8 +496,9 @@ function searchOrderNo(order_no)
                   var good_receipt_detail=good_receipt[0].good_receipt_detail_by_good_receipt;
                   if(good_receipt[0].order_status=='0'){
                     good_receipt_detail.forEach(function (element, index, array){
+                    count+=1;
                     var tr="<tr>";
-                    tr+="<td>"+"</td>";
+                    tr+="<td>"+count+"</td>";
                     tr+="<td><input type='hidden' value='"+good_receipt[0].id+"'><input type='hidden' value='"+element.id+"'><input type='hidden' value='"+good_receipt[0].customer_name+"'>"+good_receipt[0].customer_name+"</td>";
                     tr+="<td>"+good_receipt[0].order_no+"</td>";
                     tr+="<td>"+element.product_name+"</td>";
@@ -485,7 +518,6 @@ function searchOrderNo(order_no)
                       tr+="</tr>";
                       $('#tbl_product_container').append(tr);
                   });
-                  rowCount();
                 }else{
                     $.ajax({
                           type: "POST",
@@ -493,8 +525,9 @@ function searchOrderNo(order_no)
                           data:"order_id="+good_receipt[0].order_by_good_receipts[0].id,
                           success: function (orderdetails) {
                               orderdetails.forEach(function(unit, orderindex, array){
+                                count+=1;
                                   var tr="<tr>";
-                                  tr+="<td>"+"</td>";
+                                  tr+="<td>"+count+"</td>";
                                   tr+="<td><input type='hidden' value='"+good_receipt[0].id+"'><input type='hidden' value='"+unit.id+"'><input type='hidden' value='"+good_receipt[0].customer_name+"'>"+good_receipt[0].customer_name+"</td>";
                                   tr+="<td>"+good_receipt[0].order_no+"</td>";
                                   tr+="<td>"+unit.product_name+"</td>";
@@ -503,7 +536,7 @@ function searchOrderNo(order_no)
                                     tr+="<td><input type='number' value='"+Math.round(unit.quantity)+"' onblur='orderQtyCalculate("+unit.id+","+"this.value)' onkeyup='orderQtyCalculate("+unit.id+","+"this.value)'></td>";//<input type='text' class='orderQty' value='"+element.qty+"' id='order_qty"+element.id+"' disabled>
                                     tr+="<td><input type='hidden' id='remain_qty_product"+unit.id+"' value='0'><input type='text' value='0' id='remaine_qty"+unit.id+"' disabled>"+"</td>";
                                   }else{
-                                    tr+="<td><input type='number' value='"+Math.round(unit.quantity+[unit.quantity-unit.product_qty])+"' onblur='orderQtyCalculate("+unit.id+","+"this.value)' onkeyup='orderQtyCalculate("+unit.id+","+"this.value)'></td>";//<input type='text' class='orderQty' value='"+element.qty+"' id='order_qty"+element.id+"' disabled>
+                                    tr+="<td><input type='number' value='"+Math.round(unit.quantity-unit.product_qty)+"' onblur='orderQtyCalculate("+unit.id+","+"this.value)' onkeyup='orderQtyCalculate("+unit.id+","+"this.value)'></td>";//<input type='text' class='orderQty' value='"+element.qty+"' id='order_qty"+element.id+"' disabled>//unit.quantity+[unit.quantity-unit.product_qty
                                     tr+="<td><input type='hidden' id='remain_qty_product"+unit.id+"' value='"+Math.round(unit.quantity-unit.product_qty)+"'><input type='text' value='"+Math.round(unit.quantity-[unit.quantity+unit.product_qty])+"' id='remaine_qty"+unit.id+"' disabled>"+"</td>";
                                   }
                                   tr+="<td><input type='text' value='"+unit.weight+"'>"+"</td>";
@@ -512,14 +545,14 @@ function searchOrderNo(order_no)
                                   if(orderindex===0){
                                     tr+="<td class='align-left'><input type='hidden' value='"+good_receipt[0].order_status+"'><input type='hidden' value='"+good_receipt[0].order_by_good_receipts[0].id+"'><button type='button' class='btn btn-danger btn-space' onclick='deleteDeliveryDetails(this);'><i class='fas fa-trash'></i></button>"+
                                       "<button type='button' class='btn btn-success btn-print btn-space'><i class='fas fa-print'></i> Print</button>"+
-                                      "<button type='button' class='btn btn-info btn-space' onClick='addToOrderByOrderNo(" + good_receipt[0].id + ")'>ဘောင်ချာပြန်ဖွင့်ရန်</button></td>";
+                                      "<button type='button' class='btn btn-info btn-space' onClick='addToOrderByOrderNo(" + good_receipt[0].order_by_good_receipts[0].id+ ")'>ဘောင်ချာပြန်ဖွင့်ရန်</button></td>";
                                   }else{
                                     tr+="<td class='align-left'><input type='hidden' value='"+good_receipt[0].order_status+"'><input type='hidden' value='"+good_receipt[0].order_by_good_receipts[0].id+"'><button type='button' class='btn btn-danger btn-space btn-left' onclick='deleteDeliveryDetails(this);'><i class='fas fa-trash'></i></button></td>";
                                   }
                                   tr+="</tr>";
                                   $('#tbl_product_container').append(tr);
                                 });
-                                rowCount();
+
                               }
                         });
                   }
@@ -537,7 +570,7 @@ function deleteDeliveryDetails(row)
 {
     var i = row.parentNode.parentNode.rowIndex;
     document.getElementById('tbl_product').deleteRow(i);
-    rowCount();
+    count-=1;
 }
 function orderQtyCalculate(id,quantity)
 {
@@ -568,14 +601,15 @@ function addToOrderByOrderNo(order_id) {
                   var tr = "<tr>";
                   tr += "<td >" + (i+1) + "</td>";
                   tr += "<td >" + orderdetails[i].product_name + "</td>";
-                  tr += "<td >" + orderdetails[i].quantity+" "+ orderdetails[i].unit+ "</td>";
+                  tr += "<td >" + Math.round(orderdetails[i].quantity)+" "+ orderdetails[i].unit+ "</td>";
                   tr += "<td class='align-right'>" + thousands_separators(orderdetails[i].product_price)+ "</td>";
                   tr += "</tr>";
                   $("#tbl_order_invoice_container").append(tr);
               }
-              createRow("အလုပ်သမားခ:",good_receipt.order_by_good_receipts[0].order_total);
-              createRow("စိုက်ငွေ:",good_receipt.order_by_good_receipts[0].labour);
-              createRow("စုစုပေါင်း:",good_receipt.order_by_good_receipts[0].total);
+              createRow("စုစုပေါင်း:",good_receipt.order_by_good_receipts[0].order_total);
+              createRow("အလုပ်သမားခ:",good_receipt.order_by_good_receipts[0].labour);
+              createRow("စိုက်ငွေ:",good_receipt.order_by_good_receipts[0].land);
+              createRow("စုစုပေါင်းသင့်ငွေ:",good_receipt.order_by_good_receipts[0].total);
               createRow("တာဝန်ခံ:",user_name);
 
             } else {
@@ -586,7 +620,7 @@ function addToOrderByOrderNo(order_id) {
                   tr += "<td >" + "<input type='text' autocomplete='off'  value='" + Math.round(orderdetails[i].quantity-orderdetails[i].product_qty) + "'>" + "</td>";
                   tr += "<td >" + "<input type='text' autocomplete='off' id='productWeight' value='" + orderdetails[i].weight + "'>" + "</td>";
                   tr += "<td >" + "<input type='text' id='productUnit' value='" + orderdetails[i].unit + "' disabled>"+"</td>";
-                  tr += "<td >" + "<input type='text' autocomplete='off' id='productPrice' value='0' onkeyup='getTotalByUnit(this)'>" + "</td>";
+                  tr += "<td >" + "<input type='text' autocomplete='off' id='productPrice' value='0'  onkeyup='getTotalByUnit(this)'>" + "</td>";
                   tr += "<td >" + "<input type='text' id='total' value='0'>" +"</td>";
                   tr += "</tr>";
                   $("#tbl_order_delivery_body").append(tr);
@@ -617,13 +651,13 @@ function createRow(label,value){
 function appendTBody(id,label) {
     var tr = "<tr>";
     tr += "<td colspan='6' style='text-align:right;'>" + label + "</td>";
-    tr += "<td >" + "<input type='text' autocomplete='off' id='" + id +"' value='0'>" + "</td>";
+    tr += "<td >" + "<input type='text' id='" + id +"' value='0'>" + "</td>";
     tr += "</tr>";
     $("#tbl_order_delivery_body").append(tr);
     var new_id = "#" + id;
     if (id != "totalPrice") {
         $(new_id).keyup(function () {
-            getTotal();
+          getTotalDelivery();
         });
     }
 }
@@ -632,7 +666,7 @@ function getTotalByUnit(td) {
     var productQuantity = parseFloat($(row).find('#productQuantity').val());
     var productWeight = parseInt($(row).find('#productWeight').val());
     var productPrice = parseInt($(row).find('#productPrice').val()) ? parseInt($(row).find('#productPrice').val()) : 0;
-    var priceMethod = $("input[name='optradio']:checked").val();
+    var priceMethod = $("input[name='delivey-radio']:checked").val();
     var tabledelivery = document.getElementById("tbl_order_delivery").rows.length;
     var productsTotal = new Array();
     var sumVal = 0;
@@ -656,23 +690,29 @@ function getTotalByUnit(td) {
     }
     var total = sumVal + Number($("#labourFee").val()) + Number($("#land").val());
     $("#totalPrice").val(total);
-    $("#hiddenTotal").val(sumVal);
+    $("#hidden_Total").val(sumVal);
+}
+function getTotalDelivery() {
+    var totalPrice = $("#hidden_Total").val();
+    var labourFee = $("#labourFee").val();
+    var land = $("#land").val();
+    $("#totalPrice").val(Number(totalPrice) + Number(labourFee) + Number(land));
 }
 function updateOrderBygoodReceiptId()
 {
   var order={},order_data=[];
-  order['order_id']=$('#hidden_order_id').val(),order['order_total']=$("#hiddenTotal").val(),order['total']= $("#totalPrice").val(),order['labour']= $("#labourFee").val(),order['land']=$("#land").val();
+  order['order_id']=$('#hidden_order_id').val(),order['order_total']=$("#hidden_Total").val(),order['total']= $("#totalPrice").val(),order['labour']= $("#labourFee").val(),order['land']=$("#land").val();
   order_data.push(order);
-  var table_length = document.getElementById("tbl_order").rows.length;
+  var table_length = document.getElementById("tbl_order_delivery").rows.length;
   for (var i = 1; i < table_length - 3; i++) {
       var orderdetails = {};
-      orderdetails['orderdetail_id'] = document.getElementById("tbl_order").rows[i].cells[0].firstChild.value;
-      orderdetails['product_name'] =document.getElementById("tbl_order").rows[i].cells[0].children[1].value;
-      orderdetails['quantity'] = document.getElementById("tbl_order").rows[i].cells[1].firstChild.value;
-      orderdetails['weight'] = document.getElementById("tbl_order").rows[i].cells[3].firstChild.value;
-      orderdetails['unit'] = document.getElementById("tbl_order").rows[i].cells[4].firstChild.value;
-      orderdetails['product_price'] = document.getElementById("tbl_order").rows[i].cells[5].firstChild.value;
-      orderdetails['total'] =document.getElementById("tbl_order").rows[i].cells[6].firstChild.value;
+      orderdetails['orderdetail_id'] = document.getElementById("tbl_order_delivery").rows[i].cells[0].firstChild.value;
+      orderdetails['product_name'] =document.getElementById("tbl_order_delivery").rows[i].cells[0].children[1].value;
+      orderdetails['quantity'] = document.getElementById("tbl_order_delivery").rows[i].cells[1].firstChild.value;
+      orderdetails['weight'] = document.getElementById("tbl_order_delivery").rows[i].cells[3].firstChild.value;
+      orderdetails['unit'] = document.getElementById("tbl_order_delivery").rows[i].cells[4].firstChild.value;
+      orderdetails['product_price'] = document.getElementById("tbl_order_delivery").rows[i].cells[5].firstChild.value;
+      orderdetails['total'] =document.getElementById("tbl_order_delivery").rows[i].cells[6].firstChild.value;
       order_data.push(orderdetails);
   }
   $.ajax({

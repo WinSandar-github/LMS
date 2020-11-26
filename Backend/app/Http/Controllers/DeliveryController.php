@@ -113,9 +113,19 @@ class DeliveryController extends Controller
       else{
         return response()->json($delivery, 200, config('common.header'), JSON_UNESCAPED_UNICODE);
       }
+    }else if($request->input("delivery_id")){
+      $delivery =tbl_delivery_details::with(['delivery'])
+                                ->where('delivery_id','=',$request->input("delivery_id"))
+                                ->get();
+     if(sizeof($delivery)){
+        return response()->json($delivery,200, config('common.header'),JSON_UNESCAPED_UNICODE);
+      }
+      else{
+        return response()->json(config('common.message.data'), 404, config('common.header'), JSON_UNESCAPED_UNICODE);
+      }
     }else{
-      $delivery =tbl_delivery::with(['companyDelivery','deliveryDetails'])
-                                ->where('id','=',$request->input("delivery_id"))
+      $delivery =tbl_delivery::with(['deliveryDetails'])
+                                ->where('id','=',$request->input("deliveryId"))
                                 ->get();
      if(sizeof($delivery)){
         return response()->json($delivery,200, config('common.header'),JSON_UNESCAPED_UNICODE);
@@ -127,7 +137,7 @@ class DeliveryController extends Controller
   }
   public function updateDelivery(Request $request)
   {
-    try{
+    /*try{
         $delivery = tbl_delivery::find($request->input("delivery_id"));
         $delivery->car_no=$request->input("car_no");
         $delivery->driver_name=$request->input("driver_name");
@@ -139,6 +149,24 @@ class DeliveryController extends Controller
         $delivery->arrived=$request->input("different_arrived");
         $delivery->remark=$request->input("remark");
         $delivery->status=$request->input("status");
+        $delivery->save();
+        return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
+    }catch (\Exception $e) {
+        return response()->json(config('common.message.error'), 500,config('common.header'), JSON_UNESCAPED_UNICODE);
+    }*/
+    try{
+        $data=json_decode($request->getContent(), true);
+        $delivery = tbl_delivery::find($data["delivery_id"]);
+        $delivery->car_no=$data["car_no"];
+        $delivery->driver_name=$data["driver_name"];
+        $delivery->driver_phone=$data["driver_phone"];
+        $delivery->from_city_id=$data["from_city_id"];
+        $delivery->to_city_id=$data["to_city_id"];
+        $delivery->start_dt=$data["start_dt"];
+        $delivery->end_dt=$data["end_dt"];
+        $delivery->arrived=$data["arrived"];
+        $delivery->remark=$data["remark"];
+        $delivery->status=$data["status"];
         $delivery->save();
         return response()->json(config('common.message.success'), 200,config('common.header'), JSON_UNESCAPED_UNICODE);
     }catch (\Exception $e) {
@@ -160,7 +188,7 @@ class DeliveryController extends Controller
   public function getGoodReceiptByorderNo(Request $request)
   {
     if($request->input("order_no")){
-        $goodReceipt=tbl_good_receipt::with(['goodReceiptDetailByGoodReceipt','cityList','orderByGoodReceipts'])
+        $goodReceipt=tbl_good_receipt::with(['goodReceiptDetailByGoodReceipt','cityList','orderByGoodReceipts','goodReceiptBydelivery'])
                                       ->where('tbl_good_receipt.order_no','=',$request->input("order_no"))
                                       ->get();
         if(sizeof($goodReceipt)){
