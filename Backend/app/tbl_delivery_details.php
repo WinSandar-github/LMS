@@ -19,5 +19,5 @@ class tbl_delivery_details extends Model
   {
       return $this->belongsTo('App\tbl_good_receipt_details','good_receipt_detail_id');
   }
-
+  
 }

@@ -226,3 +226,6 @@ table th, td {
 .text-text{
   color: #1ea9bf;
 }
+#delivery_data{
+  display: none;
+}

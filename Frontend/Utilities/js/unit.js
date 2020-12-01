@@ -7,6 +7,7 @@ function saveUnit() {
         success: function (data) {
             successMessage(data);
             clearUnitForm();
+            location.reload();
         },
         error: function (message) {
             errorMessage(message);
@@ -26,8 +27,9 @@ function getUnit() {
         data: "company_id=" + company_id,
         success: function (data) {
             data.forEach(function (element) {
+                countUnit+=1;
                 var tr = "<tr>";
-                tr += "<td >" + (countUnit+=1) + "</td>";
+                tr += "<td >" + countUnit + "</td>";
                 tr += "<td >" + element.unit_name + "</td>";
                 tr += "<td class='alignright'><div class='btn-group'>" +
                     "<button type='button' class='btn btn-info btn-xs' onClick='showUnitInfo(" + element.id + ")'>" +

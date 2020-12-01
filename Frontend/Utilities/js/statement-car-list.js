@@ -66,26 +66,26 @@ function loadStatmentCarList() {
                   var tr = "<tr>";
                   tr += "<td >" + formatDate(element.date) + "</td>";
                   tr += "<td >" + element.car_no + "</td>";
-                  tr += "<td class='align-right'>" + element.total_price+ "</td>";
-                  tr += "<td class='align-right'>" + element.commission_value + "</td>";
-                  tr += "<td class='align-right'>" + element.labour  + "</td>";
-                  tr += "<td class='align-right'>" + element.advance + "</td>";
-                  tr += "<td class='align-right'>" + element.land + "</td>";
-                  tr += "<td class='align-right'>" + element.final_price + "</td>";
-                  tr += "<td class='align-right'>" + element.all_total + "</td>";
-                  tr += "<td class='align-right'>" + element.cash_total+ "</td>";
+                  tr += "<td class='align-right'>" + thousands_separators(element.total_price)+ "</td>";
+                  tr += "<td class='align-right'>" + thousands_separators(element.commission_value) + "</td>";
+                  tr += "<td class='align-right'>" + thousands_separators(element.labour)  + "</td>";
+                  tr += "<td class='align-right'>" +  thousands_separators(element.advance) + "</td>";
+                  tr += "<td class='align-right'>" + thousands_separators(element.land) + "</td>";
+                  tr += "<td class='align-right'>" + thousands_separators(element.final_price) + "</td>";
+                  tr += "<td class='align-right'>" + thousands_separators(element.all_total) + "</td>";
+                  tr += "<td class='align-right'>" + thousands_separators(element.cash_total)+ "</td>";
                   tr += "</tr>";
                   $("#tbl_statment_container").append(tr);
 
                 });
             var total = 0;
             $('#table_tbl_statment tr').each(function () {
-                var value = parseInt($('td', this).eq(3).text());
+                var value = removeComma($('td', this).eq(3).text());
                 if (!isNaN(value)) {
                     total += value;
                 }
             });
-            $("#total").html(total);
+            $("#total").html(thousands_separators(total));
         },
         error: function (message) {
             dataMessage(message, "#table_tbl_statment", "#tbl_statment_container");

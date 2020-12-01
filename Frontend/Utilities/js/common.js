@@ -136,7 +136,7 @@ function dataMessage(message, table, tableBody) {
     var dataMsg = message.responseText;
     var noOfColumn = countColumn(table);
     var tr = "<tr>";
-    tr += "<td colspan='" + noOfColumn + "'>" + dataMsg + "</td>";
+    tr += "<td colspan='" + noOfColumn + "'>အချက်အလက်များမရှိ‌‌‌သေးပါ</td>";
     tr += "</tr>";
     $(tableBody).append(tr);
     if(noOfColumn>=11){
@@ -148,8 +148,50 @@ function numberRows() {
         $(this).children(":eq(0)").html(idx + 1);
     });
 }
-function rowCount() {
-    $('table tbody tr').each(function (idx) {
-      $(this).children(":eq(0)").html(idx-4);
-    });
+function generateQRCode(){
+  var currentUrl = window.location.href;
+  var url = new URL(currentUrl);
+  var url=window.location.href.split('/');
+  var last_array=url[url.length - 1].split('?');
+  if(last_array[last_array.length - 2] === 'goodreceipt_invoice.html'){
+    var goodReceiptId = last_array[last_array.length - 1].split('=');
+    var id=goodReceiptId[goodReceiptId.length - 1];
+    var url="https://www.talyou.com/logistics/Frontend/Components/Good/qr_view_goodreceipt.html?id="+id;
+    var qr;
+        (function() {
+                      qr = new QRious({
+                      element: document.getElementById('qr-code'),
+                      size: 200,
+                      value: url
+                  });
+        })();
+  }else{
+    var order_no =last_array[last_array.length - 1].split('=');
+    var last_order_no=order_no[order_no.length - 1];
+    if(last_order_no[last_order_no.length - 1]=='*'){
+      var replace_order=last_order_no.replace("*",'');
+      var url="https://www.talyou.com/logistics/Frontend/Components/Delivery/qr_view_invoice.html?orderNo="+replace_order;
+      var qr;
+          (function() {
+                        qr = new QRious({
+                        element: document.getElementById('qr-code'),
+                        size: 200,
+                        value: url
+                    });
+          })();
+
+    }else{
+      var send_order_no=order_no[order_no.length - 1];
+      var url="https://www.talyou.com/logistics/Frontend/Components/Delivery/qr_view_invoice.html?orderNo="+send_order_no;
+      var qr;
+          (function() {
+                        qr = new QRious({
+                        element: document.getElementById('qr-code'),
+                        size: 200,
+                        value: url
+                    });
+          })();
+
+    }
+  }
 }
